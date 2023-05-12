@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>WIP on</title><link>https://wangze.tech/tags/WIP/</link><description>Recent content in WIP on</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><atom:link href="https://wangze.tech/tags/WIP/index.xml" rel="self" type="application/rss+xml"/><item><title>Laravel Pint 使用</title><link>https://wangze.tech/Laravel-Pint-%E4%BD%BF%E7%94%A8/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://wangze.tech/Laravel-Pint-%E4%BD%BF%E7%94%A8/</guid><description>参考：
-https://laraveldaily.com/post/laravel-pint-pre-commit-hooks-github-actions</description></item><item><title>PHP 开发设置</title><link>https://wangze.tech/PHP-%E5%BC%80%E5%8F%91%E8%AE%BE%E7%BD%AE/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://wangze.tech/PHP-%E5%BC%80%E5%8F%91%E8%AE%BE%E7%BD%AE/</guid><description>Laravel Pint 如何在PHPSTORM 配置Laravel Pint 代码格式化包
-Laravel Pint
-VSCode</description></item><item><title>PHP 错误码设计</title><link>https://wangze.tech/PHP-%E9%94%99%E8%AF%AF%E7%A0%81%E8%AE%BE%E8%AE%A1/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://wangze.tech/PHP-%E9%94%99%E8%AF%AF%E7%A0%81%E8%AE%BE%E8%AE%A1/</guid><description>目标 错误码包含：数字、英文、含义，还可以有 HTTP Status
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>WIP on</title><link>https://wangze.tech/tags/WIP/</link><description>Recent content in WIP on</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Tue, 09 May 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://wangze.tech/tags/WIP/index.xml" rel="self" type="application/rss+xml"/><item><title>Laravel Pint 使用</title><link>https://wangze.tech/Laravel-Pint-%E4%BD%BF%E7%94%A8/</link><pubDate>Tue, 09 May 2023 00:00:00 +0000</pubDate><guid>https://wangze.tech/Laravel-Pint-%E4%BD%BF%E7%94%A8/</guid><description>参考：
+https://laraveldaily.com/post/laravel-pint-pre-commit-hooks-github-actions</description></item><item><title>PHP 错误码设计</title><link>https://wangze.tech/PHP-%E9%94%99%E8%AF%AF%E7%A0%81%E8%AE%BE%E8%AE%A1/</link><pubDate>Tue, 09 May 2023 00:00:00 +0000</pubDate><guid>https://wangze.tech/PHP-%E9%94%99%E8%AF%AF%E7%A0%81%E8%AE%BE%E8%AE%A1/</guid><description>目标 错误码包含：数字、英文、含义，还可以有 HTTP Status
 这些最好放到一起，不然添加时容易漏
 方案 静态变量：数组
 多个名字类似的静态变量
 静态工厂方法
 枚举和注解
-讨论 结论 参考 Using attributes to add value</description></item></channel></rss>
+讨论 结论 参考 Using attributes to add value</description></item><item><title>PHP 开发设置</title><link>https://wangze.tech/PHP-%E5%BC%80%E5%8F%91%E8%AE%BE%E7%BD%AE/</link><pubDate>Sat, 06 May 2023 00:00:00 +0000</pubDate><guid>https://wangze.tech/PHP-%E5%BC%80%E5%8F%91%E8%AE%BE%E7%BD%AE/</guid><description>Laravel Pint 如何在PHPSTORM 配置Laravel Pint 代码格式化包
+Laravel Pint
+VSCode</description></item></channel></rss>
