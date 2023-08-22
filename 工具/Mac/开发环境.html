@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html><head><title>开发环境</title><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta property="og:title" content="开发环境"/><meta property="og:description" content="设备 § M1 MacBook Pro 14 先更新系统 Homebrew § 官网 brew tap homebrew/cask-drivers brew tap homebrew/cask-fonts brew tap homebrew/cask-versions brew tap buo/cask-upgrade brew tap mongodb/brew brew install git git-lfs git-flow git config --global core."/><meta property="og:image" content="https://wangze.tech/static/og-image.png"/><meta property="og:width" content="1200"/><meta property="og:height" content="675"/><link rel="icon" href="../../static/icon.png"/><meta name="description" content="设备 § M1 MacBook Pro 14 先更新系统 Homebrew § 官网 brew tap homebrew/cask-drivers brew tap homebrew/cask-fonts brew tap homebrew/cask-versions brew tap buo/cask-upgrade brew tap mongodb/brew brew install git git-lfs git-flow git config --global core."/><meta name="generator" content="Quartz"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link href="../../index.css" rel="stylesheet" type="text/css" spa-preserve/><link href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><link href="https://fonts.googleapis.com/css2?family=IBM Plex Mono&amp;family=Schibsted Grotesk:wght@400;700&amp;family=Source Sans Pro:ital,wght@0,400;0,600;1,400;1,600&amp;display=swap" rel="stylesheet" type="text/css" spa-preserve/><script src="../../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch(`../../static/contentIndex.json`).then(data => data.json())</script></head><body data-slug="工具/Mac/开发环境"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h1 class="page-title"><a href="../..">🪴 11ze's Garden</a></h1><div class="spacer mobile-only"></div><div class="search"><div id="search-icon"><p>Search</p><div></div><svg tabIndex="0" aria-labelledby="title desc" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title id="title">Search</title><desc id="desc">Search</desc><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg></div><div id="search-container"><div id="search-space"><input autocomplete="off" id="search-bar" name="search" type="text" aria-label="Search for something" placeholder="Search for something"/><div id="results-container"></div></div></div></div><div class="darkmode"><input class="toggle" id="darkmode-toggle" type="checkbox" tabIndex="-1"/><label id="toggle-label-light" for="darkmode-toggle" tabIndex="-1"><svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35;" xmlSpace="preserve"><title>Light mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg></label><label id="toggle-label-dark" for="darkmode-toggle" tabIndex="-1"><svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background='new 0 0 100 100'" xmlSpace="preserve"><title>Dark mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></label></div><div class="toc desktop-only"><button type="button" id="toc"><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="toc-content"><ul class="overflow"><li class="depth-0"><a href="#设备" data-for="设备">设备</a></li><li class="depth-0"><a href="#homebrew" data-for="homebrew">Homebrew</a></li><li class="depth-0"><a href="#appstore" data-for="appstore">AppStore</a></li><li class="depth-0"><a href="#软件" data-for="软件">软件</a></li><li class="depth-0"><a href="#系统设置" data-for="系统设置">系统设置</a></li></ul></div></div></div><div class="center"><div class="page-header"><div class="popover-hint"><h1 class="article-title">开发环境</h1><p class="content-meta">Aug 22, 2023, 4 min read</p><ul class="tags"><li><a href="../../tags/开发" class="internal tag-link">#开发</a></li><li><a href="../../tags/设置" class="internal tag-link">#设置</a></li><li><a href="../../tags/工具" class="internal tag-link">#工具</a></li><li><a href="../../tags/mac" class="internal tag-link">#mac</a></li></ul></div></div><article class="popover-hint"><h2 id="设备">设备<a aria-hidden="true" tabindex="-1" href="#设备" class="internal"> §</a></h2>
+<ul>
+<li>M1 MacBook Pro 14</li>
+<li>先更新系统</li>
+</ul>
+<h2 id="homebrew">Homebrew<a aria-hidden="true" tabindex="-1" href="#homebrew" class="internal"> §</a></h2>
+<ul>
+<li><a href="https://brew.sh/" class="external">官网</a></li>
+</ul>
+<div data-rehype-pretty-code-fragment><pre style="background-color:var(--shiki-color-background);" tabindex="0" data-language="bash" data-theme="default"><code data-language="bash" data-theme="default"><span data-line><span style="color:var(--shiki-token-function);">brew</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">tap</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">homebrew/cask-drivers</span></span>
+<span data-line><span style="color:var(--shiki-token-function);">brew</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">tap</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">homebrew/cask-fonts</span></span>
+<span data-line><span style="color:var(--shiki-token-function);">brew</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">tap</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">homebrew/cask-versions</span></span>
+<span data-line><span style="color:var(--shiki-token-function);">brew</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">tap</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">buo/cask-upgrade</span></span>
+<span data-line><span style="color:var(--shiki-token-function);">brew</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">tap</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">mongodb/brew</span></span>
+<span data-line> </span>
+<span data-line><span style="color:var(--shiki-token-function);">brew</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">install</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">git</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">git-lfs</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">git-flow</span></span>
+<span data-line><span style="color:var(--shiki-token-function);">git</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">config</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">--global</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">core.autocrlf</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-constant);">false</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-comment);"># 不自动转换 CRLF</span></span>
+<span data-line><span style="color:var(--shiki-token-function);">git</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">config</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">--global</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">core.ignorecase</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-constant);">false</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-comment);"># 区分大小写</span></span>
+<span data-line><span style="color:var(--shiki-token-function);">git</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">config</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">--global</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">init.defaultBranch</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">main</span></span>
+<span data-line><span style="color:var(--shiki-token-function);">git</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">config</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">--global</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">remote.origin.prune</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-constant);">true</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-comment);"># 自动移除多余远端分支</span></span>
+<span data-line><span style="color:var(--shiki-token-function);">git</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">config</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">--global</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">user.name</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">username</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-comment);"># 注意不要照抄</span></span>
+<span data-line><span style="color:var(--shiki-token-function);">git</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">config</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">--global</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">user.email</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">email</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-comment);"># 注意不要照抄</span></span>
+<span data-line> </span>
+<span data-line><span style="color:var(--shiki-token-function);">brew</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">install</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">font-jetbrains-mono</span></span>
+<span data-line><span style="color:var(--shiki-token-function);">brew</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">install</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">font-lxgw-wenkai</span></span>
+<span data-line> </span>
+<span data-line><span style="color:var(--shiki-token-comment);"># 访达插件</span></span>
+<span data-line><span style="color:var(--shiki-token-function);">brew</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">install</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">--cask</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">qlmarkdown</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-comment);"># Markdown</span></span>
+<span data-line><span style="color:var(--shiki-token-function);">brew</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">install</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">--cask</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">--no-quarantine</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">syntax-highlight</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-comment);"># 代码高亮</span></span>
+<span data-line><span style="color:var(--shiki-token-function);">brew</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">install</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">--cask</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">qlstephen</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-comment);"># 查看没有文件扩展名的纯文本文件</span></span>
+<span data-line> </span>
+<span data-line><span style="color:var(--shiki-token-comment);"># 以下应用，安装后关闭自动检查更新</span></span>
+<span data-line><span style="color:var(--shiki-token-function);">brew</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">install</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">--cask</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">font-hack-nerd-font</span></span>
+<span data-line><span style="color:var(--shiki-token-function);">brew</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">install</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">--cask</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">maczip</span></span>
+<span data-line><span style="color:var(--shiki-token-function);">brew</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">install</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">--cask</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">wechatwebdevtools</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-comment);"># 微信小程序开发者工具</span></span>
+<span data-line><span style="color:var(--shiki-token-function);">brew</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">install</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">--cask</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">mini-program-studio</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-comment);"># 支付宝小程序开发者工具</span></span>
+<span data-line><span style="color:var(--shiki-token-function);">brew</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">install</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">--cask</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">macs-fan-control</span></span>
+<span data-line><span style="color:var(--shiki-token-function);">brew</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">install</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">--cask</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">mongodb-compass</span></span>
+<span data-line><span style="color:var(--shiki-token-function);">brew</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">install</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">--cask</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">another-redis-desktop-manager</span></span>
+<span data-line><span style="color:var(--shiki-token-function);">brew</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">install</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">--cask</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">iina</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-comment);"># 本地音视频播放器</span></span>
+<span data-line><span style="color:var(--shiki-token-function);">brew</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">install</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">--cask</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">cheatsheet</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-comment);"># 快捷键提示</span></span>
+<span data-line> </span>
+<span data-line><span style="color:var(--shiki-token-function);">brew</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">install</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">battery</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-comment);"># https://github.com/actuallymentor/battery</span></span>
+<span data-line><span style="color:var(--shiki-token-function);">brew</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">install</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">percona-toolkit</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-comment);"># MySQL 运维工具</span></span>
+<span data-line> </span>
+<span data-line><span style="color:var(--shiki-token-function);">brew</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">install</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">go</span></span>
+<span data-line><span style="color:var(--shiki-color-text);">  </span><span style="color:var(--shiki-token-comment);"># 添加以下内容到 .zshrc 末尾</span></span>
+<span data-line><span style="color:var(--shiki-color-text);">  </span><span style="color:var(--shiki-token-keyword);">export</span><span style="color:var(--shiki-color-text);"> PATH</span><span style="color:var(--shiki-token-keyword);">=</span><span style="color:var(--shiki-token-string-expression);">&quot;/Users/wangze/go/bin:$PATH&quot;</span></span>
+<span data-line><span style="color:var(--shiki-color-text);">  </span><span style="color:var(--shiki-token-keyword);">export</span><span style="color:var(--shiki-color-text);"> GO111MODULE</span><span style="color:var(--shiki-token-keyword);">=</span><span style="color:var(--shiki-token-string);">on</span></span>
+<span data-line><span style="color:var(--shiki-color-text);">  </span><span style="color:var(--shiki-token-keyword);">export</span><span style="color:var(--shiki-color-text);"> GOPROXY</span><span style="color:var(--shiki-token-keyword);">=</span><span style="color:var(--shiki-token-string);">https://goproxy.cn</span></span></code></pre></div>
+<div data-rehype-pretty-code-fragment><pre style="background-color:var(--shiki-color-background);" tabindex="0" data-language="bash" data-theme="default"><code data-language="bash" data-theme="default"><span data-line><span style="color:var(--shiki-token-comment);"># 添加到 ~/.zshrc（需要先配置 Zsh）</span></span>
+<span data-line><span style="color:var(--shiki-token-keyword);">alias</span><span style="color:var(--shiki-color-text);"> updatebrew</span><span style="color:var(--shiki-token-keyword);">=</span><span style="color:var(--shiki-token-string-expression);">'brew cleanup --prune=all -q &amp;&amp; brew upgrade &amp;&amp; brew cu -ay &amp;&amp; brew uninstall node@14 node@16 node@18 node@19 --ignore-dependencies -f &amp;&amp; brew cleanup --prune=all -q &amp;&amp; npm update --location=global &amp;&amp; omz update'</span></span></code></pre></div>
+<h2 id="appstore">AppStore<a aria-hidden="true" tabindex="-1" href="#appstore" class="internal"> §</a></h2>
+<ul>
+<li><a href="https://apps.apple.com/cn/app/bob-%E7%BF%BB%E8%AF%91%E5%92%8C-ocr-%E5%B7%A5%E5%85%B7/id1630034110?mt=12" class="external">Bob</a> 翻译和 OCR</li>
+<li><a href="https://apps.apple.com/cn/app/ihosts-etc-hosts-%E7%BC%96%E8%BE%91%E5%99%A8/id1102004240?mt=12" class="external">iHosts</a></li>
+<li><a href="https://apps.apple.com/cn/app/ishot-pro-%E4%B8%93%E4%B8%9A%E7%9A%84%E6%88%AA%E5%9B%BE%E8%B4%B4%E5%9B%BE%E5%BD%95%E5%B1%8F%E5%BD%95%E9%9F%B3ocr%E7%BF%BB%E8%AF%91%E5%8F%96%E8%89%B2%E5%B7%A5%E5%85%B7/id1611347086?mt=12" class="external">iShot Pro</a> 截图、录屏</li>
+<li><a href="https://apps.apple.com/us/app/pastenow-instant-clipboard/id1552536109" class="external">PasteNow</a> 剪切板、多设备同步</li>
+<li><a href="https://apps.apple.com/cn/app/wps-office/id1443749478?mt=12" class="external">WPS Office</a></li>
+<li><a href="https://apps.apple.com/cn/app/%E6%BB%B4%E7%AD%94%E6%B8%85%E5%8D%95-%E4%B8%93%E6%B3%A8%E6%97%B6%E9%97%B4%E7%AE%A1%E7%90%86%E5%92%8C%E6%97%A5%E5%8E%86%E6%8F%90%E9%86%92%E4%BA%8B%E9%A1%B9/id966085870?mt=12" class="external">滴答清单</a></li>
+</ul>
+<h2 id="软件">软件<a aria-hidden="true" tabindex="-1" href="#软件" class="internal"> §</a></h2>
+<ul>
+<li>
+<p><a href="https://www.macbartender.com/Bartender4/" class="external">Bartender 4</a> Take control of your Menu bar</p>
+</li>
+<li>
+<p><a href="../../工具/软件/Capslock" class="internal">Capslock</a> 加强 Caps 键功能</p>
+</li>
+<li>
+<p><a href="https://install.appcenter.ms/users/clashx/apps/clashx-pro/distribution_groups/public" class="external">ClashX Pro</a> VPN</p>
+</li>
+<li>
+<p><a href="https://www.google.com/intl/zh-CN/chrome/" class="external">Chrome</a></p>
+<ul>
+<li>安装后访问一次 <a href="https://google.com/ncr" class="external">ncr</a> 避免 Google 重定向</li>
+</ul>
+</li>
+<li>
+<p><a href="https://www.docker.com/products/docker-desktop" class="external">Docker Desktop</a></p>
+<ul>
+<li>
+<p>检查 Setting - Resources - Advanced 的内容</p>
+</li>
+<li>
+<p>在 Preferences - Docker Engine 中写入以下内容</p>
+<div data-rehype-pretty-code-fragment><pre style="background-color:var(--shiki-color-background);" tabindex="0" data-language="json" data-theme="default"><code data-language="json" data-theme="default"><span data-line><span style="color:var(--shiki-color-text);">{</span></span>
+<span data-line><span style="color:var(--shiki-color-text);">    </span><span style="color:var(--shiki-token-keyword);">&quot;registry-mirrors&quot;</span><span style="color:var(--shiki-token-punctuation);">:</span><span style="color:var(--shiki-color-text);"> [</span></span>
+<span data-line><span style="color:var(--shiki-color-text);">        </span><span style="color:var(--shiki-token-string-expression);">&quot;mirrors.ustc.edu.cn&quot;</span></span>
+<span data-line><span style="color:var(--shiki-color-text);">    ]</span><span style="color:var(--shiki-token-punctuation);">,</span></span>
+<span data-line><span style="color:var(--shiki-color-text);">    </span><span style="color:var(--shiki-token-keyword);">&quot;log-driver&quot;</span><span style="color:var(--shiki-token-punctuation);">:</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string-expression);">&quot;json-file&quot;</span><span style="color:var(--shiki-token-punctuation);">,</span></span>
+<span data-line><span style="color:var(--shiki-color-text);">    </span><span style="color:var(--shiki-token-keyword);">&quot;log-opts&quot;</span><span style="color:var(--shiki-token-punctuation);">:</span><span style="color:var(--shiki-color-text);"> {</span></span>
+<span data-line><span style="color:var(--shiki-color-text);">        </span><span style="color:var(--shiki-token-keyword);">&quot;max-size&quot;</span><span style="color:var(--shiki-token-punctuation);">:</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string-expression);">&quot;10m&quot;</span><span style="color:var(--shiki-token-punctuation);">,</span></span>
+<span data-line><span style="color:var(--shiki-color-text);">        </span><span style="color:var(--shiki-token-keyword);">&quot;max-file&quot;</span><span style="color:var(--shiki-token-punctuation);">:</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string-expression);">&quot;1&quot;</span></span>
+<span data-line><span style="color:var(--shiki-color-text);">}</span></span></code></pre></div>
+</li>
+</ul>
+</li>
+<li>
+<p><a href="https://app.grammarly.com/apps" class="external">Grammarly</a>  全局英语语法检查</p>
+</li>
+<li>
+<p><a href="https://iterm2.com/" class="external">iTerm2</a></p>
+</li>
+<li>
+<p><a href="https://www.jetbrains.com/zh-cn/toolbox-app/" class="external">JetBrains Toolbox</a></p>
+</li>
+<li>
+<p><a href="https://mousefix.org/" class="external">Mac Mouse Fix</a></p>
+<ul>
+<li>Middle Button
+<ul>
+<li>Click：Middle Click</li>
+<li>Click And Drag：Mission Control &amp; Spaces</li>
+</ul>
+</li>
+<li>Invert direction：取消勾选</li>
+</ul>
+</li>
+<li>
+<p><a href="https://www.navicat.com/en/products/navicat-premium" class="external">Navicat Premium</a></p>
+</li>
+<li>
+<p><a href="../../工具/软件/Obsidian" class="internal">Obsidian</a></p>
+</li>
+<li>
+<p><a href="../../工具/软件/Oh-My-Zsh" class="internal">Oh My Zsh</a></p>
+</li>
+<li>
+<p><a href="https://www.microsoft.com/en-sg/microsoft-365/onedrive/download" class="external">OneDrive</a></p>
+</li>
+<li>
+<p><a href="https://www.parallels.cn/products/desktop/trial/" class="external">Parallels Desktop</a> 虚拟机</p>
+<ul>
+<li><a href="https://github.com/MikeWang000000/PD-Runner-Revived/tree/main" class="external">main</a></li>
+</ul>
+</li>
+<li>
+<p><a href="https://github.com/Molunerfinn/PicGo/releases" class="external">PicGo</a> 图床</p>
+</li>
+<li>
+<p><a href="https://www.postman.com/downloads/" class="external">Postman</a></p>
+</li>
+<li>
+<p><a href="https://www.raycast.com/" class="external">Raycast</a></p>
+</li>
+<li>
+<p><a href="https://rectangleapp.com/" class="external">Rectangle</a></p>
+</li>
+<li>
+<p><a href="https://www.sourcetreeapp.com/" class="external">Sourcetree</a> Git 图形客户端</p>
+</li>
+<li>
+<p><a href="https://lemon.qq.com/" class="external">Tencent Lemon</a></p>
+</li>
+<li>
+<p><a href="https://www.vmware.com/asean/products/fusion/fusion-evaluation.html" class="external">VMware Fusion</a> 免费虚拟机</p>
+</li>
+<li>
+<p><a href="https://code.visualstudio.com/download" class="external">Visual Studio Code</a></p>
+</li>
+<li>
+<p><a href="https://www.warp.dev/" class="external">Warp</a> 终端</p>
+</li>
+<li>
+<p><a href="https://xmind.app/" class="external">Xmind</a></p>
+</li>
+<li>
+<p><a href="https://mac.weixin.qq.com/?lang=zh_CN" class="external">微信</a></p>
+</li>
+<li>
+<p><a href="https://z.weixin.qq.com/" class="external">微信键盘</a></p>
+</li>
+<li>
+<p><a href="https://music.163.com/#/download" class="external">网易云音乐</a></p>
+</li>
+</ul>
+<h2 id="系统设置">系统设置<a aria-hidden="true" tabindex="-1" href="#系统设置" class="internal"> §</a></h2>
+<ul>
+<li>
+<p>打开</p>
+<ul>
+<li>「三指拖移」</li>
+<li>触控板手势 - 更多手势 -「App Exposé」四指向下清扫
+<ul>
+<li>「使窗口按应用程序成组」</li>
+</ul>
+</li>
+<li>「使用大写锁定键切换“ABC”输入法」</li>
+<li>在滚动条中点按「跳到点按的位置」</li>
+<li>键盘快捷键
+<ul>
+<li>调度中心：Ctrl + E</li>
+<li>调度中心
+<ul>
+<li>向左移动一个空间 Ctrl + Q</li>
+<li>向右移动一个空间 Ctrl + W</li>
+</ul>
+</li>
+<li>应用程序窗口：Ctrl + D</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>关闭</p>
+<ul>
+<li>调度中心
+<ul>
+<li>「根据最近的使用情况自动重新排列空间」</li>
+</ul>
+</li>
+<li>iCloud 同步「桌面与文稿文件夹」</li>
+<li>「在程序坞中显示最近使用的应用程序」</li>
+<li>「自动切换到文稿的输入法」</li>
+<li>「显示“聚焦”搜索」：有 Raycast</li>
+<li>「显示“访达”搜索窗口」：有 Raycast</li>
+</ul>
+</li>
+<li>
+<p>设置 <a href="https://www.alidns.com/" class="external">阿里公共 DNS</a></p>
+<ul>
+<li>设置优先级：路由器 > 本机</li>
+</ul>
+</li>
+</ul></article></div><div class="right sidebar"><div class="graph"><h3>Graph View</h3><div class="graph-outer"><div id="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1}"></div><svg version="1.1" id="global-graph-icon" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xmlSpace="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+	s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+	c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+	C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+	c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+	v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+	s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+	C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+	S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+	s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+	s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></div><div id="global-graph-outer"><div id="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1}"></div></div></div><div class="backlinks"><h3>Backlinks</h3><ul class="overflow"><li>No backlinks found</li></ul></div></div></div><footer><hr/><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.0.8</a>, © 2023</p><ul><li><a href="https://github.com/11ze/ob-publish">GitHub</a></li><li><a href="https://twitter.com/11ze4">Twitter</a></li></ul></footer></div></body><script type="application/javascript">// quartz/components/scripts/quartz/components/scripts/callout.inline.ts
+function toggleCallout() {
+  const outerBlock = this.parentElement;
+  outerBlock.classList.toggle(`is-collapsed`);
+  const collapsed = outerBlock.classList.contains(`is-collapsed`);
+  const height = collapsed ? this.scrollHeight : outerBlock.scrollHeight;
+  outerBlock.style.maxHeight = height + `px`;
+  let current = outerBlock;
+  let parent = outerBlock.parentElement;
+  while (parent) {
+    if (!parent.classList.contains(`callout`)) {
+      return;
+    }
+    const collapsed2 = parent.classList.contains(`is-collapsed`);
+    const height2 = collapsed2 ? parent.scrollHeight : parent.scrollHeight + current.scrollHeight;
+    parent.style.maxHeight = height2 + `px`;
+    current = parent;
+    parent = parent.parentElement;
+  }
+}
+function setupCallout() {
+  const collapsible = document.getElementsByClassName(
+    `callout is-collapsible`
+  );
+  for (const div of collapsible) {
+    const title = div.firstElementChild;
+    if (title) {
+      title.removeEventListener(`click`, toggleCallout);
+      title.addEventListener(`click`, toggleCallout);
+      const collapsed = div.classList.contains(`is-collapsed`);
+      const height = collapsed ? title.scrollHeight : div.scrollHeight;
+      div.style.maxHeight = height + `px`;
+    }
+  }
+}
+document.addEventListener(`nav`, setupCallout);
+window.addEventListener(`resize`, setupCallout);
+</script><script type="module">
+          import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
+          const darkMode = document.documentElement.getAttribute('saved-theme') === 'dark'
+          mermaid.initialize({ 
+            startOnLoad: false,
+            securityLevel: 'loose',
+            theme: darkMode ? 'dark' : 'default'
+          });
+          document.addEventListener('nav', async () => {
+            await mermaid.run({
+              querySelector: '.mermaid'
+            })
+          });
+          </script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="https://www.googletagmanager.com/gtag/js?id=G-SZZLS6FREP" type="application/javascript"></script><script src="../../postscript.js" type="module"></script></html>

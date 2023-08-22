@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html><head><title>19｜波动的响应延迟：如何应对变慢的 Redis？（下）</title><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta property="og:title" content="19｜波动的响应延迟：如何应对变慢的 Redis？（下）"/><meta property="og:description" content="文件系统：AOF 模式 AOF 重写会对磁盘进行大量 IO 操作，fsync 需要等到数据写到磁盘后才能返回 everysec 时，使用后台子线程调用 fsync 写日志 虽然 fsync 由后台子线程负责执行，但主线程会监控 fsync 的执行进度 上次 fsync 未执行完时，下次 fsync 会被阻塞 always 时，主线程中调用 fsync 避免使用操作系统的 swap 增加机器的内存 使用 Redis 集群 查看 Redis 进程的 swap 使用情况 redis-cli info | grep process_id cd /proc/{process_id} cat smaps | egrep ’^(Swap|Size)’ 操作系统：内存大页 写时复制：一旦数据要被修改，Redis 不会直接修改内存中的数据，会先拷贝一份再进行修改 常规内存机制只用拷贝 4KB，内存大页需要拷贝 2MB 关闭即可 cat /sys/kernel/mm/transparent_hugepage/enabled 查看是否 always 打开 关闭：echo never &amp;gt; /sys/kernel/mm/transparent_hugepage/enabled Checklist 获取 Redis 实例在当前环境下的基线性能 是否用了慢查询命令？使用其他命令替代慢查询命令，或者把聚合计算命令放在客户端做 是否对过期 key 设置了相同的过期时间？对于批量删除的 key，可以在每个 key 的过期时间上加一个随机数，避免同时删除 是否存在 bigkey？ 对于 bigkey 的删除操作，如果你的 Redis 是 4."/><meta property="og:image" content="https://wangze.tech/static/og-image.png"/><meta property="og:width" content="1200"/><meta property="og:height" content="675"/><link rel="icon" href="../../static/icon.png"/><meta name="description" content="文件系统：AOF 模式 AOF 重写会对磁盘进行大量 IO 操作，fsync 需要等到数据写到磁盘后才能返回 everysec 时，使用后台子线程调用 fsync 写日志 虽然 fsync 由后台子线程负责执行，但主线程会监控 fsync 的执行进度 上次 fsync 未执行完时，下次 fsync 会被阻塞 always 时，主线程中调用 fsync 避免使用操作系统的 swap 增加机器的内存 使用 Redis 集群 查看 Redis 进程的 swap 使用情况 redis-cli info | grep process_id cd /proc/{process_id} cat smaps | egrep ’^(Swap|Size)’ 操作系统：内存大页 写时复制：一旦数据要被修改，Redis 不会直接修改内存中的数据，会先拷贝一份再进行修改 常规内存机制只用拷贝 4KB，内存大页需要拷贝 2MB 关闭即可 cat /sys/kernel/mm/transparent_hugepage/enabled 查看是否 always 打开 关闭：echo never &amp;gt; /sys/kernel/mm/transparent_hugepage/enabled Checklist 获取 Redis 实例在当前环境下的基线性能 是否用了慢查询命令？使用其他命令替代慢查询命令，或者把聚合计算命令放在客户端做 是否对过期 key 设置了相同的过期时间？对于批量删除的 key，可以在每个 key 的过期时间上加一个随机数，避免同时删除 是否存在 bigkey？ 对于 bigkey 的删除操作，如果你的 Redis 是 4."/><meta name="generator" content="Quartz"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link href="../../index.css" rel="stylesheet" type="text/css" spa-preserve/><link href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><link href="https://fonts.googleapis.com/css2?family=IBM Plex Mono&amp;family=Schibsted Grotesk:wght@400;700&amp;family=Source Sans Pro:ital,wght@0,400;0,600;1,400;1,600&amp;display=swap" rel="stylesheet" type="text/css" spa-preserve/><script src="../../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch(`../../static/contentIndex.json`).then(data => data.json())</script></head><body data-slug="学习笔记/Redis-核心技术与实战/19｜波动的响应延迟：如何应对变慢的-Redis？（下）"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h1 class="page-title"><a href="../..">🪴 11ze's Garden</a></h1><div class="spacer mobile-only"></div><div class="search"><div id="search-icon"><p>Search</p><div></div><svg tabIndex="0" aria-labelledby="title desc" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title id="title">Search</title><desc id="desc">Search</desc><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg></div><div id="search-container"><div id="search-space"><input autocomplete="off" id="search-bar" name="search" type="text" aria-label="Search for something" placeholder="Search for something"/><div id="results-container"></div></div></div></div><div class="darkmode"><input class="toggle" id="darkmode-toggle" type="checkbox" tabIndex="-1"/><label id="toggle-label-light" for="darkmode-toggle" tabIndex="-1"><svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35;" xmlSpace="preserve"><title>Light mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg></label><label id="toggle-label-dark" for="darkmode-toggle" tabIndex="-1"><svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background='new 0 0 100 100'" xmlSpace="preserve"><title>Dark mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></label></div></div><div class="center"><div class="page-header"><div class="popover-hint"><h1 class="article-title">19｜波动的响应延迟：如何应对变慢的 Redis？（下）</h1><p class="content-meta">Aug 22, 2023, 5 min read</p><ul class="tags"><li><a href="../../tags/redis" class="internal tag-link">#redis</a></li></ul></div></div><article class="popover-hint"><ul>
+<li>
+<p>文件系统：AOF 模式</p>
+<ul>
+<li>
+<p><img src="https://cdn.jsdelivr.net/gh/11ze/static/images/redis-19-1.png" alt="image.png"/></p>
+</li>
+<li>
+<p>AOF 重写会对磁盘进行大量 IO 操作，fsync 需要等到数据写到磁盘后才能返回</p>
+<ul>
+<li><img src="https://cdn.jsdelivr.net/gh/11ze/static/images/redis-19-2.png" alt="image.png"/></li>
+</ul>
+</li>
+<li>
+<p>everysec 时，使用后台子线程调用 fsync 写日志</p>
+<ul>
+<li>虽然 fsync 由后台子线程负责执行，但主线程会监控 fsync 的执行进度</li>
+<li>上次 fsync 未执行完时，下次 fsync 会被阻塞</li>
+</ul>
+</li>
+<li>
+<p>always 时，主线程中调用 fsync</p>
+</li>
+</ul>
+</li>
+<li>
+<p>避免使用操作系统的 swap</p>
+<ul>
+<li>
+<p>增加机器的内存</p>
+</li>
+<li>
+<p>使用 Redis 集群</p>
+</li>
+<li>
+<p>查看 Redis 进程的 swap 使用情况</p>
+<ul>
+<li>
+<ol>
+<li>redis-cli info | grep process_id</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>cd /proc/{process_id}</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>cat smaps | egrep ’^(Swap|Size)’</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>操作系统：内存大页</p>
+<ul>
+<li>
+<p>写时复制：一旦数据要被修改，Redis 不会直接修改内存中的数据，会先拷贝一份再进行修改</p>
+</li>
+<li>
+<p>常规内存机制只用拷贝 4KB，内存大页需要拷贝 2MB</p>
+</li>
+<li>
+<p>关闭即可</p>
+<ul>
+<li>
+<ol>
+<li>cat /sys/kernel/mm/transparent_hugepage/enabled 查看是否 always 打开</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>关闭：echo never > /sys/kernel/mm/transparent_hugepage/enabled</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Checklist</p>
+<ul>
+<li>
+<ol>
+<li>获取 Redis 实例在当前环境下的基线性能</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>是否用了慢查询命令？使用其他命令替代慢查询命令，或者把聚合计算命令放在客户端做</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>是否对过期 key 设置了相同的过期时间？对于批量删除的 key，可以在每个 key 的过期时间上加一个随机数，避免同时删除</li>
+</ol>
+</li>
+<li>
+<ol start="4">
+<li>是否存在 bigkey？ 对于 bigkey 的删除操作，如果你的 Redis 是 4.0 及以上的版本，可以直接利用异步线程机制减少主线程阻塞；如果是 Redis 4.0 以前的版本，可以使用 SCAN 命令迭代删除；对于 bigkey 的集合查询和聚合操作，可以使用 SCAN 命令在客户端完成</li>
+</ol>
+</li>
+<li>
+<ol start="5">
+<li>Redis AOF 配置级别是什么？业务层面是否的确需要这一可靠性级别？如果我们需要高性能，同时也允许数据丢失，可以将配置项 no-appendfsync-on-rewrite 设置为 yes，避免 AOF 重写和 fsync 竞争磁盘 IO 资源，导致 Redis 延迟增加</li>
+</ol>
+</li>
+<li>
+<ol start="6">
+<li>Redis 实例的内存使用是否过大？发生 swap 了吗？增加机器内存，或者是使用 Redis 集群，分摊单机 Redis 的键值对数量和内存压力。同时，要避免出现 Redis 和其他内存需求大的应用共享机器的情况</li>
+</ol>
+</li>
+<li>
+<ol start="7">
+<li>在 Redis 实例的运行环境中，是否启用了透明大页机制？直接关闭内存大页机制就行了</li>
+</ol>
+</li>
+<li>
+<ol start="8">
+<li>是否运行了 Redis 主从集群？如果是的话，把主库实例的数据量大小控制在 2~4GB，以免主从复制时，从库因加载大的 RDB 文件而阻塞</li>
+</ol>
+</li>
+<li>
+<ol start="9">
+<li>是否使用了多核 CPU 或 NUMA 架构的机器运行 Redis 实例？使用多核 CPU 时，可以给 Redis 实例绑定物理核；使用 NUMA 架构时，注意把 Redis 实例和网络中断处理程序运行在同一个 CPU Socket 上</li>
+</ol>
+</li>
+<li>
+<ol start="10">
+<li>Redis 所在的机器上有没有一些其他占内存、磁盘 IO 和网络 IO 的程序，比如说数据库程序或者数据采集程序。如果有的话，建议将这些程序迁移到其他机器上运行</li>
+</ol>
+</li>
+<li>
+<ol start="11">
+<li>避免存储 bigkey，Redis 4.0+ 可开启 lazy-free 机制</li>
+</ol>
+</li>
+<li>
+<ol start="12">
+<li>使用长连接</li>
+</ol>
+</li>
+<li>
+<ol start="13">
+<li>
+<p>生成 RDB 和 AOF 重写 fork 耗时严重</p>
+</li>
+</ol>
+<ul>
+<li>a. 实例尽量小</li>
+<li>b. 尽量部署在物理机上</li>
+<li>c. 优化备份策略</li>
+<li>d. 合理配置 repl-backlog 和 slave-clent-output-buffer-limit 避免全量同步</li>
+<li>e. 视情况关闭 AOF</li>
+<li>f. 监控 latest_fork_usec 耗时是否变长</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></article></div><div class="right sidebar"><div class="graph"><h3>Graph View</h3><div class="graph-outer"><div id="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1}"></div><svg version="1.1" id="global-graph-icon" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xmlSpace="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+	s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+	c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+	C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+	c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+	v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+	s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+	C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+	S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+	s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+	s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></div><div id="global-graph-outer"><div id="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1}"></div></div></div><div class="backlinks"><h3>Backlinks</h3><ul class="overflow"><li>No backlinks found</li></ul></div></div></div><footer><hr/><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.0.8</a>, © 2023</p><ul><li><a href="https://github.com/11ze/ob-publish">GitHub</a></li><li><a href="https://twitter.com/11ze4">Twitter</a></li></ul></footer></div></body><script type="application/javascript">// quartz/components/scripts/quartz/components/scripts/callout.inline.ts
+function toggleCallout() {
+  const outerBlock = this.parentElement;
+  outerBlock.classList.toggle(`is-collapsed`);
+  const collapsed = outerBlock.classList.contains(`is-collapsed`);
+  const height = collapsed ? this.scrollHeight : outerBlock.scrollHeight;
+  outerBlock.style.maxHeight = height + `px`;
+  let current = outerBlock;
+  let parent = outerBlock.parentElement;
+  while (parent) {
+    if (!parent.classList.contains(`callout`)) {
+      return;
+    }
+    const collapsed2 = parent.classList.contains(`is-collapsed`);
+    const height2 = collapsed2 ? parent.scrollHeight : parent.scrollHeight + current.scrollHeight;
+    parent.style.maxHeight = height2 + `px`;
+    current = parent;
+    parent = parent.parentElement;
+  }
+}
+function setupCallout() {
+  const collapsible = document.getElementsByClassName(
+    `callout is-collapsible`
+  );
+  for (const div of collapsible) {
+    const title = div.firstElementChild;
+    if (title) {
+      title.removeEventListener(`click`, toggleCallout);
+      title.addEventListener(`click`, toggleCallout);
+      const collapsed = div.classList.contains(`is-collapsed`);
+      const height = collapsed ? title.scrollHeight : div.scrollHeight;
+      div.style.maxHeight = height + `px`;
+    }
+  }
+}
+document.addEventListener(`nav`, setupCallout);
+window.addEventListener(`resize`, setupCallout);
+</script><script type="module">
+          import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
+          const darkMode = document.documentElement.getAttribute('saved-theme') === 'dark'
+          mermaid.initialize({ 
+            startOnLoad: false,
+            securityLevel: 'loose',
+            theme: darkMode ? 'dark' : 'default'
+          });
+          document.addEventListener('nav', async () => {
+            await mermaid.run({
+              querySelector: '.mermaid'
+            })
+          });
+          </script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="https://www.googletagmanager.com/gtag/js?id=G-SZZLS6FREP" type="application/javascript"></script><script src="../../postscript.js" type="module"></script></html>

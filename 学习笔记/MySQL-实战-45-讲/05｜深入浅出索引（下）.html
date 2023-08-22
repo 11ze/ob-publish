@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html><head><title>05｜深入浅出索引（下）</title><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta property="og:title" content="05｜深入浅出索引（下）"/><meta property="og:description" content="如何安排联合索引内的字段顺序 § 第一原则：如果通过调整顺序，可以少维护一个索引，那么这个顺序往往就是需要优先考虑采用的。 如果既有联合查询，又有基于 a、b 各自的查询，此时要考虑空间 比如 a 比 b 大，就建 (a, b) + 单 b 还有其他情况，需要结合业务分析 查询语句的 where 里面各个判断调换顺序不影响 § 覆盖索引 § 如果查询条件使用的是普通索引（或是联合索引的最左原则字段），查询结果是联合索引的字段或是主键，不用回表操作，直接返回结果 要全用上必须是条件 =，不能是 &amp;gt; 或 &amp;lt; 在一个市民信息表上，是否有必要将身份证号和名字建立联合索引？ § 如果有一个高频请求是根据身份证号查询姓名，就有必要 前缀索引 § 最左前缀原则 可以是联合索引的最左 N 个字段 也可以是字符串索引的最左 M 个字符 索引下推 § MySQL 5."/><meta property="og:image" content="https://wangze.tech/static/og-image.png"/><meta property="og:width" content="1200"/><meta property="og:height" content="675"/><link rel="icon" href="../../static/icon.png"/><meta name="description" content="如何安排联合索引内的字段顺序 § 第一原则：如果通过调整顺序，可以少维护一个索引，那么这个顺序往往就是需要优先考虑采用的。 如果既有联合查询，又有基于 a、b 各自的查询，此时要考虑空间 比如 a 比 b 大，就建 (a, b) + 单 b 还有其他情况，需要结合业务分析 查询语句的 where 里面各个判断调换顺序不影响 § 覆盖索引 § 如果查询条件使用的是普通索引（或是联合索引的最左原则字段），查询结果是联合索引的字段或是主键，不用回表操作，直接返回结果 要全用上必须是条件 =，不能是 &amp;gt; 或 &amp;lt; 在一个市民信息表上，是否有必要将身份证号和名字建立联合索引？ § 如果有一个高频请求是根据身份证号查询姓名，就有必要 前缀索引 § 最左前缀原则 可以是联合索引的最左 N 个字段 也可以是字符串索引的最左 M 个字符 索引下推 § MySQL 5."/><meta name="generator" content="Quartz"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link href="../../index.css" rel="stylesheet" type="text/css" spa-preserve/><link href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><link href="https://fonts.googleapis.com/css2?family=IBM Plex Mono&amp;family=Schibsted Grotesk:wght@400;700&amp;family=Source Sans Pro:ital,wght@0,400;0,600;1,400;1,600&amp;display=swap" rel="stylesheet" type="text/css" spa-preserve/><script src="../../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch(`../../static/contentIndex.json`).then(data => data.json())</script></head><body data-slug="学习笔记/MySQL-实战-45-讲/05｜深入浅出索引（下）"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h1 class="page-title"><a href="../..">🪴 11ze's Garden</a></h1><div class="spacer mobile-only"></div><div class="search"><div id="search-icon"><p>Search</p><div></div><svg tabIndex="0" aria-labelledby="title desc" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title id="title">Search</title><desc id="desc">Search</desc><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg></div><div id="search-container"><div id="search-space"><input autocomplete="off" id="search-bar" name="search" type="text" aria-label="Search for something" placeholder="Search for something"/><div id="results-container"></div></div></div></div><div class="darkmode"><input class="toggle" id="darkmode-toggle" type="checkbox" tabIndex="-1"/><label id="toggle-label-light" for="darkmode-toggle" tabIndex="-1"><svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35;" xmlSpace="preserve"><title>Light mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg></label><label id="toggle-label-dark" for="darkmode-toggle" tabIndex="-1"><svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background='new 0 0 100 100'" xmlSpace="preserve"><title>Dark mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></label></div><div class="toc desktop-only"><button type="button" id="toc"><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="toc-content"><ul class="overflow"><li class="depth-0"><a href="#如何安排联合索引内的字段顺序" data-for="如何安排联合索引内的字段顺序">如何安排联合索引内的字段顺序</a></li><li class="depth-0"><a href="#查询语句的-where-里面各个判断调换顺序不影响" data-for="查询语句的-where-里面各个判断调换顺序不影响">查询语句的 where 里面各个判断调换顺序不影响</a></li><li class="depth-0"><a href="#覆盖索引" data-for="覆盖索引">覆盖索引</a></li><li class="depth-0"><a href="#在一个市民信息表上是否有必要将身份证号和名字建立联合索引" data-for="在一个市民信息表上是否有必要将身份证号和名字建立联合索引">在一个市民信息表上，是否有必要将身份证号和名字建立联合索引？</a></li><li class="depth-0"><a href="#前缀索引" data-for="前缀索引">前缀索引</a></li><li class="depth-0"><a href="#索引下推" data-for="索引下推">索引下推</a></li><li class="depth-0"><a href="#思考题" data-for="思考题">思考题</a></li><li class="depth-0"><a href="#评论区" data-for="评论区">评论区</a></li></ul></div></div></div><div class="center"><div class="page-header"><div class="popover-hint"><h1 class="article-title">05｜深入浅出索引（下）</h1><p class="content-meta">Aug 22, 2023, 7 min read</p><ul class="tags"><li><a href="../../tags/mysql" class="internal tag-link">#mysql</a></li></ul></div></div><article class="popover-hint"><h2 id="如何安排联合索引内的字段顺序">如何安排联合索引内的字段顺序<a aria-hidden="true" tabindex="-1" href="#如何安排联合索引内的字段顺序" class="internal"> §</a></h2>
+<ul>
+<li>第一原则：如果通过调整顺序，可以少维护一个索引，那么这个顺序往往就是需要优先考虑采用的。</li>
+<li>如果既有联合查询，又有基于 a、b 各自的查询，此时要考虑空间
+<ul>
+<li>比如 a 比 b 大，就建 (a, b) + 单 b</li>
+</ul>
+</li>
+<li>还有其他情况，需要结合业务分析</li>
+</ul>
+<h2 id="查询语句的-where-里面各个判断调换顺序不影响">查询语句的 where 里面各个判断调换顺序不影响<a aria-hidden="true" tabindex="-1" href="#查询语句的-where-里面各个判断调换顺序不影响" class="internal"> §</a></h2>
+<h2 id="覆盖索引">覆盖索引<a aria-hidden="true" tabindex="-1" href="#覆盖索引" class="internal"> §</a></h2>
+<ul>
+<li>如果查询条件使用的是普通索引（或是联合索引的最左原则字段），查询结果是联合索引的字段或是主键，不用回表操作，直接返回结果</li>
+<li>要全用上必须是条件 =，不能是 > 或 &lt;</li>
+</ul>
+<h2 id="在一个市民信息表上是否有必要将身份证号和名字建立联合索引">在一个市民信息表上，是否有必要将身份证号和名字建立联合索引？<a aria-hidden="true" tabindex="-1" href="#在一个市民信息表上是否有必要将身份证号和名字建立联合索引" class="internal"> §</a></h2>
+<ul>
+<li>如果有一个高频请求是根据身份证号查询姓名，就有必要</li>
+</ul>
+<h2 id="前缀索引">前缀索引<a aria-hidden="true" tabindex="-1" href="#前缀索引" class="internal"> §</a></h2>
+<ul>
+<li>最左前缀原则
+<ul>
+<li>可以是联合索引的最左 N 个字段</li>
+<li>也可以是字符串索引的最左 M 个字符</li>
+</ul>
+</li>
+</ul>
+<h2 id="索引下推">索引下推<a aria-hidden="true" tabindex="-1" href="#索引下推" class="internal"> §</a></h2>
+<ul>
+<li>MySQL 5.6 之后引入</li>
+<li>可以在索引遍历过程中，对索引中包含的字段先做判断，直接过滤掉不满足条件的记录，减少回表次数</li>
+<li>例子：有个 (name, age) 索引
+<ul>
+<li><code>where name like '张%' and age=10</code></li>
+<li>因为最左前缀原则，只能用到 name 索引</li>
+<li>5.6 之前：查找到所有<code>张</code>开头的记录，一个个回表找出数据行，对比 age 字段值</li>
+<li>5.6 之后：索引下推</li>
+</ul>
+</li>
+</ul>
+<h2 id="思考题">思考题<a aria-hidden="true" tabindex="-1" href="#思考题" class="internal"> §</a></h2>
+<ul>
+<li>已有条件
+<ul>
+<li>多个索引
+<ul>
+<li>primary ab (a, b)</li>
+<li>c (c)</li>
+<li>ca (c, a)</li>
+<li>cb (c, b)</li>
+</ul>
+</li>
+<li>DBA 解释：业务中有两个语句
+<ul>
+<li>select * from geek where c=N order by a limit 1;</li>
+<li>select * from geek where c=N order by b limit 1;</li>
+</ul>
+</li>
+<li>所以需要 ca 和 cb，而不是单个 c</li>
+</ul>
+</li>
+<li>问题
+<ul>
+<li>这样解释对吗，ca 和 cb 是否都是必须的
+<ul>
+<li>只需要 cb</li>
+</ul>
+</li>
+<li>为什么
+<ul>
+<li>因为存在 ab，普通索引包含主键，即 c + ab => cab</li>
+</ul>
+</li>
+<li>题外话
+<ul>
+<li>对于 order by，如果索引合理，数据有序，就不需要排序了</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="评论区">评论区<a aria-hidden="true" tabindex="-1" href="#评论区" class="internal"> §</a></h2>
+<ul>
+<li>面试题：怎么让 MySQL 的 <code>myisam</code> 引擎支持事务
+<ul>
+<li>用 <code>lock table</code> 实现，但只能实现串行化隔离级别</li>
+<li>因为 <code>mysiam</code> 不支持崩溃恢复，所以即使用 <code>lock table</code> 硬实现，也是问题多多</li>
+<li>ACID 里面，原子性和持久性做不到</li>
+<li>隔离性只能实现基本用不上的串行化</li>
+<li>一致性在正常运行的时候依赖于串行化，在异常崩溃的时候也不能保证</li>
+<li>这样实现的事务不要也罢</li>
+</ul>
+</li>
+<li>订单表查询，有多个条件，不选则不传，怎么建索引
+<ul>
+<li>老师回复
+<ul>
+<li>按照查询的模式，选最常见的创建联合索引。
+<ul>
+<li>比如，如果时间 + 客户标志用得最多，就创建这两个的联合索引</li>
+</ul>
+</li>
+<li>比较少用的条件，就单独建，然后查 id 出来跟别的字段的查询结果，在客户端取交集</li>
+</ul>
+</li>
+<li>跟评
+<ul>
+<li>用 <a href="../../ElasticSearch" class="internal">ElasticSearch</a>，相当于全建索引
+<ul>
+<li>好处是快，减轻数据库压力</li>
+<li>坏处是多维护一个中间件</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>使用联合索引的时候，联合索引的多个属性都在同一棵树上
+<ul>
+<li><a href="../../InnoDB" class="internal">InnoDB</a> 的普通索引，都是这个索引字段 + 主键字段的联合索引</li>
+</ul>
+</li>
+<li>用 key 和 index 创建索引没有区别</li>
+<li>什么情况下会一次取出多个主键回表
+<ul>
+<li>自动，代码版本支持就会这么做</li>
+</ul>
+</li>
+<li>联合索引是怎么存储的
+<ul>
+<li>联合索引是依次按照联合字段的<code>先后顺序</code>，依次进行排序。如 a, b, c 三个字段是联合索引，则叶子节点存储的是三个字段的数据，且按照先后顺序进行排序；而非叶子节点存储的是第一个关键字的索引。故当执行查询的时候，因为联合索引中是先根据 a 进行排序的，如果 a 没有先确定，直接对 b 或 c 进行查询的话，就相当于是<code>乱序查询</code>，因此联合索引无法生效，此时就相当于是全表查询。</li>
+</ul>
+</li>
+<li>in 速度很快，in 里面的项<code>递增</code>输入的话，理论上会快些
+<ul>
+<li>如果太多项，可以拆成多个 <code>in()</code>，分批处理</li>
+<li>⚠️ 不要用 <code>union all</code></li>
+</ul>
+</li>
+<li>b+ 树中的索引节点应该都是由指针和索引组成。但现在要将磁盘索引节点加载到内存中，这些指针地址是怎么映射的（磁盘和内存指针的映射）
+<ul>
+<li>首先磁盘的数据和数据页是一样的，</li>
+<li>所以磁盘只能记录 “我的第一个叶子节点在 page_n”</li>
+<li>在内存里面也是，当把 page_n 读到内存以后，内存里面记录的是 page_n 的内存地址在哪里</li>
+</ul>
+</li>
+</ul></article></div><div class="right sidebar"><div class="graph"><h3>Graph View</h3><div class="graph-outer"><div id="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1}"></div><svg version="1.1" id="global-graph-icon" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xmlSpace="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+	s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+	c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+	C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+	c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+	v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+	s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+	C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+	S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+	s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+	s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></div><div id="global-graph-outer"><div id="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1}"></div></div></div><div class="backlinks"><h3>Backlinks</h3><ul class="overflow"><li>No backlinks found</li></ul></div></div></div><footer><hr/><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.0.8</a>, © 2023</p><ul><li><a href="https://github.com/11ze/ob-publish">GitHub</a></li><li><a href="https://twitter.com/11ze4">Twitter</a></li></ul></footer></div></body><script type="application/javascript">// quartz/components/scripts/quartz/components/scripts/callout.inline.ts
+function toggleCallout() {
+  const outerBlock = this.parentElement;
+  outerBlock.classList.toggle(`is-collapsed`);
+  const collapsed = outerBlock.classList.contains(`is-collapsed`);
+  const height = collapsed ? this.scrollHeight : outerBlock.scrollHeight;
+  outerBlock.style.maxHeight = height + `px`;
+  let current = outerBlock;
+  let parent = outerBlock.parentElement;
+  while (parent) {
+    if (!parent.classList.contains(`callout`)) {
+      return;
+    }
+    const collapsed2 = parent.classList.contains(`is-collapsed`);
+    const height2 = collapsed2 ? parent.scrollHeight : parent.scrollHeight + current.scrollHeight;
+    parent.style.maxHeight = height2 + `px`;
+    current = parent;
+    parent = parent.parentElement;
+  }
+}
+function setupCallout() {
+  const collapsible = document.getElementsByClassName(
+    `callout is-collapsible`
+  );
+  for (const div of collapsible) {
+    const title = div.firstElementChild;
+    if (title) {
+      title.removeEventListener(`click`, toggleCallout);
+      title.addEventListener(`click`, toggleCallout);
+      const collapsed = div.classList.contains(`is-collapsed`);
+      const height = collapsed ? title.scrollHeight : div.scrollHeight;
+      div.style.maxHeight = height + `px`;
+    }
+  }
+}
+document.addEventListener(`nav`, setupCallout);
+window.addEventListener(`resize`, setupCallout);
+</script><script type="module">
+          import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
+          const darkMode = document.documentElement.getAttribute('saved-theme') === 'dark'
+          mermaid.initialize({ 
+            startOnLoad: false,
+            securityLevel: 'loose',
+            theme: darkMode ? 'dark' : 'default'
+          });
+          document.addEventListener('nav', async () => {
+            await mermaid.run({
+              querySelector: '.mermaid'
+            })
+          });
+          </script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="https://www.googletagmanager.com/gtag/js?id=G-SZZLS6FREP" type="application/javascript"></script><script src="../../postscript.js" type="module"></script></html>
