@@ -28,14 +28,8 @@ jobs:
         run: git submodule update --init --recursive
 
       # 转换笔记结构
-      - name: config1
-        run: rm -rf content/.obsidian content/Templates && mv content/*.md content/Atlas && find content/ -name "*.md" | xargs -I file  mv -f file content &&  mv content/AboutTheGarden.md content/index.md
-
-      - name: config2
-        run: "ls content/ && grep -lr --null 'title' content/* | xargs -0 sed -i -E -r 's/title: (.*)/title: \"\\1\"/g'"
-
-      - name: config3
-        run: rm -rf content/*.md-E
+      - name: Transform
+        run: rm -rf content/.obsidian content/Templates && mv content/*.md content/Atlas && find content/ -name "*.md" | xargs -I file  mv -f file content
 
       - uses: actions/setup-node@v3
         with:
@@ -52,21 +46,10 @@ jobs:
         with:
           path: public
 
-      # - name: Deploy
-      #   uses: peaceiris/actions-gh-pages@v3
-      #   with:
-      #     github_token: ${{ secrets.TOKEN }}
-      #     publish_dir: ./public
-      #     publish_branch: master
-      #     cname: wangze.tech
-
-  deploy:
-    needs: build
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.TOKEN }}
+          publish_dir: ./public
+          publish_branch: master
+          cname: wangze.tech
