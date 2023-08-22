@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html><head><title>24｜MySQL 是怎么保证主备一致的？</title><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta property="og:title" content="24｜MySQL 是怎么保证主备一致的？"/><meta property="og:description" content="本章的内容是所有 MySQL 高可用方案的基础 将备库设置为只读模式（readonly） § 防止误操作 防止切换逻辑有 bug，比如切换过程中出现双写造成主备不一致 可以用 readonly 状态判断节点的角色 readonly 设置对超级权限用户（super）无效，用于同步更新的线程拥有超级权限 一个 update 语句在节点 A 执行，然后同步到节点 B 的完整流程图。（主备同步内部流程） § 主备关系由备库指定 搭建完成后由主库决定“要发数据给备库” 一个事务日志同步的完整过程（基于长连接） § 在备库 B 通过 change master 命令设置主库 A 的 IP、端口、用户名、密码，以及从哪个位置开始请求 binlog，这个位置包含文件名和日志偏移量 在备库 B 上执行 start slave 命令，这时候备库会启动两个线程，就是图中的 io_thread 和 sql_thread。其中 io_thread 负责与主库建立连接。 主库 A 校验完用户名、密码后，开始按照备库 B 传过来的位置，从本地读取 binlog，发给 B。 备库 B 拿到 binlog 后，写到本地文件，称为中转日志（relay log）。 sql_thread 读取中转日志，解析出日志里的命令，并执行。 后来由于多线程复制方案的引入，sql_thread 演化成为了多个线程跟本章讲的原理没有直接关系 binlog 的三种格式对比（建议设置为 row） § statement 记录 SQL 原文 unsafe 的，比如一个 delete 语句，在主库跟在备库的执行结果可能不一样 有些语句执行依赖上下文，比如会有 SET TIMESTAMP=时间戳 用来设置接下来的 now() 函数的返回时间 比如带了 limit，在主备上用到了不同的索引 ⚠️ 可能导致数据不一致 raw 记录变更前和变更后的数据或被删的数据，是安全的 很占空间 mixed = statement + row MySQL 自己判断执行的语句应该使用哪种格式的日志 用得不多 查看 binlog § 首先通过 show variables like ‘log_%’ 查看 log_bin 参数是否为 ON mysql&amp;gt; show binary logs; 获取binlog文件列表 mysql&amp;gt; show binlog events; 只查看第一个binlog文件的内容 mysql&amp;gt; show binlog events in ‘mysql-bin."/><meta property="og:image" content="https://wangze.tech/static/og-image.png"/><meta property="og:width" content="1200"/><meta property="og:height" content="675"/><link rel="icon" href="./static/icon.png"/><meta name="description" content="本章的内容是所有 MySQL 高可用方案的基础 将备库设置为只读模式（readonly） § 防止误操作 防止切换逻辑有 bug，比如切换过程中出现双写造成主备不一致 可以用 readonly 状态判断节点的角色 readonly 设置对超级权限用户（super）无效，用于同步更新的线程拥有超级权限 一个 update 语句在节点 A 执行，然后同步到节点 B 的完整流程图。（主备同步内部流程） § 主备关系由备库指定 搭建完成后由主库决定“要发数据给备库” 一个事务日志同步的完整过程（基于长连接） § 在备库 B 通过 change master 命令设置主库 A 的 IP、端口、用户名、密码，以及从哪个位置开始请求 binlog，这个位置包含文件名和日志偏移量 在备库 B 上执行 start slave 命令，这时候备库会启动两个线程，就是图中的 io_thread 和 sql_thread。其中 io_thread 负责与主库建立连接。 主库 A 校验完用户名、密码后，开始按照备库 B 传过来的位置，从本地读取 binlog，发给 B。 备库 B 拿到 binlog 后，写到本地文件，称为中转日志（relay log）。 sql_thread 读取中转日志，解析出日志里的命令，并执行。 后来由于多线程复制方案的引入，sql_thread 演化成为了多个线程跟本章讲的原理没有直接关系 binlog 的三种格式对比（建议设置为 row） § statement 记录 SQL 原文 unsafe 的，比如一个 delete 语句，在主库跟在备库的执行结果可能不一样 有些语句执行依赖上下文，比如会有 SET TIMESTAMP=时间戳 用来设置接下来的 now() 函数的返回时间 比如带了 limit，在主备上用到了不同的索引 ⚠️ 可能导致数据不一致 raw 记录变更前和变更后的数据或被删的数据，是安全的 很占空间 mixed = statement + row MySQL 自己判断执行的语句应该使用哪种格式的日志 用得不多 查看 binlog § 首先通过 show variables like ‘log_%’ 查看 log_bin 参数是否为 ON mysql&amp;gt; show binary logs; 获取binlog文件列表 mysql&amp;gt; show binlog events; 只查看第一个binlog文件的内容 mysql&amp;gt; show binlog events in ‘mysql-bin."/><meta name="generator" content="Quartz"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link href="./index.css" rel="stylesheet" type="text/css" spa-preserve/><link href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><link href="https://fonts.googleapis.com/css2?family=IBM Plex Mono&amp;family=Schibsted Grotesk:wght@400;700&amp;family=Source Sans Pro:ital,wght@0,400;0,600;1,400;1,600&amp;display=swap" rel="stylesheet" type="text/css" spa-preserve/><script src="./prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch(`./static/contentIndex.json`).then(data => data.json())</script></head><body data-slug="24｜MySQL-是怎么保证主备一致的？"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h1 class="page-title"><a href=".">🪴 11ze's Garden</a></h1><div class="spacer mobile-only"></div><div class="search"><div id="search-icon"><p>Search</p><div></div><svg tabIndex="0" aria-labelledby="title desc" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title id="title">Search</title><desc id="desc">Search</desc><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg></div><div id="search-container"><div id="search-space"><input autocomplete="off" id="search-bar" name="search" type="text" aria-label="Search for something" placeholder="Search for something"/><div id="results-container"></div></div></div></div><div class="darkmode"><input class="toggle" id="darkmode-toggle" type="checkbox" tabIndex="-1"/><label id="toggle-label-light" for="darkmode-toggle" tabIndex="-1"><svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35;" xmlSpace="preserve"><title>Light mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg></label><label id="toggle-label-dark" for="darkmode-toggle" tabIndex="-1"><svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background='new 0 0 100 100'" xmlSpace="preserve"><title>Dark mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></label></div><div class="toc desktop-only"><button type="button" id="toc"><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="toc-content"><ul class="overflow"><li class="depth-0"><a href="#将备库设置为只读模式readonly" data-for="将备库设置为只读模式readonly">将备库设置为只读模式（readonly）</a></li><li class="depth-0"><a href="#一个-update-语句在节点-a-执行然后同步到节点-b-的完整流程图主备同步内部流程" data-for="一个-update-语句在节点-a-执行然后同步到节点-b-的完整流程图主备同步内部流程">一个 update 语句在节点 A 执行，然后同步到节点 B 的完整流程图。（主备同步内部流程）</a></li><li class="depth-0"><a href="#一个事务日志同步的完整过程基于长连接" data-for="一个事务日志同步的完整过程基于长连接">一个事务日志同步的完整过程（基于长连接）</a></li><li class="depth-0"><a href="#binlog-的三种格式对比建议设置为-row" data-for="binlog-的三种格式对比建议设置为-row">binlog 的三种格式对比（建议设置为 row）</a></li><li class="depth-0"><a href="#查看-binlog" data-for="查看-binlog">查看 binlog</a></li><li class="depth-0"><a href="#越来越多的场景要求把格式设置为-row最直接的好处是可以恢复数据" data-for="越来越多的场景要求把格式设置为-row最直接的好处是可以恢复数据">越来越多的场景要求把格式设置为 row，最直接的好处是可以恢复数据</a></li><li class="depth-0"><a href="#循环复制问题" data-for="循环复制问题">循环复制问题</a></li><li class="depth-0"><a href="#思考题" data-for="思考题">思考题</a></li><li class="depth-0"><a href="#评论区" data-for="评论区">评论区</a></li></ul></div></div></div><div class="center"><div class="page-header"><div class="popover-hint"><h1 class="article-title">24｜MySQL 是怎么保证主备一致的？</h1><p class="content-meta">Aug 22, 2023, 8 min read</p><ul class="tags"><li><a href="./tags/mysql" class="internal tag-link">#mysql</a></li></ul></div></div><article class="popover-hint"><p>本章的内容是所有 MySQL 高可用方案的基础</p>
+<h2 id="将备库设置为只读模式readonly">将备库设置为只读模式（readonly）<a aria-hidden="true" tabindex="-1" href="#将备库设置为只读模式readonly" class="internal"> §</a></h2>
+<ol>
+<li>防止误操作</li>
+<li>防止切换逻辑有 bug，比如切换过程中出现双写造成主备不一致</li>
+<li>可以用 readonly 状态判断节点的角色</li>
+<li>readonly 设置对超级权限用户（super）无效，用于同步更新的线程拥有超级权限</li>
+</ol>
+<h2 id="一个-update-语句在节点-a-执行然后同步到节点-b-的完整流程图主备同步内部流程">一个 update 语句在节点 A 执行，然后同步到节点 B 的完整流程图。（主备同步内部流程）<a aria-hidden="true" tabindex="-1" href="#一个-update-语句在节点-a-执行然后同步到节点-b-的完整流程图主备同步内部流程" class="internal"> §</a></h2>
+<ul>
+<li>
+<p><img src="https://cdn.jsdelivr.net/gh/11ze/static/images/mysql45-24-1.png" alt="image.png"/></p>
+</li>
+<li>
+<p>主备关系由备库指定</p>
+</li>
+<li>
+<p>搭建完成后由主库决定“要发数据给备库”</p>
+</li>
+</ul>
+<h2 id="一个事务日志同步的完整过程基于长连接">一个事务日志同步的完整过程（基于长连接）<a aria-hidden="true" tabindex="-1" href="#一个事务日志同步的完整过程基于长连接" class="internal"> §</a></h2>
+<ul>
+<li>
+<ol>
+<li>在备库 B 通过 change master 命令设置主库 A 的 IP、端口、用户名、密码，以及从哪个位置开始请求 binlog，这个位置包含文件名和日志偏移量</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>在备库 B 上执行 start slave 命令，这时候备库会启动两个线程，就是图中的 io_thread 和 sql_thread。其中 io_thread 负责与主库建立连接。</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>主库 A 校验完用户名、密码后，开始按照备库 B 传过来的位置，从本地读取 binlog，发给 B。</li>
+</ol>
+</li>
+<li>
+<ol start="4">
+<li>备库 B 拿到 binlog 后，写到本地文件，称为中转日志（relay log）。</li>
+</ol>
+</li>
+<li>
+<ol start="5">
+<li>sql_thread 读取中转日志，解析出日志里的命令，并执行。</li>
+</ol>
+<ul>
+<li>后来由于多线程复制方案的引入，sql_thread 演化成为了多个线程跟本章讲的原理没有直接关系</li>
+</ul>
+</li>
+</ul>
+<h2 id="binlog-的三种格式对比建议设置为-row">binlog 的三种格式对比（建议设置为 row）<a aria-hidden="true" tabindex="-1" href="#binlog-的三种格式对比建议设置为-row" class="internal"> §</a></h2>
+<ul>
+<li>statement
+<ul>
+<li>记录 SQL 原文
+<ul>
+<li>unsafe 的，比如一个 delete 语句，在主库跟在备库的执行结果可能不一样
+<ul>
+<li>有些语句执行依赖上下文，比如会有 SET TIMESTAMP=时间戳 用来设置接下来的 now() 函数的返回时间</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>比如带了 limit，在主备上用到了不同的索引</li>
+<li>⚠️ 可能导致数据不一致</li>
+</ul>
+</li>
+<li>raw
+<ul>
+<li>记录变更前和变更后的数据或被删的数据，是安全的</li>
+<li>很占空间</li>
+</ul>
+</li>
+<li>mixed = statement + row
+<ul>
+<li>MySQL 自己判断执行的语句应该使用哪种格式的日志</li>
+<li>用得不多</li>
+</ul>
+</li>
+</ul>
+<h2 id="查看-binlog">查看 binlog<a aria-hidden="true" tabindex="-1" href="#查看-binlog" class="internal"> §</a></h2>
+<ul>
+<li>首先通过 show variables like ‘log_%’ 查看 log_bin 参数是否为 ON
+<ul>
+<li>mysql> show binary logs; 获取binlog文件列表</li>
+<li>mysql> show binlog events; 只查看第一个binlog文件的内容</li>
+<li>mysql> show binlog events in ‘mysql-bin.000001’; # 查看指定 binlog 文件的内容</li>
+<li>mysql> show master status；查看当前正在写入的 binlog 文件</li>
+</ul>
+</li>
+<li>需要借助 mysqlbinlog 工具，用下面这个命令解析和查看 binlog 中的内容
+<ul>
+<li>比如事务的 binlog 是从 8900 这个位置开始，可以用 start-position 参数来指定从这个位置的日志开始解析
+<ul>
+<li><code>mysqlbinlog -vv data/master.000001 --start-position=8900;</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="越来越多的场景要求把格式设置为-row最直接的好处是可以恢复数据">越来越多的场景要求把格式设置为 row，最直接的好处是可以恢复数据<a aria-hidden="true" tabindex="-1" href="#越来越多的场景要求把格式设置为-row最直接的好处是可以恢复数据" class="internal"> §</a></h2>
+<ul>
+<li>delete 语句
+<ul>
+<li>记录被删的数据</li>
+</ul>
+</li>
+<li>insert 语句
+<ul>
+<li>把语句转成 delete 执行即可</li>
+</ul>
+</li>
+<li>update 语句
+<ul>
+<li>binlog 记录修改前和修改后的整行数据</li>
+<li>对调两行信息再到数据库里面执行即可</li>
+</ul>
+</li>
+<li>MariaDB 的 <a href="https://mariadb.com/kb/en/flashback/" class="external">Flashback</a> 工具基于上面的原理回滚数据
+<ul>
+<li>前提：
+<ul>
+<li>binlog_format=row</li>
+<li>binlog_row_image=FULL</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>标准做法
+<ul>
+<li>
+<ol>
+<li>用 mysqlbinlog 工具解析出来</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>把解析结果整个发给 MySQL 执行</li>
+</ol>
+</li>
+<li>类似于：将 master.000001 文件从第 2738 字节到第 2973 字节中间这段内容解析出来，放到 MySQL 去执行。
+<ul>
+<li>mysqlbinlog master.000001 —start-position=2738 —stop-position=2973 | mysql -h127.0.0.1 -P13000 -uuser -ppwd;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="循环复制问题">循环复制问题<a aria-hidden="true" tabindex="-1" href="#循环复制问题" class="internal"> §</a></h2>
+<ul>
+<li>
+<p>实际生产上使用比较多的是双 M 结构（互为主备）</p>
+<ul>
+<li>相比于主从，在切换时不用修改主备关系</li>
+</ul>
+</li>
+<li>
+<p>业务逻辑在节点 A 上更新了一条语句，然后再把生成的 binlog 发给节点 B，节点 B 执行完这条更新语句后也会生成 binlog。（我建议你把参数 log_slave_updates 设置为 on，表示备库执行 relay log 后生成 binlog）。</p>
+</li>
+<li>
+<p>解决（在某些场景下还是有可能出现死循环，看下一章）</p>
+<ol>
+<li>规定两个库的 server id 必须不同</li>
+<li>一个备库接到 binlog 并重放时，生成与原 binlog 的 server id 相同的新的 binlog</li>
+<li>每个库在收到从自己的主库发过来的日志后，先判断 server id</li>
+</ol>
+</li>
+</ul>
+<h2 id="思考题">思考题<a aria-hidden="true" tabindex="-1" href="#思考题" class="internal"> §</a></h2>
+<ul>
+<li>
+<p>什么场景下会出现循环复制？</p>
+</li>
+<li>
+<p>一种场景是，在一个主库更新事务后，用命令 set global server_id=x 修改了 server_id。等日志再传回来的时候，发现 server_id 跟自己的 server_id 不同，就只能执行。</p>
+</li>
+<li>
+<p>三个 M</p>
+<ul>
+<li>可以通过暂时修改 server id 解决</li>
+<li>但出现循环复制时应该考虑是不是数据本身已经失去可靠性</li>
+</ul>
+</li>
+</ul>
+<h2 id="评论区">评论区<a aria-hidden="true" tabindex="-1" href="#评论区" class="internal"> §</a></h2>
+<ul>
+<li>
+<p>binlog 准备写到 binlog file 时都会先判断写入后是否超过设置的 max_binlog_size 值如果超过，rotate 自动生成下一个 binlog file 记录这条 binlog 信息</p>
+<ul>
+<li>一个事务的 binlog 日志不会被拆到两个 binlog 文件，所以会等到日志写完才 rotate，所以可以看到超过配置大小上限的 binlog 文件</li>
+</ul>
+</li>
+<li>
+<p>如果一张表并没有主键，插入的一条数据和这张表原有的一条数据所有字段都是一样的，然后对插入的这条数据做恢复，会不会把原有的那条数据删除？</p>
+<ul>
+<li>会删除一条，有可能删除到之前的那条</li>
+<li>因为表没有主键的时候，binlog 里面就不会记录主键字段，即：binlog 不会记录 InnoDB 隐藏的主键 id 字段</li>
+</ul>
+</li>
+<li>
+<p>如果“redo 没有及时刷盘，binlog 刷盘了”之后瞬间数据库所在主机掉电，主机重启，MySQL 重启以后，这个事务会丢失；会引起日志和数据不一致，这也是要默认设置双 1 的原因之一</p>
+</li>
+<li>
+<p>主库 ssd，备库机械硬盘，此时可以试试备库非双 1</p>
+</li>
+<li>
+<p>联表一般在业务层面进行</p>
+</li>
+</ul></article></div><div class="right sidebar"><div class="graph"><h3>Graph View</h3><div class="graph-outer"><div id="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1}"></div><svg version="1.1" id="global-graph-icon" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xmlSpace="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+	s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+	c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+	C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+	c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+	v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+	s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+	C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+	S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+	s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+	s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></div><div id="global-graph-outer"><div id="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1}"></div></div></div><div class="backlinks"><h3>Backlinks</h3><ul class="overflow"><li>No backlinks found</li></ul></div></div></div><footer><hr/><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.0.8</a>, © 2023</p><ul><li><a href="https://github.com/11ze/ob-publish">GitHub</a></li><li><a href="https://twitter.com/11ze4">Twitter</a></li></ul></footer></div></body><script type="application/javascript">// quartz/components/scripts/quartz/components/scripts/callout.inline.ts
+function toggleCallout() {
+  const outerBlock = this.parentElement;
+  outerBlock.classList.toggle(`is-collapsed`);
+  const collapsed = outerBlock.classList.contains(`is-collapsed`);
+  const height = collapsed ? this.scrollHeight : outerBlock.scrollHeight;
+  outerBlock.style.maxHeight = height + `px`;
+  let current = outerBlock;
+  let parent = outerBlock.parentElement;
+  while (parent) {
+    if (!parent.classList.contains(`callout`)) {
+      return;
+    }
+    const collapsed2 = parent.classList.contains(`is-collapsed`);
+    const height2 = collapsed2 ? parent.scrollHeight : parent.scrollHeight + current.scrollHeight;
+    parent.style.maxHeight = height2 + `px`;
+    current = parent;
+    parent = parent.parentElement;
+  }
+}
+function setupCallout() {
+  const collapsible = document.getElementsByClassName(
+    `callout is-collapsible`
+  );
+  for (const div of collapsible) {
+    const title = div.firstElementChild;
+    if (title) {
+      title.removeEventListener(`click`, toggleCallout);
+      title.addEventListener(`click`, toggleCallout);
+      const collapsed = div.classList.contains(`is-collapsed`);
+      const height = collapsed ? title.scrollHeight : div.scrollHeight;
+      div.style.maxHeight = height + `px`;
+    }
+  }
+}
+document.addEventListener(`nav`, setupCallout);
+window.addEventListener(`resize`, setupCallout);
+</script><script type="module">
+          import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
+          const darkMode = document.documentElement.getAttribute('saved-theme') === 'dark'
+          mermaid.initialize({ 
+            startOnLoad: false,
+            securityLevel: 'loose',
+            theme: darkMode ? 'dark' : 'default'
+          });
+          document.addEventListener('nav', async () => {
+            await mermaid.run({
+              querySelector: '.mermaid'
+            })
+          });
+          </script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script src="https://www.googletagmanager.com/gtag/js?id=G-SZZLS6FREP" type="application/javascript"></script><script src="./postscript.js" type="module"></script></html>
