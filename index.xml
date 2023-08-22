@@ -667,12 +667,6 @@
     <description> 保管库是本地文件系统上的一个文件夹，Obsidian 将您的笔记存储在其中。您可以将所有笔记保存在一个保险库中，或为每个不同的项目创建多个保险库。 Create a vault - Obsidian Help.</description>
     <pubDate>Tue, 22 Aug 2023 15:19:56 GMT</pubDate>
   </items><items>
-    <title>🪴 11ze's Garden</title>
-    <link>https://wangze.tech/</link>
-    <guid>https://wangze.tech/</guid>
-    <description>🪴 欢迎你来到我的数字花园 英语 所有标签 搭建数字花园 MySQL 实战 45 讲 Redis 核心技术与实战 .</description>
-    <pubDate>Tue, 22 Aug 2023 15:19:56 GMT</pubDate>
-  </items><items>
     <title>iCloud 不同步指定文件</title>
     <link>https://wangze.tech/iCloud-不同步指定文件</link>
     <guid>https://wangze.tech/iCloud-不同步指定文件</guid>
@@ -684,6 +678,12 @@
     <guid>https://wangze.tech/iCloud-同步卡住</guid>
     <description>解决方案 § ~/.zshrc # ~/.zshrc alias killicloud=&#039;killall bird &amp;&amp; killall cloudd&#039; 终端执行命令 kill iCloud 进程 killicloud 点击访达侧边栏的 iCloud ，观察同步进度，若还是卡住，继续 kill iCloud 进程直到正常 每小时执行一次确保 iCloud 同步 $ crontab -e 0 * * * * killall bird &amp;&amp; killall cloudd # 每小时 kill 一次 iCloud 进程 参考 § 一日一技 | Mac 上 iCloud 云盘同步卡住了？可以试试这样做 .</description>
     <pubDate>Tue, 22 Aug 2023 15:19:56 GMT</pubDate>
+  </items><items>
+    <title>🪴 11ze's Garden</title>
+    <link>https://wangze.tech/</link>
+    <guid>https://wangze.tech/</guid>
+    <description>🪴 欢迎你来到我的数字花园 英语 搭建数字花园 MySQL 实战 45 讲 Redis 核心技术与实战 tags .</description>
+    <pubDate>Tue, 22 Aug 2023 15:39:45 GMT</pubDate>
   </items><items>
     <title>从微博的 Redis 实践中，我们可以学到哪些经验？</title>
     <link>https://wangze.tech/从微博的-Redis-实践中，我们可以学到哪些经验？</link>
