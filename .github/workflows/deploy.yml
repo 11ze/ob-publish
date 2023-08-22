@@ -27,6 +27,16 @@ jobs:
       - name: Checkout submodules
         run: git submodule update --init --recursive
 
+      # 转换笔记结构
+      - name: config1
+        run: rm -rf content/.obsidian content/Templates && mv content/*.md content/Atlas && find content/ -name "*.md" | xargs -I file  mv -f file content &&  mv content/AboutTheGarden.md content/_index.md
+
+      - name: config2
+        run: "ls content/ && grep -lr --null 'title' content/* | xargs -0 sed -i -E -r 's/title: (.*)/title: \"\\1\"/g'"
+
+      - name: config3
+        run: rm -rf content/*.md-E
+
       - uses: actions/setup-node@v3
         with:
           node-version: 18.14
