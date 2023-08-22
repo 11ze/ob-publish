@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>抢红包 on</title><link>https://wangze.tech/tags/%E6%8A%A2%E7%BA%A2%E5%8C%85/</link><description>Recent content in 抢红包 on</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><atom:link href="https://wangze.tech/tags/%E6%8A%A2%E7%BA%A2%E5%8C%85/index.xml" rel="self" type="application/rss+xml"/><item><title>抢红包系统</title><link>https://wangze.tech/%E6%8A%A2%E7%BA%A2%E5%8C%85%E7%B3%BB%E7%BB%9F/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://wangze.tech/%E6%8A%A2%E7%BA%A2%E5%8C%85%E7%B3%BB%E7%BB%9F/</guid><description>不能超抢 剩余的到期需要返还 通常使用的解决高并发问题方案 方案一：使用内存操作替代实时的 DB 事务操作 可能丢数据
-方案二：使用乐观锁替代悲观锁 同时抢的只能有一个能成功，可能手慢的反而能抢到
-微信红包系统的高并发解决方案
-方案三：将关于同一个红包的所有请求聚合到同一个 双维度库表设计：db_xx.t_y_dd xx/y 红包 ID 的 hash 值后三位，dd 的取值范围 01～31，一个月最多 31 天</description></item></channel></rss>
