@@ -3,14 +3,15 @@ import * as Plugin from "./quartz/plugins"
 
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "🪴 Quartz 4.0",
+    pageTitle: "🪴 11ze's Garden",
     enableSPA: true,
     enablePopovers: true,
     analytics: {
-      provider: "plausible",
+      provider: "google",
+      tagId: "G-SZZLS6FREP",
     },
-    baseUrl: "quartz.jzhao.xyz",
-    ignorePatterns: ["private", "templates"],
+    baseUrl: "wangze.tech",
+    ignorePatterns: ["private", "Templates", "Extras", ".obsidian"],
     theme: {
       typography: {
         header: "Schibsted Grotesk",
