@@ -679,11 +679,11 @@
     <description>解决方案 § ~/.zshrc # ~/.zshrc alias killicloud=&#039;killall bird &amp;&amp; killall cloudd&#039; 终端执行命令 kill iCloud 进程 killicloud 点击访达侧边栏的 iCloud ，观察同步进度，若还是卡住，继续 kill iCloud 进程直到正常 每小时执行一次确保 iCloud 同步 $ crontab -e 0 * * * * killall bird &amp;&amp; killall cloudd # 每小时 kill 一次 iCloud 进程 参考 § 一日一技 | Mac 上 iCloud 云盘同步卡住了？可以试试这样做 .</description>
     <pubDate>Tue, 22 Aug 2023 15:19:56 GMT</pubDate>
   </items><items>
-    <title>🪴 11ze's Garden</title>
+    <title>index</title>
     <link>https://wangze.tech/</link>
     <guid>https://wangze.tech/</guid>
     <description>🪴 欢迎你来到我的数字花园 英语 搭建数字花园 MySQL 实战 45 讲 Redis 核心技术与实战 tags .</description>
-    <pubDate>Tue, 22 Aug 2023 16:46:11 GMT</pubDate>
+    <pubDate>Wed, 23 Aug 2023 01:30:09 GMT</pubDate>
   </items><items>
     <title>从微博的 Redis 实践中，我们可以学到哪些经验？</title>
     <link>https://wangze.tech/从微博的-Redis-实践中，我们可以学到哪些经验？</link>
@@ -725,7 +725,7 @@
     <link>https://wangze.tech/开发环境</link>
     <guid>https://wangze.tech/开发环境</guid>
     <description>设备 § M1 MacBook Pro 14 先更新系统 Homebrew § 官网 brew tap homebrew/cask-drivers brew tap homebrew/cask-fonts brew tap homebrew/cask-versions brew tap buo/cask-upgrade brew tap mongodb/brew brew install git git-lfs git-flow git config --global core.</description>
-    <pubDate>Tue, 22 Aug 2023 15:19:56 GMT</pubDate>
+    <pubDate>Wed, 23 Aug 2023 01:31:09 GMT</pubDate>
   </items><items>
     <title>抢红包系统</title>
     <link>https://wangze.tech/抢红包系统</link>
@@ -742,8 +742,8 @@
     <title>搭建数字花园</title>
     <link>https://wangze.tech/搭建数字花园</link>
     <guid>https://wangze.tech/搭建数字花园</guid>
-    <description> 同步方案 发布方案 配置自定义域名 添加评论区 配置图床 配置 Google Analytics 本库自动提交到 GitHub 本地预览 不同步 .git 文件夹 换新设备 问题合集 .</description>
-    <pubDate>Tue, 22 Aug 2023 15:19:56 GMT</pubDate>
+    <description> 同步方案 发布方案 配置自定义域名 添加评论区 配置图床 配置 Google Analytics 本库自动提交到 GitHub 不同步 .git 文件夹 换新设备 问题合集 .</description>
+    <pubDate>Wed, 23 Aug 2023 01:31:31 GMT</pubDate>
   </items><items>
     <title>收藏文章</title>
     <link>https://wangze.tech/收藏文章</link>
@@ -755,12 +755,6 @@
     <link>https://wangze.tech/文章最后更新时间错误</link>
     <guid>https://wangze.tech/文章最后更新时间错误</guid>
     <description>解决方法 § 在发布仓库做如下修改，让 Lastmod 比 Date 优先级高 修改发布仓库的 GitHub Action：Hugo 和 Github Action 正确修改文章的最后更新日期 修改文档仓库的 GitHub Action 在所有 md 文件的第 2 行插入 lastmod: 文件在 git 记录的最后修改时间 find .</description>
-    <pubDate>Tue, 22 Aug 2023 15:19:56 GMT</pubDate>
-  </items><items>
-    <title>本地预览</title>
-    <link>https://wangze.tech/本地预览</link>
-    <guid>https://wangze.tech/本地预览</guid>
-    <description>准备 § ⚠️ 不要在你正式写笔记的发布仓库和文档仓库里操作 复制你要预览的仓库到新文件夹 进入新文件夹 将笔记转成发布仓库支持的格式 § ⚠️ 这一步会修改你的笔记文档 git submodule update --init --recursive rm -rf content/.obsidian content/cedict_ts.</description>
     <pubDate>Tue, 22 Aug 2023 15:19:56 GMT</pubDate>
   </items><items>
     <title>本库自动提交到 GitHub</title>
