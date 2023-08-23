@@ -610,7 +610,7 @@
     <title>README</title>
     <link>https://wangze.tech/README</link>
     <guid>https://wangze.tech/README</guid>
-    <description>🪴 11ze’s Garden §.</description>
+    <description>🫧 11ze §.</description>
     <pubDate>Tue, 22 Aug 2023 15:19:56 GMT</pubDate>
   </items><items>
     <title>Rate Limit</title>
@@ -658,7 +658,7 @@
     <title>Tips</title>
     <link>https://wangze.tech/Tips</link>
     <guid>https://wangze.tech/Tips</guid>
-    <description> 想到什么点子就赶紧记下来，不然过一会就忘了，即使只是上个厕所洗个手也会忘。 做一件事的时候，想象一下，最坏的情况能坏到哪呢。 你花在挑选寝室用的电视机上的时间比你选择专业和学习领域的时间长。 找出自己擅长和不擅长做的事。 什么工作是我非做不可的。 用搜索。 .</description>
+    <description> 想到什么点子就赶紧记下来，否则只是上个厕所洗个手也能忘。 做一件事的时候，想象一下，最坏的情况能坏到哪里。 找出自己擅长和不擅长做的事。 什么工作是我非做不可的。 善用搜索。 .</description>
     <pubDate>Tue, 22 Aug 2023 15:19:56 GMT</pubDate>
   </items><items>
     <title>Vault</title>
@@ -682,7 +682,7 @@
     <title>欢迎你来到我的数字花园</title>
     <link>https://wangze.tech/</link>
     <guid>https://wangze.tech/</guid>
-    <description> 英语 搭建数字花园 MySQL 实战 45 讲 Redis 核心技术与实战 tags .</description>
+    <description> tags 英语 搭建数字花园 MySQL 实战 45 讲 Redis 核心技术与实战 .</description>
     <pubDate>Wed, 23 Aug 2023 01:30:09 GMT</pubDate>
   </items><items>
     <title>从微博的 Redis 实践中，我们可以学到哪些经验？</title>
@@ -700,7 +700,7 @@
     <title>笔记 404</title>
     <link>https://wangze.tech/发布笔记-404</link>
     <guid>https://wangze.tech/发布笔记-404</guid>
-    <description> 记录此问题的时间：2023-05-12 01:26 东八区 现象： 油猴脚本 在 2023-05-12 0 点创建，发布失败，改成 2023-05-11，发布成功 笔记出现在搜索结果，点击自动跳转到 404 页面 猜测：执行发布的 GitHub Action 服务器时间比文档头标记的创建时间早，文档属于未来，所以未发布成功 2023-05-12 08:00 尝试发布成功 解决方法：使用 ISO8601 格式的日期 Page Variables | Hugo .</description>
+    <description> 记录此问题的时间：2023-05-12 01:26 东八区 现象 § 文档在 2023-05-12 0 点创建，发布失败，改成 2023-05-11，发布成功 笔记出现在搜索结果，点击自动跳转到 404 页面 猜测 § GitHub Action 服务器时间比文档头标记的创建时间早，文档属于未来，所以未发布成功 2023-05-12 08:00 尝试发布成功 解决方法 § 使用 ISO8601 格式的日期 .</description>
     <pubDate>Tue, 22 Aug 2023 15:19:56 GMT</pubDate>
   </items><items>
     <title>同步方案</title>
@@ -718,7 +718,7 @@
     <title>常见错误</title>
     <link>https://wangze.tech/常见错误</link>
     <guid>https://wangze.tech/常见错误</guid>
-    <description>Connection Closed by 20.205.243.166 Port 22 § 添加以下代码到 ~/.ssh/config Host github.com HostName ssh.github.com User username Port 443.</description>
+    <description>Connection Closed by x.x.x.x Port 22 § 添加以下代码到 ~/.ssh/config Host github.com HostName ssh.github.com User $username Port 443.</description>
     <pubDate>Tue, 22 Aug 2023 15:19:56 GMT</pubDate>
   </items><items>
     <title>开发环境</title>
@@ -736,14 +736,14 @@
     <title>换新设备</title>
     <link>https://wangze.tech/换新设备</link>
     <guid>https://wangze.tech/换新设备</guid>
-    <description>推荐做法 § clone 文档仓库到本地 将 .git 移到 iCloud 的 Obsidian 目录下的花园 Vault 根目录 强烈不推荐做法 § 删掉 iCloud 里的 Vault 再走一遍 同步方案 .</description>
+    <description>推荐做法 § clone 文档仓库到本地 将 .git 文件夹移到 iCloud 的 Obsidian 目录下的花园 Vault 根目录 强烈不推荐做法 § 删掉 iCloud 里的 Vault 再走一遍 同步方案 .</description>
     <pubDate>Tue, 22 Aug 2023 15:19:56 GMT</pubDate>
   </items><items>
     <title>搭建数字花园</title>
     <link>https://wangze.tech/搭建数字花园</link>
     <guid>https://wangze.tech/搭建数字花园</guid>
-    <description> 同步方案 发布方案 配置自定义域名 添加评论区 配置图床 配置 Google Analytics 本库自动提交到 GitHub 不同步 .git 文件夹 换新设备 问题合集 .</description>
-    <pubDate>Wed, 23 Aug 2023 01:31:31 GMT</pubDate>
+    <description> 同步方案 发布方案 配置自定义域名 添加评论区 配置图床 本库自动提交到 GitHub 不同步 .git 文件夹 换新设备 问题合集 .</description>
+    <pubDate>Wed, 23 Aug 2023 02:57:31 GMT</pubDate>
   </items><items>
     <title>收藏文章</title>
     <link>https://wangze.tech/收藏文章</link>
@@ -751,16 +751,10 @@
     <description>技术 § [Linter上手完全指南 - GitHub](linter-tutorial: 👮‍♀️ 《Linter 上手完全指南》) 一文搞懂 Redis 架构演化之路 - 腾讯技术工程 一文搞懂什么是 SaaS、BaaS、PaaS 和 IaaS - 知乎 规范 § 编程中的命名设计那点事 | 酷 壳 - CoolShell 经济 § 经济机器是怎样运行的 (时长30分钟) Ray Dalio - YouTube 沟通 § X-Y Problem | 酷 壳 - CoolShell 你会问问题吗？ | 酷 壳 - CoolShell .</description>
     <pubDate>Tue, 22 Aug 2023 15:19:56 GMT</pubDate>
   </items><items>
-    <title>文章最后更新时间错误</title>
-    <link>https://wangze.tech/文章最后更新时间错误</link>
-    <guid>https://wangze.tech/文章最后更新时间错误</guid>
-    <description>解决方法 § 在发布仓库做如下修改，让 Lastmod 比 Date 优先级高 修改发布仓库的 GitHub Action：Hugo 和 Github Action 正确修改文章的最后更新日期 修改文档仓库的 GitHub Action 在所有 md 文件的第 2 行插入 lastmod: 文件在 git 记录的最后修改时间 find .</description>
-    <pubDate>Tue, 22 Aug 2023 15:19:56 GMT</pubDate>
-  </items><items>
     <title>本库自动提交到 GitHub</title>
     <link>https://wangze.tech/本库自动提交到-GitHub</link>
     <guid>https://wangze.tech/本库自动提交到-GitHub</guid>
-    <description> 配置 crontab 每天自动执行 auto_push.sh 可能遇到的问题：Crontab 执行提示没有权限 由于已配置 GitHub Action，自动提交后会触发 Action 自动部署网站 .</description>
+    <description> 在文档仓库根目录添加文件：auto_push.sh 配置 crontab 每天自动执行文档仓库的 auto_push.sh Crontab 执行提示没有权限 由于文档仓库已配置 GitHub Action，自动提交后会触发发布仓库的 Github Action 自动部署网站 content submodule -&gt; v4 of quartz repository -&gt; master of quartz repository .</description>
     <pubDate>Tue, 22 Aug 2023 15:19:56 GMT</pubDate>
   </items><items>
     <title>油猴脚本</title>
@@ -802,31 +796,25 @@
     <title>英语</title>
     <link>https://wangze.tech/英语</link>
     <guid>https://wangze.tech/英语</guid>
-    <description> Think in English 跟 Morty 的学习路线学：【M14】英语学习唯一正确方法具体实践_哔哩哔哩 背单词 .</description>
+    <description> 【M14】英语学习唯一正确方法具体实践_哔哩哔哩 Think in English 背单词 .</description>
     <pubDate>Tue, 22 Aug 2023 15:19:56 GMT</pubDate>
-  </items><items>
-    <title>配置 Google Analytics</title>
-    <link>https://wangze.tech/配置-Google-Analytics</link>
-    <guid>https://wangze.tech/配置-Google-Analytics</guid>
-    <description>Quartz 发布 v4，待更新此文章 配置方法 § 到 Google Analytics（分析） 创建一个媒体资源并获取 ID 打开发布仓库根目录下的 config.toml 文件 写入：googleAnalytics = &quot;G-XXX&quot; 打开发布仓库的 layouts/partials/header.</description>
-    <pubDate>Tue, 22 Aug 2023 15:19:57 GMT</pubDate>
   </items><items>
     <title>配置图床</title>
     <link>https://wangze.tech/配置图床</link>
     <guid>https://wangze.tech/配置图床</guid>
-    <description> 使用 PicGo + Github + JSD 搭建免费图床 | ZeaLotSean jsDelivr .</description>
+    <description> 使用 PicGo + Github + JSD 搭建免费图床 jsDelivr .</description>
     <pubDate>Tue, 22 Aug 2023 15:19:56 GMT</pubDate>
   </items><items>
     <title>配置自定义域名</title>
     <link>https://wangze.tech/配置自定义域名</link>
     <guid>https://wangze.tech/配置自定义域名</guid>
-    <description>Vercel + Cloudflare § How to Use a Cloudflare Domain with Vercel .</description>
-    <pubDate>Tue, 22 Aug 2023 15:19:56 GMT</pubDate>
+    <description>对于 quartz4，需要在 content 目录下放置 vercel.json，用于在点击 Wikilink 时自动添加 .html { &quot;routes&quot;: [ { &quot;handle&quot;: &quot;filesystem&quot; }, { &quot;src&quot;: &quot;/(.</description>
+    <pubDate>Wed, 23 Aug 2023 02:58:26 GMT</pubDate>
   </items><items>
     <title>问题合集</title>
     <link>https://wangze.tech/问题合集</link>
     <guid>https://wangze.tech/问题合集</guid>
-    <description> 发布笔记 404 文章最后更新时间错误 .</description>
+    <description> 发布笔记 404 特殊字符 .</description>
     <pubDate>Tue, 22 Aug 2023 15:19:56 GMT</pubDate>
   </items>
   </rss>
