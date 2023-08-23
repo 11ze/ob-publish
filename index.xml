@@ -679,10 +679,10 @@
     <description>解决方案 § ~/.zshrc # ~/.zshrc alias killicloud=&#039;killall bird &amp;&amp; killall cloudd&#039; 终端执行命令 kill iCloud 进程 killicloud 点击访达侧边栏的 iCloud ，观察同步进度，若还是卡住，继续 kill iCloud 进程直到正常 每小时执行一次确保 iCloud 同步 $ crontab -e 0 * * * * killall bird &amp;&amp; killall cloudd # 每小时 kill 一次 iCloud 进程 参考 § 一日一技 | Mac 上 iCloud 云盘同步卡住了？可以试试这样做 .</description>
     <pubDate>Tue, 22 Aug 2023 15:19:56 GMT</pubDate>
   </items><items>
-    <title>index</title>
+    <title>欢迎你来到我的数字花园</title>
     <link>https://wangze.tech/</link>
     <guid>https://wangze.tech/</guid>
-    <description>🪴 欢迎你来到我的数字花园 英语 搭建数字花园 MySQL 实战 45 讲 Redis 核心技术与实战 tags .</description>
+    <description> 英语 搭建数字花园 MySQL 实战 45 讲 Redis 核心技术与实战 tags .</description>
     <pubDate>Wed, 23 Aug 2023 01:30:09 GMT</pubDate>
   </items><items>
     <title>从微博的 Redis 实践中，我们可以学到哪些经验？</title>
