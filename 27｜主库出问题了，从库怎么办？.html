@@ -1,87 +1,151 @@
 <!DOCTYPE html>
-<html><head><title>27｜主库出问题了，从库怎么办？</title><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta property="og:title" content="27｜主库出问题了，从库怎么办？"/><meta property="og:description" content="基于位点的主备切换 § change master 命令： CHANGE MASTER TO MASTER_HOST=hostn​ame MASTERP​ORT=port MASTER_USER=usern​ame MASTERP​ASSWORD=password MASTER_LOG_FILE=masterl​ogn​ame MASTERL​OGP​OS=master_log_pos - 最后两个参数就是位点参数：从主库的 master_log_name 文件的 master_log_pos 这个位置的日志继续同步 - 其中一种取同步位点的方法 - 1."/><meta property="og:image" content="https://wangze.tech/static/og-image.png"/><meta property="og:width" content="1200"/><meta property="og:height" content="675"/><link rel="icon" href="./static/icon.png"/><meta name="description" content="基于位点的主备切换 § change master 命令： CHANGE MASTER TO MASTER_HOST=hostn​ame MASTERP​ORT=port MASTER_USER=usern​ame MASTERP​ASSWORD=password MASTER_LOG_FILE=masterl​ogn​ame MASTERL​OGP​OS=master_log_pos - 最后两个参数就是位点参数：从主库的 master_log_name 文件的 master_log_pos 这个位置的日志继续同步 - 其中一种取同步位点的方法 - 1."/><meta name="generator" content="Quartz"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link href="./index.css" rel="stylesheet" type="text/css" spa-preserve/><link href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><link href="https://fonts.googleapis.com/css2?family=IBM Plex Mono&amp;family=Schibsted Grotesk:wght@400;700&amp;family=Source Sans Pro:ital,wght@0,400;0,600;1,400;1,600&amp;display=swap" rel="stylesheet" type="text/css" spa-preserve/><script src="./prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch(`./static/contentIndex.json`).then(data => data.json())</script></head><body data-slug="27｜主库出问题了，从库怎么办？"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h1 class="page-title"><a href=".">🫧 11ze</a></h1><div class="spacer mobile-only"></div><div class="search"><div id="search-icon"><p>Search</p><div></div><svg tabIndex="0" aria-labelledby="title desc" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title id="title">Search</title><desc id="desc">Search</desc><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg></div><div id="search-container"><div id="search-space"><input autocomplete="off" id="search-bar" name="search" type="text" aria-label="Search for something" placeholder="Search for something"/><div id="results-container"></div></div></div></div><div class="darkmode"><input class="toggle" id="darkmode-toggle" type="checkbox" tabIndex="-1"/><label id="toggle-label-light" for="darkmode-toggle" tabIndex="-1"><svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35;" xmlSpace="preserve"><title>Light mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg></label><label id="toggle-label-dark" for="darkmode-toggle" tabIndex="-1"><svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background='new 0 0 100 100'" xmlSpace="preserve"><title>Dark mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></label></div><div class="toc desktop-only"><button type="button" id="toc"><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="toc-content"><ul class="overflow"><li class="depth-0"><a href="#基于位点的主备切换" data-for="基于位点的主备切换">基于位点的主备切换</a></li><li class="depth-0"><a href="#思考题" data-for="思考题">思考题</a></li><li class="depth-0"><a href="#评论区" data-for="评论区">评论区</a></li></ul></div></div></div><div class="center"><div class="page-header"><div class="popover-hint"><h1 class="article-title">27｜主库出问题了，从库怎么办？</h1><p class="content-meta">Aug 22, 2023, 8 min read</p><ul class="tags"><li><a href="./tags/mysql" class="internal tag-link">#mysql</a></li></ul></div></div><article class="popover-hint"><h2 id="基于位点的主备切换">基于位点的主备切换<a aria-hidden="true" tabindex="-1" href="#基于位点的主备切换" class="internal"> §</a></h2>
+<html><head><title>27｜主库出问题了，从库怎么办？</title><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta property="og:title" content="27｜主库出问题了，从库怎么办？"/><meta property="og:description" content="基于位点的主备切换 § change master 命令： CHANGE MASTER TO MASTER_HOST=$host_name MASTER_PORT=$port MASTER_USER=$user_name MASTER_PASSWORD=$password MASTER_LOG_FILE=$master_log_name MASTER_LOG_POS=$master_log_pos 最后两个参数就是位点参数：从主库的 master_log_name 文件的 master_log_pos 这个位置的日志继续同步 其中一种取同步位点的方法 等待新主库把中转日志全部同步完成； 在新主库上执行 show master status 命令，得到当前最新的 File 和 Position； 取原主库故障的时刻 T； 用 mysqlbinlog 工具解析新主库的 File，得到 T 时刻的位点。mysqlbinlog File —stop-datetime=T —start-datetime=T ⚠️ 得到的位置不准确：比如旧主库执行完成一个 insert 语句插入数据，并且将 binlog 传给了要成为新主库的实例和从库，传完后掉电。此时，从库执行 binlog 后有了新数据，新主库可能又再次把 binlog 传过来，会报主键重复错误。 两种解决方法 主动跳过一个事务：set global sql_slave_skip_counter=1;start slave; 此方法需要在从库刚开始连接到新主库的时候持续观察，每次碰到这些错误就停下来，执行一次跳过命令，直到不再出现停下来的情况，以此来跳过可能涉及的所有事务。 通过设置 slave_skip_error 参数，直接设置跳过指定的错误。在执行主备切换时，经常会遇到： a."/><meta property="og:image" content="https://wangze.tech/static/og-image.png"/><meta property="og:width" content="1200"/><meta property="og:height" content="675"/><link rel="icon" href="./static/icon.png"/><meta name="description" content="基于位点的主备切换 § change master 命令： CHANGE MASTER TO MASTER_HOST=$host_name MASTER_PORT=$port MASTER_USER=$user_name MASTER_PASSWORD=$password MASTER_LOG_FILE=$master_log_name MASTER_LOG_POS=$master_log_pos 最后两个参数就是位点参数：从主库的 master_log_name 文件的 master_log_pos 这个位置的日志继续同步 其中一种取同步位点的方法 等待新主库把中转日志全部同步完成； 在新主库上执行 show master status 命令，得到当前最新的 File 和 Position； 取原主库故障的时刻 T； 用 mysqlbinlog 工具解析新主库的 File，得到 T 时刻的位点。mysqlbinlog File —stop-datetime=T —start-datetime=T ⚠️ 得到的位置不准确：比如旧主库执行完成一个 insert 语句插入数据，并且将 binlog 传给了要成为新主库的实例和从库，传完后掉电。此时，从库执行 binlog 后有了新数据，新主库可能又再次把 binlog 传过来，会报主键重复错误。 两种解决方法 主动跳过一个事务：set global sql_slave_skip_counter=1;start slave; 此方法需要在从库刚开始连接到新主库的时候持续观察，每次碰到这些错误就停下来，执行一次跳过命令，直到不再出现停下来的情况，以此来跳过可能涉及的所有事务。 通过设置 slave_skip_error 参数，直接设置跳过指定的错误。在执行主备切换时，经常会遇到： a."/><meta name="generator" content="Quartz"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link href="./index.css" rel="stylesheet" type="text/css" spa-preserve/><link href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><link href="https://fonts.googleapis.com/css2?family=IBM Plex Mono&amp;family=Schibsted Grotesk:wght@400;700&amp;family=Source Sans Pro:ital,wght@0,400;0,600;1,400;1,600&amp;display=swap" rel="stylesheet" type="text/css" spa-preserve/><script src="./prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch(`./static/contentIndex.json`).then(data => data.json())</script></head><body data-slug="27｜主库出问题了，从库怎么办？"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h1 class="page-title"><a href=".">🫧 11ze</a></h1><div class="spacer mobile-only"></div><div class="search"><div id="search-icon"><p>Search</p><div></div><svg tabIndex="0" aria-labelledby="title desc" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title id="title">Search</title><desc id="desc">Search</desc><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg></div><div id="search-container"><div id="search-space"><input autocomplete="off" id="search-bar" name="search" type="text" aria-label="Search for something" placeholder="Search for something"/><div id="results-container"></div></div></div></div><div class="darkmode"><input class="toggle" id="darkmode-toggle" type="checkbox" tabIndex="-1"/><label id="toggle-label-light" for="darkmode-toggle" tabIndex="-1"><svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35;" xmlSpace="preserve"><title>Light mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg></label><label id="toggle-label-dark" for="darkmode-toggle" tabIndex="-1"><svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background='new 0 0 100 100'" xmlSpace="preserve"><title>Dark mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></label></div><div class="toc desktop-only"><button type="button" id="toc"><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="toc-content"><ul class="overflow"><li class="depth-0"><a href="#基于位点的主备切换" data-for="基于位点的主备切换">基于位点的主备切换</a></li><li class="depth-0"><a href="#gtidglobal-transaction-identifier全局事务-id" data-for="gtidglobal-transaction-identifier全局事务-id">GTID（Global Transaction Identifier，全局事务 ID）</a></li><li class="depth-0"><a href="#基于-gtid-的主备切换" data-for="基于-gtid-的主备切换">基于 GTID 的主备切换</a></li><li class="depth-0"><a href="#思考题" data-for="思考题">思考题</a></li><li class="depth-0"><a href="#评论区" data-for="评论区">评论区</a></li></ul></div></div></div><div class="center"><div class="page-header"><div class="popover-hint"><h1 class="article-title">27｜主库出问题了，从库怎么办？</h1><p class="content-meta">Aug 22, 2023, 8 min read</p><ul class="tags"><li><a href="./tags/mysql" class="internal tag-link">#mysql</a></li></ul></div></div><article class="popover-hint"><h2 id="基于位点的主备切换">基于位点的主备切换<a aria-hidden="true" tabindex="-1" href="#基于位点的主备切换" class="internal"> §</a></h2>
 <ul>
 <li>
 <p>change master 命令：</p>
-<div data-rehype-pretty-code-fragment><pre style="background-color:var(--shiki-color-background);" tabindex="0" data-language="sql" data-theme="default"><code data-language="sql" data-theme="default"><span data-line> </span></code></pre></div>
+<div data-rehype-pretty-code-fragment><pre style="background-color:var(--shiki-color-background);" tabindex="0" data-language="sql" data-theme="default"><code data-language="sql" data-theme="default"><span data-line><span style="color:var(--shiki-color-text);">CHANGE </span><span style="color:var(--shiki-token-keyword);">MASTER</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-keyword);">TO</span><span style="color:var(--shiki-color-text);"> </span></span>
+<span data-line><span style="color:var(--shiki-color-text);">MASTER_HOST</span><span style="color:var(--shiki-token-keyword);">=</span><span style="color:var(--shiki-color-text);">$host_name </span></span>
+<span data-line><span style="color:var(--shiki-color-text);">MASTER_PORT</span><span style="color:var(--shiki-token-keyword);">=</span><span style="color:var(--shiki-color-text);">$port </span></span>
+<span data-line><span style="color:var(--shiki-color-text);">MASTER_USER</span><span style="color:var(--shiki-token-keyword);">=</span><span style="color:var(--shiki-color-text);">$user_name </span></span>
+<span data-line><span style="color:var(--shiki-color-text);">MASTER_PASSWORD</span><span style="color:var(--shiki-token-keyword);">=</span><span style="color:var(--shiki-color-text);">$</span><span style="color:var(--shiki-token-keyword);">password</span><span style="color:var(--shiki-color-text);"> </span></span>
+<span data-line><span style="color:var(--shiki-color-text);">MASTER_LOG_FILE</span><span style="color:var(--shiki-token-keyword);">=</span><span style="color:var(--shiki-color-text);">$master_log_name </span></span>
+<span data-line><span style="color:var(--shiki-color-text);">MASTER_LOG_POS</span><span style="color:var(--shiki-token-keyword);">=</span><span style="color:var(--shiki-color-text);">$master_log_pos</span></span></code></pre></div>
 </li>
-</ul>
-<p>CHANGE MASTER TO 
-MASTER_HOST=<span class="math math-inline"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord mathnormal">h</span><span class="mord mathnormal">os</span><span class="mord"><span class="mord mathnormal">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathnormal">am</span><span class="mord mathnormal">e</span><span class="mord"> </span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mord mathnormal">A</span><span class="mord mathnormal" style="margin-right:0.05764em;">STE</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">P</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right:0.13889em;">ORT</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span></span></span></span></span>port 
-MASTER_USER=<span class="math math-inline"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord mathnormal">u</span><span class="mord mathnormal">se</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathnormal">am</span><span class="mord mathnormal">e</span><span class="mord"> </span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mord mathnormal">A</span><span class="mord mathnormal" style="margin-right:0.05764em;">STE</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">P</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathnormal">A</span><span class="mord mathnormal" style="margin-right:0.05764em;">SS</span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span><span class="mord mathnormal" style="margin-right:0.00773em;">OR</span><span class="mord mathnormal" style="margin-right:0.02778em;">D</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span></span></span></span></span>password 
-MASTER_LOG_FILE=<span class="math math-inline"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">ma</span><span class="mord mathnormal">s</span><span class="mord mathnormal">t</span><span class="mord mathnormal">e</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.02778em;">r</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:-0.0278em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.01968em;">l</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathnormal">o</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:-0.0359em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathnormal">am</span><span class="mord mathnormal">e</span><span class="mord"> </span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mord mathnormal">A</span><span class="mord mathnormal" style="margin-right:0.05764em;">STE</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:-0.0077em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">L</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mord"><span class="mord mathnormal">G</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3283em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.13889em;">P</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right:0.05764em;">OS</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span></span></span></span></span>master_log_pos</p>
-<pre><code>
-- 最后两个参数就是位点参数：从主库的 master_log_name 文件的 master_log_pos 这个位置的日志继续同步
-- 其中一种取同步位点的方法
-
-  - 1. 等待新主库把中转日志全部同步完成；
-  - 2. 在新主库上执行 show master status 命令，得到当前最新的 File 和 Position；
-  - 3. 取原主库故障的时刻 T；
-  - 4. 用 mysqlbinlog 工具解析新主库的 File，得到 T 时刻的位点。mysqlbinlog File --stop-datetime=T --start-datetime=T
-
-- ⚠️ 得到的位置不准确：比如旧主库执行完成一个 insert 语句插入数据，并且将 binlog 传给了要成为新主库的实例和从库，传完后掉电。此时，从库执行 binlog 后有了新数据，新主库可能又再次把 binlog 传过来，会报主键重复错误。
-
-  - 两种解决方法
-  - 1. 主动跳过一个事务：`set global sql_slave_skip_counter=1;start slave;`
-
-    - 此方法需要在从库刚开始连接到新主库的时候持续观察，每次碰到这些错误就停下来，执行一次跳过命令，直到不再出现停下来的情况，以此来跳过可能涉及的所有事务。
-
-  - 2. 通过设置 slave_skip_error 参数，直接设置跳过指定的错误。在执行主备切换时，经常会遇到：
-    - a. 1062 错误，插入数据时唯一键冲突；
-    - b. 1032 错误，删除数据时找不到行。
-
-## GTID（Global Transaction Identifier，全局事务 ID）
-
-- MySQL 5.6 版本引入
-
-- 一个事务在提交的时候生成的，格式：`GTID=server_uuid:gno`
-
-  - server_uuid：实例第一次启动时自动生成，全局唯一
-  - gno：整数，初始值 1，每次提交事务的时候分配给这个事务，并加 1
-
-- 官方文档的 GTID 格式定义容易造成误解：`GTID=source_id:transaction_id`
-
-  - source_id：server_uuid
-  - transaction_id：gno
-  - 在 MySQL 里 transaction_id 就是指事务 id，事务 id 是在事务执行过程中分配的，如果这个事务回滚了，事务 id 也会递增，不连续递增。
-  - 而 gno 是在事务提交的时候才会分配，连续递增。
-
-- 启动 GTID 模式：启动 MySQL 实例时加上参数 gtid_mode=on 和 enforce_gtid_consistency=on
-- 每个事务跟一个 GTID 一一对应
-- GTID 两种生成方式
-
-  - 1. 如果 gtid_next=automatic，代表使用默认值。这时，MySQL 就会把 server_uuid:gno 分配给这个事务。
-    - a. 记录 binlog 的时候，先记录一行 `SET @@SESSION.GTID_NEXT=‘server_uuid:gno’;`
-    - b. 把这个 GTID 加入本实例的 GTID 集合。
-  - 2. 如果 gtid_next 是一个指定的 GTID 的值，比如通过 set gtid_next='current_gtid' 指定为 current_gtid，那么就有两种可能：
-    - a. 如果 current_gtid 已经存在于实例的 GTID 集合中，接下来执行的这个事务会直接被系统忽略；
-    - b. 如果 current_gtid 没有存在于实例的 GTID 集合中，就将这个 current_gtid 分配给接下来要执行的事务，也就是说系统不需要给这个事务生成新的 GTID，因此 gno 也不用加 1。
-
-- 每个 MySQL 实例都维护了一个 GTID 集合，用来对应“这个实例执行过的所有事务”。
-
-## 基于 GTID 的主备切换
-
-- change master 命令：
-  ```sql
-CHANGE MASTER TO
-MASTER_HOST=$host_name
-MASTER_PORT=$port
-MASTER_USER=$user_name
-MASTER_PASSWORD=$password
-master_auto_position=1
-</code></pre>
+<li>
+<p>最后两个参数就是位点参数：从主库的 master_log_name 文件的 master_log_pos 这个位置的日志继续同步</p>
+</li>
+<li>
+<p>其中一种取同步位点的方法</p>
 <ul>
 <li>
-<p>master_auto_position=1 表示这个主备关系使用的是 GTID 协议</p>
+<ol>
+<li>等待新主库把中转日志全部同步完成；</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>在新主库上执行 show master status 命令，得到当前最新的 File 和 Position；</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>取原主库故障的时刻 T；</li>
+</ol>
+</li>
+<li>
+<ol start="4">
+<li>用 mysqlbinlog 工具解析新主库的 File，得到 T 时刻的位点。mysqlbinlog File —stop-datetime=T —start-datetime=T</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p>⚠️ 得到的位置不准确：比如旧主库执行完成一个 insert 语句插入数据，并且将 binlog 传给了要成为新主库的实例和从库，传完后掉电。此时，从库执行 binlog 后有了新数据，新主库可能又再次把 binlog 传过来，会报主键重复错误。</p>
+<ul>
+<li>
+<p>两种解决方法</p>
+</li>
+<li>
+<ol>
+<li>
+<p>主动跳过一个事务：<code>set global sql_slave_skip_counter=1;start slave;</code></p>
+</li>
+</ol>
+<ul>
+<li>此方法需要在从库刚开始连接到新主库的时候持续观察，每次碰到这些错误就停下来，执行一次跳过命令，直到不再出现停下来的情况，以此来跳过可能涉及的所有事务。</li>
+</ul>
+</li>
+<li>
+<ol start="2">
+<li>通过设置 slave_skip_error 参数，直接设置跳过指定的错误。在执行主备切换时，经常会遇到：</li>
+</ol>
+<ul>
+<li>a. 1062 错误，插入数据时唯一键冲突；</li>
+<li>b. 1032 错误，删除数据时找不到行。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="gtidglobal-transaction-identifier全局事务-id">GTID（Global Transaction Identifier，全局事务 ID）<a aria-hidden="true" tabindex="-1" href="#gtidglobal-transaction-identifier全局事务-id" class="internal"> §</a></h2>
+<ul>
+<li>
+<p>MySQL 5.6 版本引入</p>
+</li>
+<li>
+<p>一个事务在提交的时候生成的，格式：<code>GTID=server_uuid:gno</code></p>
+<ul>
+<li>server_uuid：实例第一次启动时自动生成，全局唯一</li>
+<li>gno：整数，初始值 1，每次提交事务的时候分配给这个事务，并加 1</li>
+</ul>
+</li>
+<li>
+<p>官方文档的 GTID 格式定义容易造成误解：<code>GTID=source_id:transaction_id</code></p>
+<ul>
+<li>source_id：server_uuid</li>
+<li>transaction_id：gno</li>
+<li>在 MySQL 里 transaction_id 就是指事务 id，事务 id 是在事务执行过程中分配的，如果这个事务回滚了，事务 id 也会递增，不连续递增。</li>
+<li>而 gno 是在事务提交的时候才会分配，连续递增。</li>
+</ul>
+</li>
+<li>
+<p>启动 GTID 模式：启动 MySQL 实例时加上参数 gtid_mode=on 和 enforce_gtid_consistency=on</p>
+</li>
+<li>
+<p>每个事务跟一个 GTID 一一对应</p>
+</li>
+<li>
+<p>GTID 两种生成方式</p>
+<ul>
+<li>
+<ol>
+<li>如果 gtid_next=automatic，代表使用默认值。这时，MySQL 就会把 server_uuid:gno 分配给这个事务。</li>
+</ol>
+<ul>
+<li>a. 记录 binlog 的时候，先记录一行 <code>SET @@SESSION.GTID_NEXT=‘server_uuid:gno’;</code></li>
+<li>b. 把这个 GTID 加入本实例的 GTID 集合。</li>
+</ul>
+</li>
+<li>
+<ol start="2">
+<li>如果 gtid_next 是一个指定的 GTID 的值，比如通过 set gtid_next=‘current_gtid’ 指定为 current_gtid，那么就有两种可能：</li>
+</ol>
+<ul>
+<li>a. 如果 current_gtid 已经存在于实例的 GTID 集合中，接下来执行的这个事务会直接被系统忽略；</li>
+<li>b. 如果 current_gtid 没有存在于实例的 GTID 集合中，就将这个 current_gtid 分配给接下来要执行的事务，也就是说系统不需要给这个事务生成新的 GTID，因此 gno 也不用加 1。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>每个 MySQL 实例都维护了一个 GTID 集合，用来对应“这个实例执行过的所有事务”。</p>
+</li>
+</ul>
+<h2 id="基于-gtid-的主备切换">基于 GTID 的主备切换<a aria-hidden="true" tabindex="-1" href="#基于-gtid-的主备切换" class="internal"> §</a></h2>
+<ul>
+<li>
+<p>change master 命令：</p>
+<div data-rehype-pretty-code-fragment><pre style="background-color:var(--shiki-color-background);" tabindex="0" data-language="sql" data-theme="default"><code data-language="sql" data-theme="default"><span data-line><span style="color:var(--shiki-color-text);">CHANGE </span><span style="color:var(--shiki-token-keyword);">MASTER</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-keyword);">TO</span></span>
+<span data-line><span style="color:var(--shiki-color-text);">MASTER_HOST</span><span style="color:var(--shiki-token-keyword);">=</span><span style="color:var(--shiki-color-text);">$host_name</span></span>
+<span data-line><span style="color:var(--shiki-color-text);">MASTER_PORT</span><span style="color:var(--shiki-token-keyword);">=</span><span style="color:var(--shiki-color-text);">$port</span></span>
+<span data-line><span style="color:var(--shiki-color-text);">MASTER_USER</span><span style="color:var(--shiki-token-keyword);">=</span><span style="color:var(--shiki-color-text);">$user_name</span></span>
+<span data-line><span style="color:var(--shiki-color-text);">MASTER_PASSWORD</span><span style="color:var(--shiki-token-keyword);">=</span><span style="color:var(--shiki-color-text);">$</span><span style="color:var(--shiki-token-keyword);">password</span></span>
+<span data-line><span style="color:var(--shiki-color-text);">master_auto_position</span><span style="color:var(--shiki-token-keyword);">=</span><span style="color:var(--shiki-token-constant);">1</span></span></code></pre></div>
+<ul>
+<li>master_auto_position=1 表示这个主备关系使用的是 GTID 协议</li>
+</ul>
 </li>
 <li>
 <p>实例 B 执行 start slave 命令，取 binlog 逻辑：</p>
 <ol>
 <li>建立连接</li>
 <li>实例 B 把 set_b 发给主库</li>
-<li>主库算出两个 GTID 集合的差集（所有存在于 set_a 但不存在 set_b 的 GTID 集合），判断本地是否包含差集需要的所有 binlog 事务</li>
+<li>主库算出两个 GTID 集合的差集（所有存在于 set_a 但不存在 set_b 的 GTID 集合），判断本地是否包含差集需要的所有 binlog 事务
+<ul>
 <li>a 不包含，直接返回错误</li>
 <li>b 确认全部包含，从 binlog 找出第一个不在 set_b 的事务，发给 B4. 从这个事务开始往后读文件，按顺序取 binlog 发给 B 执行</li>
+</ul>
+</li>
 <li>之后就从这个事务开始，往后读文件，按顺序取 binlog 发给 B 去执行</li>
 </ol>
 </li>

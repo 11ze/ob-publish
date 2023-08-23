@@ -6,14 +6,18 @@
 </ul>
 <h2 id="主动切换的场景">主动切换的场景<a aria-hidden="true" tabindex="-1" href="#主动切换的场景" class="internal"> §</a></h2>
 <ol>
-<li>主库 A 执行完成一个事务，写入 binlog，我们把这个时刻记为 T1;</li>
-<li>之后传给备库 B，我们把备库 B 接收完这个 binlog 的时刻记为 T2;</li>
-</ol>
+<li>
+<p>主库 A 执行完成一个事务，写入 binlog，我们把这个时刻记为 T1;</p>
+</li>
+<li>
+<p>之后传给备库 B，我们把备库 B 接收完这个 binlog 的时刻记为 T2;</p>
 <ul>
 <li>很快</li>
 </ul>
-<ol start="3">
-<li>备库 B 执行完成这个事务，我们把这个时刻记为 T3</li>
+</li>
+<li>
+<p>备库 B 执行完成这个事务，我们把这个时刻记为 T3</p>
+</li>
 </ol>
 <h3 id="主备延迟">主备延迟<a aria-hidden="true" tabindex="-1" href="#主备延迟" class="internal"> §</a></h3>
 <ul>

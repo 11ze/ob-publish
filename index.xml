@@ -125,7 +125,7 @@
     <link>https://wangze.tech/10｜MySQL-为什么有时候会选错索引？</link>
     <guid>https://wangze.tech/10｜MySQL-为什么有时候会选错索引？</guid>
     <description>优化器的逻辑 § 扫描行数 一个索引上不同的值越多，这个索引的区分度越好 基数（cardinality）：一个索引上不同的值的个数。 采样统计：InnoDB 默认选择索引的 N 个数据页，统计这些页面上的不同值，得到一个平均值，然后乘以这个索引的页面树，就得到这个索引的基数。 当变更的数据行数超过 1/M 的时候，会自动触发重新做一次索引统计。 两种存储索引统计的方式，通过设置参数 innodb_stats_persistent 的值选择 设置为 on 的时候，表示统计信息会持久化存储。这时，默认的 N 是 20，M 是 10。 设置为 off 的时候，表示统计信息只存储在内存中。这时，默认的 N 是 8，M 是 16。 从普通索引拿到一个值后，回到主键索引查出整行数据的代价也要算。 由于索引统计信息不准确导致的问题，用 analyze table 命令来解决。 是否使用临时表 是否排序 解决其他优化器误判的情况 § 可以在应用端用 force index 来强行指定索引； 也可以通过修改语句来引导优化器； 如，当 xxx order by b limit 1; 最终选择 b 索引而不是 a 索引，可能是因为判断使用 b 就可以不用再排序，此时将语句改成 xxx order by b, a limit 1; 是一个可考虑的解决方法 前提是 SQL 语句语义不变 还可以增加或者删除索引绕过问题 思考题 § 前面我们在构造第一个例子的过程中，通过 session A 的配合，让 session B 删除数据后又重新插入了一遍数据，然后就发现 explain 结果中，rows 字段从 10001 变成 37000 多。而如果没有 session A 的配合，只是单独执行 delete from t、call idata()、explain 这三句话，会看到 rows 字段其实还是 10000 左右。你可以自己验证一下这个结果。 这是什么原因呢？也请你分析一下吧。 session A 还没有提交，所以之前插入的 10 万行数据还不能删除。 所以之前的数据每一行都有两个版本，旧版本是 delete 之前的数据，新版本是标记为 deleted 的数据。 因为这个是主键，主键是直接按照表的行数来估计的，而表的行数，优化器直接用的是 show table status 的值（后面有章节详细讲解）。 .</description>
-    <pubDate>Tue, 22 Aug 2023 15:19:56 GMT</pubDate>
+    <pubDate>Wed, 23 Aug 2023 11:28:40 GMT</pubDate>
   </items><items>
     <title>11｜“万金油”的 String，为什么不好用了？</title>
     <link>https://wangze.tech/11｜“万金油”的-String，为什么不好用了？</link>
@@ -209,7 +209,7 @@
     <link>https://wangze.tech/17｜如何正确地显示随机消息？</link>
     <guid>https://wangze.tech/17｜如何正确地显示随机消息？</guid>
     <description>内存临时表 § explain 结果中 extra 包含 Using temporary，表示需要使用临时表 Using filesort 表示需要执行排序操作 比如执行 order by rand() 的时候就需要用到上面两个 随机排序完整执行流程图 pos 是数据的位置信息 对于内存表，回表过程只是简单地根据数据行的位置直接访问内存得到数据，MySQL 优化器没有多访问磁盘的顾虑，会直接选择 rowid 排序（排序的行越小越好） 学习技巧：先通过原理分析算出扫描行数，然后再通过查看慢查询日志，来验证自己的结论 rowid 的含义：每个引擎用来唯一标识数据行的信息 对于有主键的 InnoDB 表，rowid 是主键 ID； 对于没有主键的 InnoDB 表，rowid 是由系统生成的； MEMORY 引擎不是索引组织表。在这个例子里面，可以认为它就是一个数组。因此，这个 rowid 其实就是数组的下标。 磁盘临时表 § tmp_table_size 配置限制内存表的大小，默认值 16M 如果临时表过大，就会转成磁盘临时表 当使用磁盘临时表的时候，对应的就是一个没有显式索引的 InnoDB 表的排序过程。 对于使用磁盘临时表的 order by rand()，MySQL 5.</description>
-    <pubDate>Tue, 22 Aug 2023 15:19:56 GMT</pubDate>
+    <pubDate>Wed, 23 Aug 2023 11:28:41 GMT</pubDate>
   </items><items>
     <title>18｜为什么这些 SQL 语句逻辑相同，性能却差异巨大？</title>
     <link>https://wangze.tech/18｜为什么这些-SQL-语句逻辑相同，性能却差异巨大？</link>
@@ -322,7 +322,7 @@
     <title>27｜主库出问题了，从库怎么办？</title>
     <link>https://wangze.tech/27｜主库出问题了，从库怎么办？</link>
     <guid>https://wangze.tech/27｜主库出问题了，从库怎么办？</guid>
-    <description>基于位点的主备切换 § change master 命令： CHANGE MASTER TO MASTER_HOST=hostn​ame MASTERP​ORT=port MASTER_USER=usern​ame MASTERP​ASSWORD=password MASTER_LOG_FILE=masterl​ogn​ame MASTERL​OGP​OS=master_log_pos - 最后两个参数就是位点参数：从主库的 master_log_name 文件的 master_log_pos 这个位置的日志继续同步 - 其中一种取同步位点的方法 - 1.</description>
+    <description>基于位点的主备切换 § change master 命令： CHANGE MASTER TO MASTER_HOST=$host_name MASTER_PORT=$port MASTER_USER=$user_name MASTER_PASSWORD=$password MASTER_LOG_FILE=$master_log_name MASTER_LOG_POS=$master_log_pos 最后两个参数就是位点参数：从主库的 master_log_name 文件的 master_log_pos 这个位置的日志继续同步 其中一种取同步位点的方法 等待新主库把中转日志全部同步完成； 在新主库上执行 show master status 命令，得到当前最新的 File 和 Position； 取原主库故障的时刻 T； 用 mysqlbinlog 工具解析新主库的 File，得到 T 时刻的位点。mysqlbinlog File —stop-datetime=T —start-datetime=T ⚠️ 得到的位置不准确：比如旧主库执行完成一个 insert 语句插入数据，并且将 binlog 传给了要成为新主库的实例和从库，传完后掉电。此时，从库执行 binlog 后有了新数据，新主库可能又再次把 binlog 传过来，会报主键重复错误。 两种解决方法 主动跳过一个事务：set global sql_slave_skip_counter=1;start slave; 此方法需要在从库刚开始连接到新主库的时候持续观察，每次碰到这些错误就停下来，执行一次跳过命令，直到不再出现停下来的情况，以此来跳过可能涉及的所有事务。 通过设置 slave_skip_error 参数，直接设置跳过指定的错误。在执行主备切换时，经常会遇到： a.</description>
     <pubDate>Tue, 22 Aug 2023 15:19:56 GMT</pubDate>
   </items><items>
     <title>27｜缓存被污染了，该怎么办？</title>
@@ -340,7 +340,7 @@
     <title>28｜读写分离有哪些坑？</title>
     <link>https://wangze.tech/28｜读写分离有哪些坑？</link>
     <guid>https://wangze.tech/28｜读写分离有哪些坑？</guid>
-    <description> 客户端直连 查询性能稍微好点，整体架构简单，排查问题更方便 主备切换、库迁移等操作时，客户端会感知到，并且需要调整数据库连接信息 一般采用这样的架构，一定会伴随一个负责管理后端的组件，比如 Zookeeper，尽量让业务端只专注于业务逻辑开发 带 proxy 的架构 对客户端友好，连接维护、后端信息等工作都由 proxy 完成 对后端维护团队的要求更高，需要高可用，整体架构比较复杂 过期读：在从库上会读到系统的一个过期状态 强制走主库方案 对于必须要拿到最新结果的请求，强制将其发到主库上 对于可以读到旧数据的请求，才将其发到从库上 sleep 方案 不精确 判断主备无延迟方案 三种方法 每次从库执行查询请求前，先判断 seconds_behind_master 是否已经等于 0。如果还不等于 0 ，那就必须等到这个参数变为 0 才能执行查询请求。 seconds_behind_master 的单位是秒，可能精度不够 对比位点 Master_Log_File 和 Read_Master_Log_Pos，表示的是读到的主库的最新位点；Relay_Master_Log_File 和 Exec_Master_Log_Pos，表示的是备库执行的最新位点。如果Master_Log_File 和 Relay_Master_Log_File、Read_Master_Log_Pos 和 Exec_Master_Log_Pos这两组值完全相同，就表示接收到的日志已经同步完成。 对比GTID 集合 Auto_Position=1 ，表示这对主备关系使用了 GTID 协议。Retrieved_Gtid_Set，是备库收到的所有日志的 GTID 集合；Executed_Gtid_Set，是备库所有已经执行完成的 GTID 集合。如果这两个集合相同，也表示备库接收到的日志都已经同步完成。 后两种准确度更高，但还不够 可能还有一部分日志，处于客户端已经收到提交确认，而备库还没收到日志的状态。 配合 semi-sync（半同步复制） 方案 semi-sync 的设计 事务提交的时候，主库把 binlog 发给从库； 从库收到 binlog 以后，发回给主库一个 ack，表示收到了； 3。 主库收到这个 ack 以后，才能给客户端返回“事务完成”的确认。 如果启用了 semi-sync，就表示所有给客户端发送过确认的事务，都确保了备库已经收到了这个日志。 存在问题 一主多从的时候，在某些从库执行查询请求会存在过期读的现象； 主库只要等到一个从库的 ack，就开始给客户端返回确认 在持续延迟的情况下，可能出现过度等待的问题。 如果在业务更新的高峰期，主库的位点或者 GTID 集合更新很快，那么上面的两个位点等值判断就会一直不成立，很可能出现从库上迟迟无法响应查询请求的情况。 等主库位点方案 主备持续延迟一个事务 trx1 事务更新完成后，客户端马上执行 show master status 得到当前主库执行到的 File 和 Position； 选定一个从库执行查询语句； 在从库上执行 select master_pos_wait(File, Position, 1)； a.</description>
+    <description> 过期读：在从库上会读到系统的一个过期状态 客户端连接数据库的方式 § 直连 § 查询性能稍微好点，整体架构简单，排查问题更方便 主备切换、库迁移等操作时，客户端会感知到，并且需要调整数据库连接信息 一般采用这样的架构，一定会伴随一个负责管理后端的组件，比如 Zookeeper，尽量让业务端只专注于业务逻辑开发 带 proxy 的架构 § 对客户端友好，连接维护、后端信息等工作都由 proxy 完成 对后端维护团队的要求更高，需要高可用，整体架构比较复杂 强制走主库 § 对于必须要拿到最新结果的请求，强制将其发到主库上 对于可以读到旧数据的请求，才将其发到从库上 判断主备无延迟方案 § 每次从库执行查询请求前，先判断 seconds_behind_master 是否已经等于 0。如果还不等于 0 ，那就必须等到这个参数变为 0 才能执行查询请求。 seconds_behind_master 的单位是秒，可能精度不够 对比位点 Master_Log_File 和 Read_Master_Log_Pos，表示的是读到的主库的最新位点；Relay_Master_Log_File 和 Exec_Master_Log_Pos，表示的是备库执行的最新位点。如果Master_Log_File 和 Relay_Master_Log_File、Read_Master_Log_Pos 和 Exec_Master_Log_Pos这两组值完全相同，就表示接收到的日志已经同步完成。 对比 GTID 集合 Auto_Position=1 ，表示这对主备关系使用了 GTID 协议。Retrieved_Gtid_Set，是备库收到的所有日志的 GTID 集合；Executed_Gtid_Set，是备库所有已经执行完成的 GTID 集合。如果这两个集合相同，也表示备库接收到的日志都已经同步完成。 后两种准确度更高，但还不够 可能还有一部分日志，处于客户端已经收到提交确认，而备库还没收到日志的状态。 配合 semi-sync（半同步复制） 方案 § semi-sync 的设计 事务提交的时候，主库把 binlog 发给从库； 从库收到 binlog 以后，发回给主库一个 ack，表示收到了； 3。 主库收到这个 ack 以后，才能给客户端返回“事务完成”的确认。 如果启用了 semi-sync，就表示所有给客户端发送过确认的事务，都确保了备库已经收到了这个日志。 存在问题 一主多从的时候，在某些从库执行查询请求会存在过期读的现象； 因为主库只要等到一个从库的 ack，就开始给客户端返回确认 在持续延迟的情况下，可能出现过度等待的问题。 如果在业务更新的高峰期，主库的位点或者 GTID 集合更新很快，那么上面的两个位点等值判断就会一直不成立，很可能出现从库上迟迟无法响应查询请求的情况。 等主库位点方案 § 主备持续延迟一个事务 trx1 事务更新完成后，客户端马上执行 show master status 得到当前主库执行到的 File 和 Position； 选定一个从库执行查询语句； 在从库上执行 select master_pos_wait(File, Position, 1)； a.</description>
     <pubDate>Tue, 22 Aug 2023 15:19:56 GMT</pubDate>
   </items><items>
     <title>29｜如何判断一个数据库是不是出问题了？</title>
