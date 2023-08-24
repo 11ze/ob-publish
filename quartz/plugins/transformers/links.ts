@@ -64,7 +64,7 @@ export const CrawlLinks: QuartzTransformerPlugin<Partial<Options> | undefined> =
                   const canonicalDest = url.pathname
                   const [destCanonical, _destAnchor] = splitAnchor(canonicalDest)
                   const simple = simplifySlug(destCanonical as FullSlug)
-                  outgoing.add(decodeURIComponent(simple) as SimpleSlug)
+                  outgoing.add(simple)
                 }
 
                 // rewrite link internals if prettylinks is on
