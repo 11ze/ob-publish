@@ -11,7 +11,7 @@ const config: QuartzConfig = {
       tagId: "G-SZZLS6FREP",
     },
     baseUrl: "wangze.tech",
-    ignorePatterns: ["private", "Templates", "Extras", ".obsidian"],
+    ignorePatterns: ["private", "Templates", "Extras"],
     defaultDateType: "created",
     theme: {
       typography: {
