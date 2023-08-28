@@ -10,835 +10,835 @@
     <link>https://wangze.tech/00｜开篇词</link>
     <guid>https://wangze.tech/00｜开篇词</guid>
     <description> 1 Redis 的“两大维度，三大主线 应用纬度 缓存应用 集群应用 数据结构应用 系统纬度 高性能主线 线程模型 数据结构 AOF epoll 网络框架 高可靠主线 主从复制 哨兵机制 RDB 高可扩展性主线 数据分片 负载均衡 2 Redis 问题画像图 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>01｜基础架构：一个键值数据库包含什么？</title>
     <link>https://wangze.tech/01｜基础架构：一个键值数据库包含什么？</link>
     <guid>https://wangze.tech/01｜基础架构：一个键值数据库包含什么？</guid>
     <description> 操作模块 PUT：新写入或更新一个 key-value 对，如 PUT hello world GET：根据 K 读取 V DELETE：根据 K 删除整个 KV 对 SCAN：根据一段 key 的范围返回相应的 value 值 访问模式 通过函数库调用的方式供外部应用使用 通过网络框架以 Socket 通信的形式对外提供键值对操作 I/O 模型设计 单线程、多线程、多进程 索引模块 让键值数据库根据 key 找到 value 的存储位置，进而执行操作 Memcached 和 Redis 采用哈希表作为 key-value 索引 内存的高性能随机访问特性和哈希表 O(1) 的操作复杂度相匹配 存储模块 分配器 内存：读写快，掉电数据丢失 外存：读写慢，数据持久化 持久化 对于每个键值对都进行落盘保存 数据可靠 性能差 周期性把内存中的键值数据保存到文件 数据可能丢失 性能较好 从 SimpleKV 到 Redis 的架构图转变 从键值数据库开发和运维的辅助工具上做对比 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>01｜基础架构：一条 SQL 查询语句是如何执行的？</title>
     <link>https://wangze.tech/01｜基础架构：一条-SQL-查询语句是如何执行的？</link>
     <guid>https://wangze.tech/01｜基础架构：一条-SQL-查询语句是如何执行的？</guid>
     <description>MySQL 的逻辑链接架构图 § 1. 客户端连接数据库 § wait_timeout 参数控制连接器长时间没操作自动断开的时间 只有新建的连接才会使用新的权限设置 尽量使用长连接 使用长连接的问题：可能内存疯涨，因为 MySQL 在执行过程中临时使用的内存是管理在连接对象里面，在连接断开的时候才释放 两个解决方案 定期断开长连接。使用一段时间，或者程序里面判断执行过一个占用内存的大查询后，主动断开连接，之后要查询再重连 MySQL 5.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>02｜数据结构：快速的 Redis 有哪些慢操作？</title>
     <link>https://wangze.tech/02｜数据结构：快速的-Redis-有哪些慢操作？</link>
     <guid>https://wangze.tech/02｜数据结构：快速的-Redis-有哪些慢操作？</guid>
     <description> Redis 数据类型和底层数据结构的对应关系 Redis 使用一个哈希表 O(1) 保存所有键值对 全局哈希表（数组） 哈希桶 哈希桶 entry entry *key String *value String｜List｜Hash｜Set｜Sorted Set 每个数组元素称为一个哈希桶（指针） 每个哈希桶保存多个键值对数据 计算键的哈希值就可以知道对应的哈希桶位置 哈希冲突 两个 key 的哈希值和哈希桶计算对应关系时，正好落在了同一个哈希桶中。 解决方案：链式哈希。同一个哈希桶中的多个元素用一个链表来保存，它们之间依次用指针连接。 当一个桶中的元素过多，访问时间变长时 采用两个全局哈希表，当哈希表 1 不够大时 copy 到更大的哈希表 2 问题：一次性复制会导致 Redis 线程阻塞 rehash：增加现有哈希桶的数量 装载因子的大小 = 所有 entry 个数除以哈希表的哈希桶个数 &lt; 1 或者在进行 RDB 和 AOF 重写时禁止 rehash = 1，且允许进行 rehash 时会进行 rehash = 5，立马开始 rehash 渐进式 rehash 每次处理请求时，顺带拷贝一部分数据到另一个哈希表。 定时任务周期性地搬移一些数据到新的哈希表中 压缩列表 ziplist 的结构 表头 zlbytes：列表长度 zltail：列表尾的偏移量 zllen：entry 个数 表尾 zlend：列表结束，取值默认是 255 元素 entry prev_len 前一个 entry 的长度 1 字节：上一个 entry 的长度 &lt; 254 字节 5 字节：1 字节以外的情况 prev_len的第一个字节表示一个entry的开始，如果等于255表示列表结束，如果等于254那后四个字节才是prev_len的实际值，如果小于254，那就不需要后四个字节，直接使用这一个字节表示prev_len的实际值 当前一节点长度大于等于254时，第一个字节为254(1111 1110)作为标志，后面4个字节组成一个整型用来存储长度 encoding 编码方式，1 字节 content 实际数据 其他操作同整数数组、双向列表 顺序查找 O(N) 跳表 O(logN)：多级索引，通过索引位置的几个跳转，实现数据的快速定位 不同操作的复杂度 单元素操作是基础 每一种集合类型对单个数据实现的增删改查操作 范围操作非常耗时 集合类型中的遍历操作，可以返回集合中的所有数据 用 SCAN 代替遍历操作 统计操作通常高效 集合类型中对集合中所有元素个数的记录 例外情况只有几个 某些数据结构的特殊记录 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>02｜日志系统：一条 SQL 更新语句是如何执行的？</title>
     <link>https://wangze.tech/02｜日志系统：一条-SQL-更新语句是如何执行的？</link>
     <guid>https://wangze.tech/02｜日志系统：一条-SQL-更新语句是如何执行的？</guid>
     <description>Update 语句执行流程 § 重要的日志模块：redo Log § 是 InnoDB 引擎特有的日志 WAL（Write-Ahead Logging）技术 先写日志，再写磁盘 当有一条记录需要更新的时候，InnoDB 引擎先把记录写到 redo log，并更新内存，引擎会在适当的时候，将这个操作记录更新到磁盘，这个更新往往是在系统比较空闲的时候做 redo log 大小固定，比如可以配置为一组 4 个文件，每个文件的大小是 1GB，所有文件组成一块“粉板” write pos 是当前记录的位置，一边写一边后移，写到文件末尾后会回到文件开头 checkpoint 是当前要擦除的位置，也是往后推移并且循环的，擦除记录前要把记录更新到数据文件 write pos 和 checkpoint 之间的是“粉板”上还空着的部分，可以用来记录新的操作。 如果 write pos 追上 checkpoint，表示“粉板”满了，这时候不能再执行新的更新，得停下来先擦掉一些记录，把 checkpoint 推进一下。 crash-safe：有了 redo log，InnoDB 可以保证数据库发生异常重启也不丢失数据 重要的日志模块：binlog（归档日志） § 是 Server 层的日志 statement 格式：记 SQL 语句 row 格式：记录行的内容，记两条，更新前和更新后都有 建议使用 Redo Log 和 Binlog 的不同 § redo log 是 InnoDB 引擎特有的；binlog 是 MySQL 的 Server 层实现的，所有引擎都可以使用。 redo log 是物理日志，记录的是“在某个数据页上做了什么修改”；binlog 是逻辑日志，记录的是这个语句的原始逻辑，比如“给 ID=2 这一行的 c 字段加 1 ”。 逻辑：其他引擎都能用，都讲得通这个“逻辑” 物理：只有“我“能用，别人没有共享我的”物理格式“ redo log 是循环写，空间固定会用完；binlog 是追加写入。 “追加写”是指 binlog 文件写到一定大小后会切换到下一个，并不会覆盖以前的日志。 两阶段提交 § 提交流程 redolog 的 prepare 阶段 写 binlog redolog 的 commit 在 2 之前崩溃时，重启恢复后发现没有 commit，回滚；备份恢复，没有 binlog。一致 在 3 之前崩溃，重启恢复后发现虽然没有 commit，但满足 prepare 和 binlog 完整，自动 commit；备份恢复，有 binlog。一致 设置建议 § innodb_flush_log_at_trx_commit 建议设置成 1，表示每次事务的 redo log 都直接持久化到磁盘，保证 MySQL 异常重启之后数据不丢失 sync_binlog 建议设置成 1，表示每次事务的 binlog 都持久化到磁盘，保证 MySQL 异常重启之后 binlog 不丢失 答疑文章（一） § MySQL 怎么知道 Binlog 是完整的？ § 一个事务的 binlog 有完整格式： statement 格式的 binlog，最后会有 COMMIT； row 格式的 binlog，最后会有一个 XID event。 MySQL 5.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>03｜事务隔离：为什么你改了为还看不见？</title>
     <link>https://wangze.tech/03｜事务隔离：为什么你改了为还看不见？</link>
     <guid>https://wangze.tech/03｜事务隔离：为什么你改了为还看不见？</guid>
     <description>隔离型与隔离级别 § 读未提交 read uncommitted 一个事务还没提交时，它做的变更就能被别的事务看到。 读提交 read committed 一个事务提交之后，它做的变更才会被其他事务看到。 可重复读 repeatable read 一个事务执行过程中看到的数据，总是跟这个事务在启动时看到的数据是一致的。当然在可重复读隔离级别下，未提交变更对其他事务也是不可见的。 串行化 serializable 对于同一行记录，“写”会加“写锁”，“读”会加“读锁”。当出现读写锁冲突的时候，后访问的事务必须等前一个事务执行完成，才能继续执行。 设置隔离级别 select @@transaction_isolation; set @global transaction isolation level read committed; 事务隔离的实现 § 以可重复读为例 每条记录在更新的时候会同时记录一条回滚操作 记录上的最新值，通过回滚操作，都可以得到前一个状态的值 系统会判断，当没有事务再需要用到这些回滚日志时，回滚日志才会被删除 如事务提交之前都可能用到 ⚠️ 不要使用长事务 MySQL 5.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>03｜高性能 IO 模型：为什么单线程 Redis 那么快？</title>
     <link>https://wangze.tech/03｜高性能-IO-模型：为什么单线程-Redis-那么快？</link>
     <guid>https://wangze.tech/03｜高性能-IO-模型：为什么单线程-Redis-那么快？</guid>
     <description> Redis 的网络 IO 和键值对读写由一个线程完成 当客户端和 Reids 的网络连接断开时，Redis 不会等待客户端恢复连接 Redis 的其他功能，比如持久化、异步删除、集群数据同步等，由额外的线程执行 单线程设计机制 多线程编程模式：共享资源的并发访问控制问题 在内存中完成大部分操作 + 高效的数据结构 多路复用机制（select/epoll 机制） 该机制允许内核中同时存在多个监听套接字和已连接套接字 内核监听这些套接字上的连接请求或数据请求，一旦有请求到达，就交给 Redis 处理 基于事件的回调机制 事件队列 基于多路服用的 Redis 高性能 IO 模型 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>04｜AOF 日志：宕机了，Redis 如何避免数据丢失？</title>
     <link>https://wangze.tech/04｜AOF-日志：宕机了，Redis-如何避免数据丢失？</link>
     <guid>https://wangze.tech/04｜AOF-日志：宕机了，Redis-如何避免数据丢失？</guid>
     <description> Redis 作为缓存使用 从数据库读取数据恢复 当需要恢复时数据库压力大、Redis 响应慢 写后日志：先执行命令把数据写入内存，再记录日志 不会阻塞当前的写操作 记录的命令没有错误 没来得及记录时，宕机会丢失数据 在主线程写，写盘压力大可能导致后续操作无法执行 日志格式示例 Redis 命令 set testkey testvalue AOF 文件（Append Only File） *3：命令有三个部分 $3：命令、键或值一共有多少字节 每个 $n 下一行跟着命令、键或值 三种写回策略 Always：同步写回 Everysec：每秒写回 优先使用，在可靠性和性能取了一个平衡 No：操作系统控制的写回 重写机制 如多个操作同一个键值的命令合并为一个命令 避免重写日志过大 直接根据数据库里数据的最新状态，生成这些数据的插入命令，作为新日志 一个拷贝 由后台子进程 bgrewiteaof 完成，避免阻塞主线程 fork 创建 bgrewriteaof 子进程时，阻塞主线程，如果实例内存大，执行时间还会更长 共享主线程内存，主线程执行新写或修改操作时会申请新的内存空间保存新的数据，如果操作的是 bigkey，可能因为申请大空间而面临阻塞风险 两处日志 正在使用的 AOF 日志 + 新的重写日志 避免竞争文件系统的锁 减小日志大小 AOF 非阻塞重写过程 适用于读操作比较多的场景 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>04｜深入浅出索引（上）</title>
     <link>https://wangze.tech/04｜深入浅出索引（上）</link>
     <guid>https://wangze.tech/04｜深入浅出索引（上）</guid>
     <description> 每遇到一个新数据库，先关注它的数据模型，分析数据库的适用场景 数据库底层存储的核心基于的数据模型：哈希表、有序数组、二叉树、N 叉树等 InnoDB 的索引模型 § 每一个索引在 InnoDB 里面对应一颗 B+ 树 主键索引也被称为聚簇索引（clustered index） 叶子节点内容是整行数据 主键查询只需要搜索主键这颗 B+ 树 整张表的数据存在主键索引中，这就是“聚簇索引”的意思 非主键索引也被称为二级索引（secondary index） 叶子节点内容是主键的值 如果主键索引是多个列，二级索引里包含的主键也是多列 回表：普通索引查询，先拿到主键，再到主键索引树搜索一次 叶子节点是 page（数据页），一个页里面可以存多个行 页大小 16k，则行个数 = 16k/行大小 索引维护 页分裂 新增加一个数据页，挪动部分数据过去，空间利用率降低大概 50% 不挪动数据的新增数据页操作不叫页分裂 当相邻的两个数据页利用率很低的时候会做数据页合并 主键 建议使用自增主键 建议设置 bigint unsigned 使用业务主键的场景（典型的 KV 场景） 只有一个索引 该索引必须是唯一索引 没有主键的表，InnoDB 会默认创建一个 RowId 做主键 ⚠️ 加主键会重建表 索引只能定位到 page，page 内部是个有序数组，用二分法 数据页中有页目录，页目录的 key 为 id ，value 为槽位 二分搜索页目录定位到槽位中的行记录 内存数据页和磁盘数据页是一一对应的，持久化的时候直接覆盖写进去 叶子节点中的数据连接方式 叶子内是单向链表 叶子间是双向链表 什么时候需要重建索引 § 索引可能因为删除操作、页分裂等原因，导致数据页有空洞 即空间未释放 重建索引的过程会创建一个新的索引，把数据按顺序插入，页面的利用率最高，更省空间 思考题 § 重建普通 k 索引 alter table T drop index k; alter table T add index(k); 重建主键索引 alter table T drop primary key; alter table T add primary key(id); 对于上面这两个重建索引的做法，说出你的理解。 重建索引 k 的做法合理，可以达到省空间的目的 重建主键的过程不合理 为什么不合适？ 删除或创建主键都会将整个表重建，导致第一个语句白做 更好的方法 使用 alter table T engine=InnoDB 代替 触发 MySQL 重建该表，并进行碎片处理 5.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>05｜内存快照：宕机后，Redis 如何实现快速恢复？</title>
     <link>https://wangze.tech/05｜内存快照：宕机后，Redis-如何实现快速恢复？</link>
     <guid>https://wangze.tech/05｜内存快照：宕机后，Redis-如何实现快速恢复？</guid>
     <description> 和 AOF 相比，RDB 记录某一时刻的数据，恢复时直接把 RDB 文件读入内存 类比拍照 全量快照 生成 RDB 文件的方案 save：在主线程中执行，会导致阻塞 bgsave：创建一个子进程，复制主线程的页表，专门写入 RDB 文件，避免阻塞。默认配置 共享主线程的所有内存数据 快照时数据能修改吗？ 读操作：bgsave 子进程和主线程互不影响 能 写操作：生成被修改的一块数据的副本，bgsave 子进程继续写 RDB 文件，主线程在副本上进行修改 写时复制：主线程在有写操作时，才会把这个新写或修改后的数据写入到一个新的物理地址中，并修改自己的页表映射 可以每秒做一次快照吗？ 磁盘压力 fork bgsave 子进程的过程会阻塞主线程 混合使用 AOF 和内存快照 AOF 只保留从最后一次快照开始的改动 数据不能丢失时，内存快照和 AOF 的混合使用是一个很好的选择 如果允许分钟级别的数据丢失，可以只使用 RDB 如果只用 AOF，优先使用 everysec 的配置选项，因为它在可靠性和性能之间取了一个平衡 持久化有关的风险 服务器内存不足 写时复制为写、修改操作涉及的数据分配相同大小的内存副本 子进程也会占用 CPU 资源 需要开启定时 RDB 和 AOF 重写时进程一定不要绑定 CPU：子进程会与父进程争夺同一个 CPU 资源（具体搜索关键字找到后面有关绑定 CPU 的章节） .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>05｜深入浅出索引（下）</title>
     <link>https://wangze.tech/05｜深入浅出索引（下）</link>
     <guid>https://wangze.tech/05｜深入浅出索引（下）</guid>
     <description>如何安排联合索引内的字段顺序 § 第一原则：如果通过调整顺序，可以少维护一个索引，那么这个顺序往往就是需要优先考虑采用的。 如果既有联合查询，又有基于 a、b 各自的查询，此时要考虑空间 比如 a 比 b 大，就建 (a, b) + 单 b 还有其他情况，需要结合业务分析 查询语句的 where 里面各个判断调换顺序不影响 § 覆盖索引 § 如果查询条件使用的是普通索引（或是联合索引的最左原则字段），查询结果是联合索引的字段或是主键，不用回表操作，直接返回结果 要全用上必须是条件 =，不能是 &gt; 或 &lt; 在一个市民信息表上，是否有必要将身份证号和名字建立联合索引？ § 如果有一个高频请求是根据身份证号查询姓名，就有必要 前缀索引 § 最左前缀原则 可以是联合索引的最左 N 个字段 也可以是字符串索引的最左 M 个字符 索引下推 § MySQL 5.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>06｜全局锁和表锁：给表加个字段怎么有这么多阻碍？</title>
     <link>https://wangze.tech/06｜全局锁和表锁：给表加个字段怎么有这么多阻碍？</link>
     <guid>https://wangze.tech/06｜全局锁和表锁：给表加个字段怎么有这么多阻碍？</guid>
     <description>全局锁 § 典型使用场景：做全库逻辑备份。 使用 MySQL 提供的加全局读锁的方法 Flush tables with read lock（FTWRL） 整个库进入只读状态 执行 FTWRL 命令之后由于客户端发生异常断开，MySQL 会自动释放这个全局锁，整个库回到可以正常更新的状态。 推荐：在可重复读隔离级别下开启一个事务 备份期间可以正常读写数据库 需要所有的表的引擎都支持（全库备份） mysqldump 备份工具使用 -single-transaction 参数，就会开启一个事务，确保拿到一致性视图 ⚠️ 为什么不使用 set global readonly=true？建议用 FTWRL 在有些系统中，readonly 的值会被用来做其他逻辑，比如用来判断一个库是主库还是备库。 将整个库设置为 readonly 之后，如果客户端发生异常，则数据库就会一直保持 readonly 状态，这样会导致整个库长时间处于不可写状态，风险较高。 readonly 对 super 权限的用户无效 表级锁 § 表锁 语法：lock tables … read/write unlock tables 主动释放锁，或者客户端断开时自动释放 除了会限制别的线程的读写，也会限定本线程自己接下来的操作对象 不推荐使用，若引擎不支持事务，安排升级换引擎。 升级后把使用 lock/unlock tables 语法的地方换成 begin 和 commit。 元数据锁 MDL（metadata lock） 不需要显式使用，在访问一个表的时候会被自动加上 MySQL 5.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>06｜数据同步：主从库如何实现数据一致？</title>
     <link>https://wangze.tech/06｜数据同步：主从库如何实现数据一致？</link>
     <guid>https://wangze.tech/06｜数据同步：主从库如何实现数据一致？</guid>
     <description> 写操作：首先到主库执行，主库将写操作同步给从库 同步流程 主从库第一次同步的流程 增量复制流程 全量复制 第一次同步无法避免 一个实例的数据库不要太大（几 GB 级别合适） 通过 RDB 文件 二进制文件 不用 AOF 的原因 需要打开 AOF 功能 有很多场景数据不敏感不需要开启 AOF 功能 刷盘策略选择不当会严重影响 Redis 性能 比 RDB 文件大 在从库端进行恢复时，用 RDB 的恢复效率高于用 AOF 增量复制 通过命令传播的长连接复制 完成全量复制后，主库通过长连接将后续陆续收到的命令操作同步给从库，可以避免频繁建立连接的开销 网络断连时 repl_backlog_buffer 主 -&gt; 从 -&gt; 从 从库执行 replicaof IP PORT IP 上的实例执行 bgsave 命令生成 RDB 文件后发给从库 从库清空当前数据库 主库会在内存用专门的 replication buffer 记录 RDB 文件生成后收到的所有写操作 将 replication buffer 的修改操作发给从库 分担全量复制时的主库压力 replication buffer 和 repl_backlog_buffer 的区别 replication buffer：复制缓冲区 从库也相当于一个客户端，会单独分配一个 client buffer，这里用来传播用户的写命令到从库，通常把它叫做 replication buffer 主节点开始和一个从节点进行全量同步时，会为从节点创建一个输出缓冲区，这个缓冲区就是复制缓冲区 作用：主节点向从节点发送 RDB 文件时，如果又接收写操作，会暂存在缓冲区，等 RDB 文件传输完成，且从节点加载完成后，主节点把缓冲区中的写命令发给从节点进行同步 对主从同步的影响：如果传输和加载 RDB 文件耗时长，同时主库接收的写命令操作较多，导致缓冲区写满溢出，主库会强制关闭和从库的网络连接，重新开始全量同步 通过 client-output-buffer-limit-slave 配置项增加缓冲区大小 client buffer 超过限制时，主库会强制断开这个 client 连接 此时从库再次发起复制请求，可能导致恶性循环 repl_backlog_buffer：复制积压缓冲区 是一个环形缓冲区：为了在从库断开之后能找到主从差异数据而设计 记录写操作 所有从库共享 不同的从库在进行恢复时，会把自己的复制进度（slave_repl_offset）发给主库，主库就可以和它独立同步 主从断开太久，主库写操作节点越过从库在 repl_backlog_buffer 的读节点时，从库只能全量复制 repl_backlog_size = 缓冲空间大小 * 2 缓冲空间大小 = 主库写入命令速度 * 操作大小 - 主从库间网络传输命令速度 * 操作大小 过小可能导致从库复制进度赶不上主库，触发全量复制 repl_backlog_buffer 的使用 主节点在把接收到的写命令同步给从节点时，同时会把这些写命令写入复制积压缓冲区。一旦从节点发生网络闪断，再次和主节点恢复连接后，从节点就会从复制积压缓冲区中，读取断连期间主节点接收到的写命令，进而进行增量同步 父节点图2 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>07｜哨兵机制：主库挂了，如何不间断服务？</title>
     <link>https://wangze.tech/07｜哨兵机制：主库挂了，如何不间断服务？</link>
     <guid>https://wangze.tech/07｜哨兵机制：主库挂了，如何不间断服务？</guid>
     <description> 哨兵机制的基本流程 监控：判断主从库下线 主观下线 哨兵进程会使用 PING 命令检测它自己和主、从库的网络连接情况，用来判断实例的状态。 如果哨兵发现主库或从库对 PING 命令的响应超时了，哨兵就会先把它标记为“主观下线”。 从库会被直接标记为“主观下线”。 客观下线 大多数的哨兵判断主库主观下线，主库才会标记为客观下线 减少误判 哨兵集群：哨兵机制通常采用多实例组成的集群模式部署 选主：选出新主库（筛选 + 打分） 按照一定的筛选条件去掉不符合条件的从库 在线状态 网络状态 配置项（ms）down-after-milliseconds * 10 如果在 down-after-milliseconds 毫秒内，主从节点都没有通过网络联系上，我们就可以认为主从节点断连了 如果发生断连的次数超过了 10 次，就说明这个从库的网络状况不好 此参数可以调节哨兵的敏感程度 按照一定的规则给剩下的从库逐个打分 从库优先级 通过 slave-priority 配置项设置 从库复制进度 和旧主库同步程度最接近的从库得分高 salve_repl_offset 最大 从库 ID 号 在优先级和复制进度都相同的情况下，ID 号最小的从库得分最高，会被选为新主库。 得分最高的作为新主库 新主库的选择过程 通知 让从库执行 replicaof 与新主库同步 4.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>07｜行锁功过：怎么减少锁对性能的影响？</title>
     <link>https://wangze.tech/07｜行锁功过：怎么减少锁对性能的影响？</link>
     <guid>https://wangze.tech/07｜行锁功过：怎么减少锁对性能的影响？</guid>
     <description> MyISAM 不支持行锁 InnoDB 的行锁 § 两阶段锁协议：事务中，行锁在需要的时候才加上，但要等到事务结束时释放。 如果你的事务中需要锁多个行，要把最可能造成锁冲突、影响并发度的锁尽量往后放。 当并发系统中不同线程出现循环资源依赖，涉及的线程都在等待别的线程释放资源时，就会导致这几个线程都进入无限等待的状态，称为死锁。 两种策略 直接进入等待，直到超时。 超时时间可以通过 innodb_lock_wait_timeout 设置 默认 50s。 发起死锁检测，发现死锁后，主动回滚死锁链条中的某一个事务，让其他事务得以继续执行。 将参数 innodb_deadlock_detect 设置为 on，表示开启这个逻辑。 死锁：每当一个事务被锁，就要看看它所依赖的线程有没有被别的锁住，如此循环，最后判断是否出现连循环等待。 假设现在已经有 999 个线程在同一行等锁，新来一个请求也要访问这个行，他要判断有没有死锁要判断 1000 次。然后这个结果乘以 1000。 正常情况下采用第二种策略，默认也是第二种。 怎么解决热点行更新导致的性能问题？ 问题的症结：死锁检测要耗费大量的 CPU 资源。 确保业务一定不会出现死锁，关闭死锁检测（不推荐） 控制并发度。 在中间件或修改 MySQL 源码实现：对于相同行的更新，在进入引擎之前排队，这样 InnoDB 就不会有大量的死锁检测工作。 如果做不到第 1 点，可以考虑从设计上优化 考虑通过将一行改成逻辑上的多行来减少锁冲突。 以影院账户为例，可以考虑放在多条记录上，比如 10 个记录，影院的账户总额等于这 10 个记录的值的总和。这样每次要给影院账户加金额的时候，随机选其中一条记录来加。这样每次冲突概率变成原来的 1/10，可以减少锁等待个数，也就减少了死锁检测的 CPU 消耗。 思考题 § 如果要删除一个表里面的前 1w 行数据，选择哪一种方法（选 2） 直接执行 delete from T limit 10000; 单个语句占用时间长，锁的时间也比较长； 大事务会导致主从延迟。 在一个连接中循环执行 20 次 delete from T limit 500; 在 20 个连接中同时执行 delete from T limit 500; 人为造成锁冲突。 评论区 § 关于思考题 第二种方法难道不会引起数据一致性问题吗？如果在 InnoDB 中开启了自动事务并且没有显式用 begin, commit 来做的话，在上一次循环结束和下一次循环开始之间如果有其他事务插入了新数据，而且正好位置也在前面 500条，那不就不一致了么 加个 order by id（假设 id 是表的主键） 排序后新增的 id 肯定大于要删除的最大 id 如果有多种锁，必须全部不互斥才能并行。 MySQL 没有嵌套事务，开启下一个会自动提交上一个 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>08｜事务到底是隔离的还是不隔离的？</title>
     <link>https://wangze.tech/08｜事务到底是隔离的还是不隔离的？</link>
     <guid>https://wangze.tech/08｜事务到底是隔离的还是不隔离的？</guid>
     <description>事务的启动时机 § begin/start transaction 命令之后的第一个操作 InnoDB 表的语句，事务才真正启动。 马上启动一个事务：start transaction with consistent snapshot。 事务自动提交设置，默认为 1，即除非显示声明一个事务的开始，否则每一个查询都会被当做独立的事务被处理。 整个专栏，如果没有特别说明，都默认 autocommit = 1。 MySQL 里的两个“视图”的概念 § 一个是 view。是一个用查询语句定义的虚拟表，在调用的时候执行查询语句并生成结果。 创建视图的语法是 create view …，查询方法和表一样。 另一个是 InnoDB 在实现 MVCC（多版本并发控制） 时用到的一致性读视图（consistent read view），用于支持 RC（Read Committed，读提交）和 RR（Repeatable Read，可重复读）隔离级别的实现。 视图没有物理结构，作用是事务执行期间用来定义“我能看到什么数据” “快照”在 MVCC 里是怎么工作的？ § 秒级创建快照的能力，快照是基于整库的。 InnoDB 的行数据有多个版本（row），每个版本有自己的 row trx_id（严格递增）。 图中的虚线就是 undo log。 在实现上，InnoDB 为每个事务构造了一个数组，用来保存这个事务启动瞬间，当前正在“活跃”的所有事务 ID。 活跃：启动了但还没提交。 数组里事务 ID 的最小值记为低水位。 当前系统里面已经创建过的事务 ID 的最大值加 1 记为高水位。 这个视图数组和高水位，就组成了当前事务的一致性视图（read-view）。 数据版本的可见性规则：基于数据的 row trx_id 和一致性视图的对比结果得到的。 绿色：表示这个版本是已提交的事务或者是当前事务自己生成的，可见。 红色：表示是由将来启动的事务生成的，不可见。 黄色 a）若 row trx_id 在数组中，表示这个版本是由还没提交的事务生成的，不可见； b）若 row trx_id 不在数组中，表示这个版本是已经提交了的事务生成的，可见。 翻译：对于一个事务视图，除了自己的更新总是可见以外，有三种情况 版本未提交，不可见； 版本已提交，但是是在视图创建后提交的，不可见； 版本已提交，而且是在视图创建前提交的，可见。 每个事务或者语句有自己的一致性视图。普通查询语句是一致性读，一致性读会根据 row trx_id 和一致性视图确定数据版本的可见性。 对于可重复读，查询只承认在事务启动前就已经提交完成的数据； 对于读提交，查询只承认在语句启动前就已经提交完成的数据； 更新逻辑 § 更新数据都是先读后写。 当前读：总是读取已经提交完成的最新版本。 除了 update 语句，select 语句如果加锁，也是当前读。 加上 lock in share mode 或 for update。 事务的可重复读是怎么实现的？ § 可重复读的核心是一致性读；而事务更新数据的时候，只能用当前读。如果当前的记录的行锁被其他事务占用的话，就需要进入锁等待。 读提交的逻辑和可重复读的逻辑类似，最主要的区别： 在可重复读隔离级别下，只需要在事务开始的时候创建一致性视图，之后事务里的其他查询都共用这个一致性视图； 在读提交隔离级别下，每一个语句执行前都会重新算出一个新的事务。 为什么表结构不支持“可重复读”？ § 因为表结构没有对应的行数据，也没有 row trx_id，因此只能遵循当前读的逻辑。 MySQL 8.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>08｜哨兵集群：哨兵挂了，主从库还能切换吗？</title>
     <link>https://wangze.tech/08｜哨兵集群：哨兵挂了，主从库还能切换吗？</link>
     <guid>https://wangze.tech/08｜哨兵集群：哨兵挂了，主从库还能切换吗？</guid>
     <description> 本质上哨兵就是一个运行在特定模式下的 Redis 实例。 基于 pub/sub 机制的哨兵集群组成过程（发布/订阅机制） 只有订阅了同一个频道的应用才能通过发布的消息进行信息交换 哨兵通过 sentinel:hello 频道互相发现、通信 给主库发送 INFO 命令拿到从库列表，哨兵根据列表上的连接信息和从库建立连接并监控 基于哨兵自身的 pub/sub 功能，实现客户端和哨兵之间的事件通知 重要的频道汇总图 如：客户端执行 SUBSCRIBE * 订阅所有事件 由哪一个哨兵执行主从切换？ 和主库客观下线的判断过程类似，投票仲裁 标记主库“主观下线” 向其他哨兵实例要赞成票 获得仲裁所需的赞成票后，就可以标记主库为“客观下线”。 成功标记主库为客观下线的哨兵实例向其他哨兵发送命令，表明希望执行主从切换 投票（Y/N），确定 Leader 拿到半数以上赞成票 拿到的票数大于等于哨兵配置文件中的 quorum 值 每个哨兵只能投一个赞成票，可以给自己投，第一次必投 Y 所有哨兵同时判断主库主观下线，然后同时得到客观下线的结论时，每个哨兵各自一票（概率极低） 要保证所有哨兵实例的配置是一致的，尤其是主观下线的判断值 down-after-milliseconds 思考题 配置了包含 5 个哨兵实例的集群，quorum 值设为 2。在运行过程中，如果有 3 个哨兵实例都发生故障了，此时，Redis 主库如果有故障，还能正确地判断主库“客观下线”吗？ 能，两个哨兵都给出主观下线的结果，达到了 quorum 的值 如果可以的话，还能进行主从库自动切换吗？ 不能主从切换，选举 Leader 拿不到超过半数的选票（5/2 + 1 = 3） 哨兵实例是不是越多越好呢？ 不是。通信次数增多，故障风险变大，选举时间变长 调大 down-after-milliseconds 值，对减少误判有没有好处？ 有好处，降低误判的概率，但主从切换时间变长，对业务影响时间变久 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>09｜切片集群：数据增多了，是该加内存还是加实例？</title>
     <link>https://wangze.tech/09｜切片集群：数据增多了，是该加内存还是加实例？</link>
     <guid>https://wangze.tech/09｜切片集群：数据增多了，是该加内存还是加实例？</guid>
     <description> 纵向扩展：升级单个 Redis 实例的资源配置，包括增加内存容量、增加磁盘容量、使用更高配置的 CPU 实施起来简单、直接 当使用 RDB 对数据进行持久化时，如果数据量增加，需要的内存也会增加，主线程 fork 子进程时就可能会阻塞（耗时长） 不要求持久化保存 Redis 数据时是一个不错的选择 受到硬件和成本的限制 横向扩展：增加当前 Redis 实例的个数 扩展性更好 数据切片后，在多个实例之间如何分布？ 客户端怎么确定想要访问的数据在哪个实例上？ 切片集群是一种保存大量数据的通用机制，可以有不同的实现方案 Redis Cluster（官方） 采用哈希槽（Hash Slot）处理数据与实例之间的映射关系 共有 16384 个哈希槽，个数在客户端和服务端写死 根据键值对的 key，按照 CRC16 算法 计算一个 16 bit 的值 用值对 16384 取模，得到 0～16383 范围内的模数（哈希槽编号） 数据映射关系：键的哈希值 =&gt; 哈希槽 =&gt; 不同的实例 部署 手动或自动将所有槽分配完后，集群才能正常工作 cluster create 命令创建集群，自动将槽平均分布在实例上 cluster meet 手动建立实例间的连接形成集群，再使用 cluster addslots 制定每个实例上的哈希槽个数 客户端如何定位数据？ Redis 实例会把自己的哈希槽信息发给和它相连接的其他实例，实例相互连接后每个实例都有所有哈希槽的映射关系 客户端将哈希槽信息缓存在本地 先计算键对应的哈希槽 然后给相应的哈希槽发送请求 运维人员手动触发进行负载均衡和数据迁移 常见的变化 在集群中，实例有新增或删除，Redis 需要重新分配哈希槽 为了负载均衡，Redis 需要把哈希槽在所有实例上重新分布一遍 重定向机制 当客户端把一个键值对的操作请求发给一个实例时，如果这个实例上并没有这个键值对映射的哈希槽，这个实例就会给客户端返回 MOVED 命令响应结果，这个结果中就包含了新实例的访问地址 GET hello:key｜(error) MOVED 13320 172.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>09｜普通索引和唯一索引，应该怎么选择？</title>
     <link>https://wangze.tech/09｜普通索引和唯一索引，应该怎么选择？</link>
     <guid>https://wangze.tech/09｜普通索引和唯一索引，应该怎么选择？</guid>
     <description>查询性能 § 「where = 」时，唯一索引找到了立马返回，普通索引需要找到下一个不等于的值 因为 InnoDB 的数据是按数据页为单位读写，所以性能差距微乎其微 对于整形字段，一个 16KB 的数据页可以放近千个 key Change Buffer § 当需要更新一个数据页时，如果数据页在内存中就直接更新 如果数据页还没有在内存中，在不影响数据一致性的前提下，InnoDB 会将这些更新操作缓存在 change buffer 中 下次查询需要访问这个数据页的时候，将数据页读入内存，然后执行第 2 步缓存在 change buffer 中与这个页有关的操作 这个过程称为 merge 除了访问数据页会触发 merge，系统有后台线程会定期 merge 在数据库正常关闭的过程中，也会执行 merge 操作 change buffer 是可以被持久化的数据 在内存中有拷贝，也会被写到磁盘上 减少读磁盘的次数，语句的执行速度得到明显提升 数据读入内存需要占用 buffer pool，所以 change buffer 这种方式还能够避免占用内存，提高内存利用率 什么条件下可以使用 change buffer？ 只有普通索引可以使用 唯一索引的更新不能使用 所有的更新操作都要先判断是否违反唯一性约，必须要将数据页读入内存才能判断 change buffer 用的是 buffer pool 里的内存，因此不能无限增大 通过参数 innodb_change_buffer_max_size 动态设置，如 50 表示只能占用 buffer pool 的 50% 更新数据的处理流程 更新的目标页在内存中 唯一索引：找到要插入的位置，判断没有冲突，插入 普通索引：找到要插入的位置，插入 不在内存 唯一索引：读入内存，判断没有冲突，插入 普通索引：将更新记录在 change buffer，完成 使用场景 写多读少的业务：效果最好，如账单类、日志类的系统 视情况可以尽量开大 写完马上做查询的业务：不适用，起反作用 change buffer 和 redo log redo log 主要节省随机写磁盘的 IO 消耗（转成顺序写） change buffer 主要节省随机读磁盘的 IO 消耗 Merge 的执行流程 § 从磁盘读入数据页到内存（老版本的数据页）； 从 change buffer 里找出这个数据页的 change buffer 记录（可能有多个），依次应用，得到新版数据页； 写 redo log。这个 redo log 包含了数据的变更和 change buffer 的变更。 此时 merge 过程结束，数据页和内存中 change buffer 对应的磁盘位置都还没有修改，属于脏页，之后各自刷回自己的物理数据的操作属于另外一个过程。 因为 redo log 也记录了 change buffer 的操作，所以崩溃恢复的时候能找回。 评论区 § 系统表空间和数据表空间两个概念 系统表空间用来放系统信息，比如数据字典，对应的磁盘文件是 ibdata1 数据表空间是一个个的表数据文件，对应的磁盘文件就是 表名.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>10｜MySQL 为什么有时候会选错索引？</title>
     <link>https://wangze.tech/10｜MySQL-为什么有时候会选错索引？</link>
     <guid>https://wangze.tech/10｜MySQL-为什么有时候会选错索引？</guid>
     <description>优化器的逻辑 § 扫描行数 一个索引上不同的值越多，这个索引的区分度越好 基数（cardinality）：一个索引上不同的值的个数。 采样统计：InnoDB 默认选择索引的 N 个数据页，统计这些页面上的不同值，得到一个平均值，然后乘以这个索引的页面树，就得到这个索引的基数。 当变更的数据行数超过 1/M 的时候，会自动触发重新做一次索引统计。 两种存储索引统计的方式，通过设置参数 innodb_stats_persistent 的值选择 设置为 on 的时候，表示统计信息会持久化存储。这时，默认的 N 是 20，M 是 10。 设置为 off 的时候，表示统计信息只存储在内存中。这时，默认的 N 是 8，M 是 16。 从普通索引拿到一个值后，回到主键索引查出整行数据的代价也要算。 由于索引统计信息不准确导致的问题，用 analyze table 命令来解决。 是否使用临时表 是否排序 解决其他优化器误判的情况 § 可以在应用端用 force index 来强行指定索引； 也可以通过修改语句来引导优化器； 如，当 xxx order by b limit 1; 最终选择 b 索引而不是 a 索引，可能是因为判断使用 b 就可以不用再排序，此时将语句改成 xxx order by b, a limit 1; 是一个可考虑的解决方法 前提是 SQL 语句语义不变 还可以增加或者删除索引绕过问题 思考题 § 前面我们在构造第一个例子的过程中，通过 session A 的配合，让 session B 删除数据后又重新插入了一遍数据，然后就发现 explain 结果中，rows 字段从 10001 变成 37000 多。而如果没有 session A 的配合，只是单独执行 delete from t、call idata()、explain 这三句话，会看到 rows 字段其实还是 10000 左右。你可以自己验证一下这个结果。 这是什么原因呢？也请你分析一下吧。 session A 还没有提交，所以之前插入的 10 万行数据还不能删除。 所以之前的数据每一行都有两个版本，旧版本是 delete 之前的数据，新版本是标记为 deleted 的数据。 因为这个是主键，主键是直接按照表的行数来估计的，而表的行数，优化器直接用的是 show table status 的值（后面有章节详细讲解）。 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>11｜“万金油”的 String，为什么不好用了？</title>
     <link>https://wangze.tech/11｜“万金油”的-String，为什么不好用了？</link>
     <guid>https://wangze.tech/11｜“万金油”的-String，为什么不好用了？</guid>
     <description> Redis 容量预估工具 String 类型 元数据：内存空间记录数据长度、空间使用等信息 int 编码方式：当保存 64 位有符号整数时，会保存为 8 字节的 Long 类型整数 简单动态字符串（Simple Dynamic String，SDS）结构体的组成 图 SDS buf：字节数组，保存实际数据。为了表示字节数组的结束，Redis 会自动在数组最后加一个“\0”，这就会额外占用 1 个字节的开销 len：占 4 个字节，表示 buf 的已用长度 alloc：也占 4 个字节，表示 buf 的实际分配长度，一般大于 len RedisObject 结构体 图 包含了 8 字节的元数据和一个 8 字节指针 指针指向实际数据，如 SDS int 编码：当保存 Long 类型整数时，指针直接赋值为整数数据 embstr 编码：保存 &lt;= 44 字节的字符串数据，元数据、指针和 SDS 是一块连续的内存区域 raw 编码：保存 &gt; 44 字节的字符串数据，给 SDS 分配独立的空间 哈希表的每一项是一个 dictEntry 的结构体，指向一个键值对 有三个 8 字节的指针 分别指向 key、value和下一个 dictEntry Redis 使用的内存分配库 jemalloc 根据申请的字节数 N，找一个比 N 大的最接近 N 的 2 的幂次数作为分配的空间 减少频繁分配的次数 压缩列表 ziplist 示例：用集合类型保存单值的键值对 图片 ID 1101000060 对象 ID 3302000080 二级编码：hset 1101000 060 3302000080 查找时会遍历压缩列表 Sorted Set 也可以达到类似的效果，不过插入时性能没 Hash 高 需排序，而 Hash 直接插入尾部 Hash 类型设置了用压缩列表保存数据时的两个阈值，一旦超过了阈值，Hash 类型就会用哈希表来保存数据 hash-max-ziplist-entries：表示用压缩列表保存时哈希集合中的最大元素个数 hash-max-ziplist-value：表示用压缩列表保存时哈希集合中单个元素的最大长度 数据一旦用了哈希表保存就不会自动转回成压缩列表 选用 Hash 和 Sorted Set 存储时，节省空间，但设置过期会变得困难 选用 String 存储时，可以单独设置每个 key 的过期时间，还可以设置 maxmemory 和淘汰策略，以这种方式控制整个实例的内存上限 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>11｜怎么给字符串字段加索引？</title>
     <link>https://wangze.tech/11｜怎么给字符串字段加索引？</link>
     <guid>https://wangze.tech/11｜怎么给字符串字段加索引？</guid>
     <description> 直接创建完整索引，比较占用空间； 创建前缀索引，节省空间，但会增加查询扫描次数，并且不能使用覆盖索引； 在索引上找到数据后需要回到主键上拿到完整数据进行判断 即使前缀完全覆盖了字段内容也会回表，因为不确定是不是真的完整数据 倒序存储，再创建前缀索引，用于绕过字符串本身前缀的区分度不够的问题，不支持范围扫描； index index_name(email(6)); 创建 hash 字段索引，查询性能稳定，有额外的存储和计算消耗，需要多一个字段保存 hash 字段，不支持范围扫描。 比如通过 crc32() 函数得到 hash 值 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>12｜为什么我的 MySQL 会“抖”一下？</title>
     <link>https://wangze.tech/12｜为什么我的-MySQL-会“抖”一下？</link>
     <guid>https://wangze.tech/12｜为什么我的-MySQL-会“抖”一下？</guid>
     <description>概念 § 脏页：跟磁盘数据页内容不一致的内存数据页 干净页：跟磁盘数据页内容一致的内存数据页 何时内存中的脏页往硬盘上刷？ § redo log 满 把绿色部分的日志对应的所有脏页都 flush 到磁盘上 之后，write pos 到 cp’ 之间是可以再写入的 redo log 的区域 当需要新的内存页，而内存不够用的时候，就要淘汰一些数据页，空出内存给别的数据页使用。如果淘汰的是“脏页”，就要先将脏页写到磁盘 不直接把内存淘汰掉，下次需求请求的时候从磁盘读入数据页，然后拿 redo log 出来应用的原因：为了保证每个数据页有两种状态 内存里存在，内存里肯定是正确的结果，直接返回； 内存里没有数据，可以肯定数据文件上是正确的结果，读入内存后返回。 MySQL 认为系统“空闲”的时候会刷，忙的时候也会找机会刷 正常关闭数据库时，会把内存的脏页都 flush 到磁盘上，下次启动时直接从磁盘读数据，启动速度快 第 2 种情况是常态 InnoDB 用缓冲池管理内存，缓冲池中的内存页有三种状态 还没有使用：很少 使用了并且是干净页 使用了并且是脏页。 当要读入的数据页没有在内存的时候，必须到缓冲池申请一个数据页 把最久不使用的数据页从内存中淘汰掉 影响性能的情况 一个查询要淘汰的脏页个数太多，会导致查询的响应时间明显变长； 日志写满，更新全部堵住，写性能跌为 0 InnoDB 刷脏页的控制策略 innodb_io_capacity 建议设置成磁盘的 IOPS 通过 fio 工具测试 IOPS fio -filename=$filename -direct=1 -iodepth 1 -thread -rw=randrw -ioengine=psync -bs=16k -size=500M -numjobs=10 -runtime=10 -group_reporting -name=mytest InnoDB 刷盘速度主要参考两个因素 脏页比例 - innodb_max_dirty_pages_pct 脏页比例，默认值 75% - 平时多关注脏页比例，不要让它经常接近 75% - 脏页比例通过 Innodb_buffer_pool_pages_dirty/Innodb_buffer_pool_pages_total 得到，具体的命令参考下面的代码 mysql&gt; select VARIABLE_VALUE into @a from global_status where VARIABLE_NAME = &#039;Innodb_buffer_pool_pages_dirty&#039;;select VARIABLE_VALUE into @b from global_status where VARIABLE_NAME = &#039;Innodb_buffer_pool_pages_total&#039;;select @a/@b; - InnoDB 会根据当前的脏页比例（假设为 M），算出一个范围在 0 到 100 之间的数字，计算这个数字的伪代码类似这样 伪代码 F1(M){ if M&gt;=innodb_max_dirty_pages_pct then return 100; return 100*M/innodb_max_dirty_pages_pct;} redo log 写盘速度 - InnoDB 每次写入的日志都有一个序号，当前写入的序号跟 checkpoint 对应的序号之间的差值，我们假设为 N。InnoDB 会根据这个 N 算出一个范围在 0 到 100 之间的数字，这个计算公式可以记为 F2(N)。F2(N) 算法比较复杂，你只要知道 N 越大，算出来的值越大就好了。 - 根据上述算得的 F1(M) 和 F2(N) 两个值，取其中较大的值记为 R，之后引擎就可以按照 innodb_io_capacity 定义的能力乘以 R% 来控制刷脏页的速度。 - 在 InnoDB 中，innodb_flush_neighbors 参数就是用来控制这个行为的，值为 1 的时候会有上述的“连坐”机制，值为 0 时表示不找邻居，自己刷自己的。 使用 SSD 这类 IOPS 比较高的设备时，建议设为 0 MySQL 8.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>12｜有一亿个 keys 要统计，应该用哪种集合？</title>
     <link>https://wangze.tech/12｜有一亿个-keys-要统计，应该用哪种集合？</link>
     <guid>https://wangze.tech/12｜有一亿个-keys-要统计，应该用哪种集合？</guid>
     <description> 聚合统计 统计多个集合元素的聚合结果，包括： 统计多个集合的共有元素（交集统计） 把两个集合相比，统计其中一个集合独有的元素（差集统计） 统计多个集合的所有元素（并集统计） 使用 Set 并集：SUNIONSTORE user:new user:id user:id:20200803 差集：SDIFFSTORE user:new user:id:20200804 user:id 交集：SINTERSTORE user:id:rem user:id:20200803 user:id:20200804 计算复杂度较高，数据量较大时会导致 Redis 实例阻塞 三个命令都会生成新 key，但从库一般是 readonly（不建议开写），想在从库操作需使用 SUNION、SDIFF、SINTER，这些命令可以计算出结果，但不会生成新 key 可以从主从集群中选择一个从库专门负责聚合计算，或者是把数据读取到客户端，在客户端来完成聚合统计，这样就可以规避阻塞主库实例和其他从库实例的风险了 排序统计 使用有序集合：List、Sorted Set List 是按照元素进入 List 的顺序进行排序的，而 Sorted Set 可以根据元素的权重来排序 数据更新频繁或需要分页显示，优先考虑使用 Sorted Set 二值状态统计 指集合元素的取值就只有 0 和 1 两种 Bitmap 对多个以日期为 key，位值为每个学生签到情况的 Bitmap，执行按位与操作可以统计出连续签到的学生数量 亦或者 uid:sign:3000:202008 2 1 可以统计学生在某段时间的签到情况 优势：节省内存空间 基数统计 指统计一个集合中不重复的元素个数，如统计网页的 UV Set 和 Hash 消耗比较多的内存空间 HyperLogLog 用于统计基数的数据类型 会用就行 标准误算率：0.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>13｜GEO 是什么？还可以定义新的数据类型吗？</title>
     <link>https://wangze.tech/13｜GEO-是什么？还可以定义新的数据类型吗？</link>
     <guid>https://wangze.tech/13｜GEO-是什么？还可以定义新的数据类型吗？</guid>
     <description> LBS：位置信息服务（Location-Based Service） GEO：数据类型 底层数据结构用 Sorted Set 实现 GeoHash 编码方法 基本原理：二分区间，区间编码 对经纬度分别编码，再组合 经度范围 [-180, 180]，纬度范围 [-90, 90] 做 N 次二分区操作，N 可以自定义 根据经纬度值落在左还是右分区得到 1 位编码值 重复 N 次，得到一个 N bit 的数 例：116.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>13｜为什么表数据删掉一半，表文件大小不变？</title>
     <link>https://wangze.tech/13｜为什么表数据删掉一半，表文件大小不变？</link>
     <guid>https://wangze.tech/13｜为什么表数据删掉一半，表文件大小不变？</guid>
     <description>参数 innodb_file_per_table § OFF：表的数据放在系统共享表空间，跟数据字典放在一起 ON：每个 InnoDB 表数据存储在一个以 .ibd 为后缀的文件中 从 5.6.6 版本开始是默认值 建议无论使用哪个版本都将这个值设置为 ON 因为一个表单独存储为一个文件更容易管理 在不需要这个表的时候，通过 drop table 命令可以直接删除这个文件，而如果放在共享表空间，即使表删掉了，空间也不会回收。 下面的内容基于 ON 展开 数据删除流程 § 删除一行记录，InnoDB 引擎只会把这个记录标记为删除 当再插入一个在被删记录位置的记录时，可能复用该位置 如果删掉一整个数据页上的所有记录，则整个数据页可以被复用 数据页的复用跟记录的复用不同 记录的复用只限于符合范围条件的数据 数据页的复用可以复用到任何位置 如果相邻的两个数据页利用率都很小，系统会把两个页的数据合到其中一个页，另一个被标记为可复用 如果用 delete 命令删除整个表的数据，则所有的数据页都会被标记为可复用，但是磁盘上文件不会变小 重建表 § alter table A engine=InnoDB 起到收缩表 A 的作用 5.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>14｜count(*) 这么慢，我该怎么办？</title>
     <link>https://wangze.tech/14｜count(*)-这么慢，我该怎么办？</link>
     <guid>https://wangze.tech/14｜count(*)-这么慢，我该怎么办？</guid>
     <description>count(*) 的实现方式 § MyISAM 引擎把一个表的总行数存在磁盘上，执行时直接返回这个数 InnoDB 引擎每次都需要把数据一行行地从引擎里面读出来，累计行数 以上都是在说没有过滤条件的 `count(*) count 是一行行读数据，是一致性读（快照读），不加锁 其他计数方式 § 在数据库保存计数 新建一个表专门用于计数 全部用 InnoDB 引擎 在修改计数时使用事务 show table status 命令：输出结果有一个 TABLE_ROWS 用于显示这个表当前行数，执行很快，但这个结果是采样估算的（误差可能达到 40% 到 50%） 用缓存系统保存计数 比如用 Redis 将计数保存在缓存系统中的方式，还不只是丢失更新的问题。即使 Redis 正常工作，这个值还是逻辑上不精确的。 两个系统间存在数据不一致的时刻 不同的 Count 用法（InnoDB） § count() 是一个聚合函数，对于返回的结果集，一行行地判断，如果 count 函数的参数不是 NULL，累计值就加 1，否则不加。最后返回累计值。 count(*)、count(主键 id) 和 count(1) 都表示返回满足条件的结果集的总行数；而 count(字段） 则表示返回满足条件的数据行里面，参数“字段”不为 NULL 的总个数。 分析性能差别的时候的原则 server 层要什么就给什么； InnoDB 只给必要的值； 现在的优化器只优化了 count(*) 的语义为“取行数”，其他“显而易见”的优化并没有做。 count(主键 id)：遍历整张表，把每一行的 id 值都取出来，返回给 server 层，server 层拿到后判断是不可能为空的，就按行累加。 count(1)：遍历整张表，但不取值，server 层对于返回的每一行，放一个数字“1”进去，判断是不可能为空的，按行累加。 count(字段) 如果这个“字段”是定义为 not null 的话，一行行地从记录里面读出这个字段，判断不能为 null，按行累加； 如果这个“字段”定义允许为 null，那么执行的时候，判断到有可能是 null，还要把值取出来再判断一下，不是 null 才累加。 count(*)：例外，并不会把全部字段取出来，而是专门做了优化，不取值。count(*) 肯定不是 null，按行累加。 MySQL 版本 &gt;= 5.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>14｜如何在 Redis 中保存时间序列数据？</title>
     <link>https://wangze.tech/14｜如何在-Redis-中保存时间序列数据？</link>
     <guid>https://wangze.tech/14｜如何在-Redis-中保存时间序列数据？</guid>
     <description> 要求 写要快 查询模式多 一、同时使用 Hash 和 Sorted Set {1: a, 2: b, 3: c} + setKey: {1: a, 2: b, 3: c} Hash 负责单键查询，Sorted Set 负责范围查询 多个写操作的原子性 MULTI 命令：表示一系列原子性操作的开始 EXEC 命令：表示一系列原子性操作的结束 建议客户端使用 pipeline，一次性批量发送命令给服务端，减少网络 IO 次数 聚合计算需要借助客户端，数据量大时比较耗资源 二、RedisTimeSeries 是专门为时间序列数据访问设计的扩展模块 支持聚合计算 可以按标签属性过滤查询数据集合 不属于内建功能模块，需要先把它的源码单独编译成动态链接库 redistimeseries.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>15｜消息队列的考验：Redis 有哪些解决方案？</title>
     <link>https://wangze.tech/15｜消息队列的考验：Redis-有哪些解决方案？</link>
     <guid>https://wangze.tech/15｜消息队列的考验：Redis-有哪些解决方案？</guid>
     <description> 消息队列的三大需求：消息保序、重复消息处理、消息可靠性保证 List 支持阻塞获取数据 不支持消费组 Stream Redis 5.0 之后专门为消息队列设计的数据类型 不同消费组的消费者可以消费同一个消息 同一消费组的消费者不消费同一消息 自动生成全局唯一 ID 两者比较 不能丢数据的场景应该采用专业的队列中间件：Kafka + Zookeeper、RabbitMQ .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>15｜答疑文章（一）：日志和索引相关问题</title>
     <link>https://wangze.tech/15｜答疑文章（一）：日志和索引相关问题</link>
     <guid>https://wangze.tech/15｜答疑文章（一）：日志和索引相关问题</guid>
     <description>业务设计问题 § 业务上有这样的需求，A、B 两个用户，如果互相关注，则成为好友。设计上是有两张表，一个是 like 表，一个是 friend 表，like 表有 user_id、liker_id 两个字段，我设置为复合唯一索引 uk_user_id_liker_id。语句执行逻辑是这样的：以 A 关注 B 为例：第一步，先查询对方有没有关注自己（B 有没有关注 A）select * from like where user_id = B and liker_id = A; 如果有，则成为好友insert into friend; 没有，则只是单向关注关系 insert into like; 但是如果 A、B 同时关注对方，会出现不会成为好友的情况。因为上面第 1 步，双方都没关注对方。第 1 步即使使用了排他锁也不行，因为记录不存在，行锁无法生效。请问这种情况，在 MySQL 锁层面有没有办法处理？ CREATE TABLElike(idint(11) NOT NULL AUTO_INCREMENT,user_idint(11) NOT NULL,liker_idint(11) NOT NULL, PRIMARY KEY (id), UNIQUE KEYuk_user_id_liker_id(user_id,liker_id)) ENGINE=InnoDB;CREATE TABLEfriend(idint(11) NOT NULL AUTO_INCREMENT,friend_1_idint(11) NOT NULL,friend_2_idint(11) NOT NULL, UNIQUE KEYuk_friend(friend_1_id,friend_2_id), PRIMARY KEY (id)) ENGINE=InnoDB; 首先，要给“like”表增加一个字段，比如叫作 relation_ship，并设为整型，取值 1、2、3。值是 1 的时候，表示 user_id 关注 liker_id；值是 2 的时候，表示 liker_id 关注 user_id；值是 3 的时候，表示互相关注。 然后，当 A 关注 B 的时候，逻辑改成如下所示的样子：应用代码里面，比较 A 和 B 的大小，如果 A &lt; B，就执行下面的逻辑 mysql&gt; begin; /*启动事务*/insert intolike(user_id, liker_id, relation_ship) values(A, B, 1) on duplicate key update relation_ship=relation_ship | 1;select relation_ship fromlikewhere user_id=A and liker_id=B;/*代码中判断返回的 relation_ship， 如果是1，事务结束，执行 commit 如果是3，则执行下面这两个语句： */insert ignore into friend(friend_1_id, friend_2_id) values(A,B);commit; 如果 A &gt; B，则执行下面的逻辑 mysql&gt; begin; /*启动事务*/insert intolike(user_id, liker_id, relation_ship) values(B, A, 2) on duplicate key update relation_ship=relation_ship | 2;select relation_ship fromlikewhere user_id=B and liker_id=A;/*代码中判断返回的 relation_ship， 如果是2，事务结束，执行 commit 如果是3，则执行下面这两个语句：*/insert ignore into friend(friend_1_id, friend_2_id) values(B,A);commit; 这个设计里，让“like”表里的数据保证 user_id &lt; liker_id，这样不论是 A 关注 B，还是 B 关注 A，在操作“like”表的时候，如果反向的关系已经存在，就会出现行锁冲突。然后，insert … on duplicate 语句，确保了在事务内部，执行了这个 SQL 语句后，就强行占住了这个行锁，之后的 select 判断 relation_ship 这个逻辑时就确保了是在行锁保护下的读操作。操作符 “|” 是按位或，连同最后一句 insert 语句里的 ignore，是为了保证重复调用时的幂等性。这样，即使在双方“同时”执行关注操作，最终数据库里的结果，也是 like 表里面有一条关于 A 和 B 的记录，而且 relation_ship 的值是 3， 并且 friend 表里面也有了 A 和 B 的这条记录。 思考题 § 创建一个简单的表 t，并插入一行，然后对这一行做修改。 mysql&gt; CREATE TABLEt(idint(11) NOT NULL primary key auto_increment,aint(11) DEFAULT NULL) ENGINE=InnoDB; insert into t values(1,2); 假设，执行：mysql&gt; update t set a=2 where id=1; 仅从现象上看，MySQL 内部在处理这个命令的时候，可以有以下三种选择： 更新都是先读后写的，MySQL 读出数据，发现 a 的值本来就是 2，不更新，直接返回，执行结束； session B 的 update 语句被 blocked 了，加锁这个动作是 InnoDB 才能做的，所以排除选项 1。 MySQL 调用了 InnoDB 引擎提供的“修改为 (1,2)”这个接口，但是引擎发现值与原来相同，不更新，直接返回； session A 的第二个 select 语句是一致性读（快照读)，它是不能看见 session B 的更新的。 现在它返回的是 (1,3)，表示它看见了某个新的版本，这个版本只能是 session A 自己的 update 语句做更新的时候生成。所以排除选项 2。 可以回顾 08｜事务到底是隔离的还是不隔离的？ InnoDB 认真执行了“把这个值修改成 (1,2)“这个操作，该加锁的加锁，该更新的更新。 你觉得实际情况会是以上哪种呢？你可否用构造实验的方式，来证明你的结论？进一步地，可以思考一下，MySQL 为什么要选择这种策略呢？ 验证结果都在 binlog_format=statement 格式下进行 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>16｜“order by”是怎么工作的？</title>
     <link>https://wangze.tech/16｜“order-by”是怎么工作的？</link>
     <guid>https://wangze.tech/16｜“order-by”是怎么工作的？</guid>
     <description> MySQL 会给每个线程分配一块内存用于排序，称为 sort_buffer select city,name,age from t where city=&#039;杭州&#039; order by name limit 1000; city varchar 16，name varchar 16，age int 11，city 有索引 初始化 sort_buffer，确定放入 name、city、age 这三个字段； 从索引 city 找到第一个满足 city=&#039;杭州&#039; 条件的主键 id； 到主键 id 索引取出整行，取 name、city、age 三个字段的值，存入 sort_buffer 中； 从索引 city 取下一个记录的主键 id； 重复步骤 3、4 直到 city 的值不满足查询条件为止； 对 sort_buffer 中的数据按照字段 name 做快速排序； 可能在内存中完成，也可能需要使用外部排序，这取决于排序所需的内存和参数 sort_buffer_size。 按照排序结果取前 1000 行返回给客户端。 全字段排序 sort_buffer_size，是 MySQL 为排序开辟的内存（sort_buffer）的大小。如果要排序的数据量小于 sort_buffer_size，排序就在内存中完成。但如果排序数据量太大，内存放不下，则不得不利用磁盘临时文件辅助排序。 确定一个排序语句是否使用了临时文件 /* 打开 optimizer_trace，只对本线程有效 */ SET optimizer_trace=&#039;enabled=on&#039;; /* @a 保存 Innodb_rows_read 的初始值 */ select VARIABLE_VALUE into @a from performance_schema.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>16｜异步机制：如何避免单线程模型的阻塞？</title>
     <link>https://wangze.tech/16｜异步机制：如何避免单线程模型的阻塞？</link>
     <guid>https://wangze.tech/16｜异步机制：如何避免单线程模型的阻塞？</guid>
     <description> 4 类交互对象和具体的操作之间的关系 和客户端交互时的阻塞点 集合的全量查询和聚合操作 删除 bigkey 清空数据库 和磁盘交互时的阻塞点 同步写 AOF 日志 主从节点交互时的阻塞点 加载 RDB 文件 从库接收 RDB 文件后会清空当前数据库 然后加载 RDB 到内存，文件越大越慢 切片集群实例交互时的阻塞点 使用 Redis Cluster 方案，并迁移 bigkey Redis Cluster 方案使用了同步迁移 当没有 bigkey 时，切片集群的各实例在进行交互时不会阻塞主线程 可以异步操作的阻塞点：2、3、4 如果一个操作能被异步执行，就意味着，它并不是 Redis 主线程的关键路径上的操作 客户端把请求发送给 Redis 后，等着 Redis 返回数据结果的操作 读操作是典型的关键路径操作 异步的键值对删除和数据库清空操作是 Redis 4.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>17｜为什么 CPU 结构也会影响 Redis 的性能？</title>
     <link>https://wangze.tech/17｜为什么-CPU-结构也会影响-Redis-的性能？</link>
     <guid>https://wangze.tech/17｜为什么-CPU-结构也会影响-Redis-的性能？</guid>
     <description> NUMA 架构（Non-Uniform Memory Access 非统一内存访问架构） 图 第一步 第二步 文字描述 多个 CPU 处理器（多 CPU Socket） 每个都有自己的 多个物理核（包括 L1、L2 缓存） 每个物理核私有的 L1、L2 大小受限于处理器的制造基数，KB 级别大小 缓存应用程序访问最频繁的指令和数据 现在主流的 CPU 处理器中，每个物理核通常都会运行两个超线程，也叫作逻辑核。同一个物理核的逻辑核会共享使用 L1、L2 缓存 L3 缓存 多个物理核共用 几 MB 到几十 MB 大小 在 L1、L2 缓存中没有数据缓存时被访问，尽可能避免访问内存 连接的内存 不同处理器间通过总线连接 CPU 架构对应用程序运行的影响 L1、L2 缓存中的指令和数据的访问速度很快，充分利用 L1、L2 缓存，可以有效缩短应用程序的执行时间 在 NUMA 架构下，如果应用程序从一个 Socket 上调度到另一个 Socket 上，就可能会出现远端内存访问的情况，这会直接增加应用程序的执行时间 ECS 主机提供的 vCPU 虚拟核，一般对应一个物理核心上的一个超线程，这是因为底层服务器一般会开启超线程 通常，一个物理核心会对应 2 个超线程，每个超线程对应一个 vCPU 多个 vCPU 一般在同一个 NUMA 节点上 如果希望减少 CPU 超线程对性能的影响，可以通过阿里云 SDK 的选项关闭超线程 CPU 多核对 Redis 性能的影响 99% 尾延迟：99% 的请求延迟小于的值 context switch：一个线程先在一个 CPU 核上运行，之后又切换到另一个 CPU 核上运行，这时就会发生 context switch 此时 Redis 主线程的运行时信息需要被加载到另一个 CPU 核上 CPU 的 NUMA 架构对 Redis 性能的影响 把操作系统的网络中断处理程序和 CPU 核绑定 网络中断处理程序 操作系统内核中用来处理网卡中断事件、把数据从内核的缓冲区拷贝到应用程序缓冲区的程序。 当网卡接收到数据后，会触发网卡中断，用来通知操作系统内核进行数据处理。 避免网络中断处理程序在不同核上来回调度执行，能有效提升 Redis 的网络处理性能 为了避免 Redis 跨 CPU Socket 访问网络数据，最好把网络中断程序和 Redis 实例绑在同一个 CPU Socket 的不同核上 在 CPU 的 NUMA 架构下，对 CPU 核的编号规则，并不是先把一个 CPU Socket 中的所有逻辑核编完，再对下一个 CPU Socket 中的逻辑核编码，而是先给每个 CPU Socket 中每个物理核的第一个逻辑核依次编号，再给每个 CPU Socket 中的物理核的第二个逻辑核依次编号 执行 lscpu 命令 查看核的编号 绑核的风险和解决方案 风险 把 Redis 实例绑到一个 CPU 逻辑核上时，会导致子进程、后台线程和 Redis 主线程竞争 CPU 资源，一旦子进程或后台线程占用 CPU 时，主线程就会被阻塞，导致 Redis 请求延迟增加 解决方案 一个 Redis 实例对应绑一个物理核 将实例绑到一个物理核上的所有逻辑核 Redis 的主线程、子进程和后台线程可以共享使用一个物理核上的两个逻辑核，缓解 CPU 资源竞争 优化 Redis 源码 避免切换核带来的性能影响 让子进程、后台线程核主线程不在同一个核上运行，避免 CPU 资源竞争 Redis 6.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>17｜如何正确地显示随机消息？</title>
     <link>https://wangze.tech/17｜如何正确地显示随机消息？</link>
     <guid>https://wangze.tech/17｜如何正确地显示随机消息？</guid>
     <description>内存临时表 § explain 结果中 extra 包含 Using temporary，表示需要使用临时表 Using filesort 表示需要执行排序操作 比如执行 order by rand() 的时候就需要用到上面两个 随机排序完整执行流程图 pos 是数据的位置信息 对于内存表，回表过程只是简单地根据数据行的位置直接访问内存得到数据，MySQL 优化器没有多访问磁盘的顾虑，会直接选择 rowid 排序（排序的行越小越好） 学习技巧：先通过原理分析算出扫描行数，然后再通过查看慢查询日志，来验证自己的结论 rowid 的含义：每个引擎用来唯一标识数据行的信息 对于有主键的 InnoDB 表，rowid 是主键 ID； 对于没有主键的 InnoDB 表，rowid 是由系统生成的； MEMORY 引擎不是索引组织表。在这个例子里面，可以认为它就是一个数组。因此，这个 rowid 其实就是数组的下标。 磁盘临时表 § tmp_table_size 配置限制内存表的大小，默认值 16M 如果临时表过大，就会转成磁盘临时表 当使用磁盘临时表的时候，对应的就是一个没有显式索引的 InnoDB 表的排序过程。 对于使用磁盘临时表的 order by rand()，MySQL 5.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>18｜为什么这些 SQL 语句逻辑相同，性能却差异巨大？</title>
     <link>https://wangze.tech/18｜为什么这些-SQL-语句逻辑相同，性能却差异巨大？</link>
     <guid>https://wangze.tech/18｜为什么这些-SQL-语句逻辑相同，性能却差异巨大？</guid>
     <description>案例一：条件字段函数操作 § 原语句：mysql&gt; select count(*) from tradelog where month(t_modified)=7; 字段值如：2017-7-1 对索引字段做函数操作，可能会破坏索引值的有序性，因此优化器就决定放弃走树搜索功能 但是，优化器并不是要放弃使用这个索引，还可以选择遍历主键索引，也可以选择遍历索引 t_modified 优化方案：mysql&gt; select count(*) from tradelog where -&gt; (t_modified &gt;= &#039;2016-7-1&#039; and t_modified&lt;&#039;2016-8-1&#039;) or -&gt; (t_modified &gt;= &#039;2017-7-1&#039; and t_modified&lt;&#039;2017-8-1&#039;) or -&gt; (t_modified &gt;= &#039;2018-7-1&#039; and t_modified&lt;&#039;2018-8-1&#039;); 案例二：隐式类型转换 § mysql&gt; select * from tradelog where tradeid=110717; 相当于：mysql&gt; select * from tradelog where CAST(tradid AS signed int) = 110717; 因为 tradeid 的字段类型是 varchar(32)，输入的参数是整形，所以该语句需要走全表扫描 如果字段是整形，输入是字符串，则可以走索引 数据类型转换的规则 为什么有数据类型转换就需要走全索引扫描 这条语句触发了我们上面说到的规则：对索引字段做函数操作，优化器会放弃走树搜索功能。 案例三：隐式字符编码转换 § 两个表的字符集不同，一个是 utf8，一个是 utf8mb4，所以做表连接查询的时候用不上关联字段的索引 utf8mb4 是 utf8 的超集。类似地，在程序设计语言里面，做自动类型转换的时候，为了避免数据在转换过程中由于截断导致数据错误，也都是“按数据长度增加的方向”进行转换的。 例子：select * from trade_detail where CONVERT(traideid USING utf8mb4)=$L2.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>18｜波动的响应延迟：如何应对变慢的 Redis？（上）</title>
     <link>https://wangze.tech/18｜波动的响应延迟：如何应对变慢的-Redis？（上）</link>
     <guid>https://wangze.tech/18｜波动的响应延迟：如何应对变慢的-Redis？（上）</guid>
     <description> Redis 真的变慢了吗？ 查看 Redis 的响应延迟 redis-cli —latency -h host -p port 基于当前环境下的 Redis 基线性能做判断 基线性能：一个系统在低压力、无干扰下的基本性能，这个性能只由当前的软硬件配置决定 redis-cli 命令提供的 -intrinsic-latency 选项可以用来检测和统计测试期间的最大延迟，这个延迟可以作为基线性能 要在服务器端运行，只考虑服务器端软硬件环境的影响 Redis 运行时延迟是其基线性能的 2 倍及以上表示 Redis 变慢了 如何应对 Redis 变慢？ 从慢查询命令开始排查，并且根据业务需求替换慢查询命令 在客户端进行排序、交集、并集操作，不使用 SORT、SUNION、SINTER 命令，避免拖慢 Redis 实例 排查过期 key 的时间设置，并根据实际使用需求，设置不同的过期时间，给过期时间加上随机数 在 Redis 中，还有哪些其他命令可以代替 KEYS 命令，实现同样的功能呢？这些命令的复杂度会导致 Redis 变慢吗？ 使用 SCAN 命令获取整个实例所有 key SCAN cursorCOUNTcount 一次最多返回 count 个数的 key，数量不会超过 count 不会漏 key SCAN 采用高位进位法的方式遍历哈希桶，当哈希表扩容后，通过此算法遍历，旧哈希表中的数据映射到新哈希表，依旧会保留原来的先后顺序，此时不会遗漏也不会重复 key 可能会返回重复的 key 与 Redis 的 Rehash 机制有关，哈希表缩容时，已经遍历过的哈希表会映射到新哈希表没有遍历到的位置 Redis 针对 Hash/Set/Sorted Set 提供了 HSCAN/SSCAN/ZSCAN 命令，用于遍历一个 key 中的所有元素，建议在获取一个 bigkey 的所有数据时使用，避免发生阻塞风险 key 的元素较少时，底层采用 intset/ziplist 方式存储，会无视命令的 count 参数 Redis 4.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>19｜为什么我只查一行的语句，也执行这么慢？</title>
     <link>https://wangze.tech/19｜为什么我只查一行的语句，也执行这么慢？</link>
     <guid>https://wangze.tech/19｜为什么我只查一行的语句，也执行这么慢？</guid>
     <description> 有个表 t：mysql&gt; CREATE TABLEt(idint(11) NOT NULL,cint(11) DEFAULT NULL, PRIMARY KEY (id)) ENGINE=InnoDB; 第一类：查询长时间不返回 § 等 MDL 锁 § 使用 show processlist 命令查看 Waiting for table metadata lock 的示意图 出现这个状态表示的是，现在有一个线程正在表 t 上请求或持有 MDL 写锁，把 select 语句堵住了 简单的复现步骤 处理方式：找到谁持有 MDL 写锁，kill 掉 但是，由于在 show processlist 的结果里面，session A 的 Command 列是“Sleep”，导致查找起来很不方便。不过有了 performance_schema 和 sys 系统库以后，就方便多了。（MySQL 启动时需要设置 performance_schema=on，相比于设置为 off 会有 10% 左右的性能损失) 通过查询 sys.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>19｜波动的响应延迟：如何应对变慢的 Redis？（下）</title>
     <link>https://wangze.tech/19｜波动的响应延迟：如何应对变慢的-Redis？（下）</link>
     <guid>https://wangze.tech/19｜波动的响应延迟：如何应对变慢的-Redis？（下）</guid>
     <description> 文件系统：AOF 模式 AOF 重写会对磁盘进行大量 IO 操作，fsync 需要等到数据写到磁盘后才能返回 everysec 时，使用后台子线程调用 fsync 写日志 虽然 fsync 由后台子线程负责执行，但主线程会监控 fsync 的执行进度 上次 fsync 未执行完时，下次 fsync 会被阻塞 always 时，主线程中调用 fsync 避免使用操作系统的 swap 增加机器的内存 使用 Redis 集群 查看 Redis 进程的 swap 使用情况 redis-cli info | grep process_id cd /proc/{process_id} cat smaps | egrep ’^(Swap|Size)’ 操作系统：内存大页 写时复制：一旦数据要被修改，Redis 不会直接修改内存中的数据，会先拷贝一份再进行修改 常规内存机制只用拷贝 4KB，内存大页需要拷贝 2MB 关闭即可 cat /sys/kernel/mm/transparent_hugepage/enabled 查看是否 always 打开 关闭：echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled Checklist 获取 Redis 实例在当前环境下的基线性能 是否用了慢查询命令？使用其他命令替代慢查询命令，或者把聚合计算命令放在客户端做 是否对过期 key 设置了相同的过期时间？对于批量删除的 key，可以在每个 key 的过期时间上加一个随机数，避免同时删除 是否存在 bigkey？ 对于 bigkey 的删除操作，如果你的 Redis 是 4.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>20｜删除数据后，为什么内存占用率还是很高？</title>
     <link>https://wangze.tech/20｜删除数据后，为什么内存占用率还是很高？</link>
     <guid>https://wangze.tech/20｜删除数据后，为什么内存占用率还是很高？</guid>
     <description> 内存碎片 现象：内存空间闲置 生成原因：操作系统的内存分配机制 + Redis 的负载特征 操作系统按固定大小分配内存，而不是完全按照应用程序申请的内存空间大小给程序分配 当程序申请的内存最接近某个固定值时，Redis 使用的 jemalloc 会给它分配相应大小的空间 为了减少分配次数 判断是否有内存碎片 执行 INFO memory used_memory_rss：操作系统实际分配的物理内存空间，包含了碎片 used_memory：保存数据实际申请使用的空间 mem_fragmentation_ratio：当前的内存碎片率 mem_fragmentation_ratio = used_memory_rss / used_memory 经验阈值 合理情况：mem_fragmentation_ratio 大于 1 但小于 1.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>20｜幻读是什么，幻读有什么问题？</title>
     <link>https://wangze.tech/20｜幻读是什么，幻读有什么问题？</link>
     <guid>https://wangze.tech/20｜幻读是什么，幻读有什么问题？</guid>
     <description> InnoDB 的默认事务隔离级别是可重复读 和下一章共用的表： CREATE TABLE `t` ( `id` int(11) NOT NULL, `c` int(11) DEFAULT NULL, `d` int(11) DEFAULT NULL, PRIMARY KEY (`id`), KEY `c` (`c`) ) ENGINE=InnoDB; insert into t values(0,0,0),(5,5,5),(10,10,10),(15,15,15),(20,20,20),(25,25,25); 幻读 § 幻读指的是一个事务在前后两次查询同一个范围的时候，后一次查询看到了前一次查询没有看到的行。 ⚠️ 在可重复读隔离级别下，普通的查询是快照读，是不会看到别的事务插入的数据的。因此，幻读在“当前读”下才会出现。 幻读专指“新插入的行”。 原因：行锁只能锁住行，但是新插入记录这个动作，要更新的是记录之间的“间隙” 幻读有什么问题？ 语义上被破坏，比如，假设只把所有 d = 5 的行锁住，不准别的事务进行读写操作，此时更新别的未被锁住的 d != 5 的行，让 d = 5 数据一致性问题 即使把即将要改成 d = 5 的行也锁住，还是拦不住插入 d = 5 的行 解决 § InnoDB 只好引入新的锁，也就是间隙锁 (Gap Lock)。 间隙锁，锁的就是两个值之间的空隙。比如文章开头的表 t，初始化插入了 6 个记录，这就产生了 7 个间隙。 间隙锁记为开区间 跟间隙锁存在冲突关系的，是“往这个间隙中插入一个记录”这个操作。间隙锁之间都不存在冲突关系。 间隙锁和行锁合称 next-key lock，是前开后闭区间。 如果用 select * from t for update 要把整个表所有记录锁起来，就形成了 7 个 next-key lock，分别是 (-∞,0]、(0,5]、(5,10]、(10,15]、(15,20]、(20, 25]、(25, +supremum]。 间隙锁和 next-key lock 的引入带来的问题 加大了加锁范围，降低并发度 上面的讨论都是在可重复度隔离级别下的，间隙锁在此级别下才会生效 如果改成读提交，就没有间隙锁，同时也不会有上面的问题，但同时也需要把 binlog 格式设置为 row 常见的配置组合：读提交 + binlog_format=row 思考题 § B 和 C 都会进入锁等待状态 原因是什么 desc，向右扫描变成向左扫描 前开后闭没变 加锁范围 (20, 25) (15, 20] (5, 10] 评论区 § MySQL 里单引号双引号一样 &lt;= 是间隙锁还是行锁？ 找第一个值是，按等值，找下一个值，按范围查找 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>21｜为什么我只改一行的语句，锁这么多？</title>
     <link>https://wangze.tech/21｜为什么我只改一行的语句，锁这么多？</link>
     <guid>https://wangze.tech/21｜为什么我只改一行的语句，锁这么多？</guid>
     <description> 此章节的规则有效的前提 加锁策略可能改变，下面的只限于 5.x 系列 &lt;= 5.7.24 8.0 系列 &lt;= 8.0.13 间隙锁在可重复读隔离级别下才有效 读提交在外键场景下也有 两个原则、两个优化、一个 bug 原则 1：加锁的基本单位是 next-key lock。希望你还记得，next-key lock 是前开后闭区间。 原则 2：查找过程中访问到的对象才会加锁。逐个加 优化 1：索引上的等值查询，给唯一索引加锁的时候，next-key lock 退化为行锁。 优化 2：索引上的等值查询，向右遍历时且最后一个值不满足等值条件的时候，next-key lock 退化为间隙锁。 一个 bug：唯一索引上的范围查询会访问到不满足条件的第一个值为止。 MySQL 8.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>21｜缓冲区：一个可能引发“惨案”的地方</title>
     <link>https://wangze.tech/21｜缓冲区：一个可能引发“惨案”的地方</link>
     <guid>https://wangze.tech/21｜缓冲区：一个可能引发“惨案”的地方</guid>
     <description> 客户端输入和输出缓冲区 避免客户端和服务端的请求发送和处理速度不匹配 输入缓冲区会先把客户端发送过来的命令暂存起来，Redis 主线程再从输入缓冲区中读取命令，进行处理。当 Redis 主线程处理完数据后，会把结果写入到输出缓冲区，再通过输出缓冲区返回给客户端 查看输入缓冲区的内存使用情况：CLIENT LIST 命令 cmd：最新执行的命令 qbuf：输入缓冲区已经使用的大小 qbuf-free：尚未使用的大小 服务端允许为每个客户端最多暂存 1GB 的命令和数据，上限阈值在代码中设定 1GB，不可变（输入缓冲区） 输出缓冲区会溢出的情况 返回 bigkey 的大量结果 执行了 MONITOR 命令：检测 Redis 执行 缓冲区大小设置不合理 大小上限阈值 持续写入数据的数量上限阈值 普通客户端通用设置 - 配置文件：client-output-buffer-limit normal 0 0 0 订阅客户端 - 配置文件：client-output-buffer-limit pubsub 8mb 2mb 60 主从集群中的缓冲区 复制缓冲区的溢出问题 在主节点执行：config set client-output-buffer-limit slave 512mb 128mb 60 进行设置 slave 表示该配置项是针对复制缓冲区的 每个从节点各一个 复制积压缓冲区（repl_backlog_buffer）的溢出问题 导致数据丢失 其他缓冲区导致网络连接关闭 应用程序中使用的客户端需要使用缓冲区时 在 buffer 中拼装好数据，一次性由操作系统发送给服务端 使用 Pipeline 批量发送命令到服务端 主库上的从库输出缓冲区 slave-client-output-buffer 不计算在 Redis 使用的总内存中，不会超过 maxmemory 导致淘汰数据，只有普通和订阅客户端的输出缓冲区内存增长，超过 maxmemory 时，才会淘汰数据 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>22｜MySQL有哪些“饮鸩止渴”提高性能的方法？</title>
     <link>https://wangze.tech/22｜MySQL有哪些“饮鸩止渴”提高性能的方法？</link>
     <guid>https://wangze.tech/22｜MySQL有哪些“饮鸩止渴”提高性能的方法？</guid>
     <description>短连接风暴 § max_connections 参数控制一个 MySQL 实例同时存在的连接数上限 超过这个数，系统就会拒绝接下来的连接请求，并报错提示“Too many connections” 只要连着就会计数 解决方案 一、先处理掉那些占着连接但是不工作的线程 wait_timeout 参数设置一个线程在多少秒后会被 MySQL 直接断开连接 在服务端执行命令：kill connection + id 直到客户端在发起下一个请求的时候，才会收到这样的报错“ERROR 2013 (HY000): Lost connection to MySQL server during query”。 在 show processlist 的结果里找到可以踢掉的连接 先断开事务外空闲的连接 还不够的情况下再考虑断开事务内空闲太久的连接 会导致事务回滚 查看事务具体状态 查 information_schema 库的 innodb_trx 表 二、减少连接过程的消耗 使用 —skip-grant-tables 参数启动 MySQL，整个 MySQL 会跳过所有的权限验证阶段，包括连接过程和语句执行过程在内 风险极高，MySQL 8.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>22｜第 11～21 讲课后思考题答案及常见问题答疑</title>
     <link>https://wangze.tech/22｜第-11～21-讲课后思考题答案及常见问题答疑</link>
     <guid>https://wangze.tech/22｜第-11～21-讲课后思考题答案及常见问题答疑</guid>
     <description> 问题 1：如何使用慢查询日志和 latency monitor 排查执行慢的操作？ 设置 slowlog-log-slower-than：对执行时间大于多少微妙的命令进行记录 设置 slowlog-max-len：日志最多记录多少调命令 使用 SLOWLOG GET 命令查看慢查询日志 也可以使用 latency monitor 监控工具 监控 Redis 运行过程中的峰值延迟情况 从 2.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>23｜MySQL 是怎么保证数据不丢的？</title>
     <link>https://wangze.tech/23｜MySQL-是怎么保证数据不丢的？</link>
     <guid>https://wangze.tech/23｜MySQL-是怎么保证数据不丢的？</guid>
     <description>只要 redo log 和 binlog 保证持久化到磁盘，就能确保 MySQL 异常重启后，数据可以恢复。 binlog 的写入机制 § 写入逻辑：事务执行过程中，先把日志写到 binlog cache，事务提交时再把 binlog cache 写到 binlog 文件。 一个事务的 binlog 是要确保一次性写入，不能被打断 系统给 binlog cache 分配了一片内存，每个线程一个， 参数 binlog_cache_size 用于控制单个线程内 binlog cache 所占内存的大小。如果超过了这个参数规定的大小，就要暂存到磁盘。 事务提交时，执行器把 binlog cache 里的完整事务写入到 binlog 中，并清空 binlog cache。状态如图所示。 图中的 write，指的就是指把日志写入到文件系统的 page cache，并没有把数据持久化到磁盘，所以速度比较快。 图中的 fsync，才是将数据持久化到磁盘的操作。一般情况下，我们认为 fsync 才占磁盘的 IOPS。 write 和 fsync 的时机，是由参数 sync_binlog 控制的： sync_binlog=0 的时候，表示每次提交事务都只 write，不 fsync； sync_binlog=1 的时候，表示每次提交事务都会执行 fsync； sync_binlog=N(N&gt;1) 的时候，表示每次提交事务都 write，但累积 N 个事务后才 fsync。 如果主机发生异常重启，会丢失最近 N 个事务的 binlog 日志。 redo log 的写入机制 § 都先写到 redo log buffer 不用每次生成后都直接持久化到磁盘 如果事务执行期间 MySQL 异常重启，这部分日志丢了，由于事务并没有提交，所以没损失 事务没提交，这时日志也有可能被持久化到磁盘 redo log 的存储状态 为了控制 redo log 的写入策略，InnoDB 提供了 innodb_flush_log_at_trx_commit 参数 设置为 0 的时候，表示每次事务提交时都只是把 redo log 留在 redo log buffer 中 ; 设置为 1 的时候，表示每次事务提交时都将 redo log 直接持久化到磁盘； 设置为 2 的时候，表示每次事务提交时都只是把 redo log 写到 page cache。 InnoDB 有一个后台线程，每隔 1 秒，就会把 redo log buffer 中的日志，调用 write 写到文件系统的 page cache，然后调用 fsync 持久化到磁盘。 没有提交的事务的 redo log 也会 另外两个会让没有提交的事务的 redo log 写入到磁盘的场景 redo log buffer 占用的空间即将达到 innodb_log_buffer_size 一半的时候，后台线程会主动写盘。 注意，由于这个事务并没有提交，所以这个写盘动作只是 write，而没有调用 fsync，也就是只留在了文件系统的 page cache。 并行的事务提交的时候，顺带将这个事务的 redo log buffer 持久化到磁盘。 假设一个事务 A 执行到一半，已经写了一些 redo log 到 buffer 中，这时候有另外一个线程的事务 B 提交，如果 innodb_flush_log_at_trx_commit 设置的是 1，那么按照这个参数的逻辑，事务 B 要把 redo log buffer 里的日志全部持久化到磁盘。这时候，就会带上事务 A 在 redo log buffer 里的日志一起持久化到磁盘。 通常我们说 MySQL 的“双 1”配置，指的就是 sync_binlog 和 innodb_flush_log_at_trx_commit 都设置成 1。也就是说，一个事务完整提交前，需要等待两次刷盘，一次是 redo log（prepare 阶段），一次是 binlog。 组提交机制 § 日志逻辑序列号（log sequence number，LSN） 单调递增，用来对应 redo log 的一个个写入点 每次写入长度为 length 的 redo log， LSN 的值就会加上 length。 LSN 也会写到 InnoDB 的数据页中，来确保数据页不会被多次执行重复的 redo log 一次组提交里面，组员越多，节约磁盘 IOPS 的效果越好。但如果只有单线程压测，那就只能老老实实地一个事务对应一次持久化操作了。 trx1 先到达，会被选为 leader 开始写盘，因为组里有了三个事务，所以 LSN 变成了最大值 160 等到 trx1 返回时，所有 LSN 小于等于 160 的 redo log 都已经被持久化到磁盘，所以 trx2 和 trx3 可以直接返回 在并发更新场景下，第一个事务写完 redo log buffer 以后，接下来这个 fsync 越晚调用，组员可能越多，节约 IOPS 的效果就越好。 为了让一次 fsync 带的组员更多，MySQL 有一个很有趣的优化：拖时间。 两阶段提交 两阶段提交细化 写 binlog 是分成两步的 先把 binlog 从 binlog cache 中写到磁盘上的 binlog 文件； 调用 fsync 持久化。 MySQL 为了让组提交的效果更好，把 redo log 做 fsync 的时间拖到了步骤 1 之后 3 执行很快，所以 binlog 的组提交效果通常不如 redo log 的效果好 提升 binlog 组提交的效果 binlog_group_commit_sync_delay 参数，表示延迟多少微秒后才调用 fsync; binlog_group_commit_sync_no_delay_count 参数，表示累积多少次以后才调用 fsync。 两个条件是 或 的关系 WAL 机制是减少磁盘写，但每次提交事务都要写 redo log 和 binlog，磁盘读写没减少？ § redo log 和 binlog 都是顺序写，磁盘的顺序写比随机写速度要快； 组提交机制可以大幅度降低磁盘的 IOPS 消耗。 MySQL 出现 IO 性能瓶颈的提升性能方法 § 设置 binlog_group_commit_sync_delay 和 binlog_group_commit_sync_no_delay_count 参数，减少 binlog 的写盘次数。 这个方法基于“额外的故意等待”来实现，因此可能会增加语句的响应时间，但没有丢失数据的风险。 将 sync_binlog 设置为大于 1 的值（比较常见是 100~1000）。 ⚠️ 这样做的风险是，主机掉电时会丢 binlog 日志。 将 innodb_flush_log_at_trx_commit 设置为 2。这样做的风险是，主机掉电的时候会丢数据。 不建议设置为 0（只保存在内存中） 0 跟 2 的性能差不多，但 2 的风险更小 数据库的 crash-safe 的作用 § 如果客户端收到事务成功的消息，事务就一定持久化了； 双 1 配置时 如果客户端收到事务失败（比如主键冲突、回滚等）的消息，事务就一定失败了； 如果客户端收到“执行异常”的消息，应用需要重连后通过查询当前状态来继续后续的逻辑。此时数据库只需要保证内部（数据和日志之间，主库和备库之间）一致就可以了。 思考题 § 你的生产库设置的是「双 1」吗？ 如果平时是的话，你有在什么场景下改成过“非双 1”吗？你的这个操作又是基于什么决定的？ 业务高峰期 备库延迟 用备份恢复主库的副本，应用 binlog 的过程 批量导入数据的时候 我们都知道这些设置可能有损，如果发生了异常，你的止损方案是什么？ 一般情况下，把生产库改成“非双 1 ”配置，是设置 innodb_flush_logs_at_trx_commit=2 sync_binlog=1000 评论区 § 看到的「binlog 的记录」是从 page cache 读，page cache 在操作系统文件系统上 ls 的结果也是 为什么 binlog cache 是每个线程自己维护的，而 redo log buffer 是全局共用的？ binlog 存储是以 statement 或者 row 格式存储的，而 redo log 是以 page 页格式存储的。page 格式，天生就是共有的，而 row 格式，只跟当前事务相关 在这里联系到 binlog 的格式，statement 记录的是更新的 SQL，但是要写上下文，因此不能中断，不然同步到从库后从库无法恢复一样的数据内容 如果 sync_binlog = N｜binlog_group_commit_sync_no_delay_count = M｜binlog_group_commit_sync_delay = 很大值，这种情况 fsync 什么时候发生 sync_delay 和 sync_no_delay_count 的逻辑先走，因此该等还是会等。等到满足了这两个条件之一，就进入 sync_binlog 阶段。这时候如果判断 sync_binlog=0，就直接跳过，还是不调 fsync。 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>23｜旁路缓存：Redis 是如何工作的？</title>
     <link>https://wangze.tech/23｜旁路缓存：Redis-是如何工作的？</link>
     <guid>https://wangze.tech/23｜旁路缓存：Redis-是如何工作的？</guid>
     <description> 旁路缓存：读取缓存、读取数据库和更新缓存的操作都需要在应用程序中完成 Redis 适合做缓存 在分层系统中，数据暂存在快速子系统中有助于加速访问 缓存容量有限，缓存写满时，数据需要被淘汰 只读缓存 写操作直接作用在数据库，并删掉已缓存的数据 适用于写请求较少或者只需要提升读请求响应速度的情况 数据可靠，优先保证数据库和缓存的一致性 读写缓存 对写请求进行加速 对数据可靠性要求低，或业务上不会并发修改同一个值时 同步直写 异步写回 需要在脏数据被淘汰时，自行把数据写回数据库，Redis 无法实现这一点 所以，使用 Redis 缓存时，不采用这个模式 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>24｜MySQL 是怎么保证主备一致的？</title>
     <link>https://wangze.tech/24｜MySQL-是怎么保证主备一致的？</link>
     <guid>https://wangze.tech/24｜MySQL-是怎么保证主备一致的？</guid>
     <description>本章的内容是所有 MySQL 高可用方案的基础 将备库设置为只读模式（readonly） § 防止误操作 防止切换逻辑有 bug，比如切换过程中出现双写造成主备不一致 可以用 readonly 状态判断节点的角色 readonly 设置对超级权限用户（super）无效，用于同步更新的线程拥有超级权限 一个 update 语句在节点 A 执行，然后同步到节点 B 的完整流程图。（主备同步内部流程） § 主备关系由备库指定 搭建完成后由主库决定“要发数据给备库” 一个事务日志同步的完整过程（基于长连接） § 在备库 B 通过 change master 命令设置主库 A 的 IP、端口、用户名、密码，以及从哪个位置开始请求 binlog，这个位置包含文件名和日志偏移量 在备库 B 上执行 start slave 命令，这时候备库会启动两个线程，就是图中的 io_thread 和 sql_thread。其中 io_thread 负责与主库建立连接。 主库 A 校验完用户名、密码后，开始按照备库 B 传过来的位置，从本地读取 binlog，发给 B。 备库 B 拿到 binlog 后，写到本地文件，称为中转日志（relay log）。 sql_thread 读取中转日志，解析出日志里的命令，并执行。 后来由于多线程复制方案的引入，sql_thread 演化成为了多个线程跟本章讲的原理没有直接关系 binlog 的三种格式对比（建议设置为 row） § statement 记录 SQL 原文 unsafe 的，比如一个 delete 语句，在主库跟在备库的执行结果可能不一样 有些语句执行依赖上下文，比如会有 SET TIMESTAMP=时间戳 用来设置接下来的 now() 函数的返回时间 比如带了 limit，在主备上用到了不同的索引 ⚠️ 可能导致数据不一致 raw 记录变更前和变更后的数据或被删的数据，是安全的 很占空间 mixed = statement + row MySQL 自己判断执行的语句应该使用哪种格式的日志 用得不多 查看 binlog § 首先通过 show variables like ‘log_%’ 查看 log_bin 参数是否为 ON mysql&gt; show binary logs; 获取binlog文件列表 mysql&gt; show binlog events; 只查看第一个binlog文件的内容 mysql&gt; show binlog events in ‘mysql-bin.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>24｜替换策略：缓存满了怎么办？</title>
     <link>https://wangze.tech/24｜替换策略：缓存满了怎么办？</link>
     <guid>https://wangze.tech/24｜替换策略：缓存满了怎么办？</guid>
     <description> 建议把缓存容量设置为总数据量的 15% 到 30%，兼顾访问性能和内存空间开销 CONFIG SET maxmemory 4gb 数据淘汰策略 noeviction（不进行数据淘汰） 一旦缓存被写满，再有写请求时，Redis 不再提供服务，直接返回错误 进行数据淘汰的策略 在设置了过期时间的数据中进行淘汰 volatile-lru volatile-random volatile-ttl volatile-lfu Redis 4.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>25｜MySQL 是怎么保证高可用的？</title>
     <link>https://wangze.tech/25｜MySQL-是怎么保证高可用的？</link>
     <guid>https://wangze.tech/25｜MySQL-是怎么保证高可用的？</guid>
     <description> 最终一致性：正常情况下，只要主库执行更新生成的所有 binlog 都可以传到备库并被正确地执行，备库就能达到跟主库一致的状态 从库和备库概念上差不多，把会在「HA」过程中被选成新主库的称为备库 HA：高可用（MySQL HA Solution） 主动切换的场景 § 主库 A 执行完成一个事务，写入 binlog，我们把这个时刻记为 T1; 之后传给备库 B，我们把备库 B 接收完这个 binlog 的时刻记为 T2; 很快 备库 B 执行完成这个事务，我们把这个时刻记为 T3 主备延迟 § T3 减 T1 的时间 在备库执行 show slave status 命令，返回结果的 seconds_behind_master 表示当前备库延迟了多少秒 每个事务的 binlog 都有一个记录主库上写入的时间的时间字段 备库取出当前正在执行的事务的时间字段的值，计算与当前「系统时间」的差值 计算完之后手动修改备库时间，不会自动修正 备库在连接到主库的时候会通过 SELECT UNIX_TIMASTAMP() 函数获得当前主库的系统时间 如果主库时间跟自己时间不一样，会在计算时自动扣掉这个差值 延迟原因 § 备库比主库所在的机器性能差 这种情况可以设置备库非双 1 备库压力大 比如一些不适合在主库跑的大查询放在了备库上，此时压力来到备库 可以多接几个从库分担压力 通过 binlog 输出到外部系统，比如 Hadoop 或 es，让外部系统提供统计类查询的能力 工具可以了解下 canal 大事务 如果一个语句在主库执行了 10 分钟，那在备库上也要执行很久 ⚠️ 不要一次性修改、删除太多数据 大表 DDL 计划内的 DDL 建议用 gh-ost 方案 备库的并行复制能力（在下一篇） 主备切换策略 § 可靠性优先 § 判断备库 B 现在的 seconds_behind_master，持续重试，如果小于某个值才进入下一步 把主库 A 改成只读状态 判断备库 B 的 seconds_behind_master 的值是否为 0，持续重试 把备库 B 改成可读写状态 把业务请求切到备库 B 一般由专门的 HA 系统完成此流程 可用性优先 § 把 4、5 调整到最开始执行 可能会出现数据不一致 适用场景之一 一个专门负责操作日志的库，数据不一致可以通过 binlog 修补，短暂的不一致也不会引发业务问题同时，业务系统依赖于这个日志写入逻辑，如果这个库不可写，会导致线上的业务操作无法执行 思考题 § 什么原因导致的？ 一种是大事务（包括大表 DDL、一个事务操作很多行）； 还有一种情况比较隐蔽，备库起了一个长事务，比如 begin; select * from t limit 1; 然后就不动了 怎么确认？ 看一下备库当前执行的命令 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>25｜缓存异常（上）：如何解决缓存和数据库的数据不一致问题？</title>
     <link>https://wangze.tech/25｜缓存异常（上）：如何解决缓存和数据库的数据不一致问题？</link>
     <guid>https://wangze.tech/25｜缓存异常（上）：如何解决缓存和数据库的数据不一致问题？</guid>
     <description> 数据的一致性 缓存中有数据，缓存的数据值需要和数据库中的值相同 缓存中没有数据，数据库中的值必须是最新值 「读写缓存」 要保证一致性可以采用同步直写策略 适用于读写相当的业务场景 「只读缓存」 数据不一致的问题原因、现象和应对方案 分为 1. 先删除缓存再更新数据库；2. 先更新数据库再删除缓存 适用于读操作比较多的业务场景 优先使用先更新数据库再删除缓存的方法 先删除缓存可能导致请求因缓存缺失而访问数据库，给数据库带来压力 业务应用中读取数据库和写缓存的时间不好估算，所以延迟双删的等待时间不好设置 注意：如果要保证数据一致，可以在更新数据库的时候在 Redis 缓存客户端暂存并发读请求，等数据库更新完、缓存值删除后再读取数据 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>26｜备库为什么会延迟好几个小时？</title>
     <link>https://wangze.tech/26｜备库为什么会延迟好几个小时？</link>
     <guid>https://wangze.tech/26｜备库为什么会延迟好几个小时？</guid>
     <description> 为了解决备库一直追不上更新压力较大的主库的问题 多线程复制机制：将单线程 sql_thread 拆成多个线程 § coordinator 就是原来的 sql_thread，但不再更新数据，只负责读取中转日志和分发事务真正更新日志的变成 worker 线程，个数由参数 slave_parallel_workers 决定一般设置 8～16 之间最好（32 核物理机的情况）需要留资源给读查询 分发时的基本要求 不会造成更新覆盖。这就要求更新同一行的两个事务必须分发到同一个 worker 中 同一个事务不能被拆开 MySQL 5.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>26｜缓存异常（下）：如何解决缓存雪崩、击穿、穿透难题？</title>
     <link>https://wangze.tech/26｜缓存异常（下）：如何解决缓存雪崩、击穿、穿透难题？</link>
     <guid>https://wangze.tech/26｜缓存异常（下）：如何解决缓存雪崩、击穿、穿透难题？</guid>
     <description> 三大问题的原因和应对方案 缓存雪崩 大量的应用请求无法在 Redis 缓存中进行处理，紧接着，应用将大量请求发送到数据库层，导致数据库层的压力激增。 缓存击穿 针对某个访问非常频繁的热点数据的请求，无法在缓存中进行处理，紧接着，访问该数据的大量请求，一下子都发送到了后端数据库，导致了数据库压力激增，会影响数据库处理其他请求。 缓存击穿的情况，经常发生在热点数据过期失效时。 缓存穿透 要访问的数据既不在 Redis 缓存中，也不在数据库中，导致请求在访问缓存时，发生缓存缺失，再去访问数据库时，发现数据库中也没有要访问的数据。 此时缓存成了摆设。 同时给缓存和数据库巨大压力。 尽量使用预防式方案 1-1.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>27｜主库出问题了，从库怎么办？</title>
     <link>https://wangze.tech/27｜主库出问题了，从库怎么办？</link>
     <guid>https://wangze.tech/27｜主库出问题了，从库怎么办？</guid>
     <description>基于位点的主备切换 § change master 命令： CHANGE MASTER TO MASTER_HOST=$host_name MASTER_PORT=$port MASTER_USER=$user_name MASTER_PASSWORD=$password MASTER_LOG_FILE=$master_log_name MASTER_LOG_POS=$master_log_pos 最后两个参数就是位点参数：从主库的 master_log_name 文件的 master_log_pos 这个位置的日志继续同步 其中一种取同步位点的方法 等待新主库把中转日志全部同步完成； 在新主库上执行 show master status 命令，得到当前最新的 File 和 Position； 取原主库故障的时刻 T； 用 mysqlbinlog 工具解析新主库的 File，得到 T 时刻的位点。mysqlbinlog File —stop-datetime=T —start-datetime=T ⚠️ 得到的位置不准确：比如旧主库执行完成一个 insert 语句插入数据，并且将 binlog 传给了要成为新主库的实例和从库，传完后掉电。此时，从库执行 binlog 后有了新数据，新主库可能又再次把 binlog 传过来，会报主键重复错误。 两种解决方法 主动跳过一个事务：set global sql_slave_skip_counter=1;start slave; 此方法需要在从库刚开始连接到新主库的时候持续观察，每次碰到这些错误就停下来，执行一次跳过命令，直到不再出现停下来的情况，以此来跳过可能涉及的所有事务。 通过设置 slave_skip_error 参数，直接设置跳过指定的错误。在执行主备切换时，经常会遇到： a.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>27｜缓存被污染了，该怎么办？</title>
     <link>https://wangze.tech/27｜缓存被污染了，该怎么办？</link>
     <guid>https://wangze.tech/27｜缓存被污染了，该怎么办？</guid>
     <description> 缓存污染 留存在缓存中的数据，实际不会被再次访问了，但是又占据了缓存空间。 如果这样的数据体量很大，甚至占满了缓存，每次有新数据写入缓存时，还需要把这些数据逐步淘汰出缓存，就会增加缓存操作的时间开销。 解决 volatile-ttl 策略：设置时需明确知道数据被再次访问的情况时 LRU 缓存策略：只看数据的访问时间，可能在对大量数据进行一次全体读取后没能及时删除缓存数据 LFU 缓存策略 在 LRU 策略基础上，为每个数据增加一个计数器，用于统计数据的访问次数 淘汰数据时，首先根据数据的访问次数进行筛选 如果访问次数相同，则比较两个数据的访问时效性 LFU 与 LRU 实现的异同 LRU 使用 24bit 大小的 lru 字段 LFU 使用前 16bit 作为 ldt 值，表示数据的访问时间戳 后 8bit 作为 counter 值，表示数据的访问次数（最大值 255） LFU 的计数规则 增加机制 每当数据被访问一次 用计数器当前值 * 配置项 lfu_log_factor，再加 1，再取倒数，得到一个 p 值 把 p 值和一个取值范围再（0，1）间的随机数 r 值比大小 p 值大于 r 值时，计数器加 1 计数器默认值为 5（由代码中的 LFU_INIT_VAL 常量设置），避免数据刚写入就被淘汰 一般将 lfu_log_factor 设置为 10 就可以对百、千、十万级别的访问次数做明显区分 衰减机制 假设设置 lfu_decay_time 取值为 1 如果数据在 N 分钟没有被访问 访问次数减 N 如果业务应用中有短时高频访问的数据，建议把 lfu_decay_time 设置为 1 使用 LFU 策略后，缓存还会被污染，因为存在参数设置不合理的问题 如设置太大导致衰减过慢 或者一个数据只在短时间内被高频访问，也有可能滞留在缓存中 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>28｜Pika：如何基于 SSD 实现大容量 Redis？</title>
     <link>https://wangze.tech/28｜Pika：如何基于-SSD-实现大容量-Redis？</link>
     <guid>https://wangze.tech/28｜Pika：如何基于-SSD-实现大容量-Redis？</guid>
     <description> 基于大内存实现大容量 Redis 实例的潜在问题 内存快照 RDB 生成和恢复效率低 主从节点全量同步时长增加、缓冲区易溢出 Pika 键值数据库 Pika 设计目标 一、单实例可以保存大容量数据，同时避免实例恢复和主从同步时的潜在问题 二、和 Redis 数据类型保持兼容，可以平滑迁移到 Pika 上 整体架构 网络框架 Pika 线程模块 多线程 一个请求分发线程 DispatchThread 一组工作线程 WorkerThread 一个线程池 ThreadPool Nemo 存储模块 实现 Pika 和 Redis 的数据兼容 List Set Hash Sorted Set 不用修改业务应用中操作 Redis 的代码 RocksDB RocksDB 写入数据的基本流程 基于 SSD 保存数据 是一个持久化键值数据库 保存数据 使用两小块内存空间 Memtable1 和 Memtable2 交替缓存写入的数据 大小可设置 max_write_buffer_number 控制写限速 其中一块写满后，RocksDB 把数据以文件的形式快速写入底层的 SSD 读取数据 先在 Member 中查询，查询不到再到数据文件中查询 避免了内存快照的生成和恢复问题 在把数据写入 Memtable 时，也会把命令操作写到 binlog 文件中。 binlog 机制 实现增量命令同步 节省了内存，避免缓冲区溢出 其他优势 实例重启快 主从库执行全量同步风险低，不受内存缓冲区大小的限制 不足 性能比用内存低 多线程模型一定程度上弥补从 SSD 存取数据造成的性能损失 写 binlog 时影响性能 降低性能影响的建议 利用 Pika 的多线程模型，增加线程数量，提升 Pika 的并发请求处理能力 为 Pika 配置高配的 SSD，提升 SSD 自身的访问性能 工具 使用 aof_to_pika 命令迁移 Redis 数据到 Pika 中 Github｜Pika .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>28｜读写分离有哪些坑？</title>
     <link>https://wangze.tech/28｜读写分离有哪些坑？</link>
     <guid>https://wangze.tech/28｜读写分离有哪些坑？</guid>
     <description> 过期读：在从库上会读到系统的一个过期状态 客户端连接数据库的方式 § 直连 § 查询性能稍微好点，整体架构简单，排查问题更方便 主备切换、库迁移等操作时，客户端会感知到，并且需要调整数据库连接信息 一般采用这样的架构，一定会伴随一个负责管理后端的组件，比如 Zookeeper，尽量让业务端只专注于业务逻辑开发 带 proxy 的架构 § 对客户端友好，连接维护、后端信息等工作都由 proxy 完成 对后端维护团队的要求更高，需要高可用，整体架构比较复杂 强制走主库 § 对于必须要拿到最新结果的请求，强制将其发到主库上 对于可以读到旧数据的请求，才将其发到从库上 判断主备无延迟方案 § 每次从库执行查询请求前，先判断 seconds_behind_master 是否已经等于 0。如果还不等于 0 ，那就必须等到这个参数变为 0 才能执行查询请求。 seconds_behind_master 的单位是秒，可能精度不够 对比位点 Master_Log_File 和 Read_Master_Log_Pos，表示的是读到的主库的最新位点；Relay_Master_Log_File 和 Exec_Master_Log_Pos，表示的是备库执行的最新位点。如果Master_Log_File 和 Relay_Master_Log_File、Read_Master_Log_Pos 和 Exec_Master_Log_Pos这两组值完全相同，就表示接收到的日志已经同步完成。 对比 GTID 集合 Auto_Position=1 ，表示这对主备关系使用了 GTID 协议。Retrieved_Gtid_Set，是备库收到的所有日志的 GTID 集合；Executed_Gtid_Set，是备库所有已经执行完成的 GTID 集合。如果这两个集合相同，也表示备库接收到的日志都已经同步完成。 后两种准确度更高，但还不够 可能还有一部分日志，处于客户端已经收到提交确认，而备库还没收到日志的状态。 配合 semi-sync（半同步复制） 方案 § semi-sync 的设计 事务提交的时候，主库把 binlog 发给从库； 从库收到 binlog 以后，发回给主库一个 ack，表示收到了； 3。 主库收到这个 ack 以后，才能给客户端返回“事务完成”的确认。 如果启用了 semi-sync，就表示所有给客户端发送过确认的事务，都确保了备库已经收到了这个日志。 存在问题 一主多从的时候，在某些从库执行查询请求会存在过期读的现象； 因为主库只要等到一个从库的 ack，就开始给客户端返回确认 在持续延迟的情况下，可能出现过度等待的问题。 如果在业务更新的高峰期，主库的位点或者 GTID 集合更新很快，那么上面的两个位点等值判断就会一直不成立，很可能出现从库上迟迟无法响应查询请求的情况。 等主库位点方案 § 主备持续延迟一个事务 trx1 事务更新完成后，客户端马上执行 show master status 得到当前主库执行到的 File 和 Position； 选定一个从库执行查询语句； 在从库上执行 select master_pos_wait(File, Position, 1)； a.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>29｜如何判断一个数据库是不是出问题了？</title>
     <link>https://wangze.tech/29｜如何判断一个数据库是不是出问题了？</link>
     <guid>https://wangze.tech/29｜如何判断一个数据库是不是出问题了？</guid>
     <description> 优先考虑 update 系统表，然后再配合增加检测 performance_schema 的信息。 select 1 判断 § ⚠️ 只能说明这个库的进程还在，不能说明主库没问题 mysqladmin ping 机制也属于同一类 控制并发线程上限 § 建议把 innodb_thread_concurrency 设置为 64~128 之间的值 一旦并发线程数达到这个值，InnoDB 在接收到新请求的时候，就会进入等待状态，直到有线程退出。 ⚠️ 达到上限时，select 1 能正常返回 并发连接：达到几千个影响不大，占内存而已 并发查询：CPU 杀手 在线程进入锁等待以后，并发线程的计数会减一 查表判断 § 一般的做法是，在系统库（mysql 库）里创建一个表，比如命名为 health_check，里面只放一行数据，然后定期执行：mysql&gt; select * from mysql.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>29｜无锁的原子操作：Redis 如何应对并发访问？</title>
     <link>https://wangze.tech/29｜无锁的原子操作：Redis-如何应对并发访问？</link>
     <guid>https://wangze.tech/29｜无锁的原子操作：Redis-如何应对并发访问？</guid>
     <description> 加锁 原子操作 单命令操作 多个操作在 Redis 中实现成一个操作（如改源码） INCR/DECR 命令 以原子性方式执行 Lua 脚本 redis-cli —eval {lua.script} {keys}, {args} 避免把不需要做并发控制的操作写入脚本 并发访问中需要控制的操作 读取 - 修改 - 写回操作（RMW） .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>3-2-1 的有趣想法</title>
     <link>https://wangze.tech/3-2-1-的有趣想法</link>
     <guid>https://wangze.tech/3-2-1-的有趣想法</guid>
     <description>内容摘抄自：3-2-1 想法 § If you’re searching for more time this year, start with a clean slate and choose what to add to your days rather than starting with a full schedule and trying to figure out what to eliminate.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>30｜如何使用 Redis 实现分布式锁？</title>
     <link>https://wangze.tech/30｜如何使用-Redis-实现分布式锁？</link>
     <guid>https://wangze.tech/30｜如何使用-Redis-实现分布式锁？</guid>
     <description> 单机版 用一个变量表示：0 没有线程获取到锁；1 有线程获取到锁 分布式锁 锁变量需要有一个共享存储系统来维护 基于单个节点 加锁 SET lock_key unique_value NX [EX seconds | PX milliseconds] key 不存在时会被创建 key 存在，不做任何赋值操作 例：SET lock_key unique_value NX PX 10000 加锁成功后设置有效期 将上述操作写进 Lua 脚本 释放锁 比较锁变量的 unique_value 是否相等，避免误释放 unique_value：随机值，唯一，和其他客户端作区分 使用 Lua 脚本保证原子性 例：redis-cli —eval unlock.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>30｜答疑文章（二）：用动态的观点看加锁</title>
     <link>https://wangze.tech/30｜答疑文章（二）：用动态的观点看加锁</link>
     <guid>https://wangze.tech/30｜答疑文章（二）：用动态的观点看加锁</guid>
     <description>下面的讨论基于此表 CREATE TABLE `t` ( `id` int(11) NOT NULL, `c` int(11) DEFAULT NULL, `d` int(11) DEFAULT NULL, PRIMARY KEY (`id`), KEY `c` (`c`) ) ENGINE=InnoDB; insert into t values(0,0,0),(5,5,5),(10,10,10),(15,15,15),(20,20,20),(25,25,25); show engine innodb status 命令输出的信息中，LATESTADETECTED DEADLOCK 记录了最后一次死锁信息 由于锁是一个个加的，要避免死锁，对同一组资源，要按照尽量相同的顺序访问； 在发生死锁的时刻，for update 这条语句占有的资源更多，回滚成本更大，所以 InnoDB 选择了回滚成本更小的 lock in share mode 语句，来回滚。 所谓“间隙”，其实根本就是由“这个间隙右边的那个记录”定义的。 思考题 § 空表的间隙的定义 一个空表只有一个间隙 比如执行：begin; select * from t where id&gt;1 for update; 加锁范围：next_key lock (-∞, supremum] 评论区 § 删除数据，导致锁扩大的描述：“因此，我们就知道了，由于 delete 操作把 id=10 这一行删掉了，原来的两个间隙 (5,10)、(10,15）变成了一个 (5,15)。”我觉得这个提到的(5, 10) 和 (10, 15)两个间隙会让人有点误解，实际上在删除之前间隙锁只有一个(10, 15)，删除了数据之后，导致间隙锁左侧扩张成了5，间隙锁成为了(5, 15)。 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>31｜事务机制｜Redis 能实现 ACID 属性吗？</title>
     <link>https://wangze.tech/31｜事务机制｜Redis-能实现-ACID-属性吗？</link>
     <guid>https://wangze.tech/31｜事务机制｜Redis-能实现-ACID-属性吗？</guid>
     <description> 事务命令 MULTI 开启一个事务 EXEC 提交事务，从命令队列中去除提交的操作命令，进行实际执行 DISCARD 放弃一个事务，清空命令队列 只是清空，起不到回滚的作用 WATCH 检测一个或多个键的值在事务执行期间是否发生变化，如果发生变化，那么当前事务放弃执行 Redis 的事务机制 可以保证一致性和隔离性，无法保证持久性（非必要） 原子性 命令语法有误时，得不到保证 不存在的命令一开始就会被记录错误 无法得到保证的原因：命令和操作的数据类型不匹配，但 Redis 实例没检查出错误并开始执行 预防建议：严格按照 Redis 的命令规范进行程序开发，并且通过 code review 确保命令的正确性 实例发生故障，且 Redis 使用了 RDB 机制 RDB 不会在事务执行时执行，也就不会记录下事务执行了一部分的结果 存在一种情况无法保证原子性：如果事务执行完成，还没执行 RDB 快照，此时发生故障，会丢失事务修改的数据 其他情况，事务都可以原子性执行 前提：执行事务的 EXEC 命令时，Redis 实例发生了故障，导致事务执行失败 开启 AOF 日志 只会有部分的事务操作被记录到 AOF 日志中 使用 redis-check-aof 工具检查 AOF 日志文件 工具会把未完成的事务操作从 AOF 日志中去除 这时再使用 AOF 恢复实例，失败的事务操作不会再被执行 事务使用建议 配合 Pipeline 使用 隔离性由服务端保证，此时不需要使用 WATCH WATCH 的使用场景 WATCH key，读取 key，修改 key，写回 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>31｜误删数据后除了跑路，还能怎么办？</title>
     <link>https://wangze.tech/31｜误删数据后除了跑路，还能怎么办？</link>
     <guid>https://wangze.tech/31｜误删数据后除了跑路，还能怎么办？</guid>
     <description>多种情况 § 使用 delete 语句误删数据行； 使用 drop table 或者 truncate table 语句误删数据表； 使用 drop database 语句误删数据库； 使用 rm 命令误删整个 MySQL 实例。 误删行 § 恢复数据比较安全的做法，是恢复出一个备份，或者找一个从库作为临时库，在这个临时库上执行这些操作，然后再将确认过的临时库的数据，恢复回主库。 预防：把 sql_safe_updates 参数设置为 on。这样一来，如果我们忘记在 delete 或者 update 语句中写 where 条件，或者 where 条件里面没有包含索引字段的话，这条语句的执行就会报错。 delete 全表很慢，应该优先考虑使用 truncate table 或者 drop table 命令 误删库/表 § 即使配置了 binlog_format=row，记录的还是 statement 格式，binlog 只有一个 truncate/drop 语句，不足以恢复数据 恢复方法：使用全量备份 + 增量日志的方式 加速数据恢复：使用 mysqlbinlog 命令时加上 -database 参数指定误删表所在的库 应用日志时跳过误操作的语句的 binlog 如果原实例没有使用 GTID 模式，只能在应用到包含错误语句的 binlog 文件时，先用 -stop-position 参数执行到误操作之前的日志，再用 -start-position 从误操作之后的日志继续执行 如果实例使用了 GTID 模式，假设误操作命令的 GTID 时 gtid1，执行 set gtid_next=gtid1; begin; commit; 把这个 GTID 加到临时实例的 GTID 集合，之后顺序执行 binlog 的时候会自动跳过误操作的语句 上述使用 mysqlbinlog 方法恢复数据不够快 mysqlbinlog 不能指定只解析一个表的日志 单线程 加速方法之一：在用备份恢复出临时实例之后，把实例设置成线上备库的从库 在 start slave 之前，先通过执行 change replication filter replicate_do_table = (tbl_name) 命令，就可以让临时库只同步误操作的表； 这样做也可以用上并行复制技术，来加速整个数据恢复过程。 如果备库上没有日志的话，从备份中下载恢复 建议把上述恢复功能做成自动化工具，并且经常拿出来演练 延迟复制备库 § MySQL 5.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>32｜Redis 主从同步与故障切换，有哪些坑？</title>
     <link>https://wangze.tech/32｜Redis-主从同步与故障切换，有哪些坑？</link>
     <guid>https://wangze.tech/32｜Redis-主从同步与故障切换，有哪些坑？</guid>
     <description> 主从数据不一致 因为主从数据是异步复制 a）使用外部监控程序对比主从库复制进度，不让客户端从落后的从库中读取数据 开发一个工具： 基于 INFO replication 命令查看主库接收写命令的进度信息（master_repl_offset）和从库复制写命令的进度信息（slave_repl_offset） 比较两者大小，大于我们预设的阈值则不让客户端和此从库连接 b）保证主从间的网络链接状况良好 读到过期数据 Redis 同时使用两种策略删除过期的数据 惰性删除 当一个数据过期时间到了之后，不会立即删除数据，等到再有请求读写这个数据时，检查发现过期再删除 好处是对于用不到的数据，不浪费时间进行检查和删除 会导致大量已过期数据留存在内存中 而且，从库本身不会执行删除操作，只能同步主库的删除操作，所以主库可能已经自动删除的数据，在从库还有留存 定期删除 Redis 每隔一段时间（默认 100ms）随机选出一定数量的数据，删除其中过期的数据 Redis 3.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>32｜为什么还有 kill 不掉的语句？</title>
     <link>https://wangze.tech/32｜为什么还有-kill-不掉的语句？</link>
     <guid>https://wangze.tech/32｜为什么还有-kill-不掉的语句？</guid>
     <description>两个 kill 命令 § kill query + 线程 id 终止这个线程中正在执行的语句 kill connection + 线程 id connection 可以不写 断开这个线程的连接 会先停止正在执行的语句 收到 kill 以后，线程做什么？ § 告诉执行线程：这条语句已经不需要继续执行了，可以开始“执行停止的逻辑了” 跟 Linux 的 kill 命令类似，kill -N pid 并不是让进程直接停止，而是给进程发一个信号，然后进程处理这个信号，进入终止逻辑。只是对于 MySQL 的 kill 命令来说，不需要传信号量参数，就只有“停止”这个命令。 实现上，当用户执行 kill query thread_id_B 时，MySQL 里处理 kill 命令的线程做了两件事： 把 session B 的运行状态改成 THD::KILL_QUERY(将变量 killed 赋值为 THD::KILL_QUERY)； 如果 session B 处于锁等待，并不能知道状态变化，还是会继续等待。 给 session B 的执行线程发一个信号。 发信号的目的：让 session B 退出等待，处理 1 设置的状态 kill 无效的两类情况 § 线程没有执行到判断线程状态的逻辑 相同的还有由于 IO 压力过大，读写 IO 的函数一直无法返回，导致不能及时判断线程的状态 语句执行到能判断到线程状态已经变成了 KILL_QUERY 或者 KILL_CONNECTION 的时候，再进入终止逻辑阶段。 如果一个线程的状态是KILL_CONNECTION，就把Command列显示成Killed。 终止逻辑耗时较长 超大事务执行期间被 kill，触发回滚操作 大查询回滚，查询过程生成了比较大的临时文件 + 此时文件系统压力大 =&gt; 删除临时文件可能需要等待 IO 资源 DDL 命令执行到最后阶段，被 kill 需要删除中间过程的临时文件，同 2 客户端执行 Ctrl+C § 是 MySQL 客户端另外启动一个连接发送一个 kill query 命令 另外两个关于客户端的误解 § 如果库里面的表特别多，连接就会很慢。 每个客户端在和服务端建立连接的时候，需要做的事情就是 TCP 握手、用户校验、获取权限。但这几个操作，跟库里面表的个数无关。（第一章） 我们感知到的连接过程慢，其实并不是连接慢，也不是服务端慢，而是客户端慢。 客户端在连接成功后： 执行 show databases 切到 db1 库，执行 show tables 把这两个命令的结果用于构建一个本地的哈希表（最耗时） 如果在连接命令中加上 -A，就可以关掉这个自动补全的功能，然后客户端就可以快速返回。 –quick 也可以跳过 –quick 是让客户端变快 MySQL 客户端发送请求后，接收服务端返回结果的方式有两种： 一种是本地缓存，也就是在本地开一片内存，先把结果存起来。如果你用 API 开发，对应的就是 mysql_store_result 方法。 另一种是不缓存，读一个处理一个。如果你用 API 开发，对应的就是 mysql_use_result 方法。 默认第一种 查询的返回结果不会很多的话，都推荐用这个 加上 -quick 参数后使用第二种 采用不缓存的方式，如果本地处理得慢，就会导致服务端发送结果被阻塞，因此会让服务端变慢 参数效果 跳过表名自动补全功能 mysql_store_result 需要申请本地内存来缓存查询结果，如果查询结果太大，会耗费较多的本地内存 不会把执行命令记录到本地的命令历史文件 线程处于 Killed 状态 § 可以做的事情：通过影响系统环境，让 Killed 状态尽快结束 并发度问题，临时调大 innodb_thread_concurrency 的值或停掉别的线程，让出位子给这个线程执行 回滚逻辑由于 IO 资源限制，通过减少系统压力让它加速 思考题 § 如果你碰到一个被 killed 的事务一直处于回滚状态，你认为是应该直接把 MySQL 进程强行重启，还是应该让它自己执行完成呢？ 让它自己结束 为什么呢？ 因为重启之后该做的回滚动作不能少 可以先做主备切换，切到新主库提供服务 减少系统压力，加速终止逻辑 评论区 § 并非所有的 DDL 操作都可以通过主从切换来实现 改索引、 加最后一列、删最后一列 其他的大多数不行，比如删除中间一列 kill 的影响只有回滚，恢复到执行前的状态，没有其他 遇到错误时：pstack &gt; /tmp/pstack.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>33｜我查这么多数据，会不会把数据库内存打爆？</title>
     <link>https://wangze.tech/33｜我查这么多数据，会不会把数据库内存打爆？</link>
     <guid>https://wangze.tech/33｜我查这么多数据，会不会把数据库内存打爆？</guid>
     <description>全表扫描对 server 层的影响 § 服务端并不需要保存一个完整的结果集 取数据和发数据的流程（边读边发）： 获取一行，写到 net_buffer 中。这块内存的大小是由参数 net_buffer_length 定义的，默认是 16k。 重复获取行，直到 net_buffer 写满，调用网络接口发出去。（发给 socket send buffer） 如果发送成功，就清空 net_buffer，然后继续取下一行，并写入 net_buffer。 如果发送函数返回 EAGAIN 或 WSAEWOULDBLOCK，就表示本地网络栈（socket send buffer）写满了，进入等待。直到网络栈重新可写，再继续发送 show processlist 结果看到 State 一直处于“Sending to client”，表示服务器端的网络栈写满了（上一节讲到的 -quick 参数就可能导致这种情况） 可以考虑将 net_buffer_length 参数设置为更大的值 等待客户端接收结果 “Sending data”状态 一个查询语句的状态变化（这里略去了其他无关的状态）： MySQL 查询语句进入执行阶段后，首先把状态设置成“Sending data”；然后，发送执行结果的列相关的信息（meta data) 给客户端；再继续执行语句的流程；执行完成后，把状态设置成空字符串。 不一定是指正在发送数据，而可能是处于执行器过程中的任意阶段 全表扫描对 InnoDB 的影响 § 内存的数据页是在 Buffer Pool (BP) 中管理，在 WAL 里 Buffer Pool 起到了加速更新的作用。而实际上，Buffer Pool 还有一个更重要的作用，加速查询。 由于有 WAL 机制，当事务提交的时候，磁盘上的数据页是旧的，此时如果有一个查询要读这个数据页，并不需要把 redo log 应用到数据页。因为这时候内存数据页的结果是最新的， 直接读内存页就可以了 Buffer Pool 对查询的加速效果依赖于一个重要的指标：内存命中率 show engine innodb status 结果查看 一般情况下，一个稳定服务的线上系统，要保证响应时间符合要求的话，内存命中率要在 99% 以上。 Buffer pool hit rate 表示命中率 InnoDB Buffer Pool 的大小是由参数 innodb_buffer_pool_size 确定，一般建议设置成可用物理内存的 60%~80%。 InnoDB 内存管理用的是最近最少使用 (Least Recently Used, LRU) 算法，这个算法的核心就是淘汰最久未使用的数据。 用链表实现 没有改进前：遇到全表扫描时内存命中率急剧下降，磁盘压力增加，SQL 语句响应变慢 改进的 LRU 算法 靠近链表头部的 5/8 是 young 区域，靠近链表尾部的 3/8 是 old 区域。 状态 1，要访问数据页 P3，由于 P3 在 young 区域，因此和优化前的 LRU 算法一样，将其移到链表头部，变成状态 2。 之后要访问一个新的不存在于当前链表的数据页，这时候依然是淘汰掉数据页 Pm，但是新插入的数据页 Px，是放在 LRU_old 处。 处于 old 区域的数据页，每次被访问的时候都要做下面这个判断： a.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>33｜脑裂：一次奇怪的数据丢失</title>
     <link>https://wangze.tech/33｜脑裂：一次奇怪的数据丢失</link>
     <guid>https://wangze.tech/33｜脑裂：一次奇怪的数据丢失</guid>
     <description> 脑裂：指在主从集群中，同时有两个主节点，都能接收写请求 图 1 图 2 影响：客户端不知道该往哪个主节点写入数据，结果不同客户端往不同的主节点写数据，严重的会导致数据丢失 数据丢失排查过程 确认是不是数据同步出现问题 主库的数据未同步到从库且发生了故障，从库升级为主库，未同步的数据丢失 可以通过计算 master_repl_offset 和 slave_repl_offset 的差值做判断 排查客户端的操作日志，发现脑裂现象 在主从切换后的一段时间内，有客户端仍然在和原主库通信，并没有和升级的新主库进行交互 原主库假故障导致的脑裂 采用哨兵机制，如果超过预设数量的哨兵实例和主库的心跳都超时，才会把主库判断为客观下限，然后哨兵开始执行主从切换，切换完成后客户端会和新主库通信 和主库部署在同一台服务器上的其他程序临时占用了大量资源（例如 CPU 资源），导致主库资源使用受限，短时间内无法响应心跳。其它程序不再使用资源时，主库又恢复正常 主库自身遇到了阻塞的情况，例如，处理 bigkey 或是发生内存 swap（复习下第 19 讲中总结的导致实例阻塞的原因），短时间内无法响应心跳，等主库阻塞解除后，又恢复正常的请求处理了 脑裂应对方案 min-slaves-to-write：设置主库能进行数据同步的最少从库数量 min-slaves-max-lag：设置主从库间进行数据复制时，从库给主库发送 ACK 消息的最大延迟（以秒为单位） 搭配两个配置项，假设为 N 和 T，主库连接的从库中至少有 N 个从库，和主库进行数据复制时的 ACK 消息延迟不能超过 T 秒，否则，主库就不会再接收客户端的请求 只是减少数据的丢失 建议：假设从库有 K 个，将 min-slaves-to-write 设置为 K/2+1（如果 K = 1，就设为 1），将 min-slaves-max-lag 设置为十几秒（如 10～20s），在这个配置下，如果有一半以上的从库和主库进行的 ACK 消息延迟超过十几秒，我们就禁止主库接收客户端写请求 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>34｜到底可不可以使用 join ？</title>
     <link>https://wangze.tech/34｜到底可不可以使用-join-？</link>
     <guid>https://wangze.tech/34｜到底可不可以使用-join-？</guid>
     <description>Index Nested-Loop Join（NLJ） § 使用 join 语句，性能比强行拆成多个单表执行 SQL 语句的性能要好； 如果使用 join 语句的话，需要让小表做驱动表 前提是“可以使用被驱动表的索引” Simple Nested-Loop Join § MySQL 没有 Block Nested-Loop Join（BNL） § 被驱动表没有索引 驱动表中取出所有满足条件的数据，读入线程内存 join_buffer 中 如果 join_buffer 满了，进入下一步，比较完放入结果集后，清空 join_buffer，回到这一步 join_buffer_size 设置 join_buffer 的大小 扫描被驱动表，把每一行拿出来跟 join_buffer 中的数据做对比，满足 join 条件的，作为结果集的一部分返回 跟 Simple xx join 一样的扫描行数 不同的是一个是每一行都在驱动表全表扫描作比较，一个在内存比较 不用分段时，选哪个表做驱动表都一样 两个表都做一次全表扫描 M + N 内存中的判断次数 M * N 分段时，选择小表做驱动表 驱动表 N 行，被驱动表 M 行 N 越大，分段次数越多，M 被扫的次数越多 调大 join_buffer_size 可以加快没用到被驱动表索引的 join 语句 能不能用 join 语句？ § 如果可以使用 Index Nested-Loop Join 算法，也就是说可以用上被驱动表上的索引，其实是没问题的； 判断要不要使用 join 语句时，就是看 explain 结果里面，Extra 字段里面有没有出现“Block Nested Loop”字样，有就不用 选择大表还是小表做驱动表 § 总是应该用“小表” 小表：两个表按照各自的条件过滤，计算参与 join 的各个字段的总数据量，数据量小的那个表，就是“小表”，应该作为驱动表。 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>35｜Codis VS Redis Cluster：我该选择哪一个集群方案？</title>
     <link>https://wangze.tech/35｜Codis-VS-Redis-Cluster：我该选择哪一个集群方案？</link>
     <guid>https://wangze.tech/35｜Codis-VS-Redis-Cluster：我该选择哪一个集群方案？</guid>
     <description> Codis 集群 Codis 集群的架构和关键组件图 codis server 进行了二次开发的 Redis 实例，其中增加了额外的数据结构，支持数据迁移操作，主要负责处理具体的数据读写请求 codis proxy 接收客户端请求，并把请求转发给 codis server Zookeeper 集群 保存集群元数据，例如数据位置信息和 codis proxy 信息 也可以换用 etcd 或本地文件系统保存元数据信息 etcd 是一个分布式键值对存储 codis dashboard 和 codis fe 共同组成集群管理工具 codis dashboard 负责执行集群管理工作，包括增删 codis server、codis proxy 和进行数据迁移 codis fe 负责提供 dashboard 的 Web 操作界面，便于进行集群管理 Codis 处理请求 先使用 codis dashboard 设置 codis server 和 codis proxy 的访问地址 客户端直接和 proxy 建立连接，不用修改客户端，和访问单实例 Redis 没区别 proxy 接收到请求，查询请求数据和 codis server 的映射关系，转给相应的 server 处理，最后通过 proxy 把数据返回给客户端 处理流程图 Codis 关键技术原理 集群里的数据分布 集群一共有 1024 个 Slot，编号依次是 0 到 1023 可以手动，也可以通过 codis dashboard 进行自动分配 客户端要读写数据时，使用 CRC32 算法计算数据 key 的哈希值，把哈希值对 1024 取模得到对应 Slot 的编号 CRC32(key) % 1024 = n 即可知道数据保存在哪个 server 上 数据路由表 指 Slot 和 codis server 的映射关系 在 codis dashboard 分配好路由表后会把路由表发送给 codis proxy，同时也会保存在 Zookeeper 中，codis proxy 会把路由表缓存在本地 路由表的分配和使用过程 集群扩容和数据迁移 增加 codis server 启动新的 codis server，将它加入集群 把部分数据迁移到新的 server Codis 集群按照 Slot 的粒度进行数据迁移 在源 server 上，Codis 从要迁移的 Slot 中随机选择一个数据，发送给目的 server 目的 server 确认收到数据后，会给源 server 返回确认消息。这时，源 server 会在本地将刚才迁移的数据删除 第一步和第二步就是单个数据的迁移过程。Codis 会不断重复这个迁移过程，直到要迁移的 Slot 中的数据全部迁移完成 支持两种迁移模式 同步迁移 阻塞，此时源 server 无法处理新的请求操作 异步迁移 非阻塞，迁移的数据会被设置为只读，不会出现数据不一致的问题 对于 bigkey，采用拆分指令的方式进行迁移：对 bigkey 的每个元素，用一条指令进行迁移 会给目的 server 上被迁移中的 bigkey 设置临时过期时间，如果迁移过程发生故障，不会影响迁移的原子性，完成迁移后删除设置的临时过期时间 可以通过异步迁移命令 SLOTSMGRTTAGSLOT-ASYNC 的参数 numkeys 设置每次迁移的 key 数量 增加 codis proxy 启动新的 proxy 通过 codis dashboard 把 proxy 加入集群即可 Codis 集群可靠性 codis server 给每个 server 配置从库，并使用哨兵机制进行监控 此时每个 server 成为一个 server group，都是一主多从 server group 的 Codis 集群架构图 codis proxy 和 Zookeeper 搭配使用 有超过半数的 Zookeeper 实例可以正常工作，Zookeeper 集群就可以提供服务 proxy 故障只需重启，然后通过 codis dashboard 从 Zookeeper 集群获取路由表即可恢复服务 切片集群方案选择建议 Codis 和 Redis Cluster 的区别 从稳定性和成熟度，选 Codis 从业务应用客户端兼容性，选 Codis 从数据迁移性能纬度看，选 Codis 从使用 Redis 新命令和新特性，选 Redis Cluster Codis server 是基于开源的 Redis 3.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>35｜join 语句怎么优化？</title>
     <link>https://wangze.tech/35｜join-语句怎么优化？</link>
     <guid>https://wangze.tech/35｜join-语句怎么优化？</guid>
     <description>Multi-Range Read 优化（MRR） § 目的：尽量使用顺序读盘 设计思路：因为大多数的数据都是按照主键递增顺序插入得到的，所以我们可以认为，如果按照主键的递增顺序查询的话，对磁盘的读比较接近顺序读，能够提升读性能。 优化后的执行流程 根据索引 a 定位到满足条件的记录，将 id 值放入 read_rnd_buffer 中 ; read_rnd_buffer：MySQL 的随机读缓冲区。当按任意顺序读取行时（例如按照排序顺序）将分配一个随机读取缓冲区，进行排序查询时，MySQL 会首先扫描一遍该缓冲，以避免磁盘搜索，提高查询速度。 将 read_rnd_buffer 中的 id 进行递增排序； 排序后的 id 数组，依次到主键 id 索引中查记录，并作为结果返回。 read_rnd_buffer 的大小由 read_rnd_buffer_size 参数控制。 如果步骤 1 中 read_rnd_buffer 放满了，就会先执行完步骤 2 和 3，然后清空 read_rnd_buffer。之后继续找索引 a 的下个记录，并继续循环。 想要稳定地使用 MRR 优化的话，需要设置set optimizer_switch=“mrr_cost_based=off”。 官方文档的说法，是现在的优化器策略，判断消耗的时候，会更倾向于不使用 MRR，把 mrr_cost_based 设置为 off，就是固定使用 MRR 了。 提升性能的核心：在索引 a 上做一个范围查询，拿到足够多的主键 id，通过排序后，再去主键索引查数据，才能体现出“顺序性”的优势。 用了 order by 就不要用 MRR 了 Batched Key Access（BKA） § MySQL 已经内置支持的，建议默认使用 MySQL 5.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>36｜Redis 支撑秒杀场景的关键技术和实践都有哪些？</title>
     <link>https://wangze.tech/36｜Redis-支撑秒杀场景的关键技术和实践都有哪些？</link>
     <guid>https://wangze.tech/36｜Redis-支撑秒杀场景的关键技术和实践都有哪些？</guid>
     <description> 特征 瞬时并发访问量非常高 读多写少 秒杀场景的所有环节 活动前 不需要 Redis 尽量把商品详情页页面元素静态化，然后使用前端 CDN 或浏览器缓存把元素缓存起来 活动开始 Redis 参与的两个环节 使用 Redis 保存库存量，不交给数据库做库存扣减 如果把库存扣减在数据库执行，会带来两个问题 额外的开销。Redis 中保存了库存量，而库存量的最新值又是数据库在维护，所以数据库更新后，还需要和 Redis 进行同步，这个过程增加了额外的操作逻辑，也带来了额外的开销。 数据库处理较慢，不能及时更新库存余量，导致大量库存查验请求读取到 Redis 中的旧库存值，此时会出现下单数量大于实际的库存量，导致超售 最后在数据库处理订单 订单处理涉及支付、商品出库、物流等多个关联操作，要保证处理的事务性，需要在数据库中完成 订单处理时的请求压力已经不大 活动结束后 不需要 Redis 库存数据保存方式 使用切片集群，用不同实例保存不同商品的库存 每个商品用一个 Hash 类型的键值对保存 key: itemID value: {total: N, ordered: M} 先用 CRC 算法计算不同商品 key 对应的 Slot，然后，在分配 Slot 和实例对应关系时，才能把不同秒杀商品对应的 Slot 分配到不同实例上保存 基于原子操作支撑秒杀场景 使用 Lua 脚本执行库存查验和库存扣减操作，保证原子性 基于分布式锁来支撑秒杀场景 先让客户端向 Redis 申请分布式锁，只有拿到锁的客户端才能执行库存查验和库存扣减 这样可以在争夺分布式锁时过滤掉大量的秒杀请求 库存查验和扣减也不用使用原子操作了，因为多个并发客户端只有一个客户端能够拿到锁，已经保证了客户端并发访问的互斥性 建议 使用切片集群中的不同实例，分别保存分布式锁和商品库存信息 减轻保存库存信息的实例的压力 把秒杀商品的库存信息用单独的实例保存，不要和日常业务系统的数据保存在同一个实例上，避免干扰业务系统的正常运行 其他环节 前端静态页面的设计 请求拦截和流控 使用黑名单禁止恶意 IP 进行访问；限流；等等 库存信息过期时间处理 Redis 中的库存信息 = 数据库的缓存，不给 Reids 的库存信息设置过期时间 数据库订单异常处理 增加订单重试功能 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>36｜为什么临时表可以重名？</title>
     <link>https://wangze.tech/36｜为什么临时表可以重名？</link>
     <guid>https://wangze.tech/36｜为什么临时表可以重名？</guid>
     <description> 临时表和内存表不同 内存表，指的是使用 Memory 引擎的表，建表语法是 create table … engine=memory。这种表的数据都保存在内存里，系统重启的时候会被清空，但是表结构还在。除了这两个特性看上去比较“奇怪”外，从其他的特征上看，它就是一个正常的表。 而临时表，可以使用各种引擎类型 。如果是使用 InnoDB 引擎或者 MyISAM 引擎的临时表，写数据的时候是写到磁盘上的。临时表也可以使用 Memory 引擎。 临时表的特性 建表语法是 create temporary table …。 一个临时表只能被创建它的 session 访问，对其他线程不可见。 在 session 结束的时候会自动删除临时表 不用担心数据删除问题 不同 session 的临时表可以重名 临时表可以与普通表同名。 session A 内有同名的临时表和普通表的时候，show create 语句，以及增删改查语句访问的是临时表。 show tables 命令不显示临时表。 临时表的应用 经常被用在复杂查询的优化过程中 典型：分库分表系统的跨库查询 第一种思路：在 proxy 层的进程代码中实现排序 开发工作量比较大 对 proxy 端压力大：内存、CPU 第二种思路：把各个分库拿到的数据，汇总到一个 MySQL 实例的一个表中，然后在这个汇总实例上做逻辑操作。 在汇总库创建临时表 在分库拿到需要的数据，插入到临时表中 临时表可以重名 物理上的文件 #sql{进程 id}{线程 id} 序列号.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>37｜什么时候会使用内部临时表？</title>
     <link>https://wangze.tech/37｜什么时候会使用内部临时表？</link>
     <guid>https://wangze.tech/37｜什么时候会使用内部临时表？</guid>
     <description> union 执行流程 (select 1000 as f) union (select id from t1 order by id desc limit 2);这条语句用到了 union，它的语义是，取这两个子查询结果的并集。并集的意思就是这两个集合加起来，重复的行只保留一行。 创建临时表，执行第一个查询，拿到 1000，放入临时表，执行第二个查询，拿到 1000 和 999，1000 由于违反唯一性约束插入失败，接着放入 999 后返回，最后从临时表中按行取出数据，返回结果，并删除临时表 改成 union all 则没有去重的语义，执行时不需要临时表 group by 执行流程 select id%10 as m, count(*) as c from t1 group by m;创建临时表（m(pk)，c），扫表 t1 的索引 a，取出 id 并计算出 x，放入临时表/计数，完成后根据 m 做排序，得到结果集返回给客户端 order by null 可以跳过对结果集的排序 内存临时表的大小是有限制的，参数 tmp_table_size 就是控制这个内存大小的，默认是 16M。 如果超出，就会转成磁盘临时表 磁盘临时表默认使用 InnoDB 引擎 group by 优化方法 — 索引 数据有序，就不需要临时表排序了 如果可以确保输入的数据是有序的，那么计算 group by 的时候，就只需要从左到右，顺序扫描，依次累加。 在 MySQL 5.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>37｜数据分布优化：如何应对数据倾斜？</title>
     <link>https://wangze.tech/37｜数据分布优化：如何应对数据倾斜？</link>
     <guid>https://wangze.tech/37｜数据分布优化：如何应对数据倾斜？</guid>
     <description> 数据量倾斜：在某些情况下，实例上的数据分布不均衡，某个实例上的数据特别多 bigkey 集合类型的 bigkey 如果是集合类型，可以拆分成很多个小的集合类型数据，分散保存在不同的实例上 比如通过 ID 范围拆分 避免 bigkey Slot 分配不均衡 手动迁移 Redis Cluster 的 Slot cluster slots 命令查看 Slot 分配情况 可用命令 CLUSTER SETSLOT：使用不同的选项进行三种设置，分别是设置 Slot 要迁入的目标实例，Slot 要迁出的源实例，以及 Slot 所属的实例 CLUSTER GETKEYSINSLOT：获取某个 Slot 中一定数量的 key。 MIGRATE：把一个 key 从源实例实际迁移到目标实例 手动迁移 Codis 的 Slot codis-admin —dashboard=ADDR -slot-action —create —sid=300 —gid=6 Hash Tag 指加在键值对 key 中的一对花括号 {} 如果有 Hash Tag，客户端在计算 key 的 CRC16 值时，只对 Hash Tag 花括号中的 key 内容进行计算 相同 Hash Tag 的数据会被映射到相同的 Slot 上 使用场景：用在 Redis Cluster 和 Codis 中，支持事务操作和范围查询 因为 Redis Cluster 和 Codis 本身不支持跨实例的事务操作 建议：不使用 Hash Tag，在客户端执行事务操作和范围查询 数据访问倾斜：虽然每个集群实例上的数据量相差不大，但是某个实例上的数据是热点数据，被访问得非常频繁 根本原因：实例存在热点数据 应对方法 只读的热点数据 具体做法：将热点数据复制多分，每个副本 key 增加一个随机前缀，映射到不同的实例的 Slot 中 有读有写的热点数据 给实例本身增加资源 比如配置更高的机器 集群的实例资源配置建议 在构建切片集群时，尽量使用大小配置相同的实例（例如实例内存配置保持相同），可以避免因实例资源不均衡而在不同实例上分配不同数量的 Slot .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>38｜通信开销：限制 Redis Cluster 规模的关键因素</title>
     <link>https://wangze.tech/38｜通信开销：限制-Redis-Cluster-规模的关键因素</link>
     <guid>https://wangze.tech/38｜通信开销：限制-Redis-Cluster-规模的关键因素</guid>
     <description> Redis Cluster 实例间以 Gossip 协议进行通信的机制 Gossip 协议的工作原理 两个实例间进行 PING、PONG 消息传递的情况 每个实例默认每秒从集群中随机挑选一些实例，把 PING 消息发送给挑选出来的实例，用来检测这些实例是否在线，并交换彼此的状态信息 PING 消息中封装了发送消息的实例自身的状态信息、部分其它实例的状态信息，以及 Slot 映射表 一个实例在接收到 PING 消息后，会给发送 PING 消息的实例，发送一个 PONG 消息。PONG 消息包含的内容和 PING 消息一样 Gossip 消息大小 PING 和 PONG 消息的消息体都大约 12KB PING 消息中带有一个长度为 16384 bit 的 Bitmap 每一位对应一个 Slot，如果某一位为 1，表示这个 Slot 属于当前实例 实例间通信频率 Gossip 协议的工作原理第二点 实例每 100ms 扫描本地的实例列表，如果发现有实例最近一次接收 PONG 消息的时间已经大于配置项 cluster-node-timeout 的一半，就会立刻给该实例发送 PING 消息，更新这个实例上的集群状态信息 每秒会发送的 PING 消息数量 = 1 + 10 * 实例数 实例数 = 最近一次接收 PONG 消息的时间超出 cluster-node-timeout/2 降低实例间的通信开销 不能减小实例传输的消息大小 只能修改 cluster-node-timeout 配置项 默认 15 秒，调大到 20 或 25 秒 验证调整后的值是否能减少心跳消息占用的集群网络带宽 调整前后使用 tcpdump 命令抓取实例发送心跳信息网络包的情况 例如，执行：tcpdump host 192.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>38｜都说 InnoDB 好，那还要不要使用 Memory 引擎？</title>
     <link>https://wangze.tech/38｜都说-InnoDB-好，那还要不要使用-Memory-引擎？</link>
     <guid>https://wangze.tech/38｜都说-InnoDB-好，那还要不要使用-Memory-引擎？</guid>
     <description> 内存表的数据组织结构 InnoDB 引擎把数据放在主键索引上，其他索引上保存的是主键 id。这种方式，我们称之为索引组织表（Index Organizied Table）。 而 Memory 引擎采用的是把数据单独存放，索引上保存数据位置的数据组织形式，我们称之为堆组织表（Heap Organizied Table）。 InnoDB 表的数据总是有序存放的，而内存表的数据就是按照写入顺序存放的； 当数据文件有空洞的时候，InnoDB 表在插入新数据的时候，为了保证数据有序性，只能在固定的位置写入新值，而内存表找到空位就可以插入新值； 数据位置发生变化的时候，InnoDB 表只需要修改主键索引，而内存表需要修改所有索引； InnoDB 表用主键索引查询时需要走一次索引查找，用普通索引查询的时候，需要走两次索引查找。而内存表没有这个区别，所有索引的“地位”都是相同的。 InnoDB 支持变长数据类型，不同记录的长度可能不同；内存表不支持 Blob 和 Text 字段，并且即使定义了 varchar(N)，实际也当作 char(N)，也就是固定长度字符串来存储，因此内存表的每行数据长度相同。 内存表也支持 B-Tree 索引的 alter table t1 add index a_btree_index using btree (id); 不建议在生产环境使用普通内存表 锁粒度问题 不支持行锁，只支持表锁 数据持久化问题 M - S 架构下，比如备库重启，内存表被清空，此时内存表被清空，导致主备同步停止 双 M 架构下，在备库重启的时候，备库 binlog 里的 delete 语句就会传到主库，然后把主库内存表的内容删除。 建议把普通内存表都用 InnoDB 代替 例外：内存临时表 临时表不会被其他线程访问，没有并发性的问题； 临时表重启后也是需要删除的，清空数据这个问题不存在； 备库的临时表也不会影响主库的用户线程。 思考题 假设你刚刚接手的一个数据库上，真的发现了一个内存表。备库重启之后肯定是会导致备库的内存表数据被清空，进而导致主备同步停止。这时，最好的做法是将它修改成 InnoDB 引擎表。 假设当时的业务场景暂时不允许你修改引擎，你可以加上什么自动化逻辑，来避免主备同步停止呢？ 先避免备库重启的时候数据丢失：set sql_log_bin=off;alter table tbl_name engine=innodb;由于主库重启后，会往 binlog 写 delete from tbl_name，传到备库，备库的同名的表数据也会被清空，所以不会出现主备同步停止的问题 如果主库变成新备库，重复上面的操作 所以，如果我们不能直接修改主库上的表引擎，可以配置一个自动巡检的工具，在备库上发现内存表就把引擎改了。 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>39｜Redis 6.0 的新特性：多线程、客户端缓存与安全</title>
     <link>https://wangze.tech/39｜Redis-6.0-的新特性：多线程、客户端缓存与安全</link>
     <guid>https://wangze.tech/39｜Redis-6.0-的新特性：多线程、客户端缓存与安全</guid>
     <description> 多 IO 线程 作用：使用多个 IO 线程并行读取网络请求、进行协议解析、回写 Socket 主线程和 IO 线程协作完成请求处理 阶段一：服务端和客户端建立 Socket 连接，并分配处理线程 阶段二：IO 线程读取并解析请求 阶段三：主线程执行请求操作 阶段四：IO 线程回写 Socket 和主线程清空全局队列 启用多线程命令：io-threads-do-reads yes 设置线程个数命令：io-threads 6 一般要小于实例所在机器的 CPU 核个数 例如，对于一个 8 核的机器来说，Redis 官方建议配置 6 个 IO 线程 如果在实际应用中，发现 Redis 实例的 CPU 开销不大，吞吐量却没有提升，可以考虑使用 Redis 6.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>39｜自增主键为什么不是连续的？</title>
     <link>https://wangze.tech/39｜自增主键为什么不是连续的？</link>
     <guid>https://wangze.tech/39｜自增主键为什么不是连续的？</guid>
     <description> 自增值保存在哪儿？ 表的结构定义存放在后缀名为.frm 的文件中，但是并不会保存自增值。 MyISAM 引擎的自增值保存在数据文件中。 InnoDB 在 MySQL 5.7 及之前的版本，自增值保存在内存里，并没有持久化。每次重启后，第一次打开表的时候，都会去找自增值的最大值 max(id)，然后将 max(id)+1 作为这个表当前的自增值。 在 MySQL 8.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>40｜Redis 的下一步：基于 NVM 内存的实践</title>
     <link>https://wangze.tech/40｜Redis-的下一步：基于-NVM-内存的实践</link>
     <guid>https://wangze.tech/40｜Redis-的下一步：基于-NVM-内存的实践</guid>
     <description> 特性 能持久化保存数据 读写速度比 DRAM 内存稍慢 DRAM：Dynamic random-access memory 动态随机存取存储器（半导体记存储器） 容量大 Optane AEP 内存条（简称 AEP 内存，Intel 2019 年 4 月份推出） Memory 模式 只用容量大和性能高的特性，没有启用数据持久化功能 仍需配 DRAM 内存，但它是作为 AEP 内存的缓存，对应用软件不可见 软件系统能使用到的内存空间，就是 AEP 内存条的空间容量 App Direct 模式 启用持久化数据的功能 此模式的 AEP 内存叫做持久化内存（Persistent Memory，PM） 使用方法 部署 PM 格式化 挂载到服务器的一个目录下 在目录下创建文件，通过内存映射（mmap）的方式把文件映射到 Redis 的进程空间 仍需要主从集群 分担读压力 没有了 RDB，主从复制的实现，二选一 首先，增加从节点时，把全库数据拷贝到从节点上 一、用写前日志，日志拷贝到从节点进行回放 会带来双写问题 二、主节点在 NVM 上做快照，但不写文件，从节点直接从主节点的 NVM 上通过远程内存拷贝来实现复制，需要基于 RDMA（远程内存访问） 来做 应用程序如何基于持久化内存恢复自身的状态？ 把应用程序本身的运行时状态，如堆栈等也保存到持久化内存上，需要对操作系统的内核做修改 目前还没有成熟的方案（2021.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>40｜insert 语句的锁为什么这么多？</title>
     <link>https://wangze.tech/40｜insert-语句的锁为什么这么多？</link>
     <guid>https://wangze.tech/40｜insert-语句的锁为什么这么多？</guid>
     <description> insert … select 语句 并发 insert 场景 实际的执行效果是，如果 session B 先执行，由于这个语句对表 t 主键索引加了 (-∞,1]这个 next-key lock，会在语句执行完成后，才允许 session A 的 insert 语句执行。 但如果没有锁的话，就可能出现 session B 的 insert 语句先执行，但是后写入 binlog 的情况。于是，在 binlog_format=statement 的情况下，binlog 里面就记录了这样的语句序列：insert into t values(-1,-1,-1);insert into t2(c,d) select c,d from t;这个语句到了备库执行，就会把 id=-1 这一行也写到表 t2 中，出现主备不一致。 是很常见的在两个表之间拷贝数据的方法 在可重复读隔离级别下，这个语句会给 select 的表里扫描到的记录和间隙加读锁。 insert 循环写入 如果 insert 和 select 的对象是同一个表，则有可能会造成循环写入。这种情况下，我们需要引入用户临时表来做优化。 怕边遍历原表边插入数据会查到刚插入的新数据，所以会先把查询结果放到临时表，再取出来进行插入操作 这里需要给子查询加入 limit，不然就会全表扫描，导致给所有记录和空隙加锁 8.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>41｜怎么最快地复制一张表？</title>
     <link>https://wangze.tech/41｜怎么最快地复制一张表？</link>
     <guid>https://wangze.tech/41｜怎么最快地复制一张表？</guid>
     <description> 逻辑导数据 在两张表中拷贝数据，最简单地使用 insert … select 语句即可实现 将数据写到外部文本文件，然后再写回目标表 mysqldump 方法 a. 将数据导出成一组 INSERT 语句：mysqldump -hhost−Pport -u$user —add-locks=0 —no-create-info —single-transaction —set-gtid-purged=OFF db1 t —where=“a&gt;900” —result-file=/client_tmp/t.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>41｜第 35～40 讲课后思考题答案及常见问题答疑</title>
     <link>https://wangze.tech/41｜第-35～40-讲课后思考题答案及常见问题答疑</link>
     <guid>https://wangze.tech/41｜第-35～40-讲课后思考题答案及常见问题答疑</guid>
     <description> Memcached 是内存键值数据库 RocksDB 是硬盘键值数据库（持久化） Redis 和 Memcached 的比较 Redis 和 RocksDB 的比较 可扩展性 Memcached &gt; Codis &gt; Redis Cluster 一致性哈希的集群扩容 假设新加入的节点在一致性哈希圆环上是 A 沿逆时针方向的前一个集群节点是 B 只需要迁移 B 和 A 之间的数据 数据迁移量比普通哈希后取模的方法的量少 5 分钟理解一致性哈希算法（掘金） .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>42｜grant 之后要跟着 flush privileges 吗？</title>
     <link>https://wangze.tech/42｜grant-之后要跟着-flush-privileges-吗？</link>
     <guid>https://wangze.tech/42｜grant-之后要跟着-flush-privileges-吗？</guid>
     <description> 不用 在 MySQL 里面，用户名 (user)+ 地址 (host) 才表示一个用户，因此 ua@ip1 和 ua@ip2 代表的是两个不同的用户。 全局权限 保存在 mysql.user 表 给用户 ua 赋一个最高权限，语句：grant all privileges on . to ‘ua’@’%’ with grant option; 同时更新了磁盘和内存 磁盘上，将 mysql.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>43｜要不要使用分区表？</title>
     <link>https://wangze.tech/43｜要不要使用分区表？</link>
     <guid>https://wangze.tech/43｜要不要使用分区表？</guid>
     <description> 分区表：对于引擎层，n 个表对于 server 层，1 个表 分区策略 MyISAM 分区表 InnoDB 分区表 通用分区策略：每次访问都由 server 层控制 MyISAM 分区表使用的分区策略 性能较差 5.7.17 开始标记为即将弃用8.0 开始不允许使用 打开分区表时，如果分区过多，超过 open_files_limit 参数设置的值时会报错，默认 1024 本地分区策略：引擎内部自己管理打开分区的行为 InnoDB 和 NDB 引擎支持了 没有通用分区策略会报错的问题：innodb_open_files 参数控制打开多少个文件后自动关闭一些之前打开的文件 分区表的 server 层行为 MySQL 在第一次打开分区表的时候，需要访问所有的分区； 在 server 层，认为这是同一张表，因此所有分区共用同一个 MDL 锁； 在引擎层，认为这是不同的表，因此 MDL 锁之后的执行过程，会根据分区表规则，只访问必要的分区。 分区表的应用场景 对业务透明，代码更简洁 清理历史数据方便 删掉分区：alter table t drop partition …会直接删除分区文件，效果跟 drop 普通表类似 与使用 delete 语句删除数据相比，速度快，对系统影响小 注意事项 分区并不是越细越好。 分区也不要提前预留太多，在使用之前预先创建即可。比如，如果是按月分区，每年年底时再把下一年度的 12 个新分区创建上即可。对于没有数据的历史分区，要及时的 drop 掉。 其他分区方法：官方手册 思考题 文章中举例只用到了日期字段，没有自增主键，如果要定义这个表的主键，怎么定义？为什么？ MySQL 要求主键包含所有的分区字段 这里必须创建联合主键 从利用率上看，应该创建 (ftime, id) InnoDB 要求至少有一个索引，以自增字段作为第一个字段，所以还要创建一个 id 的单独索引 上面的方案反过来也可以 (id, ftime) (ftime) 评论区 分区表的用法跟普通表，在 sql 语句上是相同的。 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>44｜答疑文章（三）：说一说这些好问题</title>
     <link>https://wangze.tech/44｜答疑文章（三）：说一说这些好问题</link>
     <guid>https://wangze.tech/44｜答疑文章（三）：说一说这些好问题</guid>
     <description> join 的写法 在 MySQL 里，NULL 跟任何值执行等值判断和不等值判断的结果，都是 NULL。这里包括， select NULL = NULL 的结果，也是返回 NULL。 where a.f2=b.f2 就表示，查询结果里面不会包含 b.f2 是 NULL 的行 使用 left join 时，左边的表不一定是驱动表。 如果需要 left join 的语义，就不能把被驱动表的字段放在 where 条件里面做等值判断或不等值判断，必须都写在 on 里面 distinct 和 group by 的性能 如果只需要去重，不需要执行聚合函数，distinct 和 group by 哪种效率高一些呢？ 没有索引时一样 select a,count(*) from t group by a order by null;这条语句的逻辑是：按照字段 a 分组，计算每组的 a 出现的次数。在这个结果里，由于做的是聚合计算，相同的 a 只出现一次。37 章有关于 group by 的相关内容 思考题 查看了一下 innodb_trx，发现这个事务的 trx_id 是一个很大的数（281479535353408），而且似乎在同一个 session 中启动的会话得到的 trx_id 是保持不变的。当执行任何加写锁的语句后，trx_id 都会变成一个很小的数字（118378）。 你可以通过实验验证一下，然后分析看看，事务 id 的分配规则是什么，以及 MySQL 为什么要这么设计呢？ .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>45｜自增 id 用完怎么办？</title>
     <link>https://wangze.tech/45｜自增-id-用完怎么办？</link>
     <guid>https://wangze.tech/45｜自增-id-用完怎么办？</guid>
     <description> 表定义的自增值达到上限后的逻辑是：再申请下一个 id 时，得到的值保持不变。 row_id InnoDB 表没有指定主键时，会创建一个不可见的，长度为 6 个字节的 row_id。 row_id 是一个长度 8 字节的无符号长整形 但是 InnoDB 只留了 6 个字节的长度给 row_id 用 row_id 写入表中的值范围，是从 0 到 248-1； 达到上限后从 0 开始，写入时会覆盖原有的行 Xid redo log 和 binlog 相配合时都有的一个共同字段 MySQL 内部维护了一个全局变量 global_query_id，每次执行语句的时候将它赋值给 Query_id，然后给这个变量加 1。如果当前语句是这个事务执行的第一条语句，那么 MySQL 还会同时把 Query_id 赋值给这个事务的 Xid。 global_query_id 是一个纯内存变量，重启之后就清零了 重启后会清零 不同事务的 Xid 可能相同 重启后会重新生成新的 binlog 文件 同一个 binlog 文件里，Xid 唯一 达到上限（超大）后从 0 开始，还是可能不唯一，但是只存在于理论上 长度是 8 个字节，上限超大 Innodb trx_id 第 8 篇讲事务可见性用到的事务 id（transaction id） Xid 由 server 层维护，InnoDB 内部使用 Xid 是为了在 InnoDB 事务和 server 之间做关联 InnoDB 内部维护了一个 max_trx_id 全局变量，每次需要申请一个新的 trx_id 时，就获得 max_trx_id 的当前值，然后并将 max_trx_id 加 1。 对于正在执行的事务，可以从 information_schema.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>About Atlas</title>
     <link>https://wangze.tech/About-Atlas</link>
     <guid>https://wangze.tech/About-Atlas</guid>
     <description>MOC (map of maps).</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>Capslock</title>
     <link>https://wangze.tech/Capslock</link>
     <guid>https://wangze.tech/Capslock</guid>
     <description>功能 § 加强 Caps 键功能 安装 § Github 单击 Caps 切换输入法 § 打开配置文件 ~/.config/karabiner/karabiner.json 做如下修改： 找到 caps_lock 的 to_if_alone 将 key_code 改成 caps_lock 找到 spacebar = language switch 删除所在 {} 代码块 目的：维持单点 Caps 切换输入法 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>Crontab 执行提示没有权限</title>
     <link>https://wangze.tech/Crontab-执行提示没有权限</link>
     <guid>https://wangze.tech/Crontab-执行提示没有权限</guid>
     <description> Mac 的解决方案：How to Fix Cron “Operation not permitted” error in macOS - ITPro Helper .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>不常见问题</title>
     <link>https://wangze.tech/Docker-不常见问题</link>
     <guid>https://wangze.tech/Docker-不常见问题</guid>
     <description>修改宿主机 hosts § 编辑 /etc/hosts 执行 /etc/init.d/network restart 使修改生效 重启 service docker restart 不重启则外网访问 Docker 部署的 Nginx 等服务失败，宿主机 curl localhost 可以成功 crontab § 到容器里执行 /usr/sbin/crond -b 启动服务 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>Docker</title>
     <link>https://wangze.tech/Docker</link>
     <guid>https://wangze.tech/Docker</guid>
     <description> Docker 不常见问题 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>Egg.js 手动热更新</title>
     <link>https://wangze.tech/Egg.js-手动热更新</link>
     <guid>https://wangze.tech/Egg.js-手动热更新</guid>
     <description>package.json { &quot;scripts&quot;: { &quot;start&quot;: &quot;egg-scripts start --daemon --title=egg-server&quot;, &quot;stop&quot;: &quot;egg-scripts stop --daemon --title=egg-server&quot;, &quot;start-tmp&quot;: &quot;egg-scripts start --daemon --title=egg-tmp-server --port=7002&quot;, &quot;stop-tmp&quot;: &quot;egg-scripts stop --daemon --title=egg-tmp-server --port=7002&quot; } } 正常启动时 npm run build &amp;&amp; npm run start，在 Nginx 里反代到 7001 端口 需要热更新时，npm run start-tmp，在 Nginx 里反代到 7002 端口（service nginx reload） 重启 7001 端口上的服务，在 Nginx 里反代回 7001 端口 npm run start-tmp 关闭 7002 端口的服务 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>GitHub 加速访问</title>
     <link>https://wangze.tech/GitHub-加速访问</link>
     <guid>https://wangze.tech/GitHub-加速访问</guid>
     <description> hosts: GitHub最新hosts。解决GitHub图片无法显示，加速GitHub网页浏览。 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>Laravel Pint 使用</title>
     <link>https://wangze.tech/Laravel-Pint-使用</link>
     <guid>https://wangze.tech/Laravel-Pint-使用</guid>
     <description>参考： laravel-pint-pre-commit-hooks-github-actions PhpStorm 已内置支持，可在设置里搜索到并主动打开 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>Linux 安装 oh-my-zsh</title>
     <link>https://wangze.tech/Linux-安装-oh-my-zsh</link>
     <guid>https://wangze.tech/Linux-安装-oh-my-zsh</guid>
     <description>安装 Zsh § Installing-ZSH sudo apt install zsh # 查看所有可用 shell chsh -l # 将终端默认 shell 切换到 zsh，后面要输入实际看到的 zsh 路径 chsh -s /bin/zsh # 新开一个终端确认是否切换成功 echo $SHELL 安装 Oh-my-zsh § #install 插件 § git clone 到 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>Mac 应用已损坏</title>
     <link>https://wangze.tech/Mac-应用已损坏</link>
     <guid>https://wangze.tech/Mac-应用已损坏</guid>
     <description> 安装后打开提示已损坏时执行命令：sudo xattr -d com.apple.quarantine &quot;/Applications/{appName}.app&quot; .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>MySQL 实战 45 讲</title>
     <link>https://wangze.tech/MySQL-实战-45-讲</link>
     <guid>https://wangze.tech/MySQL-实战-45-讲</guid>
     <description> 内容整理自极客时间《MySQL 实战 45 讲》 章节分类 § 分类名章节基础知识01索引04、05、09、10、11、15、16、18事务03、08、20锁06、07、13、19、20、21、30、40日志与主备02、12、23、24、25、26、27、28、29、31临时表17、34、35、36、37、43实用性14、32、33、38、41、44、45 基础篇 § 01｜基础架构：一条 SQL 查询语句是如何执行的？ 02｜日志系统：一条 SQL 更新语句是如何执行的？ 03｜事务隔离：为什么你改了为还看不见？ 04｜深入浅出索引（上） 05｜深入浅出索引（下） 06｜全局锁和表锁：给表加个字段怎么有这么多阻碍？ 07｜行锁功过：怎么减少锁对性能的影响？ 08｜事务到底是隔离的还是不隔离的？ 实践篇 § 09｜普通索引和唯一索引，应该怎么选择？ 10｜MySQL 为什么有时候会选错索引？ 11｜怎么给字符串字段加索引？ 12｜为什么我的 MySQL 会“抖”一下？ 13｜为什么表数据删掉一半，表文件大小不变？ 14｜count(*) 这么慢，我该怎么办？ 15｜答疑文章（一）：日志和索引相关问题 16｜“order by”是怎么工作的？ 17｜如何正确地显示随机消息？ 18｜为什么这些 SQL 语句逻辑相同，性能却差异巨大？ 19｜为什么我只查一行的语句，也执行这么慢？ 20｜幻读是什么，幻读有什么问题？ 21｜为什么我只改一行的语句，锁这么多？ 22｜MySQL有哪些“饮鸩止渴”提高性能的方法？ 23｜MySQL 是怎么保证数据不丢的？ 24｜MySQL 是怎么保证主备一致的？ 25｜MySQL 是怎么保证高可用的？ 26｜备库为什么会延迟好几个小时？ 27｜主库出问题了，从库怎么办？ 28｜读写分离有哪些坑？ 29｜如何判断一个数据库是不是出问题了？ 30｜答疑文章（二）：用动态的观点看加锁 31｜误删数据后除了跑路，还能怎么办？ 32｜为什么还有 kill 不掉的语句？ 33｜我查这么多数据，会不会把数据库内存打爆？ 34｜到底可不可以使用 join ？ 35｜join 语句怎么优化？ 36｜为什么临时表可以重名？ 37｜什么时候会使用内部临时表？ 38｜都说 InnoDB 好，那还要不要使用 Memory 引擎？ 39｜自增主键为什么不是连续的？ 40｜insert 语句的锁为什么这么多？ 41｜怎么最快地复制一张表？ 42｜grant 之后要跟着 flush privileges 吗？ 43｜要不要使用分区表？ 44｜答疑文章（三）：说一说这些好问题 45｜自增 id 用完怎么办？ .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>Obsidian 插件</title>
     <link>https://wangze.tech/Obsidian-插件</link>
     <guid>https://wangze.tech/Obsidian-插件</guid>
     <description>推荐 § Enhancing Mindmap 思维导图，只需修改文档头，没有额外学习成本 Update time on edit 自动更新文档的创建、更新时间 其他 § 2022年7月，obsidian 依然必装的 10 个插件 待折腾 § 玩转 Obsidian 08：利用 Dataview 打造自动化 HomePage | by 闲者时间 | Medium .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>Obsidian</title>
     <link>https://wangze.tech/Obsidian</link>
     <guid>https://wangze.tech/Obsidian</guid>
     <description> 官网 Obsidian 是一个功能强大且可扩展的知识库，它在您的本地纯文本文件文件夹之上运行。 您现在浏览的数字花园的文本编辑器 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>Oh My Zsh</title>
     <link>https://wangze.tech/Oh-My-Zsh</link>
     <guid>https://wangze.tech/Oh-My-Zsh</guid>
     <description>Linux 用户请看：Linux 安装 oh-my-zsh 安装 § 切换到系统自带的 Zsh：chsh -s /bin/zsh Oh My Zsh 系统终端的配色方案 § Powerlevel10k 下载 cd ~/Downloads git clone git://github.com/altercation/solarized.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>PHP 开发设置</title>
     <link>https://wangze.tech/PHP-开发设置</link>
     <guid>https://wangze.tech/PHP-开发设置</guid>
     <description>Laravel Pint § 如何在PHPSTORM 配置Laravel Pint 代码格式化包 Laravel Pint VSCode §.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>PHP 错误码设计</title>
     <link>https://wangze.tech/PHP-错误码设计</link>
     <guid>https://wangze.tech/PHP-错误码设计</guid>
     <description>目标 § 错误码包含：数字、英文、含义，还可以有 HTTP Status 这些最好放到一起，不然添加时容易漏 方案 § 静态变量：数组 多个名字类似的静态变量 静态工厂方法 枚举和注解 讨论 § 结论 § 参考 § Using attributes to add value PHP 异常与错误处理 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>PHP-FPM 配置</title>
     <link>https://wangze.tech/PHP-FPM-配置</link>
     <guid>https://wangze.tech/PHP-FPM-配置</guid>
     <description>以下内容适用于 IO 密集型应用 一个 PHP-FPM 进程大约占 30M 内存 进程数量 计算公式：进程数 = 内存大小（M） * 0.6 / 30 举例：8G * 1024 * 0.6 / 30 = 163.84 max_requests 每个进程重启前可以处理的请求数 由 pm.max_children 的值和每秒的实际请求数量决定 参考文章 FastCGI 进程管理器（FPM） PHP-FPM tuning: Using ‘pm static’ for Max Performance（译文） PHP-FPM 配置 PHP-FPM 进程数设置多少合适 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>README</title>
     <link>https://wangze.tech/README</link>
     <guid>https://wangze.tech/README</guid>
     <description>🫧 11ze §.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>Rate Limit</title>
     <link>https://wangze.tech/Rate-Limit</link>
     <guid>https://wangze.tech/Rate-Limit</guid>
     <description>功能 § 限制接口请求数 缓存数据格式 § key: { current_count: number; // 也可以不要该字段，每次请求都算一次队列长度 started_at: date; request_time_queue: date[]; time_range: number; // 时间窗口大小 count_limit: number; } 实现流程 § 请求进来 拼接出 key 查找 key 对应的缓存 取出队头，跟当前时间比较 a.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>Redis 学习路径</title>
     <link>https://wangze.tech/Redis-学习路径</link>
     <guid>https://wangze.tech/Redis-学习路径</guid>
     <description> 掌握数据结构和缓存的基本使用方法 学会基础数据类型的用法 String List Hash Set Sorted Set 掌握扩展数据类型的用法 HyperLogLog Bitmap GEO 积累 Redis 用作缓存的方法以及典型问题的解决方案 数据库和 Redis 缓存的数据一致性问题 缓存穿透问题 缓存雪崩问题 掌握支撑 Redis 实现高性能、高可靠的技术点 持久化机制 主从复制机制 哨兵机制 故障自动恢复 切片集群 精通 Redis 底层实现原理 数据结构的实现原理 高性能、高可靠相关的一系列原理 持久化 哨兵集群：分布式系统的选举问题和共识问题 切片集群：分布式系统的很多问题，例如 CAP 原理、分布式事务、架构设计 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>Redis 客户端如何与服务端交换命令和数据？</title>
     <link>https://wangze.tech/Redis-客户端如何与服务端交换命令和数据？</link>
     <guid>https://wangze.tech/Redis-客户端如何与服务端交换命令和数据？</guid>
     <description> 客户端和服务端交互内容 命令 键 单个值 集合值 OK 回复 整数回复 错误信息 RESP 2 协议 两个基本规范 实现 5 种编码格式类型，在每种编码类型的开头使用一个专门的字符区分 按照单个命令或单个数据的粒度进行编码，在每个编码结果后面增加一个换行符 \r\n 表示编码结束 简单字符串类型 RESP Simple Strings +OK\r\n 长字符串类型 RESP Bulk String 图 $9 testvalue\r\n Redis SDS 结构 len = 14; alloc; buf (“Redis\0Cluster\0”) \0 解析成正常的 0 字符 最大 512MB 整数类型 RESP Integer :3\r\n 错误类型 RESP Errors -ERR unknown command PUT, with args beginning with: testkey, testvalue 数组编码类型 RESP Arrays *2\r\n3\nGET˚​\n˚​7\r\ntestkey\r\n 2：数组元素个数，命令 GET 和键 testkey 不足 只能区分字符串和整数，其他类型需要客户端进行额外的转换操作 使用数组类别编码表示所有的集合类型，客户端需要根据发送的命令操作把返回结果转换成相应的集合类型数据结构 RESP 2 协议的 5 种编码类型和相应的开头字符 RESP 3 协议（6.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>Redis 有哪些好用的运维工具？</title>
     <link>https://wangze.tech/Redis-有哪些好用的运维工具？</link>
     <guid>https://wangze.tech/Redis-有哪些好用的运维工具？</guid>
     <description> 最基本的监控命令：INFO 命令 INFO 命令的返回信息 重点关注 stat、commandstat、cpu、memory 参数的返回结果 通过 persistence 参数的返回结果查看 RDB 或者 AOF 的执行情况 通过 replication 参数的返回结果查看主从集群的实时状态 面向 Prometheus 的 Redis-exporter 监控 开源的系统监控报警框架 结合 Grafana 进行可视化展示 支持 Redis 2.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>Redis 核心技术与实战</title>
     <link>https://wangze.tech/Redis-核心技术与实战</link>
     <guid>https://wangze.tech/Redis-核心技术与实战</guid>
     <description> 内容整理自极客时间《Redis 核心技术与实战》 基础篇 § 00｜开篇词 01｜基础架构：一个键值数据库包含什么？ 02｜数据结构：快速的 Redis 有哪些慢操作？ 03｜高性能 IO 模型：为什么单线程 Redis 那么快？ 04｜AOF 日志：宕机了，Redis 如何避免数据丢失？ 05｜内存快照：宕机后，Redis 如何实现快速恢复？ 06｜数据同步：主从库如何实现数据一致？ 07｜哨兵机制：主库挂了，如何不间断服务？ 08｜哨兵集群：哨兵挂了，主从库还能切换吗？ 09｜切片集群：数据增多了，是该加内存还是加实例？ 实践篇 § 11｜“万金油”的 String，为什么不好用了？ 12｜有一亿个 keys 要统计，应该用哪种集合？ 13｜GEO 是什么？还可以定义新的数据类型吗？ 14｜如何在 Redis 中保存时间序列数据？ 15｜消息队列的考验：Redis 有哪些解决方案？ 16｜异步机制：如何避免单线程模型的阻塞？ 17｜为什么 CPU 结构也会影响 Redis 的性能？ 18｜波动的响应延迟：如何应对变慢的 Redis？（上） 19｜波动的响应延迟：如何应对变慢的 Redis？（下） 20｜删除数据后，为什么内存占用率还是很高？ 21｜缓冲区：一个可能引发“惨案”的地方 22｜第 11～21 讲课后思考题答案及常见问题答疑 23｜旁路缓存：Redis 是如何工作的？ 24｜替换策略：缓存满了怎么办？ 25｜缓存异常（上）：如何解决缓存和数据库的数据不一致问题？ 26｜缓存异常（下）：如何解决缓存雪崩、击穿、穿透难题？ 27｜缓存被污染了，该怎么办？ 28｜Pika：如何基于 SSD 实现大容量 Redis？ 29｜无锁的原子操作：Redis 如何应对并发访问？ 30｜如何使用 Redis 实现分布式锁？ 31｜事务机制｜Redis 能实现 ACID 属性吗？ 32｜Redis 主从同步与故障切换，有哪些坑？ 33｜脑裂：一次奇怪的数据丢失 35｜Codis VS Redis Cluster：我该选择哪一个集群方案？ 36｜Redis 支撑秒杀场景的关键技术和实践都有哪些？ 37｜数据分布优化：如何应对数据倾斜？ 38｜通信开销：限制 Redis Cluster 规模的关键因素 未来篇 § 39｜Redis 6.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>Redis 的使用规范小建议</title>
     <link>https://wangze.tech/Redis-的使用规范小建议</link>
     <guid>https://wangze.tech/Redis-的使用规范小建议</guid>
     <description> 键值对使用规范 通过命名区分不同业务数据 SELECT 命令进行数据库切换相当于增加一个额外的操作 业务名缩写作为 key 的前缀 对于业务名或业务数据名，可以使用相应的英文单词的首字母表示，（比如 user 用 u 表示，message 用 m），或者是用缩写表示（例如 unique visitor 使用 uv）。 避免使用 bigkey 尽量把集合类型的元素个数控制在 1 万以下 控制 String 类型数据的大小不超过 10KB 使用高效序列化方法和压缩方法减小 value 的大小 使用整数对象共享池 如果一个键值对中有 0 到 9999 范围的整数，Redis 会服用共享池中的整数对象 不能用的情况 Redis 设置了 maxmemory 并且启用 LRU 策略，因为 LRU 策略需要统计每个键值对的使用时间 集合类型数据采用 ziplist 编码，而集合元素是整数，判断整数对象的共享情况效率低 数据保存规范 使用 Redis 保存热数据 不同的业务数据分实例存储 在数据保存时要设置过期时间 控制 Redis 实例的容量 单实例不要太大，建议设置在 2～6GB RDB 快照、主从集群数据同步都能很快完成 命令使用规范 线上禁用部分命令 KEYS、FLUSHALL、FLUSHDB 严重阻塞主线程 具体的做法：管理员用 rename-command 命令在配置文件中重命名这些命令 替代：SCAN、ASYNC 选项（分别对应上面的 KEYS，FLUSHALL、FLUSHDB） 慎用 MONITOR 命令 会把监控到的内容持续写入到输出缓冲区，可能很快溢出，对性能造成影响甚至引起服务崩溃 慎用全量操作命令 HGETALL、SMEMBERS 等 全量扫描 建议 使用 SSCAN、HSCAN 命令分批返回集合中的数据 大集合拆分成小集合 如果集合类型保存的是业务数据的多个属性，而每次查询时，也需要返回这些属性，那么可以使用 String 类型，将这些属性序列化后保存，每次直接返回 String 数据，不用再对集合类型做全量扫描 规范汇总 强制类别的规范：如果不按照规范内容来执行，就会给 Redis 的应用带来极大的负面影响，例如性能受损。 推荐类别的规范：能有效提升性能、节省内存空间，或者是增加开发和运维的便捷性，可以直接应用到实践中。 建议类别的规范：这类规范内容和实际业务应用相关，结合自己的业务场景参考使用。 面向业务开发人员 key 的长度尽量短，节省内存空间 避免 bigkey，防止阻塞主线程 4.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>Think in English</title>
     <link>https://wangze.tech/Think-in-English</link>
     <guid>https://wangze.tech/Think-in-English</guid>
     <description>How to THINK in English | No More Translating in Your Head! - YouTube Introduction § If you’re translating in your head, then you know that that’s a frustrating way to speak English.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>Tips</title>
     <link>https://wangze.tech/Tips</link>
     <guid>https://wangze.tech/Tips</guid>
     <description> 想到什么点子就赶紧记下来，否则只是上个厕所洗个手也能忘。 做一件事的时候，想象一下，最坏的情况能坏到哪里。 找出自己擅长和不擅长做的事。 什么工作是我非做不可的。 善用搜索。 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>Vault</title>
     <link>https://wangze.tech/Vault</link>
     <guid>https://wangze.tech/Vault</guid>
     <description> 保管库是本地文件系统上的一个文件夹，Obsidian 将您的笔记存储在其中。您可以将所有笔记保存在一个保险库中，或为每个不同的项目创建多个保险库。 Create a vault - Obsidian Help.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>iCloud 不同步指定文件</title>
     <link>https://wangze.tech/iCloud-不同步指定文件</link>
     <guid>https://wangze.tech/iCloud-不同步指定文件</guid>
     <description>说明 § iCloud 不同步带有 .nosync 后缀的文件和文件夹 使用场景 § 在 iCloud 中忽略 .git 且 Git 命令可以正常使用 § cd repo mv .git .git.nosync ln -s .git.nosync .git.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>iCloud 同步卡住</title>
     <link>https://wangze.tech/iCloud-同步卡住</link>
     <guid>https://wangze.tech/iCloud-同步卡住</guid>
     <description>解决方案 § ~/.zshrc # ~/.zshrc alias killicloud=&#039;killall bird &amp;&amp; killall cloudd&#039; 终端执行命令 kill iCloud 进程 killicloud 点击访达侧边栏的 iCloud ，观察同步进度，若还是卡住，继续 kill iCloud 进程直到正常 每小时执行一次确保 iCloud 同步 $ crontab -e 0 * * * * killall bird &amp;&amp; killall cloudd # 每小时 kill 一次 iCloud 进程 参考 § 一日一技 | Mac 上 iCloud 云盘同步卡住了？可以试试这样做 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>欢迎你来到我的数字花园</title>
     <link>https://wangze.tech/</link>
     <guid>https://wangze.tech/</guid>
     <description> tags 英语 搭建数字花园 MySQL 实战 45 讲 Redis 核心技术与实战 Docker .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>从微博的 Redis 实践中，我们可以学到哪些经验？</title>
     <link>https://wangze.tech/从微博的-Redis-实践中，我们可以学到哪些经验？</link>
     <guid>https://wangze.tech/从微博的-Redis-实践中，我们可以学到哪些经验？</guid>
     <description> 微博对 Redis 的技术需求 能够提供高性能、高并发的读写访问，保证读写延迟低 能够支持大容量存储 可以灵活扩展，对于不同业务能进行快速扩容 对 Redis 的基本改进 避免阻塞和节省内存 持久化需求：使用全量 RDB + 增量 AOF 复制 在 AOF 日志写入刷盘时，用额外的 BIO 线程负责实际的刷盘工作，避免 AOF 日志慢速刷盘阻塞主线程 增加 aofnumber 配置项设置 AOF 文件的数量 使用独立的复制线程进行主从库同步，避免对主线程的阻塞影响 定制化设计了 LongSet 数据类型 数据区分冷热度 用异步线程将冷数据从 Redis 迁移到 RocksDB，保存到硬盘中 服务化改造 使用 Redis 集群服务不同的业务场景需求，每一个业务拥有独立的资源 所有的 Redis 实例形成资源池，轻松扩容 采用类似 Codis 的方案，通过集群代理层连接客户端和服务端 客户端连接监听和端口自动增删 Redis 协议解析：确定需要路由的请求，如果是非法和不支持的请求，直接返回错误 请求路由：根据数据和后端实例间的映射规则，将请求路由到对应的后端实例进行处理，并将结果返回给客户端 指标采集监控：采集集群运行的状态，并发送到专门的可视化组件，由这些组件进行监控处理 配置中心：管理整个集群的元数据 微博 Redis 服务化集群架构图 万亿级日访问量下，Redis 在微博的 9 年优化历程 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>发布方案</title>
     <link>https://wangze.tech/发布方案</link>
     <guid>https://wangze.tech/发布方案</guid>
     <description>选用方案 § quartz 怎么做 § 注意事项 § 参考文章 §.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>笔记 404</title>
     <link>https://wangze.tech/发布笔记-404</link>
     <guid>https://wangze.tech/发布笔记-404</guid>
     <description> 记录此问题的时间：2023-05-12 01:26 东八区 现象 § 文档在 2023-05-12 0 点创建，发布失败，改成 2023-05-11，发布成功 笔记出现在搜索结果，点击自动跳转到 404 页面 猜测 § GitHub Action 服务器时间比文档头标记的创建时间早，文档属于未来，所以未发布成功 2023-05-12 08:00 尝试发布成功 解决方法 § 使用 ISO8601 格式的日期 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>同步方案</title>
     <link>https://wangze.tech/同步方案</link>
     <guid>https://wangze.tech/同步方案</guid>
     <description>多种方案 § Obsidian Sync：官方，要钱 Remotely Sync：第三方插件，但自动同步最短间隔 1 分钟（可以手动同步），免费 iCloud：实时同步，免费 我使用的同步方案（iCloud） § 优点 § 免费实时同步文档、插件、设置 怎么做 § 我的设备：iPhone + MacBook iPhone 安装 Obsidian 进入 Obsidian 创建一个打开 iCloud 同步功能的 Vault 此时 iCloud 中会生成 Vault 目录 MacBook 安装 Obsidian 用 Obsidian 打开 2 创建的目录 遇到的问题 § iCloud 同步卡住 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>学习方法</title>
     <link>https://wangze.tech/学习方法</link>
     <guid>https://wangze.tech/学习方法</guid>
     <description>费曼学习法 § mUAQX_2b0Ut3APWB-pyYSQ 在纸上写下要学习的知识点 写下自己对于这个知识点所知的一切, 然后假装讲给一个孩子听 反复理解: 复习卡住的地方, 直到能用大白话讲清楚为止 在第二步的基础上进行补充和简化, 循环 高效学习: 深度, 归纳和坚持时间 § 14360 系统地学习（学习模板） 这个技术出现的背景、初衷和要达到什么样的目标或是要解决什么样的问题 这个技术的优势和劣势分别是什么，或者说，这个技术的 trade-off 是什么 这个技术适用的场景 技术的组成部分和关键点 技术的底层原理和关键实现 已有的实现和它之间的对比 系统学习完了？举一反三 联想, 抽象, 自省 总结和归纳 学习的开始阶段，可以不急于总结归纳，不急于下判断，做结论，而应该保留部分知识的不确定性，保持对知识的开放状态 把看到和学习到的信息，归整好，排列好，关联好，总之把信息碎片给结构化掉，然后在结构化的信息中，找到规律，找到相通之处，找到共同之处，进行简化、归纳和总结，最终形成一种套路，一种模式，一种通用方法 分享 每周写一个 ARTS：Algorithm 是一道算法题，Review 是读一篇英文文章，Technique/Tips 是分享一个小技术，Share 是分享一个观点 坚持一年 晒出来, 可以是单一篇文章: 每周学习报告, 可以是多篇文章: 博客 十步学习法 § 《软技能：代码之外的生存指南》 如何开始——要想开始使用自己所学的，我需要掌握哪些基本知识？ 学科范围——我现在学的东西有多宏大？我应该怎么做？ 基础知识——不止在开始阶段，要想使用一项特定的技术，我需要了解基本的用户案例和最常见的问题，也需要知道自己学的哪 20% 就能满足 80% 的日常应用 执行 说明 1 - 6 走一遍（所有步骤都是为了 3） 7 - 10 重复 先完整过一遍再尝试优化成自己的学习方法 步骤 了解全局：网上搜索关键字 确定范围：缩小到一个特定的范围，一次只学一样东西。如「学习 C#」改为「学习 C# 的基础知识，掌握如何创建一个简单的控制台程序」 定义目标：不好的成功标准「完学习了关于 C# 语言的基础知识」，好的「我可以利用 C# 语言的主要功能写出一个小的应用程序」 寻找资源 创建学习计划：从第四步找到的资源看看别人都是按什么顺序教的 筛选资源 开始学习，浅尝辄止：快速学习基础知识，立刻开始实际操作（像玩游戏） 动手操作，边玩边学：如果我正在学一门新技术或者新的编程语言，我可以先创建一个小项目来测试这一步的效果，记录下尚未找到答案的问题 全面掌握，学以致用：只需要阅读或观看与当前所学相关的部分，找到 8 的问题答案 乐为人师，融会贯通：比如对话、写博客，在整理过程中发现问题 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>常见错误</title>
     <link>https://wangze.tech/常见错误</link>
     <guid>https://wangze.tech/常见错误</guid>
     <description>Connection Closed by x.x.x.x Port 22 § 添加以下代码到 ~/.ssh/config Host github.com HostName ssh.github.com User $username Port 443.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>开发环境</title>
     <link>https://wangze.tech/开发环境</link>
     <guid>https://wangze.tech/开发环境</guid>
     <description>设备 § M1 MacBook Pro 14 先更新系统 Homebrew § 官网 brew tap homebrew/cask-drivers brew tap homebrew/cask-fonts brew tap homebrew/cask-versions brew tap buo/cask-upgrade brew tap mongodb/brew brew install git git-lfs git-flow git config --global core.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>抢红包系统</title>
     <link>https://wangze.tech/抢红包系统</link>
     <guid>https://wangze.tech/抢红包系统</guid>
     <description> 不能超抢 剩余的到期需要返还 通常使用的解决高并发问题方案 方案一：使用内存操作替代实时的 DB 事务操作 § 可能丢数据 方案二：使用乐观锁替代悲观锁 § 同时抢的只能有一个能成功，可能手慢的反而能抢到 微信红包系统的高并发解决方案 方案三：将关于同一个红包的所有请求聚合到同一个 § 双维度库表设计：db_xx.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>换新设备</title>
     <link>https://wangze.tech/换新设备</link>
     <guid>https://wangze.tech/换新设备</guid>
     <description>推荐做法 § clone 文档仓库到本地 将 .git 文件夹移到 iCloud 的 Obsidian 目录下的花园 Vault 根目录 强烈不推荐做法 § 删掉 iCloud 里的 Vault 再走一遍 同步方案 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>搭建数字花园</title>
     <link>https://wangze.tech/搭建数字花园</link>
     <guid>https://wangze.tech/搭建数字花园</guid>
     <description> 同步方案 发布方案 配置自定义域名 添加评论区 配置图床 本库自动提交到 GitHub 不同步 .git 文件夹 换新设备 问题合集 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>支付技术方案</title>
     <link>https://wangze.tech/支付技术方案</link>
     <guid>https://wangze.tech/支付技术方案</guid>
     <description></description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>收藏文章</title>
     <link>https://wangze.tech/收藏文章</link>
     <guid>https://wangze.tech/收藏文章</guid>
     <description>技术 § [Linter上手完全指南 - GitHub](linter-tutorial: 👮‍♀️ 《Linter 上手完全指南》) 一文搞懂 Redis 架构演化之路 - 腾讯技术工程 一文搞懂什么是 SaaS、BaaS、PaaS 和 IaaS - 知乎 规范 § 编程中的命名设计那点事 | 酷 壳 - CoolShell 经济 § 经济机器是怎样运行的 (时长30分钟) Ray Dalio - YouTube 沟通 § X-Y Problem | 酷 壳 - CoolShell 你会问问题吗？ | 酷 壳 - CoolShell .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>本库自动提交到 GitHub</title>
     <link>https://wangze.tech/本库自动提交到-GitHub</link>
     <guid>https://wangze.tech/本库自动提交到-GitHub</guid>
     <description> 在文档仓库根目录添加文件：auto_push.sh 配置 crontab 每天自动执行文档仓库的 auto_push.sh Crontab 执行提示没有权限 由于文档仓库已配置 GitHub Action，自动提交后会触发发布仓库的 Github Action 自动部署网站 content submodule -&gt; v4 of quartz repository -&gt; master of quartz repository .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>油猴脚本</title>
     <link>https://wangze.tech/油猴脚本</link>
     <guid>https://wangze.tech/油猴脚本</guid>
     <description>安装说明 § Greasy Fork - safe and useful user scripts 我发布的脚本 § user-scripts 推荐脚本 § Endless Google: Google 搜索结果列表可以无限下拉 redirect 外链跳转: 从 QQ 邮箱、知乎等网站点击外链时自动跳转，免去点击步骤 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>添加评论区</title>
     <link>https://wangze.tech/添加评论区</link>
     <guid>https://wangze.tech/添加评论区</guid>
     <description>Quartz 发布 v4，待更新此文章 到 giscus 生成自己的评论区代码并复制 到发布仓库找到以下文件，将代码粘贴到图中红框位置 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>特殊字符</title>
     <link>https://wangze.tech/特殊字符</link>
     <guid>https://wangze.tech/特殊字符</guid>
     <description> &amp;#64 表示邮箱的 at 符号，否则发布后显示 email protected 上面的编码在代码块里无效，但直接用 at 符号会被当成邮箱 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>秒杀系统</title>
     <link>https://wangze.tech/秒杀系统</link>
     <guid>https://wangze.tech/秒杀系统</guid>
     <description>主要问题：并发读、并发写 关键点 § 高性能 一致性 高可用 原则 § 请求数据要尽量少 减少序列化和反序列化 字符转化 请求数要尽量少 如在请求路径上将多个 Javascript 用逗号合并，服务端一次性返回多个文件 路径要尽量短 将多个相互强依赖的应用合并部署到一起 依赖要尽量少 可以把依赖的服务先降级或停用 不要有单点 将服务无状态化，让实例可以动态伸缩 把秒杀系统独立出来单独打造一个系统，并且在系统部署上也独立做一个机器集群，避免影响非秒杀商品的机器 动静分离 § 根据情况把静态数据缓存到离用户近的地方（浏览器、CDN、服务端的 Cache） 直接缓存 HTTP 连接 怎么做： URL 唯一化（如 /id=xxx） 分离浏览者相关的因素（比如登录信息，这些通过动态请求获取） 分离时间因素，也通过动态请求获取 异步化地域因素 去掉 Cookie（让缓存的静态数据中不含有 Cookie） 服务端： 生成完整页面 客户端获取动态内容 架构方案 实体机单机部署：大 Cache 容量，高缓存命中率 统一 Cache 层 上 CDN：二级 Cache（一级发现没缓存数据就去二级找，都没有就回源获取数据并缓存到一级、二级缓存） 热点数据 § 静态热点数据：能提前预测的 通过商业手段（强制让商家登记、对买家每天访问的商品进行大数据计算） 动态热点数据：不能提前预测的 （异步）收集交易链路上各个环节中的中间件产品的热点 Key（Nginx、缓存、RPC 服务框架等） 上报热点，透传给下游系统 流量削峰 § 排队 答题：延缓请求，并可以防止买家使用秒杀器作弊 分层过滤：只在写数据时进行强一致性校验 性能优化 § 影响： 减少线程等待时间影响不大 减少 CPU 执行时间影响大 线程数影响大 发现瓶颈： 工具：JProfiler、Yourkit CPU 使用率超过 95% 优化方式： 减少编码 减少序列化 Java 极致优化（直接输出流数据、直接使用 Servlet 处理请求） 并发读优化 减库存 § 下单减库存：恶意下单 付款减库存：超卖 预扣库存（最常见）：同样可能恶意下单（影响小一些），确保最终一致性 Plan B § 降级 限流：客户端限流、服务端限流 拒绝服务 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>经典的 Redis 学习资料</title>
     <link>https://wangze.tech/经典的-Redis-学习资料</link>
     <guid>https://wangze.tech/经典的-Redis-学习资料</guid>
     <description> 工具书：《Redis 使用手册》 最有用的是「数据结构与应用」的内容 工具网站 Redis 命令参考 原理书：《Redis 设计与实现》 重点学习 Redis 底层数据结构、RDB 和 AOF 持久化机制、哨兵机制和切片集群的介绍 出版日期较早，针对的是 Redis 3.0 实战书：《Redis 开发与运维》 介绍了 Redis 的 Java 和 Python 客户端，以及 Redis 用于缓存设计的关键技术和注意事项，这些内容在其他参考书中不太常见，重点学习 围绕客户端、持久化、主从复制、哨兵、切片集群等几个方面，着重介绍了在日常的开发运维过程中遇到的问题和“坑”，都是经验之谈，可以帮助提前做规避 针对 Redis 阻塞、优化内存使用、处理 bigkey 这几个经典问题，提供了解决方案 扩展阅读 《操作系统导论》 和 Redis 直接相关的部分：对进程、线程的定义，对进程 API、线程 API 以及对文件系统 fsync 操作、缓存和缓冲的介绍 《大规模分布式存储系统：原理解析与架构实战》 分布式系统章节 Redis 的关键机制和操作系统、分布式系统的对应知识点 《Redis 深度历险：核心原理与应用实践》 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>背单词</title>
     <link>https://wangze.tech/背单词</link>
     <guid>https://wangze.tech/背单词</guid>
     <description>准备 § 手机安装不背单词 APP 浏览器安装插件 不背单词查词 在 APP 添加生词 § 到不背单词首页下拉弹出单词搜索框 输入单词或短语到搜索框进行搜索 点击搜索结果 点击星星图标添加到生词本 在网页添加生词 § 划词 在弹出的窗口点击添加生词 开始背单词 § 将生词本设置为正在学习的词书 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>英语</title>
     <link>https://wangze.tech/英语</link>
     <guid>https://wangze.tech/英语</guid>
     <description> 背单词 Think in English 【M14】英语学习唯一正确方法具体实践_哔哩哔哩 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>配置图床</title>
     <link>https://wangze.tech/配置图床</link>
     <guid>https://wangze.tech/配置图床</guid>
     <description> 使用 PicGo + Github + JSD 搭建免费图床 jsDelivr .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>配置自定义域名</title>
     <link>https://wangze.tech/配置自定义域名</link>
     <guid>https://wangze.tech/配置自定义域名</guid>
     <description>对于 quartz4，需要在 content 目录下放置 vercel.json，用于在点击 Wikilink 时自动添加 .html { &quot;routes&quot;: [ { &quot;handle&quot;: &quot;filesystem&quot; }, { &quot;src&quot;: &quot;/(.</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item><item>
     <title>问题合集</title>
     <link>https://wangze.tech/问题合集</link>
     <guid>https://wangze.tech/问题合集</guid>
     <description> 发布笔记 404 特殊字符 .</description>
-    <pubDate>Sun, 27 Aug 2023 15:00:40 GMT</pubDate>
+    <pubDate>Mon, 28 Aug 2023 01:20:08 GMT</pubDate>
   </item>
     </channel>
   </rss>
