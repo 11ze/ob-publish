@@ -1,418 +1,418 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml"><url>
     <loc>https://wangze.tech/00｜开篇词</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/01｜基础架构：一个键值数据库包含什么？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/01｜基础架构：一条-SQL-查询语句是如何执行的？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/02｜数据结构：快速的-Redis-有哪些慢操作？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/02｜日志系统：一条-SQL-更新语句是如何执行的？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/03｜事务隔离：为什么你改了为还看不见？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/03｜高性能-IO-模型：为什么单线程-Redis-那么快？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/04｜AOF-日志：宕机了，Redis-如何避免数据丢失？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/04｜深入浅出索引（上）</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/05｜内存快照：宕机后，Redis-如何实现快速恢复？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/05｜深入浅出索引（下）</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/06｜全局锁和表锁：给表加个字段怎么有这么多阻碍？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/06｜数据同步：主从库如何实现数据一致？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/07｜哨兵机制：主库挂了，如何不间断服务？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/07｜行锁功过：怎么减少锁对性能的影响？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/08｜事务到底是隔离的还是不隔离的？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/08｜哨兵集群：哨兵挂了，主从库还能切换吗？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/09｜切片集群：数据增多了，是该加内存还是加实例？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/09｜普通索引和唯一索引，应该怎么选择？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/10｜MySQL-为什么有时候会选错索引？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/11｜“万金油”的-String，为什么不好用了？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/11｜怎么给字符串字段加索引？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/12｜为什么我的-MySQL-会“抖”一下？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/12｜有一亿个-keys-要统计，应该用哪种集合？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/13｜GEO-是什么？还可以定义新的数据类型吗？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/13｜为什么表数据删掉一半，表文件大小不变？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/14｜count(*)-这么慢，我该怎么办？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/14｜如何在-Redis-中保存时间序列数据？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/15｜消息队列的考验：Redis-有哪些解决方案？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/15｜答疑文章（一）：日志和索引相关问题</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/16｜“order-by”是怎么工作的？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/16｜异步机制：如何避免单线程模型的阻塞？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/17｜为什么-CPU-结构也会影响-Redis-的性能？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/17｜如何正确地显示随机消息？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/18｜为什么这些-SQL-语句逻辑相同，性能却差异巨大？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/18｜波动的响应延迟：如何应对变慢的-Redis？（上）</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/19｜为什么我只查一行的语句，也执行这么慢？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/19｜波动的响应延迟：如何应对变慢的-Redis？（下）</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/20｜删除数据后，为什么内存占用率还是很高？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/20｜幻读是什么，幻读有什么问题？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/21｜为什么我只改一行的语句，锁这么多？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/21｜缓冲区：一个可能引发“惨案”的地方</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/22｜MySQL有哪些“饮鸩止渴”提高性能的方法？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/22｜第-11～21-讲课后思考题答案及常见问题答疑</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/23｜MySQL-是怎么保证数据不丢的？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/23｜旁路缓存：Redis-是如何工作的？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/24｜MySQL-是怎么保证主备一致的？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/24｜替换策略：缓存满了怎么办？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/25｜MySQL-是怎么保证高可用的？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/25｜缓存异常（上）：如何解决缓存和数据库的数据不一致问题？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/26｜备库为什么会延迟好几个小时？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/26｜缓存异常（下）：如何解决缓存雪崩、击穿、穿透难题？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/27｜主库出问题了，从库怎么办？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/27｜缓存被污染了，该怎么办？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/28｜Pika：如何基于-SSD-实现大容量-Redis？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/28｜读写分离有哪些坑？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/29｜如何判断一个数据库是不是出问题了？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/29｜无锁的原子操作：Redis-如何应对并发访问？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/3-2-1-的有趣想法</loc>
-    <lastmod>2023-08-29T04:34:15.220Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/30｜如何使用-Redis-实现分布式锁？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/30｜答疑文章（二）：用动态的观点看加锁</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/31｜事务机制｜Redis-能实现-ACID-属性吗？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/31｜误删数据后除了跑路，还能怎么办？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/32｜Redis-主从同步与故障切换，有哪些坑？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/32｜为什么还有-kill-不掉的语句？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/33｜我查这么多数据，会不会把数据库内存打爆？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/33｜脑裂：一次奇怪的数据丢失</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/34｜到底可不可以使用-join-？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/35｜Codis-VS-Redis-Cluster：我该选择哪一个集群方案？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/35｜join-语句怎么优化？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/36｜Redis-支撑秒杀场景的关键技术和实践都有哪些？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/36｜为什么临时表可以重名？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/37｜什么时候会使用内部临时表？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/37｜数据分布优化：如何应对数据倾斜？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/38｜通信开销：限制-Redis-Cluster-规模的关键因素</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/38｜都说-InnoDB-好，那还要不要使用-Memory-引擎？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/39｜Redis-6.0-的新特性：多线程、客户端缓存与安全</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/39｜自增主键为什么不是连续的？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/40｜Redis-的下一步：基于-NVM-内存的实践</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/40｜insert-语句的锁为什么这么多？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/41｜怎么最快地复制一张表？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/41｜第-35～40-讲课后思考题答案及常见问题答疑</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/42｜grant-之后要跟着-flush-privileges-吗？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/43｜要不要使用分区表？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/44｜答疑文章（三）：说一说这些好问题</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/45｜自增-id-用完怎么办？</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/About-Atlas</loc>
-    <lastmod>2023-08-29T04:34:15.220Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/Capslock</loc>
-    <lastmod>2023-08-29T04:34:15.220Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/Crontab-执行提示没有权限</loc>
-    <lastmod>2023-08-29T04:34:15.220Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/Docker-不常见问题</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/Docker</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/Egg.js-手动热更新</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/GitHub-加速访问</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/Laravel-Pint-使用</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/Linux-安装-oh-my-zsh</loc>
-    <lastmod>2023-08-29T04:34:15.220Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/Mac-应用已损坏</loc>
-    <lastmod>2023-08-29T04:34:15.220Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/MySQL-实战-45-讲</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/Obsidian-插件</loc>
-    <lastmod>2023-08-29T04:34:15.220Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/Obsidian</loc>
-    <lastmod>2023-08-29T04:34:15.220Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/Oh-My-Zsh</loc>
-    <lastmod>2023-08-29T04:34:15.220Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/PHP-开发设置</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/PHP-错误码设计</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/PHP-FPM-配置</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/README</loc>
-    <lastmod>2023-08-29T04:34:15.220Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/Rate-Limit</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.057Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/Redis-学习路径</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/Redis-客户端如何与服务端交换命令和数据？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/Redis-有哪些好用的运维工具？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/Redis-核心技术与实战</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/Redis-的使用规范小建议</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/Think-in-English</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/Tips</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/Vault</loc>
-    <lastmod>2023-08-29T04:34:15.220Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/iCloud-不同步指定文件</loc>
-    <lastmod>2023-08-29T04:34:15.220Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/iCloud-同步卡住</loc>
-    <lastmod>2023-08-29T04:34:15.220Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/</loc>
-    <lastmod>2023-08-29T04:34:15.220Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/从微博的-Redis-实践中，我们可以学到哪些经验？</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/发布方案</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/发布笔记-404</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/同步方案</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/学习方法</loc>
-    <lastmod>2023-08-29T04:34:15.220Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/常见错误</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/开发环境</loc>
-    <lastmod>2023-08-29T04:34:15.220Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/抢红包系统</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/换新设备</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/搭建数字花园</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/支付技术方案</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/收藏文章</loc>
-    <lastmod>2023-08-29T04:34:15.224Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/本库自动提交到-GitHub</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/油猴脚本</loc>
-    <lastmod>2023-08-29T04:34:15.220Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.053Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/添加评论区</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/特殊字符</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/秒杀系统</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/经典的-Redis-学习资料</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/背单词</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/英语</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/配置图床</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/配置自定义域名</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url><url>
     <loc>https://wangze.tech/问题合集</loc>
-    <lastmod>2023-08-29T04:34:15.228Z</lastmod>
+    <lastmod>2023-08-29T15:00:50.061Z</lastmod>
   </url></urlset>
