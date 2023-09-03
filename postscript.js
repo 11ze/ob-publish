@@ -1024,8 +1024,10 @@ function _stripSlashes(s, onlyStripPrefix) {
 
 // quartz/components/scripts/quartz/components/scripts/search.inline.ts
 var index = void 0;
+var searchType = "basic";
 var contextWindowWords = 30;
 var numSearchResults = 5;
+var numTagResults = 3;
 function highlight(searchTerm, text, trim) {
   const tokenizedTerms = searchTerm.split(/\s+/).filter((t2) => t2 !== "").sort((a2, b2) => b2.length - a2.length);
   let tokenizedText = text.split(/\s+/).filter((t2) => t2 !== "");
@@ -1081,8 +1083,10 @@ document.addEventListener("nav", async (e) => {
     if (results) {
       removeAllChildren(results);
     }
+    searchType = "basic";
   }
-  function showSearch() {
+  function showSearch(searchTypeNew) {
+    searchType = searchTypeNew;
     if (sidebar) {
       sidebar.style.zIndex = "1";
     }
@@ -1090,10 +1094,16 @@ document.addEventListener("nav", async (e) => {
     searchBar?.focus();
   }
   function shortcutHandler(e2) {
-    if (e2.key === "k" && (e2.ctrlKey || e2.metaKey)) {
+    if (e2.key === "k" && (e2.ctrlKey || e2.metaKey) && !e2.shiftKey) {
       e2.preventDefault();
       const searchBarOpen = container?.classList.contains("active");
-      searchBarOpen ? hideSearch() : showSearch();
+      searchBarOpen ? hideSearch() : showSearch("basic");
+    } else if (e2.shiftKey && (e2.ctrlKey || e2.metaKey) && e2.key.toLowerCase() === "k") {
+      e2.preventDefault();
+      const searchBarOpen = container?.classList.contains("active");
+      searchBarOpen ? hideSearch() : showSearch("tags");
+      if (searchBar)
+        searchBar.value = "#";
     } else if (e2.key === "Enter") {
       const anchor = document.getElementsByClassName("result-card")[0];
       if (anchor) {
@@ -1101,20 +1111,58 @@ document.addEventListener("nav", async (e) => {
       }
     }
   }
+  function trimContent(content) {
+    const sentences = content.replace(/\s+/g, " ").split(".");
+    let finalDesc = "";
+    let sentenceIdx = 0;
+    const len = contextWindowWords * 5;
+    while (finalDesc.length < len) {
+      const sentence = sentences[sentenceIdx];
+      if (!sentence)
+        break;
+      finalDesc += sentence + ".";
+      sentenceIdx++;
+    }
+    if (finalDesc.length < content.length) {
+      finalDesc += "..";
+    }
+    return finalDesc;
+  }
   const formatForDisplay = (term, id) => {
     const slug2 = idDataMap[id];
     return {
       id,
       slug: slug2,
-      title: highlight(term, data[slug2].title ?? ""),
-      content: highlight(term, data[slug2].content ?? "", true)
+      title: searchType === "tags" ? data[slug2].title : highlight(term, data[slug2].title ?? ""),
+      // if searchType is tag, display context from start of file and trim, otherwise use regular highlight
+      content: searchType === "tags" ? trimContent(data[slug2].content) : highlight(term, data[slug2].content ?? "", true),
+      tags: highlightTags(term, data[slug2].tags)
     };
   };
-  const resultToHTML = ({ slug: slug2, title, content }) => {
+  function highlightTags(term, tags) {
+    if (tags && searchType === "tags") {
+      const termLower = term.toLowerCase();
+      let matching = tags.filter((str) => str.includes(termLower));
+      if (matching.length > 0) {
+        let difference = tags.filter((x2) => !matching.includes(x2));
+        matching = matching.map((tag) => `<li><p class="match-tag">#${tag}</p></li>`);
+        difference = difference.map((tag) => `<li><p>#${tag}</p></li>`);
+        matching.push(...difference);
+      }
+      if (tags.length > numTagResults) {
+        matching.splice(numTagResults);
+      }
+      return matching;
+    } else {
+      return [];
+    }
+  }
+  const resultToHTML = ({ slug: slug2, title, content, tags }) => {
+    const htmlTags = tags.length > 0 ? `<ul>${tags.join("")}</ul>` : ``;
     const button = document.createElement("button");
     button.classList.add("result-card");
     button.id = slug2;
-    button.innerHTML = `<h3>${title}</h3><p>${content}</p>`;
+    button.innerHTML = `<h3>${title}</h3>${htmlTags}<p>${content}</p>`;
     button.addEventListener("click", () => {
       const targ = resolveRelative(currentSlug, slug2);
       window.spaNavigate(new URL(targ, window.location.toString()));
@@ -1136,13 +1184,37 @@ document.addEventListener("nav", async (e) => {
     }
   }
   async function onType(e2) {
-    const term = e2.target.value;
-    const searchResults = await index?.searchAsync(term, numSearchResults) ?? [];
+    let term = e2.target.value;
+    let searchResults;
+    if (term.toLowerCase().startsWith("#")) {
+      searchType = "tags";
+    } else {
+      searchType = "basic";
+    }
+    switch (searchType) {
+      case "tags": {
+        term = term.substring(1);
+        searchResults = await index?.searchAsync({ query: term, limit: numSearchResults, index: ["tags"] }) ?? [];
+        break;
+      }
+      case "basic":
+      default: {
+        searchResults = await index?.searchAsync({
+          query: term,
+          limit: numSearchResults,
+          index: ["title", "content"]
+        }) ?? [];
+      }
+    }
     const getByField = (field) => {
       const results2 = searchResults.filter((x2) => x2.field === field);
       return results2.length === 0 ? [] : [...results2[0].result];
     };
-    const allIds = /* @__PURE__ */ new Set([...getByField("title"), ...getByField("content")]);
+    const allIds = /* @__PURE__ */ new Set([
+      ...getByField("title"),
+      ...getByField("content"),
+      ...getByField("tags")
+    ]);
     const finalResults = [...allIds].map((id) => formatForDisplay(term, id));
     displayResults(finalResults);
   }
@@ -1151,8 +1223,8 @@ document.addEventListener("nav", async (e) => {
   }
   document.addEventListener("keydown", shortcutHandler);
   prevShortcutHandler = shortcutHandler;
-  searchIcon?.removeEventListener("click", showSearch);
-  searchIcon?.addEventListener("click", showSearch);
+  searchIcon?.removeEventListener("click", () => showSearch("basic"));
+  searchIcon?.addEventListener("click", () => showSearch("basic"));
   searchBar?.removeEventListener("input", onType);
   searchBar?.addEventListener("input", onType);
   if (!index) {
@@ -1171,23 +1243,31 @@ document.addEventListener("nav", async (e) => {
           {
             field: "content",
             tokenize: "reverse"
+          },
+          {
+            field: "tags",
+            tokenize: "reverse"
           }
         ]
       }
     });
-    let id = 0;
-    for (const [slug2, fileData] of Object.entries(data)) {
-      await index.addAsync(id, {
-        id,
-        slug: slug2,
-        title: fileData.title,
-        content: fileData.content
-      });
-      id++;
-    }
+    fillDocument(index, data);
   }
   registerEscapeHandler(container, hideSearch);
 });
+async function fillDocument(index2, data) {
+  let id = 0;
+  for (const [slug2, fileData] of Object.entries(data)) {
+    await index2.addAsync(id, {
+      id,
+      slug: slug2,
+      title: fileData.title,
+      content: fileData.content,
+      tags: fileData.tags
+    });
+    id++;
+  }
+}
 })();
 (function () {// quartz/components/scripts/quartz/components/scripts/toc.inline.ts
 var observer = new IntersectionObserver((entries) => {
