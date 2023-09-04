@@ -1071,6 +1071,7 @@ document.addEventListener("nav", async (e) => {
   const searchIcon = document.getElementById("search-icon");
   const searchBar = document.getElementById("search-bar");
   const results = document.getElementById("results-container");
+  const resultCards = document.getElementsByClassName("result-card");
   const idDataMap = Object.keys(data);
   function hideSearch() {
     container?.classList.remove("active");
@@ -1105,9 +1106,27 @@ document.addEventListener("nav", async (e) => {
       if (searchBar)
         searchBar.value = "#";
     } else if (e2.key === "Enter") {
-      const anchor = document.getElementsByClassName("result-card")[0];
-      if (anchor) {
-        anchor.click();
+      if (results?.contains(document.activeElement)) {
+        const active = document.activeElement;
+        active.click();
+      } else {
+        const anchor = document.getElementsByClassName("result-card")[0];
+        anchor?.click();
+      }
+    } else if (e2.key === "ArrowDown") {
+      e2.preventDefault();
+      if (!results?.contains(document.activeElement)) {
+        const firstResult = resultCards[0];
+        firstResult?.focus();
+      } else {
+        const nextResult = document.activeElement?.nextElementSibling;
+        nextResult?.focus();
+      }
+    } else if (e2.key === "ArrowUp") {
+      e2.preventDefault();
+      if (results?.contains(document.activeElement)) {
+        const prevResult = document.activeElement?.previousElementSibling;
+        prevResult?.focus();
       }
     }
   }
