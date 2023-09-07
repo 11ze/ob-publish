@@ -5289,11 +5289,12 @@ async function renderGraph(container, fullSlug) {
   } = JSON.parse(graph.dataset["cfg"]);
   const data = await fetchData;
   const links = [];
+  const validLinks = new Set(Object.keys(data).map((slug3) => simplifySlug(slug3)));
   for (const [src, details] of Object.entries(data)) {
     const source = simplifySlug(src);
     const outgoing = details.links ?? [];
     for (const dest of outgoing) {
-      if (dest in data) {
+      if (validLinks.has(dest)) {
         links.push({ source, target: dest });
       }
     }
