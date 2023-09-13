@@ -1001,7 +1001,7 @@ function resolveRelative(current, target) {
   return res;
 }
 function joinSegments(...args) {
-  return args.filter((segment) => segment !== "").join("/");
+  return args.filter((segment) => segment !== "").join("/").replace(/\/\/+/g, "/");
 }
 function _endsWith(s, suffix) {
   return s === suffix || s.endsWith("/" + suffix);
@@ -5238,7 +5238,7 @@ function resolveRelative(current, target) {
   return res;
 }
 function joinSegments(...args) {
-  return args.filter((segment) => segment !== "").join("/");
+  return args.filter((segment) => segment !== "").join("/").replace(/\/\/+/g, "/");
 }
 function _endsWith(s, suffix) {
   return s === suffix || s.endsWith("/" + suffix);
