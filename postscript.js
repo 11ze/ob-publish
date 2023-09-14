@@ -5285,10 +5285,13 @@ async function renderGraph(container, fullSlug) {
     centerForce,
     linkDistance,
     fontSize,
-    opacityScale
+    opacityScale,
+    removeTags,
+    showTags
   } = JSON.parse(graph.dataset["cfg"]);
   const data = await fetchData;
   const links = [];
+  const tags = [];
   const validLinks = new Set(Object.keys(data).map((slug3) => simplifySlug(slug3)));
   for (const [src, details] of Object.entries(data)) {
     const source = simplifySlug(src);
@@ -5296,6 +5299,13 @@ async function renderGraph(container, fullSlug) {
     for (const dest of outgoing) {
       if (validLinks.has(dest)) {
         links.push({ source, target: dest });
+      }
+    }
+    if (showTags) {
+      const localTags = details.tags.filter((tag) => !removeTags.includes(tag)).map((tag) => simplifySlug("tags/" + tag));
+      tags.push(...localTags.filter((tag) => !tags.includes(tag)));
+      for (const tag of localTags) {
+        links.push({ source, target: tag });
       }
     }
   }
@@ -5316,13 +5326,18 @@ async function renderGraph(container, fullSlug) {
     }
   } else {
     Object.keys(data).forEach((id2) => neighbourhood.add(simplifySlug(id2)));
+    if (showTags)
+      tags.forEach((tag) => neighbourhood.add(tag));
   }
   const graphData = {
-    nodes: [...neighbourhood].map((url) => ({
-      id: url,
-      text: data[url]?.title ?? url,
-      tags: data[url]?.tags ?? []
-    })),
+    nodes: [...neighbourhood].map((url) => {
+      const text = url.startsWith("tags/") ? "#" + url.substring(5) : data[url]?.title ?? url;
+      return {
+        id: url,
+        text,
+        tags: data[url]?.tags ?? []
+      };
+    }),
     links: links.filter((l) => neighbourhood.has(l.source) && neighbourhood.has(l.target))
   };
   const simulation = simulation_default(graphData.nodes).force("charge", manyBody_default().strength(-100 * repelForce)).force(
@@ -5338,7 +5353,7 @@ async function renderGraph(container, fullSlug) {
     const isCurrent = d.id === slug2;
     if (isCurrent) {
       return "var(--secondary)";
-    } else if (visited.has(d.id)) {
+    } else if (visited.has(d.id) || d.id.startsWith("tags/")) {
       return "var(--tertiary)";
     } else {
       return "var(--gray)";
@@ -5389,9 +5404,7 @@ async function renderGraph(container, fullSlug) {
     const parent = this.parentNode;
     select_default2(parent).select("text").transition().duration(200).style("opacity", select_default2(parent).select("text").attr("opacityOld")).style("font-size", fontSize + "em");
   }).call(drag(simulation));
-  const labels = graphNode.append("text").attr("dx", 0).attr("dy", (d) => -nodeRadius(d) + "px").attr("text-anchor", "middle").text(
-    (d) => data[d.id]?.title || (d.id.charAt(0).toUpperCase() + d.id.slice(1, d.id.length - 1)).replace("-", " ")
-  ).style("opacity", (opacityScale - 1) / 3.75).style("pointer-events", "none").style("font-size", fontSize + "em").raise().call(drag(simulation));
+  const labels = graphNode.append("text").attr("dx", 0).attr("dy", (d) => -nodeRadius(d) + "px").attr("text-anchor", "middle").text((d) => d.text).style("opacity", (opacityScale - 1) / 3.75).style("pointer-events", "none").style("font-size", fontSize + "em").raise().call(drag(simulation));
   if (enableZoom) {
     svg.call(
       zoom_default2().extent([
