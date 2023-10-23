@@ -6249,6 +6249,8 @@ var isLocalUrl = (href) => {
 var getOpts = ({ target }) => {
   if (!isElement(target))
     return;
+  if (target.attributes.getNamedItem("target")?.value === "_blank")
+    return;
   const a = target.closest("a");
   if (!a)
     return;
