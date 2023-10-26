@@ -1248,7 +1248,6 @@ document.addEventListener("nav", async (e) => {
   searchBar?.addEventListener("input", onType);
   if (!index) {
     index = new import_flexsearch.Document({
-      cache: true,
       charset: "latin:extra",
       optimize: true,
       encode: encoder,
