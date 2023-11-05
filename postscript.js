@@ -5544,8 +5544,9 @@ function toggleToc() {
 function setupToc() {
   const toc = document.getElementById("toc");
   if (toc) {
+    const collapsed = toc.classList.contains("collapsed");
     const content = toc.nextElementSibling;
-    content.style.maxHeight = content.scrollHeight + "px";
+    content.style.maxHeight = collapsed ? "0px" : content.scrollHeight + "px";
     toc.removeEventListener("click", toggleToc);
     toc.addEventListener("click", toggleToc);
   }
