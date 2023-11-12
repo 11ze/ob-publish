@@ -5996,7 +5996,8 @@ async function mouseEnterHandler({ clientX, clientY }) {
       top: `${y2}px`
     });
   }
-  if ([...link.children].some((child) => child.classList.contains("popover"))) {
+  const hasAlreadyBeenFetched = () => [...link.children].some((child) => child.classList.contains("popover"));
+  if (hasAlreadyBeenFetched()) {
     return setPosition(link.lastChild);
   }
   const thisUrl = new URL(document.location.href);
@@ -6011,6 +6012,9 @@ async function mouseEnterHandler({ clientX, clientY }) {
   const contents = await fetch(`${targetUrl}`).then((res) => res.text()).catch((err) => {
     console.error(err);
   });
+  if (hasAlreadyBeenFetched()) {
+    return;
+  }
   if (!contents)
     return;
   const html = p3.parseFromString(contents, "text/html");
@@ -6669,7 +6673,8 @@ async function mouseEnterHandler({ clientX, clientY }) {
       top: `${y2}px`
     });
   }
-  if ([...link.children].some((child) => child.classList.contains("popover"))) {
+  const hasAlreadyBeenFetched = () => [...link.children].some((child) => child.classList.contains("popover"));
+  if (hasAlreadyBeenFetched()) {
     return setPosition(link.lastChild);
   }
   const thisUrl = new URL(document.location.href);
@@ -6684,6 +6689,9 @@ async function mouseEnterHandler({ clientX, clientY }) {
   const contents = await fetch(`${targetUrl}`).then((res) => res.text()).catch((err) => {
     console.error(err);
   });
+  if (hasAlreadyBeenFetched()) {
+    return;
+  }
   if (!contents)
     return;
   const html = p4.parseFromString(contents, "text/html");
