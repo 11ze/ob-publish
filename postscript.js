@@ -5977,12 +5977,17 @@ var B2 = (t2, n3, o3) => {
 };
 
 // quartz/components/scripts/quartz/components/scripts/popover.inline.ts
-function normalizeRelativeURLs(el, base) {
-  const update = (el2, attr, base2) => {
-    el2.setAttribute(attr, new URL(el2.getAttribute(attr), base2).pathname);
+function normalizeRelativeURLs(el, destination) {
+  const rebase = (el2, attr, newBase) => {
+    const rebased = new URL(el2.getAttribute(attr), newBase);
+    el2.setAttribute(attr, rebased.pathname + rebased.hash);
   };
-  el.querySelectorAll('[href^="./"], [href^="../"]').forEach((item) => update(item, "href", base));
-  el.querySelectorAll('[src^="./"], [src^="../"]').forEach((item) => update(item, "src", base));
+  el.querySelectorAll('[href^="./"], [href^="../"]').forEach(
+    (item) => rebase(item, "href", destination)
+  );
+  el.querySelectorAll('[src^="./"], [src^="../"]').forEach(
+    (item) => rebase(item, "src", destination)
+  );
 }
 var p3 = new DOMParser();
 async function mouseEnterHandler({ clientX, clientY }) {
@@ -6654,12 +6659,17 @@ var B2 = (t2, n3, o3) => {
 };
 
 // quartz/components/scripts/popover.inline.ts
-function normalizeRelativeURLs(el, base) {
-  const update = (el2, attr, base2) => {
-    el2.setAttribute(attr, new URL(el2.getAttribute(attr), base2).pathname);
+function normalizeRelativeURLs(el, destination) {
+  const rebase = (el2, attr, newBase) => {
+    const rebased = new URL(el2.getAttribute(attr), newBase);
+    el2.setAttribute(attr, rebased.pathname + rebased.hash);
   };
-  el.querySelectorAll('[href^="./"], [href^="../"]').forEach((item) => update(item, "href", base));
-  el.querySelectorAll('[src^="./"], [src^="../"]').forEach((item) => update(item, "src", base));
+  el.querySelectorAll('[href^="./"], [href^="../"]').forEach(
+    (item) => rebase(item, "href", destination)
+  );
+  el.querySelectorAll('[src^="./"], [src^="../"]').forEach(
+    (item) => rebase(item, "src", destination)
+  );
 }
 var p4 = new DOMParser();
 async function mouseEnterHandler({ clientX, clientY }) {
@@ -6812,6 +6822,7 @@ function createRouter() {
       if (isSamePage(url) && url.hash) {
         const el = document.getElementById(decodeURIComponent(url.hash.substring(1)));
         el?.scrollIntoView();
+        history.pushState({}, "", url);
         return;
       }
       try {
