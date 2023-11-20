@@ -3,7 +3,7 @@
 <li>每遇到一个新数据库，先关注它的数据模型，分析数据库的适用场景</li>
 <li>数据库底层存储的核心基于的数据模型：哈希表、有序数组、二叉树、N 叉树等</li>
 </ul>
-<h2 id="innodb-的索引模型">InnoDB 的索引模型<a aria-hidden="true" tabindex="-1" href="#innodb-的索引模型" class="internal"> §</a></h2>
+<h2 id="innodb-的索引模型">InnoDB 的索引模型<a aria-hidden="true" tabindex="-1" href="#innodb-的索引模型" class="internal alias"> §</a></h2>
 <ul>
 <li>每一个索引在 InnoDB 里面对应一颗 <code>B+ 树</code></li>
 <li>主键索引也被称为聚簇索引（clustered index）
@@ -70,7 +70,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="什么时候需要重建索引">什么时候需要重建索引<a aria-hidden="true" tabindex="-1" href="#什么时候需要重建索引" class="internal"> §</a></h2>
+<h2 id="什么时候需要重建索引">什么时候需要重建索引<a aria-hidden="true" tabindex="-1" href="#什么时候需要重建索引" class="internal alias"> §</a></h2>
 <ul>
 <li>索引可能因为删除操作、页分裂等原因，导致数据页有空洞
 <ul>
@@ -79,7 +79,7 @@
 </li>
 <li>重建索引的过程会创建一个新的索引，把数据按顺序插入，页面的利用率最高，更省空间</li>
 </ul>
-<h2 id="思考题">思考题<a aria-hidden="true" tabindex="-1" href="#思考题" class="internal"> §</a></h2>
+<h2 id="思考题">思考题<a aria-hidden="true" tabindex="-1" href="#思考题" class="internal alias"> §</a></h2>
 <ul>
 <li>重建普通 k 索引
 <ul>
@@ -112,7 +112,7 @@
 <li>5.6 版本以后支持 online ddl，没有行锁，有 mdl 读锁</li>
 </ul>
 </li>
-<li>在第 12 讲有分析 <a href="./12｜为什么我的-MySQL-会“抖”一下？" class="internal" data-slug="12｜为什么我的-MySQL-会“抖”一下？">12｜为什么我的 MySQL 会“抖”一下？</a></li>
+<li>在第 12 讲有分析 <a href="./12｜为什么我的-MySQL-会“抖”一下？" class="internal alias" data-slug="12｜为什么我的-MySQL-会“抖”一下？">12｜为什么我的 MySQL 会“抖”一下？</a></li>
 </ul>
 </li>
 </ul></article></div><div class="right sidebar"><div class="graph "><h3>Graph View</h3><div class="graph-outer"><div id="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:true,&quot;removeTags&quot;:[]}"></div><svg version="1.1" id="global-graph-icon" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xmlSpace="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17

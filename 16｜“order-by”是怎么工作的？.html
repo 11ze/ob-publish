@@ -169,7 +169,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="思考题">思考题<a aria-hidden="true" tabindex="-1" href="#思考题" class="internal"> §</a></h2>
+<h2 id="思考题">思考题<a aria-hidden="true" tabindex="-1" href="#思考题" class="internal alias"> §</a></h2>
 <ul>
 <li>假设你的表里面已经有了 city_name(city, name) 这个联合索引，然后你要查杭州和苏州两个城市中所有的市民的姓名，并且按名字排序，显示前 100 条记录。如果 SQL 查询语句是这么写的 ：</li>
 <li><code>mysql> select * from t where city in ('杭州',&quot;苏州&quot;) order by name limit 100;</code></li>
@@ -193,7 +193,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="评论区">评论区<a aria-hidden="true" tabindex="-1" href="#评论区" class="internal"> §</a></h2>
+<h2 id="评论区">评论区<a aria-hidden="true" tabindex="-1" href="#评论区" class="internal alias"> §</a></h2>
 <ul>
 <li>
 <p>varchar(n)，n 的值中，255 是个边界，小于等于 255 需要一个字节记录长度，超过就需要两个字节</p>
@@ -208,7 +208,7 @@
 <p>引擎内部自己调用，读取行，不加扫描行数</p>
 <ul>
 <li>对于 using index condition 的场景，执行器只调用了一次查询接口，回表是由存储层来完成的，所以扫描行数只算一次，即只算走索引搜索的过程中扫描的行数。</li>
-<li>加索引的时候，要扫描全表，但如果是inplace DDL（<a href="./13｜为什么表数据删掉一半，表文件大小不变？" class="internal" data-slug="13｜为什么表数据删掉一半，表文件大小不变？">13｜为什么表数据删掉一半，表文件大小不变？</a>），你会看到扫描行数是 0，也是因为这些扫描动作都是引擎内部自己调用的。</li>
+<li>加索引的时候，要扫描全表，但如果是inplace DDL（<a href="./13｜为什么表数据删掉一半，表文件大小不变？" class="internal alias" data-slug="13｜为什么表数据删掉一半，表文件大小不变？">13｜为什么表数据删掉一半，表文件大小不变？</a>），你会看到扫描行数是 0，也是因为这些扫描动作都是引擎内部自己调用的。</li>
 </ul>
 </li>
 <li>
