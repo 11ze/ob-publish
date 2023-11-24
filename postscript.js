@@ -1287,110 +1287,44 @@ async function fillDocument(index2, data) {
   }
 }
 })();
-(function () {// quartz/components/scripts/quartz/components/scripts/explorer.inline.ts
-var explorerState;
+(function () {// quartz/components/scripts/quartz/components/scripts/toc.inline.ts
 var observer = new IntersectionObserver((entries) => {
-  const explorer = document.getElementById("explorer-ul");
   for (const entry of entries) {
-    if (entry.isIntersecting) {
-      explorer?.classList.add("no-background");
-    } else {
-      explorer?.classList.remove("no-background");
+    const slug = entry.target.id;
+    const tocEntryElement = document.querySelector(`a[data-for="${slug}"]`);
+    const windowHeight = entry.rootBounds?.height;
+    if (windowHeight && tocEntryElement) {
+      if (entry.boundingClientRect.y < windowHeight) {
+        tocEntryElement.classList.add("in-view");
+      } else {
+        tocEntryElement.classList.remove("in-view");
+      }
     }
   }
 });
-function toggleExplorer() {
+function toggleToc() {
   this.classList.toggle("collapsed");
   const content = this.nextElementSibling;
   content.classList.toggle("collapsed");
   content.style.maxHeight = content.style.maxHeight === "0px" ? content.scrollHeight + "px" : "0px";
 }
-function toggleFolder(evt) {
-  evt.stopPropagation();
-  const target = evt.target;
-  const isSvg = target.nodeName === "svg";
-  let childFolderContainer;
-  let currentFolderParent;
-  if (isSvg) {
-    childFolderContainer = target.parentElement?.nextSibling;
-    currentFolderParent = target.nextElementSibling;
-    childFolderContainer.classList.toggle("open");
-  } else {
-    childFolderContainer = target.parentElement?.parentElement?.nextElementSibling;
-    currentFolderParent = target.parentElement;
-    childFolderContainer.classList.toggle("open");
-  }
-  if (!childFolderContainer)
-    return;
-  const isCollapsed = childFolderContainer.classList.contains("open");
-  setFolderState(childFolderContainer, !isCollapsed);
-  const clickFolderPath = currentFolderParent.dataset.folderpath;
-  const fullFolderPath = clickFolderPath.substring(1);
-  toggleCollapsedByPath(explorerState, fullFolderPath);
-  const stringifiedFileTree = JSON.stringify(explorerState);
-  localStorage.setItem("fileTree", stringifiedFileTree);
-}
-function setupExplorer() {
-  const explorer = document.getElementById("explorer");
-  const storageTree = localStorage.getItem("fileTree");
-  const useSavedFolderState = explorer?.dataset.savestate === "true";
-  if (explorer) {
-    const collapseBehavior = explorer.dataset.behavior;
-    if (collapseBehavior === "collapse") {
-      Array.prototype.forEach.call(
-        document.getElementsByClassName("folder-button"),
-        function(item) {
-          item.removeEventListener("click", toggleFolder);
-          item.addEventListener("click", toggleFolder);
-        }
-      );
-    }
-    explorer.removeEventListener("click", toggleExplorer);
-    explorer.addEventListener("click", toggleExplorer);
-  }
-  Array.prototype.forEach.call(document.getElementsByClassName("folder-icon"), function(item) {
-    item.removeEventListener("click", toggleFolder);
-    item.addEventListener("click", toggleFolder);
-  });
-  if (storageTree && useSavedFolderState) {
-    explorerState = JSON.parse(storageTree);
-    explorerState.map((folderUl) => {
-      const folderLi = document.querySelector(
-        `[data-folderpath='/${folderUl.path}']`
-      );
-      if (folderLi) {
-        const folderUL = folderLi.parentElement?.nextElementSibling;
-        if (folderUL) {
-          setFolderState(folderUL, folderUl.collapsed);
-        }
-      }
-    });
-  } else if (explorer?.dataset.tree) {
-    explorerState = JSON.parse(explorer.dataset.tree);
+function setupToc() {
+  const toc = document.getElementById("toc");
+  if (toc) {
+    const collapsed = toc.classList.contains("collapsed");
+    const content = toc.nextElementSibling;
+    content.style.maxHeight = collapsed ? "0px" : content.scrollHeight + "px";
+    toc.removeEventListener("click", toggleToc);
+    toc.addEventListener("click", toggleToc);
   }
 }
-window.addEventListener("resize", setupExplorer);
+window.addEventListener("resize", setupToc);
 document.addEventListener("nav", () => {
-  setupExplorer();
+  setupToc();
   observer.disconnect();
-  const lastItem = document.getElementById("explorer-end");
-  if (lastItem) {
-    observer.observe(lastItem);
-  }
+  const headers = document.querySelectorAll("h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]");
+  headers.forEach((header) => observer.observe(header));
 });
-function setFolderState(folderElement, collapsed) {
-  if (collapsed) {
-    folderElement?.classList.remove("open");
-  } else {
-    folderElement?.classList.add("open");
-  }
-}
-function toggleCollapsedByPath(array, path) {
-  const entry = array.find((item) => item.path === path);
-  if (entry) {
-    entry.collapsed = !entry.collapsed;
-  }
-}
 })();
 (function () {// node_modules/d3-dispatch/src/dispatch.js
 var noop = { value: () => {
@@ -5519,45 +5453,6 @@ document.addEventListener("nav", async (e) => {
   const containerIcon = document.getElementById("global-graph-icon");
   containerIcon?.removeEventListener("click", renderGlobalGraph);
   containerIcon?.addEventListener("click", renderGlobalGraph);
-});
-})();
-(function () {// quartz/components/scripts/quartz/components/scripts/toc.inline.ts
-var observer = new IntersectionObserver((entries) => {
-  for (const entry of entries) {
-    const slug = entry.target.id;
-    const tocEntryElement = document.querySelector(`a[data-for="${slug}"]`);
-    const windowHeight = entry.rootBounds?.height;
-    if (windowHeight && tocEntryElement) {
-      if (entry.boundingClientRect.y < windowHeight) {
-        tocEntryElement.classList.add("in-view");
-      } else {
-        tocEntryElement.classList.remove("in-view");
-      }
-    }
-  }
-});
-function toggleToc() {
-  this.classList.toggle("collapsed");
-  const content = this.nextElementSibling;
-  content.classList.toggle("collapsed");
-  content.style.maxHeight = content.style.maxHeight === "0px" ? content.scrollHeight + "px" : "0px";
-}
-function setupToc() {
-  const toc = document.getElementById("toc");
-  if (toc) {
-    const collapsed = toc.classList.contains("collapsed");
-    const content = toc.nextElementSibling;
-    content.style.maxHeight = collapsed ? "0px" : content.scrollHeight + "px";
-    toc.removeEventListener("click", toggleToc);
-    toc.addEventListener("click", toggleToc);
-  }
-}
-window.addEventListener("resize", setupToc);
-document.addEventListener("nav", () => {
-  setupToc();
-  observer.disconnect();
-  const headers = document.querySelectorAll("h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]");
-  headers.forEach((header) => observer.observe(header));
 });
 })();
 (function () {// node_modules/@floating-ui/core/dist/floating-ui.core.browser.min.mjs
