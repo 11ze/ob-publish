@@ -49,15 +49,17 @@
 <span data-line><span style="color:var(--shiki-color-text);">  </span><span style="color:var(--shiki-token-keyword);">export</span><span style="color:var(--shiki-color-text);"> GO111MODULE</span><span style="color:var(--shiki-token-keyword);">=</span><span style="color:var(--shiki-token-string);">on</span></span>
 <span data-line><span style="color:var(--shiki-color-text);">  </span><span style="color:var(--shiki-token-keyword);">export</span><span style="color:var(--shiki-color-text);"> GOPROXY</span><span style="color:var(--shiki-token-keyword);">=</span><span style="color:var(--shiki-token-string);">https://goproxy.cn</span></span>
 <span data-line> </span>
+<span data-line><span style="color:var(--shiki-token-comment);"># Rust--</span></span>
 <span data-line><span style="color:var(--shiki-token-function);">curl</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">--proto</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string-expression);">'=https'</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">--tlsv1.2</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">https://sh.rustup.rs</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">-sSf</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-keyword);">|</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-function);">sh</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-comment);"># rustc -V &amp;&amp; cargo -V</span></span>
 <span data-line> </span>
-<span data-line><span style="color:var(--shiki-token-keyword);">~</span><span style="color:var(--shiki-color-text);">/.cargo/config.toml</span></span>
+<span data-line><span style="color:var(--shiki-token-comment);"># ~/.cargo/config.toml</span></span>
 <span data-line><span style="color:var(--shiki-color-text);">[source.crates-io]</span></span>
 <span data-line><span style="color:var(--shiki-token-function);">replace-with</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">=</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string-expression);">'ustc'</span></span>
 <span data-line> </span>
 <span data-line><span style="color:var(--shiki-color-text);">[source.ustc]</span></span>
 <span data-line><span style="color:var(--shiki-token-function);">registry</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string);">=</span><span style="color:var(--shiki-color-text);"> </span><span style="color:var(--shiki-token-string-expression);">&quot;git://mirrors.ustc.edu.cn/crates.io-index&quot;</span></span>
 <span data-line> </span>
+<span data-line><span style="color:var(--shiki-token-comment);">#--Rust</span></span>
 <span data-line> </span></code></pre></div>
 <div data-rehype-pretty-code-fragment><pre style="background-color:var(--shiki-color-background);" tabindex="0" data-language="bash" data-theme="default"><code data-language="bash" data-theme="default"><span data-line><span style="color:var(--shiki-token-comment);"># 添加到 ~/.zshrc（需要先配置 Zsh）</span></span>
 <span data-line><span style="color:var(--shiki-token-keyword);">alias</span><span style="color:var(--shiki-color-text);"> upb</span><span style="color:var(--shiki-token-keyword);">=</span><span style="color:var(--shiki-token-string-expression);">'brew cleanup --prune=all -q &amp;&amp; brew upgrade &amp;&amp; brew cu -ay &amp;&amp; brew uninstall node@14 node@16 node@18 node@19 --ignore-dependencies -f &amp;&amp; brew cleanup --prune=all -q &amp;&amp; npm update --location=global &amp;&amp; omz update'</span></span></code></pre></div>
@@ -75,7 +77,7 @@
 <h2 id="软件">软件<a aria-hidden="true" tabindex="-1" href="#软件" class="internal alias"> §</a></h2>
 <ul>
 <li>
-<p><a href="https://www.macbartender.com/Bartender4/" class="external alias">Bartender 4</a> 隐藏菜单栏图标</p>
+<p><a href="https://xclient.info/search/s/bartender/" class="external alias">Bartender 5</a> 隐藏菜单栏图标</p>
 </li>
 <li>
 <p><a href="./Capslock" class="internal" data-slug="Capslock">Capslock</a> 增强 Caps 键功能</p>
@@ -87,7 +89,7 @@
 <p><a href="https://www.google.com/intl/zh-CN/chrome/" class="external alias">Chrome</a></p>
 <ul>
 <li>安装后访问一次 <a href="https://google.com/ncr" class="external alias">google.com/ncr</a> 避免 Google 重定向</li>
-<li>允许预加载网页：uBlock Origin，Decentraleyes</li>
+<li>修改扩展允许预加载网页：uBlock Origin，Decentraleyes</li>
 </ul>
 </li>
 <li>
@@ -97,7 +99,7 @@
 <p><a href="https://iterm2.com/" class="external alias">iTerm2</a> 终端</p>
 </li>
 <li>
-<p><a href="https://mousefix.org/" class="external alias">Mac Mouse Fix</a></p>
+<p><a href="https://mousefix.org/" class="external alias">Mac Mouse Fix</a> 体验鼠标优化</p>
 <ul>
 <li>Middle Button
 <ul>
@@ -109,10 +111,10 @@
 </ul>
 </li>
 <li>
-<p><a href="https://www.navicat.com/en/products/navicat-premium" class="external alias">Navicat Premium</a> 管理数据库</p>
+<p><a href="https://www.macyy.cn/?s=Navicat+Premium&amp;post_type=post" class="external alias">Navicat Premium</a>) 管理数据库</p>
 </li>
 <li>
-<p><a href="./Obsidian" class="internal" data-slug="Obsidian">Obsidian</a> 笔记</p>
+<p><a href="./Obsidian" class="internal" data-slug="Obsidian">Obsidian</a> 双链笔记</p>
 </li>
 <li>
 <p><a href="./Oh-My-Zsh" class="internal alias" data-slug="Oh-My-Zsh">Oh My Zsh</a> 增强终端功能</p>
@@ -146,7 +148,7 @@
 </ul>
 </li>
 <li>
-<p><a href="https://www.parallels.cn/products/desktop/trial/" class="external alias">Parallels Desktop</a>> 虚拟机</p>
+<p><a href="https://www.parallels.cn/products/desktop/trial/" class="external alias">Parallels Desktop</a> 虚拟机</p>
 </li>
 <li>
 <p><a href="https://github.com/Molunerfinn/PicGo/releases" class="external alias">PicGo</a> 图床</p>
