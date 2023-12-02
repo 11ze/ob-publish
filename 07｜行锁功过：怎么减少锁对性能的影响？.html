@@ -45,7 +45,15 @@
 <li>
 <ol start="2">
 <li>控制并发度。</li>
+</ol>
+<ul>
+<li>
+<ol>
 <li>在中间件或修改 MySQL 源码实现：对于相同行的更新，在进入引擎之前排队，这样 InnoDB 就不会有大量的死锁检测工作。</li>
+</ol>
+</li>
+<li>
+<ol start="2">
 <li>如果做不到第 1 点，可以考虑从设计上优化</li>
 </ol>
 <ul>
@@ -56,9 +64,13 @@
 </ul>
 </li>
 </ul>
+</li>
+</ul>
 <h2 id="思考题">思考题<a aria-hidden="true" tabindex="-1" href="#思考题" class="internal alias"> §</a></h2>
 <ul>
 <li>如果要删除一个表里面的前 1w 行数据，选择哪一种方法（选 2）
+<ul>
+<li>
 <ol>
 <li>直接执行 <code>delete from T limit 10000</code>;</li>
 </ol>
@@ -66,12 +78,20 @@
 <li>单个语句占用时间长，锁的时间也比较长；</li>
 <li>大事务会导致主从延迟。</li>
 </ul>
+</li>
+<li>
 <ol start="2">
 <li>在一个连接中循环执行 20 次 <code>delete from T limit 500</code>;</li>
+</ol>
+</li>
+<li>
+<ol start="3">
 <li>在 20 个连接中同时执行 <code>delete from T limit 500</code>;</li>
 </ol>
 <ul>
 <li>人为造成锁冲突。</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

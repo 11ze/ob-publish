@@ -32,11 +32,10 @@
 <li><code>count()</code> 是一个聚合函数，对于返回的结果集，一行行地判断，如果 <code>count</code> 函数的参数不是 <code>NULL</code>，累计值就加 1，否则不加。最后返回累计值。</li>
 <li><code>count(*)</code>、<code>count(主键 id)</code> 和 <code>count(1)</code> 都表示返回满足条件的结果集的总行数；而 <code>count(字段）</code> 则表示返回满足条件的数据行里面，参数“字段”不为 <code>NULL</code> 的总个数。</li>
 <li>分析性能差别的时候的原则
-<ol>
+<ul>
 <li>server 层要什么就给什么；</li>
 <li>InnoDB 只给必要的值；</li>
-<li>现在的优化器只优化了 <code>count(*)</code> 的语义为“取行数”，其他“显而易见”的优化并没有做。</li>
-</ol>
+<li>现在的优化器只优化了 <code>count(*)</code> 的语义为“取行数”，其他“显而易见”的优化并没有做。
 <ul>
 <li><code>count(主键 id)</code>：遍历整张表，把每一行的 id 值都取出来，返回给 server 层，server 层拿到后判断是不可能为空的，就按行累加。</li>
 <li><code>count(1)</code>：遍历整张表，但不取值，server 层对于返回的每一行，放一个数字“1”进去，判断是不可能为空的，按行累加。</li>
@@ -52,6 +51,8 @@
 </ul>
 </li>
 <li>效率：<code>count(*)</code> ≈ <code>count(1)</code> > <code>count(主键 id)</code> > <code>count(字段)</code></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

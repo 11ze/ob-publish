@@ -53,6 +53,8 @@
 </ul>
 </li>
 <li>如何安全地给小表加字段？
+<ul>
+<li>
 <ol>
 <li>解决长事务，事务不提交会一直占着 MDL 锁。</li>
 </ol>
@@ -60,6 +62,8 @@
 <li>在 information_schema 库的 innodb_trx 表可以查到当前执行中的事务。</li>
 <li>可以暂停 DDL 或者 kill 掉这个长事务</li>
 </ul>
+</li>
+<li>
 <ol start="2">
 <li>热点表，数据量不大的情况</li>
 </ol>
@@ -68,6 +72,8 @@
 <li>在 alter table 语句里面设定等待时间，拿不到 MDL 写锁就先放弃，重试命令重复加字段过程。
 <ul>
 <li>MariaDB 已经合并了 AliSQL 的这个功能，这两个开源分支都支持 DDL NOWAIT/WAIT n 语法</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
