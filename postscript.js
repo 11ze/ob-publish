@@ -987,7 +987,8 @@ var own = Object.hasOwnProperty;
 
 // quartz/util/path.ts
 function simplifySlug(fp) {
-  return _stripSlashes(_trimSuffix(fp, "index"), true);
+  const res = _stripSlashes(_trimSuffix(fp, "index"), true);
+  return res.length === 0 ? "/" : res;
 }
 function pathToRoot(slug2) {
   let rootPath = slug2.split("/").filter((x2) => x2 !== "").slice(0, -1).map((_) => "..").join("/");
@@ -5224,7 +5225,8 @@ function getFullSlug(window2) {
   return res;
 }
 function simplifySlug(fp) {
-  return _stripSlashes(_trimSuffix(fp, "index"), true);
+  const res = _stripSlashes(_trimSuffix(fp, "index"), true);
+  return res.length === 0 ? "/" : res;
 }
 function pathToRoot(slug2) {
   let rootPath = slug2.split("/").filter((x2) => x2 !== "").slice(0, -1).map((_) => "..").join("/");
@@ -5289,12 +5291,16 @@ async function renderGraph(container, fullSlug) {
     removeTags,
     showTags
   } = JSON.parse(graph.dataset["cfg"]);
-  const data = await fetchData;
+  const data = new Map(
+    Object.entries(await fetchData).map(([k, v]) => [
+      simplifySlug(k),
+      v
+    ])
+  );
   const links = [];
   const tags = [];
-  const validLinks = new Set(Object.keys(data).map((slug3) => simplifySlug(slug3)));
-  for (const [src, details] of Object.entries(data)) {
-    const source = simplifySlug(src);
+  const validLinks = new Set(data.keys());
+  for (const [source, details] of data.entries()) {
     const outgoing = details.links ?? [];
     for (const dest of outgoing) {
       if (validLinks.has(dest)) {
@@ -5325,17 +5331,17 @@ async function renderGraph(container, fullSlug) {
       }
     }
   } else {
-    Object.keys(data).forEach((id2) => neighbourhood.add(simplifySlug(id2)));
+    validLinks.forEach((id2) => neighbourhood.add(id2));
     if (showTags)
       tags.forEach((tag) => neighbourhood.add(tag));
   }
   const graphData = {
     nodes: [...neighbourhood].map((url) => {
-      const text = url.startsWith("tags/") ? "#" + url.substring(5) : data[url]?.title ?? url;
+      const text = url.startsWith("tags/") ? "#" + url.substring(5) : data.get(url)?.title ?? url;
       return {
         id: url,
         text,
-        tags: data[url]?.tags ?? []
+        tags: data.get(url)?.tags ?? []
       };
     }),
     links: links.filter((l) => neighbourhood.has(l.source) && neighbourhood.has(l.target))
@@ -5388,7 +5394,7 @@ async function renderGraph(container, fullSlug) {
     const targ = resolveRelative(fullSlug, d.id);
     window.spaNavigate(new URL(targ, window.location.toString()));
   }).on("mouseover", function(_, d) {
-    const neighbours = data[fullSlug].links ?? [];
+    const neighbours = data.get(slug2)?.links ?? [];
     const neighbourNodes = selectAll_default2(".node").filter((d2) => neighbours.includes(d2.id));
     const currentId = d.id;
     const linkNodes = selectAll_default2(".link").filter((d2) => d2.source.id === currentId || d2.target.id === currentId);
@@ -5876,16 +5882,16 @@ var B2 = (t2, n3, o3) => {
 var own = Object.hasOwnProperty;
 
 // quartz/util/path.ts
+var _rebaseHtmlElement = (el, attr, newBase) => {
+  const rebased = new URL(el.getAttribute(attr), newBase);
+  el.setAttribute(attr, rebased.pathname + rebased.hash);
+};
 function normalizeRelativeURLs(el, destination) {
-  const rebase = (el2, attr, newBase) => {
-    const rebased = new URL(el2.getAttribute(attr), newBase);
-    el2.setAttribute(attr, rebased.pathname + rebased.hash);
-  };
   el.querySelectorAll('[href^="./"], [href^="../"]').forEach(
-    (item) => rebase(item, "href", destination)
+    (item) => _rebaseHtmlElement(item, "href", destination)
   );
   el.querySelectorAll('[src^="./"], [src^="../"]').forEach(
-    (item) => rebase(item, "src", destination)
+    (item) => _rebaseHtmlElement(item, "src", destination)
   );
 }
 
@@ -5913,8 +5919,6 @@ async function mouseEnterHandler({ clientX, clientY }) {
   const hash = targetUrl.hash;
   targetUrl.hash = "";
   targetUrl.search = "";
-  if (thisUrl.toString() === targetUrl.toString())
-    return;
   const contents = await fetch(`${targetUrl}`).then((res) => res.text()).catch((err) => {
     console.error(err);
   });
@@ -6141,16 +6145,16 @@ function getFullSlug(window2) {
   const res = window2.document.body.dataset.slug;
   return res;
 }
+var _rebaseHtmlElement = (el, attr, newBase) => {
+  const rebased = new URL(el.getAttribute(attr), newBase);
+  el.setAttribute(attr, rebased.pathname + rebased.hash);
+};
 function normalizeRelativeURLs(el, destination) {
-  const rebase = (el2, attr, newBase) => {
-    const rebased = new URL(el2.getAttribute(attr), newBase);
-    el2.setAttribute(attr, rebased.pathname + rebased.hash);
-  };
   el.querySelectorAll('[href^="./"], [href^="../"]').forEach(
-    (item) => rebase(item, "href", destination)
+    (item) => _rebaseHtmlElement(item, "href", destination)
   );
   el.querySelectorAll('[src^="./"], [src^="../"]').forEach(
-    (item) => rebase(item, "src", destination)
+    (item) => _rebaseHtmlElement(item, "src", destination)
   );
 }
 
