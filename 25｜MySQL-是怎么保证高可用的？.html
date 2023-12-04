@@ -4,7 +4,7 @@
 <li>从库和备库概念上差不多，把会在「HA」过程中被选成新主库的称为备库</li>
 <li>HA：高可用（MySQL HA Solution）</li>
 </ul>
-<h2 id="主动切换的场景">主动切换的场景<a aria-hidden="true" tabindex="-1" href="#主动切换的场景" class="internal alias"> §</a></h2>
+<h2 id="主动切换的场景">主动切换的场景<a aria-hidden="true" tabindex="-1" data-no-popover="true" href="#主动切换的场景" class="internal alias"> §</a></h2>
 <ol>
 <li>
 <p>主库 A 执行完成一个事务，写入 binlog，我们把这个时刻记为 T1;</p>
@@ -19,7 +19,7 @@
 <p>备库 B 执行完成这个事务，我们把这个时刻记为 T3</p>
 </li>
 </ol>
-<h3 id="主备延迟">主备延迟<a aria-hidden="true" tabindex="-1" href="#主备延迟" class="internal alias"> §</a></h3>
+<h3 id="主备延迟">主备延迟<a aria-hidden="true" tabindex="-1" data-no-popover="true" href="#主备延迟" class="internal alias"> §</a></h3>
 <ul>
 <li>
 <p>T3 减 T1 的时间</p>
@@ -49,7 +49,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="延迟原因">延迟原因<a aria-hidden="true" tabindex="-1" href="#延迟原因" class="internal alias"> §</a></h3>
+<h3 id="延迟原因">延迟原因<a aria-hidden="true" tabindex="-1" data-no-popover="true" href="#延迟原因" class="internal alias"> §</a></h3>
 <ul>
 <li>
 <p>备库比主库所在的机器性能差</p>
@@ -85,8 +85,8 @@
 <p>备库的并行复制能力（在下一篇）</p>
 </li>
 </ul>
-<h2 id="主备切换策略">主备切换策略<a aria-hidden="true" tabindex="-1" href="#主备切换策略" class="internal alias"> §</a></h2>
-<h3 id="可靠性优先">可靠性优先<a aria-hidden="true" tabindex="-1" href="#可靠性优先" class="internal alias"> §</a></h3>
+<h2 id="主备切换策略">主备切换策略<a aria-hidden="true" tabindex="-1" data-no-popover="true" href="#主备切换策略" class="internal alias"> §</a></h2>
+<h3 id="可靠性优先">可靠性优先<a aria-hidden="true" tabindex="-1" data-no-popover="true" href="#可靠性优先" class="internal alias"> §</a></h3>
 <ol>
 <li>判断备库 B 现在的 seconds_behind_master，持续重试，如果小于某个值才进入下一步</li>
 <li>把主库 A 改成只读状态</li>
@@ -95,7 +95,7 @@
 <li>把业务请求切到备库 B</li>
 </ol>
 <p>一般由专门的 HA 系统完成此流程</p>
-<h3 id="可用性优先">可用性优先<a aria-hidden="true" tabindex="-1" href="#可用性优先" class="internal alias"> §</a></h3>
+<h3 id="可用性优先">可用性优先<a aria-hidden="true" tabindex="-1" data-no-popover="true" href="#可用性优先" class="internal alias"> §</a></h3>
 <ul>
 <li>把 4、5 调整到最开始执行</li>
 <li>可能会出现数据不一致</li>
@@ -105,7 +105,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="思考题">思考题<a aria-hidden="true" tabindex="-1" href="#思考题" class="internal alias"> §</a></h2>
+<h2 id="思考题">思考题<a aria-hidden="true" tabindex="-1" data-no-popover="true" href="#思考题" class="internal alias"> §</a></h2>
 <ul>
 <li>
 <p>什么原因导致的？</p>

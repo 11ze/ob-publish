@@ -5899,6 +5899,9 @@ function normalizeRelativeURLs(el, destination) {
 var p3 = new DOMParser();
 async function mouseEnterHandler({ clientX, clientY }) {
   const link = this;
+  if (link.dataset.noPopover === "true") {
+    return;
+  }
   async function setPosition(popoverElement2) {
     const { x: x3, y: y2 } = await B2(link, popoverElement2, {
       middleware: [D({ x: clientX, y: clientY }), O(), A()]

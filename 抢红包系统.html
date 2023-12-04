@@ -4,12 +4,12 @@
 <li>剩余的到期需要返还</li>
 <li>通常使用的解决高并发问题方案</li>
 </ul>
-<h2 id="方案一使用内存操作替代实时的-db-事务操作">方案一：使用内存操作替代实时的 DB 事务操作<a aria-hidden="true" tabindex="-1" href="#方案一使用内存操作替代实时的-db-事务操作" class="internal alias"> §</a></h2>
+<h2 id="方案一使用内存操作替代实时的-db-事务操作">方案一：使用内存操作替代实时的 DB 事务操作<a aria-hidden="true" tabindex="-1" data-no-popover="true" href="#方案一使用内存操作替代实时的-db-事务操作" class="internal alias"> §</a></h2>
 <p>可能丢数据</p>
-<h2 id="方案二使用乐观锁替代悲观锁">方案二：使用乐观锁替代悲观锁<a aria-hidden="true" tabindex="-1" href="#方案二使用乐观锁替代悲观锁" class="internal alias"> §</a></h2>
+<h2 id="方案二使用乐观锁替代悲观锁">方案二：使用乐观锁替代悲观锁<a aria-hidden="true" tabindex="-1" data-no-popover="true" href="#方案二使用乐观锁替代悲观锁" class="internal alias"> §</a></h2>
 <p>同时抢的只能有一个能成功，可能手慢的反而能抢到</p>
 <p>微信红包系统的高并发解决方案</p>
-<h2 id="方案三将关于同一个红包的所有请求聚合到同一个">方案三：将关于同一个红包的所有请求聚合到同一个<a aria-hidden="true" tabindex="-1" href="#方案三将关于同一个红包的所有请求聚合到同一个" class="internal alias"> §</a></h2>
+<h2 id="方案三将关于同一个红包的所有请求聚合到同一个">方案三：将关于同一个红包的所有请求聚合到同一个<a aria-hidden="true" tabindex="-1" data-no-popover="true" href="#方案三将关于同一个红包的所有请求聚合到同一个" class="internal alias"> §</a></h2>
 <p>双维度库表设计：db_xx.t_y_dd xx/y 红包 ID 的 hash 值后三位，dd 的取值范围 01～31，一个月最多 31 天</p>
 <p>通过分流 + 队列 + 流控解决高并发场景下库存锁竞争的情况；</p>
 <p>通过事务操作串行化保证资金安全，避免出现红包超发、漏发、重复发的情况；</p>

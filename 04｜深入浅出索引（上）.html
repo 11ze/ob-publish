@@ -3,7 +3,7 @@
 <li>每遇到一个新数据库，先关注它的数据模型，分析数据库的适用场景</li>
 <li>数据库底层存储的核心基于的数据模型：哈希表、有序数组、二叉树、N 叉树等</li>
 </ul>
-<h2 id="innodb-的索引模型">InnoDB 的索引模型<a aria-hidden="true" tabindex="-1" href="#innodb-的索引模型" class="internal alias"> §</a></h2>
+<h2 id="innodb-的索引模型">InnoDB 的索引模型<a aria-hidden="true" tabindex="-1" data-no-popover="true" href="#innodb-的索引模型" class="internal alias"> §</a></h2>
 <ul>
 <li>每一个索引在 InnoDB 里面对应一颗 <code>B+ 树</code></li>
 <li>主键索引也被称为聚簇索引（clustered index）
@@ -70,7 +70,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="什么时候需要重建索引">什么时候需要重建索引<a aria-hidden="true" tabindex="-1" href="#什么时候需要重建索引" class="internal alias"> §</a></h2>
+<h2 id="什么时候需要重建索引">什么时候需要重建索引<a aria-hidden="true" tabindex="-1" data-no-popover="true" href="#什么时候需要重建索引" class="internal alias"> §</a></h2>
 <ul>
 <li>索引可能因为删除操作、页分裂等原因，导致数据页有空洞
 <ul>
@@ -79,7 +79,7 @@
 </li>
 <li>重建索引的过程会创建一个新的索引，把数据按顺序插入，页面的利用率最高，更省空间</li>
 </ul>
-<h2 id="思考题">思考题<a aria-hidden="true" tabindex="-1" href="#思考题" class="internal alias"> §</a></h2>
+<h2 id="思考题">思考题<a aria-hidden="true" tabindex="-1" data-no-popover="true" href="#思考题" class="internal alias"> §</a></h2>
 <ul>
 <li>重建普通 k 索引
 <ul>

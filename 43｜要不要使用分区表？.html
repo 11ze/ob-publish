@@ -3,7 +3,7 @@
 <li>分区表：对于引擎层，n 个表对于 server 层，1 个表</li>
 <li>用法跟普通表在 sql 语句上是相同的。</li>
 </ul>
-<h2 id="分区策略">分区策略<a aria-hidden="true" tabindex="-1" href="#分区策略" class="internal alias"> §</a></h2>
+<h2 id="分区策略">分区策略<a aria-hidden="true" tabindex="-1" data-no-popover="true" href="#分区策略" class="internal alias"> §</a></h2>
 <ul>
 <li>
 <p>MyISAM 分区表</p>
@@ -28,13 +28,13 @@
 </ul>
 </li>
 </ul>
-<h2 id="server-层行为">server 层行为<a aria-hidden="true" tabindex="-1" href="#server-层行为" class="internal alias"> §</a></h2>
+<h2 id="server-层行为">server 层行为<a aria-hidden="true" tabindex="-1" data-no-popover="true" href="#server-层行为" class="internal alias"> §</a></h2>
 <ol>
 <li>MySQL 在第一次打开分区表的时候，需要访问所有的分区；</li>
 <li>在 server 层，认为这是同一张表，因此所有分区共用同一个 MDL 锁；</li>
 <li>在引擎层，认为这是不同的表，因此 MDL 锁之后的执行过程，会根据分区表规则，只访问必要的分区。</li>
 </ol>
-<h2 id="应用场景">应用场景<a aria-hidden="true" tabindex="-1" href="#应用场景" class="internal alias"> §</a></h2>
+<h2 id="应用场景">应用场景<a aria-hidden="true" tabindex="-1" data-no-popover="true" href="#应用场景" class="internal alias"> §</a></h2>
 <ul>
 <li>对业务透明，代码更简洁</li>
 <li>清理历史数据方便
@@ -44,17 +44,17 @@
 </ul>
 </li>
 </ul>
-<h2 id="注意事项">注意事项<a aria-hidden="true" tabindex="-1" href="#注意事项" class="internal alias"> §</a></h2>
+<h2 id="注意事项">注意事项<a aria-hidden="true" tabindex="-1" data-no-popover="true" href="#注意事项" class="internal alias"> §</a></h2>
 <ol>
 <li>分区不是越细越好。</li>
 <li>分区不要提前预留太多，在使用之前预先创建即可。</li>
 <li>比如，如果是按月分区，每年年底时再把下一年度的 12 个新分区创建上即可。对于没有数据的历史分区，要及时的 drop 掉。</li>
 </ol>
-<h2 id="其他分区方法">其他分区方法<a aria-hidden="true" tabindex="-1" href="#其他分区方法" class="internal alias"> §</a></h2>
+<h2 id="其他分区方法">其他分区方法<a aria-hidden="true" tabindex="-1" data-no-popover="true" href="#其他分区方法" class="internal alias"> §</a></h2>
 <ul>
 <li><a href="https://dev.mysql.com/doc/refman/8.0/en/partitioning-types.html" class="external alias">官方手册</a></li>
 </ul>
-<h2 id="思考题">思考题<a aria-hidden="true" tabindex="-1" href="#思考题" class="internal alias"> §</a></h2>
+<h2 id="思考题">思考题<a aria-hidden="true" tabindex="-1" data-no-popover="true" href="#思考题" class="internal alias"> §</a></h2>
 <ul>
 <li>文章中举例只用到了日期字段，没有自增主键，如果要定义这个表的主键，怎么定义？为什么？
 <ul>
