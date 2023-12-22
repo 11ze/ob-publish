@@ -83,14 +83,14 @@
 <ul>
 <li>重建普通 k 索引
 <ul>
-<li>alter table T drop index k;</li>
-<li>alter table T add index(k);</li>
+<li><code>alter table T drop index k;</code></li>
+<li><code>alter table T add index(k);</code></li>
 </ul>
 </li>
 <li>重建主键索引
 <ul>
-<li>alter table T drop primary key;</li>
-<li>alter table T add primary key(id);</li>
+<li><code>alter table T drop primary key;</code></li>
+<li><code>alter table T add primary key(id);</code></li>
 </ul>
 </li>
 <li>对于上面这两个重建索引的做法，说出你的理解。
@@ -106,7 +106,7 @@
 </li>
 <li>更好的方法
 <ul>
-<li>使用 alter table T engine=InnoDB 代替
+<li>使用 <code>alter table T engine=InnoDB</code> 代替
 <ul>
 <li>触发 MySQL 重建该表，并进行碎片处理</li>
 <li>5.6 版本以后支持 online ddl，没有行锁，有 mdl 读锁</li>
