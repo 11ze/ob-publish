@@ -38,6 +38,7 @@ export const defaultContentPageLayout: PageLayout = {
       },
     }),
     Component.Backlinks(),
+    Component.Giscus(),
   ],
 }
 
