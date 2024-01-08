@@ -25,7 +25,7 @@ export const defaultContentPageLayout: PageLayout = {
     Component.MobileOnly(Component.Spacer()),
     Component.Search(),
     Component.Darkmode(),
-    Component.DesktopOnly(Component.TableOfContents()),
+    Component.RecentNotes(),
     // Component.DesktopOnly(Component.Explorer()), // 在我的文档库会列出所有文档，没有可读性
   ],
   right: [
@@ -37,6 +37,7 @@ export const defaultContentPageLayout: PageLayout = {
         showTags: false,
       },
     }),
+    Component.DesktopOnly(Component.TableOfContents()),
     Component.Backlinks(),
     Component.Giscus(),
   ],
