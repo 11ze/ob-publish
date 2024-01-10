@@ -38,7 +38,7 @@ export const defaultContentPageLayout: PageLayout = {
       },
     }),
     Component.Backlinks(),
-    Component.Giscus(),
+    // Component.Giscus(), // 评论区太小了
   ],
 }
 
