@@ -12,7 +12,7 @@ const config: QuartzConfig = {
     },
     baseUrl: "wangze.tech",
     ignorePatterns: ["private", "Templates", "Extras"],
-    defaultDateType: "modified",
+    defaultDateType: "created",
     theme: {
       typography: {
         header: "Schibsted Grotesk",
