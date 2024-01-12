@@ -26,7 +26,7 @@ export const defaultContentPageLayout: PageLayout = {
     Component.Search(),
     Component.Darkmode(),
     Component.DesktopOnly(Component.TableOfContents()),
-    Component.DesktopOnly(Component.RecentNotes()),
+    // Component.DesktopOnly(Component.RecentNotes()),
     // Component.DesktopOnly(Component.Explorer()), // 在我的文档库会列出所有文档，没有可读性
   ],
   right: [
