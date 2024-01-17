@@ -186,7 +186,7 @@
 <li>
 <p>一主多从，即使采用半同步，也只能保证 binlog 至少在两台机器上，没有一个机制能够选出拥有最完整 binlog 的从库作为新的主库。</p>
 <ul>
-<li>直接使用MHA工具，在配置文件里面选择 candidate_master，选择使用了半同步复制的备库就行了。<a href="https://www.cnblogs.com/--smile/p/11475380.html" class="external alias">MHA 工具介绍</a></li>
+<li>直接使用MHA工具，在配置文件里面选择 candidate_master，选择使用了半同步复制的备库就行了。<a href="https://www.cnblogs.com/--smile/p/11475380.html" class="external">MHA 工具介绍<svg class="external-icon" viewBox="0 0 512 512"><path d="M320 0H288V64h32 82.7L201.4 265.4 178.7 288 224 333.3l22.6-22.6L448 109.3V192v32h64V192 32 0H480 320zM32 32H0V64 480v32H32 456h32V480 352 320H424v32 96H64V96h96 32V32H160 32z"></path></svg></a></li>
 </ul>
 </li>
 <li>
