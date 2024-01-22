@@ -61,7 +61,7 @@
 <p>查看生成的 SQL：<code>DB::enableQueryLog(); DB::getQueryLog();</code></p>
 </li>
 <li>
-<p>在循环里 $role->users 这种查询会触发 N+1 问题，使用 with 方法预加载</p>
+<p>在循环里 $role<span>→</span>users 这种查询会触发 N+1 问题，使用 with 方法预加载</p>
 <ul>
 <li><code>Role::with('users')->get();</code></li>
 <li>或在 Model 里设置 <code>protected $with = ['users'];</code>
@@ -82,9 +82,9 @@
 <li>
 <p>基于 Model 使用 join 时，最后要在 get() 里指定字段，否则数据可能错误，关联模型的字段不会受指定字段影响</p>
 <ul>
-<li>如 User::join(Student)->get()，id 会被覆盖变成 student.id，改为 User::join(Student)->get([‘users.*’]) 即可
+<li>如 User::join(Student)<span>→</span>get()，id 会被覆盖变成 student.id，改为 User::join(Student)<span>→</span>get([‘users.*’]) 即可
 <ul>
-<li>user->student 能正常拿到、从接口返回学生信息</li>
+<li>user<span>→</span>student 能正常拿到、从接口返回学生信息</li>
 </ul>
 </li>
 </ul>
