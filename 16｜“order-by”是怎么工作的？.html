@@ -66,19 +66,19 @@
 </ul>
 <figure data-rehype-pretty-code-figure><pre tabindex="0" data-language="SQL" data-theme="github-dark github-light"><code data-language="SQL" data-theme="github-dark github-light" style="display:grid;"><span data-line><span>/* 打开 optimizer_trace，只对本线程有效 */</span></span>
 <span data-line><span>SET optimizer_trace='enabled=on';</span></span>
-<span data-line><span></span></span>
+<span data-line> </span>
 <span data-line><span>/* @a 保存 Innodb_rows_read 的初始值 */</span></span>
 <span data-line><span>select VARIABLE_VALUE into @a from  performance_schema.session_status where variable_name = 'Innodb_rows_read';</span></span>
-<span data-line><span></span></span>
+<span data-line> </span>
 <span data-line><span>/* 执行语句 */</span></span>
 <span data-line><span>select city, name,age from t where city='杭州' order by name limit 1000;</span></span>
-<span data-line><span></span></span>
+<span data-line> </span>
 <span data-line><span>/* 查看 OPTIMIZER_TRACE 输出 */</span></span>
 <span data-line><span>SELECT * FROM `information_schema`.`OPTIMIZER_TRACE`\G</span></span>
-<span data-line><span></span></span>
+<span data-line> </span>
 <span data-line><span>/* @b 保存 Innodb_rows_read 的当前值 */</span></span>
 <span data-line><span>select VARIABLE_VALUE into @b from performance_schema.session_status where variable_name = 'Innodb_rows_read';</span></span>
-<span data-line><span></span></span>
+<span data-line> </span>
 <span data-line><span>/* 计算 Innodb_rows_read 差值 */</span></span>
 <span data-line><span>select @b-@a;</span></span></code></pre></figure>
 <ul>
@@ -169,7 +169,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="思考题">思考题<a aria-hidden="true" tabindex="-1" data-no-popover="true" href="#思考题" class="internal alias"> §</a></h2>
+<h2 id="思考题">思考题<a aria-hidden="true" tabindex="-1" data-no-popover="true" href="#思考题" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
 <ul>
 <li>假设你的表里面已经有了 city_name(city, name) 这个联合索引，然后你要查杭州和苏州两个城市中所有的市民的姓名，并且按名字排序，显示前 100 条记录。如果 SQL 查询语句是这么写的 ：</li>
 <li><code>mysql> select * from t where city in ('杭州',&quot;苏州&quot;) order by name limit 100;</code></li>
@@ -193,7 +193,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="评论区">评论区<a aria-hidden="true" tabindex="-1" data-no-popover="true" href="#评论区" class="internal alias"> §</a></h2>
+<h2 id="评论区">评论区<a aria-hidden="true" tabindex="-1" data-no-popover="true" href="#评论区" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
 <ul>
 <li>
 <p>varchar(n)，n 的值中，255 是个边界，小于等于 255 需要一个字节记录长度，超过就需要两个字节</p>
@@ -230,43 +230,7 @@
 	C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
 	S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
 	s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
-	s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></div><div id="global-graph-outer"><div id="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:false,&quot;removeTags&quot;:[]}"></div></div></div><div class="backlinks "><h3>Backlinks</h3><ul class="overflow"><li><a href="./MySQL-实战-45-讲" class="internal">MySQL 实战 45 讲</a></li></ul></div></div></div><footer class><hr/><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.1.5</a>, © 2024</p><ul><li><a href="https://github.com/11ze/knowledge-garden">GitHub</a></li><li><a href="https://twitter.com/11ze4">Twitter</a></li></ul></footer></div></body><script src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script type="application/javascript">// quartz/components/scripts/quartz/components/scripts/callout.inline.ts
-function toggleCallout() {
-  const outerBlock = this.parentElement;
-  outerBlock.classList.toggle(`is-collapsed`);
-  const collapsed = outerBlock.classList.contains(`is-collapsed`);
-  const height = collapsed ? this.scrollHeight : outerBlock.scrollHeight;
-  outerBlock.style.maxHeight = height + `px`;
-  let current = outerBlock;
-  let parent = outerBlock.parentElement;
-  while (parent) {
-    if (!parent.classList.contains(`callout`)) {
-      return;
-    }
-    const collapsed2 = parent.classList.contains(`is-collapsed`);
-    const height2 = collapsed2 ? parent.scrollHeight : parent.scrollHeight + current.scrollHeight;
-    parent.style.maxHeight = height2 + `px`;
-    current = parent;
-    parent = parent.parentElement;
-  }
-}
-function setupCallout() {
-  const collapsible = document.getElementsByClassName(
-    `callout is-collapsible`
-  );
-  for (const div of collapsible) {
-    const title = div.firstElementChild;
-    if (title) {
-      title.removeEventListener(`click`, toggleCallout);
-      title.addEventListener(`click`, toggleCallout);
-      const collapsed = div.classList.contains(`is-collapsed`);
-      const height = collapsed ? title.scrollHeight : div.scrollHeight;
-      div.style.maxHeight = height + `px`;
-    }
-  }
-}
-document.addEventListener(`nav`, setupCallout);
-window.addEventListener(`resize`, setupCallout);
+	s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></div><div id="global-graph-outer"><div id="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:false,&quot;removeTags&quot;:[]}"></div></div></div><div class="backlinks "><h3>Backlinks</h3><ul class="overflow"><li><a href="./MySQL-实战-45-讲" class="internal">MySQL 实战 45 讲</a></li></ul></div></div></div><footer class><hr/><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.1.5</a>, © 2024</p><ul><li><a href="https://github.com/11ze/knowledge-garden">GitHub</a></li><li><a href="https://twitter.com/11ze4">Twitter</a></li></ul></footer></div></body><script src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/contrib/copy-tex.min.js" type="application/javascript"></script><script type="application/javascript">function o(){let e=this.parentElement;e.classList.toggle("is-collapsed");let l=e.classList.contains("is-collapsed")?this.scrollHeight:e.scrollHeight;e.style.maxHeight=l+"px";let c=e,t=e.parentElement;for(;t;){if(!t.classList.contains("callout"))return;let n=t.classList.contains("is-collapsed")?t.scrollHeight:t.scrollHeight+c.scrollHeight;t.style.maxHeight=n+"px",c=t,t=t.parentElement}}function i(){let e=document.getElementsByClassName("callout is-collapsible");for(let s of e){let l=s.firstElementChild;if(l){l.removeEventListener("click",o),l.addEventListener("click",o);let t=s.classList.contains("is-collapsed")?l.scrollHeight:s.scrollHeight;s.style.maxHeight=t+"px"}}}document.addEventListener("nav",i);window.addEventListener("resize",i);
 </script><script type="module">
           import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
           const darkMode = document.documentElement.getAttribute('saved-theme') === 'dark'

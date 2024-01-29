@@ -9,14 +9,14 @@
     <title>44｜答疑文章（三）：说一说这些好问题</title>
     <link>https://wangze.tech/44%EF%BD%9C%E7%AD%94%E7%96%91%E6%96%87%E7%AB%A0%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AF%B4%E4%B8%80%E8%AF%B4%E8%BF%99%E4%BA%9B%E5%A5%BD%E9%97%AE%E9%A2%98</link>
     <guid>https://wangze.tech/44%EF%BD%9C%E7%AD%94%E7%96%91%E6%96%87%E7%AB%A0%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AF%B4%E4%B8%80%E8%AF%B4%E8%BF%99%E4%BA%9B%E5%A5%BD%E9%97%AE%E9%A2%98</guid>
-    <description>join 的写法 § 在 MySQL 里，NULL 跟任何值执行等值判断和不等值判断的结果，都是 NULL。这里包括， select NULL = NULL 的结果，也是返回 NULL。 where a.f2=b.f2 就表示，查询结果里面不会包含 b.f2 是 NULL 的行 使用 left join 时，左边的表不一定是驱动表。 如果需要 left join 的语义，就不能把被驱动表的字段放在 where 条件里面做等值判断或不等值判断，必须都写在 on 里面 distinct 和 group by 的性能 § 如果只需要去重，不需要执行聚合函数，distinct 和 group by 哪种效率高一些呢？ 没有索引时一样 select a,count(*) from t group by a order by null; 这条语句的逻辑是：按照字段 a 分组，计算每组的 a 出现的次数。在这个结果里，由于做的是聚合计算，相同的 a 只出现一次。37 章有关于 group by 的相关内容 .</description>
-    <pubDate>Sun, 28 Jan 2024 15:00:52 GMT</pubDate>
+    <description>join 的写法 在 MySQL 里，NULL 跟任何值执行等值判断和不等值判断的结果，都是 NULL。这里包括， select NULL = NULL 的结果，也是返回 NULL。 where a.f2=b.f2 就表示，查询结果里面不会包含 b.f2 是 NULL 的行 使用 left join 时，左边的表不一定是驱动表。 如果需要 left join 的语义，就不能把被驱动表的字段放在 where 条件里面做等值判断或不等值判断，必须都写在 on 里面 distinct 和 group by 的性能 如果只需要去重，不需要执行聚合函数，distinct 和 group by 哪种效率高一些呢？ 没有索引时一样 select a,count(*) from t group by a order by null; 这条语句的逻辑是：按照字段 a 分组，计算每组的 a 出现的次数。在这个结果里，由于做的是聚合计算，相同的 a 只出现一次。37 章有关于 group by 的相关内容 .</description>
+    <pubDate>Mon, 29 Jan 2024 11:43:34 GMT</pubDate>
   </item><item>
     <title>30｜答疑文章（二）：用动态的观点看加锁</title>
     <link>https://wangze.tech/30%EF%BD%9C%E7%AD%94%E7%96%91%E6%96%87%E7%AB%A0%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E7%94%A8%E5%8A%A8%E6%80%81%E7%9A%84%E8%A7%82%E7%82%B9%E7%9C%8B%E5%8A%A0%E9%94%81</link>
     <guid>https://wangze.tech/30%EF%BD%9C%E7%AD%94%E7%96%91%E6%96%87%E7%AB%A0%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E7%94%A8%E5%8A%A8%E6%80%81%E7%9A%84%E8%A7%82%E7%82%B9%E7%9C%8B%E5%8A%A0%E9%94%81</guid>
-    <description>下面的讨论基于此表 CREATE TABLE `t` ( `id` int(11) NOT NULL, `c` int(11) DEFAULT NULL, `d` int(11) DEFAULT NULL, PRIMARY KEY (`id`), KEY `c` (`c`) ) ENGINE=InnoDB; insert into t values(0,0,0),(5,5,5),(10,10,10),(15,15,15),(20,20,20),(25,25,25); show engine innodb status 命令输出的信息中，LATESTADETECTED DEADLOCK 记录了最后一次死锁信息 由于锁是一个个加的，要避免死锁，对同一组资源，要按照尽量相同的顺序访问； 在发生死锁的时刻，for update 这条语句占有的资源更多，回滚成本更大，所以 InnoDB 选择了回滚成本更小的 lock in share mode 语句，来回滚。 所谓“间隙”，其实根本就是由“这个间隙右边的那个记录”定义的。 思考题 § 空表的间隙的定义 一个空表只有一个间隙 比如执行：begin; select * from t where id&gt;1 for update; 加锁范围：next_key lock (-∞, supremum] 评论区 § 删除数据，导致锁扩大的描述：“因此，我们就知道了，由于 delete 操作把 id=10 这一行删掉了，原来的两个间隙 (5,10)、(10,15）变成了一个 (5,15)。”我觉得这个提到的(5, 10) 和 (10, 15)两个间隙会让人有点误解，实际上在删除之前间隙锁只有一个(10, 15)，删除了数据之后，导致间隙锁左侧扩张成了5，间隙锁成为了(5, 15)。 .</description>
-    <pubDate>Sun, 28 Jan 2024 15:00:52 GMT</pubDate>
+    <description>下面的讨论基于此表 CREATE TABLE `t` ( `id` int(11) NOT NULL, `c` int(11) DEFAULT NULL, `d` int(11) DEFAULT NULL, PRIMARY KEY (`id`), KEY `c` (`c`) ) ENGINE=InnoDB; insert into t values(0,0,0),(5,5,5),(10,10,10),(15,15,15),(20,20,20),(25,25,25); show engine innodb status 命令输出的信息中，LATESTADETECTED DEADLOCK 记录了最后一次死锁信息 由于锁是一个个加的，要避免死锁，对同一组资源，要按照尽量相同的顺序访问； 在发生死锁的时刻，for update 这条语句占有的资源更多，回滚成本更大，所以 InnoDB 选择了回滚成本更小的 lock in share mode 语句，来回滚。 所谓“间隙”，其实根本就是由“这个间隙右边的那个记录”定义的。 思考题 空表的间隙的定义 一个空表只有一个间隙 比如执行：begin; select * from t where id&gt;1 for update; 加锁范围：next_key lock (-∞, supremum] 评论区 删除数据，导致锁扩大的描述：“因此，我们就知道了，由于 delete 操作把 id=10 这一行删掉了，原来的两个间隙 (5,10)、(10,15）变成了一个 (5,15)。”我觉得这个提到的(5, 10) 和 (10, 15)两个间隙会让人有点误解，实际上在删除之前间隙锁只有一个(10, 15)，删除了数据之后，导致间隙锁左侧扩张成了5，间隙锁成为了(5, 15)。 .</description>
+    <pubDate>Mon, 29 Jan 2024 11:43:34 GMT</pubDate>
   </item><item>
     <title>第一期</title>
     <link>https://wangze.tech/%E7%AC%AC%E4%B8%80%E6%9C%9F</link>
@@ -27,13 +27,13 @@
     <title>开发环境</title>
     <link>https://wangze.tech/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</link>
     <guid>https://wangze.tech/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</guid>
-    <description>设备 § M1 MacBook Pro 14 先更新系统 Homebrew § 安装 brew tap homebrew/cask-drivers brew tap homebrew/cask-fonts brew tap homebrew/cask-versions brew tap buo/cask-upgrade brew tap mongodb/brew brew install git git-lfs git-flow git config --global core.</description>
+    <description>设备 M1 MacBook Pro 14 先更新系统 Homebrew 安装 brew tap homebrew/cask-drivers brew tap homebrew/cask-fonts brew tap homebrew/cask-versions brew tap buo/cask-upgrade brew tap mongodb/brew brew install git git-lfs git-flow git config --global core.</description>
     <pubDate>Fri, 26 Jan 2024 02:54:00 GMT</pubDate>
   </item><item>
     <title>秒杀系统</title>
     <link>https://wangze.tech/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F</link>
     <guid>https://wangze.tech/%E7%A7%92%E6%9D%80%E7%B3%BB%E7%BB%9F</guid>
-    <description>主要问题：并发读、并发写 关键点 § 高性能 一致性 高可用 原则 § 请求数据要尽量少 减少序列化和反序列化 字符转化 请求数要尽量少 如在请求路径上将多个 Javascript 用逗号合并，服务端一次性返回多个文件 路径要尽量短 将多个相互强依赖的应用合并部署到一起 依赖要尽量少 可以把依赖的服务先降级或停用 不要有单点 将服务无状态化，让实例可以动态伸缩 把秒杀系统独立出来单独打造一个系统，并且在系统部署上也独立做一个机器集群，避免影响非秒杀商品的机器 动静分离 § 根据情况把静态数据缓存到离用户近的地方（浏览器、CDN、服务端的 Cache） 直接缓存 HTTP 连接 怎么做： URL 唯一化（如 /id=xxx） 分离浏览者相关的因素（比如登录信息，这些通过动态请求获取） 分离时间因素，也通过动态请求获取 异步化地域因素 去掉 Cookie（让缓存的静态数据中不含有 Cookie） 服务端： 生成完整页面 客户端获取动态内容 架构方案 实体机单机部署：大 Cache 容量，高缓存命中率 统一 Cache 层 上 CDN：二级 Cache（一级发现没缓存数据就去二级找，都没有就回源获取数据并缓存到一级、二级缓存） 热点数据 § 静态热点数据：能提前预测的 通过商业手段（强制让商家登记、对买家每天访问的商品进行大数据计算） 动态热点数据：不能提前预测的 （异步）收集交易链路上各个环节中的中间件产品的热点 Key（Nginx、缓存、RPC 服务框架等） 上报热点，透传给下游系统 流量削峰 § 排队 答题：延缓请求，并可以防止买家使用秒杀器作弊 分层过滤：只在写数据时进行强一致性校验 性能优化 § 影响： 减少线程等待时间影响不大 减少 CPU 执行时间影响大 线程数影响大 发现瓶颈： 工具：JProfiler、Yourkit CPU 使用率超过 95% 优化方式： 减少编码 减少序列化 Java 极致优化（直接输出流数据、直接使用 Servlet 处理请求） 并发读优化 减库存 § 下单减库存：恶意下单 付款减库存：超卖 预扣库存（最常见）：同样可能恶意下单（影响小一些），确保最终一致性 Plan B § 降级 限流：客户端限流、服务端限流 拒绝服务 .</description>
+    <description>主要问题：并发读、并发写 关键点 高性能 一致性 高可用 原则 请求数据要尽量少 减少序列化和反序列化 字符转化 请求数要尽量少 如在请求路径上将多个 Javascript 用逗号合并，服务端一次性返回多个文件 路径要尽量短 将多个相互强依赖的应用合并部署到一起 依赖要尽量少 可以把依赖的服务先降级或停用 不要有单点 将服务无状态化，让实例可以动态伸缩 把秒杀系统独立出来单独打造一个系统，并且在系统部署上也独立做一个机器集群，避免影响非秒杀商品的机器 动静分离 根据情况把静态数据缓存到离用户近的地方（浏览器、CDN、服务端的 Cache） 直接缓存 HTTP 连接 怎么做： URL 唯一化（如 /id=xxx） 分离浏览者相关的因素（比如登录信息，这些通过动态请求获取） 分离时间因素，也通过动态请求获取 异步化地域因素 去掉 Cookie（让缓存的静态数据中不含有 Cookie） 服务端： 生成完整页面 客户端获取动态内容 架构方案 实体机单机部署：大 Cache 容量，高缓存命中率 统一 Cache 层 上 CDN：二级 Cache（一级发现没缓存数据就去二级找，都没有就回源获取数据并缓存到一级、二级缓存） 热点数据 静态热点数据：能提前预测的 通过商业手段（强制让商家登记、对买家每天访问的商品进行大数据计算） 动态热点数据：不能提前预测的 （异步）收集交易链路上各个环节中的中间件产品的热点 Key（Nginx、缓存、RPC 服务框架等） 上报热点，透传给下游系统 流量削峰 排队 答题：延缓请求，并可以防止买家使用秒杀器作弊 分层过滤：只在写数据时进行强一致性校验 性能优化 影响： 减少线程等待时间影响不大 减少 CPU 执行时间影响大 线程数影响大 发现瓶颈： 工具：JProfiler、Yourkit CPU 使用率超过 95% 优化方式： 减少编码 减少序列化 Java 极致优化（直接输出流数据、直接使用 Servlet 处理请求） 并发读优化 减库存 下单减库存：恶意下单 付款减库存：超卖 预扣库存（最常见）：同样可能恶意下单（影响小一些），确保最终一致性 Plan B 降级 限流：客户端限流、服务端限流 拒绝服务 .</description>
     <pubDate>Thu, 25 Jan 2024 07:37:00 GMT</pubDate>
   </item><item>
     <title>英语语法</title>
@@ -57,7 +57,7 @@
     <title>服务器疑难杂症</title>
     <link>https://wangze.tech/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%96%91%E9%9A%BE%E6%9D%82%E7%97%87</link>
     <guid>https://wangze.tech/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%96%91%E9%9A%BE%E6%9D%82%E7%97%87</guid>
-    <description>Linux Crontab § 看日志：/var/log/cron 问题：Jan 9 15:05:01 i-9010749a crond[14778]: (www) PAM ERROR (鉴定令牌不再有效；需要新的鉴定令牌) 解决：执行 chage -M 99999 www # 99999 单位是天 Crontab 执行提示没有权限 Nginx § try_files 需要带上匹配的规则名，如 location /test，则可以是 try_files $uri /test/index.</description>
+    <description>Linux Crontab 看日志：/var/log/cron 问题：Jan 9 15:05:01 i-9010749a crond[14778]: (www) PAM ERROR (鉴定令牌不再有效；需要新的鉴定令牌) 解决：执行 chage -M 99999 www # 99999 单位是天 Crontab 执行提示没有权限 Nginx try_files 需要带上匹配的规则名，如 location /test，则可以是 try_files $uri /test/index.</description>
     <pubDate>Tue, 23 Jan 2024 05:41:47 GMT</pubDate>
   </item><item>
     <title>Mac 应用已损坏</title>
