@@ -6,65 +6,65 @@
       <description>Last 10 notes on 🫧 11ze</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
-    <title>11｜“万金油”的 String，为什么不好用了？</title>
-    <link>https://wangze.tech/11%EF%BD%9C%E2%80%9C%E4%B8%87%E9%87%91%E6%B2%B9%E2%80%9D%E7%9A%84-String%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E5%A5%BD%E7%94%A8%E4%BA%86%EF%BC%9F</link>
-    <guid>https://wangze.tech/11%EF%BD%9C%E2%80%9C%E4%B8%87%E9%87%91%E6%B2%B9%E2%80%9D%E7%9A%84-String%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E5%A5%BD%E7%94%A8%E4%BA%86%EF%BC%9F</guid>
-    <description> Redis 容量预估工具 String 类型 元数据：内存空间记录数据长度、空间使用等信息 int 编码方式：当保存 64 位有符号整数时，会保存为 8 字节的 Long 类型整数 简单动态字符串（Simple Dynamic String，SDS）结构体的组成 buf：字节数组，保存实际数据。为了表示字节数组的结束，Redis 会自动在数组最后加一个“\0”，这就会额外占用 1 个字节的开销 len：占 4 个字节，表示 buf 的已用长度 alloc：也占 4 个字节，表示 buf 的实际分配长度，一般大于 len RedisObject 结构体 包含了 8 字节的元数据和一个 8 字节指针 指针指向实际数据，如 SDS int 编码：当保存 Long 类型整数时，指针直接赋值为整数数据 embstr 编码：保存 ⇐ 44 字节的字符串数据，元数据、指针和 SDS 是一块连续的内存区域 raw 编码：保存 &gt; 44 字节的字符串数据，给 SDS 分配独立的空间 哈希表的每一项是一个 dictEntry 的结构体，指向一个键值对 有三个 8 字节的指针 分别指向 key、value和下一个 dictEntry Redis 使用的内存分配库 jemalloc 根据申请的字节数 N，找一个比 N 大的最接近 N 的 2 的幂次数作为分配的空间 减少频繁分配的次数 压缩列表 ziplist 示例：用集合类型保存单值的键值对 图片 ID 1101000060 对象 ID 3302000080 二级编码：hset 1101000 060 3302000080 查找时会遍历压缩列表 Sorted Set 也可以达到类似的效果，不过插入时性能没 Hash 高 需排序，而 Hash 直接插入尾部 Hash 类型设置了用压缩列表保存数据时的两个阈值，一旦超过了阈值，Hash 类型就会用哈希表来保存数据 hash-max-ziplist-entries：表示用压缩列表保存时哈希集合中的最大元素个数 hash-max-ziplist-value：表示用压缩列表保存时哈希集合中单个元素的最大长度 数据一旦用了哈希表保存就不会自动转回成压缩列表 选用 Hash 和 Sorted Set 存储时，节省空间，但设置过期会变得困难 选用 String 存储时，可以单独设置每个 key 的过期时间，还可以设置 maxmemory 和淘汰策略，以这种方式控制整个实例的内存上限 .</description>
-    <pubDate>Sun, 25 Feb 2024 01:28:13 GMT</pubDate>
+    <title>Capslock</title>
+    <link>https://wangze.tech/Capslock</link>
+    <guid>https://wangze.tech/Capslock</guid>
+    <description>功能 加强 Caps 键功能 安装 Github 到系统设置 - 键盘 - 键盘快捷键 - Modifier Keys 里选择键盘 设置单击 Caps 切换输入法 打开配置文件 ~/.config/karabiner/karabiner.json 搜 &quot;key_code&quot;: &quot;spacebar&quot; 将 to_if_alone 值改成 caps_lock .</description>
+    <pubDate>Mon, 26 Feb 2024 04:17:57 GMT</pubDate>
   </item><item>
-    <title>12｜有一亿个 keys 要统计，应该用哪种集合？</title>
-    <link>https://wangze.tech/12%EF%BD%9C%E6%9C%89%E4%B8%80%E4%BA%BF%E4%B8%AA-keys-%E8%A6%81%E7%BB%9F%E8%AE%A1%EF%BC%8C%E5%BA%94%E8%AF%A5%E7%94%A8%E5%93%AA%E7%A7%8D%E9%9B%86%E5%90%88%EF%BC%9F</link>
-    <guid>https://wangze.tech/12%EF%BD%9C%E6%9C%89%E4%B8%80%E4%BA%BF%E4%B8%AA-keys-%E8%A6%81%E7%BB%9F%E8%AE%A1%EF%BC%8C%E5%BA%94%E8%AF%A5%E7%94%A8%E5%93%AA%E7%A7%8D%E9%9B%86%E5%90%88%EF%BC%9F</guid>
-    <description>数据类型汇总表格 聚合统计 统计多个集合元素的聚合结果，包括： 统计多个集合的共有元素（交集统计） 把两个集合相比，统计其中一个集合独有的元素（差集统计） 统计多个集合的所有元素（并集统计） 使用 Set 并集：SUNIONSTORE user:new user:id user:id:20200803 差集：SDIFFSTORE user:new user:id:20200804 user:id 交集：SINTERSTORE user:id:rem user:id:20200803 user:id:20200804 计算复杂度较高，数据量较大时会导致 Redis 实例阻塞 三个命令都会生成新 key，但从库一般是 readonly（不建议开写），想在从库操作需使用 SUNION、SDIFF、SINTER，这些命令可以计算出结果，但不会生成新 key 可以从主从集群中选择一个从库专门负责聚合计算，或者是把数据读取到客户端，在客户端来完成聚合统计，这样就可以规避阻塞主库实例和其他从库实例的风险了 排序统计 使用有序集合：List、Sorted Set List 是按照元素进入 List 的顺序进行排序，而 Sorted Set 可以根据元素的权重来排序 数据更新频繁或需要分页显示，优先考虑使用 Sorted Set 二值状态统计 指集合元素的取值就只有 0 和 1 两种 Bitmap 对多个以日期为 key，位值为每个学生签到情况的 Bitmap，执行按位与操作可以统计出连续签到的学生数量 亦或者 uid:sign:3000:202008 2 1 可以统计学生在某段时间的签到情况 优势：节省内存空间 基数统计 指统计一个集合中不重复的元素个数，如统计网页的 UV Set 和 Hash 消耗比较多的内存空间 HyperLogLog 用于统计基数的数据类型 会用就行 标准误算率：0.</description>
-    <pubDate>Sun, 25 Feb 2024 01:28:13 GMT</pubDate>
+    <title>Crontab 执行提示没有权限</title>
+    <link>https://wangze.tech/Crontab-%E6%89%A7%E8%A1%8C%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90</link>
+    <guid>https://wangze.tech/Crontab-%E6%89%A7%E8%A1%8C%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90</guid>
+    <description> Mac 的解决方案：How to Fix Cron “Operation not permitted” error in macOS - ITPro Helper 检查有没有用户对应的 home 目录 .</description>
+    <pubDate>Mon, 26 Feb 2024 04:17:57 GMT</pubDate>
   </item><item>
-    <title>13｜GEO 是什么？还可以定义新的数据类型吗？</title>
-    <link>https://wangze.tech/13%EF%BD%9CGEO-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E8%BF%98%E5%8F%AF%E4%BB%A5%E5%AE%9A%E4%B9%89%E6%96%B0%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%90%97%EF%BC%9F</link>
-    <guid>https://wangze.tech/13%EF%BD%9CGEO-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E8%BF%98%E5%8F%AF%E4%BB%A5%E5%AE%9A%E4%B9%89%E6%96%B0%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%90%97%EF%BC%9F</guid>
-    <description> LBS：位置信息服务（Location-Based Service） GEO：数据类型 底层数据结构：Sorted Set GeoHash 编码方法 基本原理：二分区间，区间编码 对经纬度分别编码，再组合 经度范围 [-180, 180]，纬度范围 [-90, 90] 做 N 次二分区操作，N 可以自定义 根据经纬度值落在左还是右分区得到 1 位编码值 重复 N 次，得到一个 N bit 的数 例：116.</description>
-    <pubDate>Sun, 25 Feb 2024 01:28:13 GMT</pubDate>
+    <title>Linux 安装 oh-my-zsh</title>
+    <link>https://wangze.tech/Linux-%E5%AE%89%E8%A3%85-oh-my-zsh</link>
+    <guid>https://wangze.tech/Linux-%E5%AE%89%E8%A3%85-oh-my-zsh</guid>
+    <description>安装 Zsh https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH sudo apt install zsh # 查看所有可用 shell chsh -l # 将终端默认 shell 切换到 zsh，后面要输入实际看到的 zsh 路径 chsh -s /bin/zsh # 新开一个终端确认是否切换成功 echo $SHELL 安装 oh-my-zsh https://ohmyz.</description>
+    <pubDate>Mon, 26 Feb 2024 04:17:57 GMT</pubDate>
   </item><item>
-    <title>14｜如何在 Redis 中保存时间序列数据？</title>
-    <link>https://wangze.tech/14%EF%BD%9C%E5%A6%82%E4%BD%95%E5%9C%A8-Redis-%E4%B8%AD%E4%BF%9D%E5%AD%98%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E6%95%B0%E6%8D%AE%EF%BC%9F</link>
-    <guid>https://wangze.tech/14%EF%BD%9C%E5%A6%82%E4%BD%95%E5%9C%A8-Redis-%E4%B8%AD%E4%BF%9D%E5%AD%98%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E6%95%B0%E6%8D%AE%EF%BC%9F</guid>
-    <description> 要求 写要快 查询模式多 一、同时使用 Hash 和 Sorted Set {1: a, 2: b, 3: c} + setKey: {1: a, 2: b, 3: c} Hash 负责单键查询，Sorted Set 负责范围查询 多个写操作的原子性 MULTI 命令：表示一系列原子性操作的开始 EXEC 命令：表示一系列原子性操作的结束 建议客户端使用 pipeline，一次性批量发送命令给服务端，减少网络 IO 次数 聚合计算需要借助客户端，数据量大时比较耗资源 二、RedisTimeSeries 是专门为时间序列数据访问设计的扩展模块 支持聚合计算 可以按标签属性过滤查询数据集合 不属于内建功能模块，需要先把它的源码单独编译成动态链接库 redistimeseries.</description>
-    <pubDate>Sun, 25 Feb 2024 01:28:13 GMT</pubDate>
+    <title>Obsidian</title>
+    <link>https://wangze.tech/Obsidian</link>
+    <guid>https://wangze.tech/Obsidian</guid>
+    <description> 官网 Obsidian 是一个功能强大且可扩展的知识库，它在您的本地纯文本文件文件夹之上运行。 .</description>
+    <pubDate>Mon, 26 Feb 2024 04:17:57 GMT</pubDate>
   </item><item>
-    <title>15｜消息队列的考验：Redis 有哪些解决方案？</title>
-    <link>https://wangze.tech/15%EF%BD%9C%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84%E8%80%83%E9%AA%8C%EF%BC%9ARedis-%E6%9C%89%E5%93%AA%E4%BA%9B%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9F</link>
-    <guid>https://wangze.tech/15%EF%BD%9C%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84%E8%80%83%E9%AA%8C%EF%BC%9ARedis-%E6%9C%89%E5%93%AA%E4%BA%9B%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9F</guid>
-    <description> 消息队列的三大需求：消息保序、重复消息处理、消息可靠性保证 List 支持阻塞获取数据 不支持消费组 Stream Redis 5.0 之后专门为消息队列设计的数据类型 不同消费组的消费者可以消费同一个消息 同一消费组的消费者不消费同一消息 自动生成全局唯一 ID 两者比较 ⚠️ 不能丢数据的场景应该采用专业的队列中间件：Kafka + Zookeeper、RabbitMQ .</description>
-    <pubDate>Sun, 25 Feb 2024 01:28:13 GMT</pubDate>
+    <title>Oh My Zsh</title>
+    <link>https://wangze.tech/Oh-My-Zsh</link>
+    <guid>https://wangze.tech/Oh-My-Zsh</guid>
+    <description> Linux 用户看：Linux 安装 oh-my-zsh Mac 用户往下看 安装 切换到系统自带的 Zsh：chsh -s /bin/zsh Oh My Zsh 插件 brew install autojump brew install zsh-syntax-highlighting brew install zsh-autosuggestions # 添加以下内容到 .</description>
+    <pubDate>Mon, 26 Feb 2024 04:17:57 GMT</pubDate>
   </item><item>
-    <title>16｜异步机制：如何避免单线程模型的阻塞？</title>
-    <link>https://wangze.tech/16%EF%BD%9C%E5%BC%82%E6%AD%A5%E6%9C%BA%E5%88%B6%EF%BC%9A%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E5%8D%95%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B%E7%9A%84%E9%98%BB%E5%A1%9E%EF%BC%9F</link>
-    <guid>https://wangze.tech/16%EF%BD%9C%E5%BC%82%E6%AD%A5%E6%9C%BA%E5%88%B6%EF%BC%9A%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E5%8D%95%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B%E7%9A%84%E9%98%BB%E5%A1%9E%EF%BC%9F</guid>
-    <description> 4 类交互对象和具体的操作之间的关系 和客户端交互时的阻塞点 集合的全量查询和聚合操作 删除 bigkey 清空数据库 和磁盘交互时的阻塞点 同步写 AOF 日志 主从节点交互时的阻塞点 加载 RDB 文件 从库接收 RDB 文件后会清空当前数据库 然后加载 RDB 到内存，文件越大越慢 切片集群实例交互时的阻塞点 使用 Redis Cluster 方案，并迁移 bigkey Redis Cluster 方案使用了同步迁移 当没有 bigkey 时，切片集群的各实例在进行交互时不会阻塞主线程 可以异步操作的阻塞点：2、3、4 如果一个操作能被异步执行，就意味着，它并不是 Redis 主线程的关键路径上的操作 客户端把请求发送给 Redis 后，等着 Redis 返回数据结果的操作 读操作是典型的关键路径操作 异步的键值对删除和数据库清空操作是 Redis 4.</description>
-    <pubDate>Sun, 25 Feb 2024 01:28:13 GMT</pubDate>
+    <title>Redis 的使用规范小建议</title>
+    <link>https://wangze.tech/Redis-%E7%9A%84%E4%BD%BF%E7%94%A8%E8%A7%84%E8%8C%83%E5%B0%8F%E5%BB%BA%E8%AE%AE</link>
+    <guid>https://wangze.tech/Redis-%E7%9A%84%E4%BD%BF%E7%94%A8%E8%A7%84%E8%8C%83%E5%B0%8F%E5%BB%BA%E8%AE%AE</guid>
+    <description>键值对使用规范 通过命名区分不同业务数据 SELECT 命令进行数据库切换相当于增加一个额外的操作 业务名缩写作为 key 的前缀 对于业务名或业务数据名，可以使用相应的英文单词的首字母表示，（比如 user 用 u 表示，message 用 m），或者是用缩写表示（例如 unique visitor 使用 uv）。 避免使用 bigkey 尽量把集合类型的元素个数控制在 1 万以下 控制 String 类型数据的大小不超过 10KB 使用高效序列化方法和压缩方法减小 value 的大小 使用整数对象共享池 如果一个键值对中有 0 到 9999 范围的整数，Redis 会服用共享池中的整数对象 不能用的情况 Redis 设置了 maxmemory 并且启用 LRU 策略，因为 LRU 策略需要统计每个键值对的使用时间 集合类型数据采用 ziplist 编码，而集合元素是整数，判断整数对象的共享情况效率低 数据保存规范 使用 Redis 保存热数据 不同的业务数据分实例存储 在数据保存时要设置过期时间 控制 Redis 实例的容量 单实例不要太大，建议设置在 2～6GB RDB 快照、主从集群数据同步都能很快完成 命令使用规范 线上禁用部分命令 KEYS、FLUSHALL、FLUSHDB 严重阻塞主线程 具体的做法：管理员用 rename-command 命令在配置文件中重命名这些命令 替代：SCAN、ASYNC 选项（分别对应上面的 KEYS，FLUSHALL、FLUSHDB） 慎用 MONITOR 命令 会把监控到的内容持续写入到输出缓冲区，可能很快溢出，对性能造成影响甚至引起服务崩溃 慎用全量操作命令 HGETALL、SMEMBERS 等 全量扫描 建议 使用 SSCAN、HSCAN 命令分批返回集合中的数据 大集合拆分成小集合 如果集合类型保存的是业务数据的多个属性，而每次查询时，也需要返回这些属性，那么可以使用 String 类型，将这些属性序列化后保存，每次直接返回 String 数据，不用再对集合类型做全量扫描 规范汇总 强制类别的规范：如果不按照规范内容来执行，就会给 Redis 的应用带来极大的负面影响，例如性能受损。 推荐类别的规范：能有效提升性能、节省内存空间，或者是增加开发和运维的便捷性，可以直接应用到实践中。 建议类别的规范：这类规范内容和实际业务应用相关，结合自己的业务场景参考使用。 面向业务开发人员 key 的长度尽量短，节省内存空间 避免 bigkey，防止阻塞主线程 4.</description>
+    <pubDate>Mon, 26 Feb 2024 04:17:57 GMT</pubDate>
   </item><item>
-    <title>17｜为什么 CPU 结构也会影响 Redis 的性能？</title>
-    <link>https://wangze.tech/17%EF%BD%9C%E4%B8%BA%E4%BB%80%E4%B9%88-CPU-%E7%BB%93%E6%9E%84%E4%B9%9F%E4%BC%9A%E5%BD%B1%E5%93%8D-Redis-%E7%9A%84%E6%80%A7%E8%83%BD%EF%BC%9F</link>
-    <guid>https://wangze.tech/17%EF%BD%9C%E4%B8%BA%E4%BB%80%E4%B9%88-CPU-%E7%BB%93%E6%9E%84%E4%B9%9F%E4%BC%9A%E5%BD%B1%E5%93%8D-Redis-%E7%9A%84%E6%80%A7%E8%83%BD%EF%BC%9F</guid>
-    <description>NUMA 架构（Non-Uniform Memory Access 非统一内存访问架构） 图 第一步 第二步 文字描述 多个 CPU 处理器（多 CPU Socket） 每个都有自己的： 多个物理核（包括 L1、L2 缓存） 每个物理核私有的 L1、L2 大小受限于处理器的制造基数，KB 级别大小 缓存应用程序访问最频繁的指令和数据 L3 缓存 多个物理核共用 几 MB 到几十 MB 大小 在 L1、L2 缓存中没有数据缓存时被访问，尽可能避免访问内存 连接的内存 不同处理器间通过总线连接 CPU 架构对应用程序运行的影响 L1、L2 缓存中的指令和数据的访问速度很快，充分利用 L1、L2 缓存，可以有效缩短应用程序的执行时间 在 NUMA 架构下，如果应用程序从一个 Socket 上调度到另一个 Socket 上，就可能会出现远端内存访问的情况，这会直接增加应用程序的执行时间 ECS 主机提供的 vCPU 虚拟核，一般对应一个物理核心上的一个超线程，这是因为底层服务器一般会开启超线程 通常，一个物理核心会对应 2 个超线程，每个超线程对应一个 vCPU 多个 vCPU 一般在同一个 NUMA 节点上 如果希望减少 CPU 超线程对性能的影响，可以通过阿里云 SDK 的选项关闭超线程 同一个物理核的逻辑核会共享使用 L1、L2 缓存 CPU 多核对 Redis 性能的影响 99% 尾延迟：99% 的请求延迟小于的值 context switch：一个线程先在一个 CPU 核上运行，之后又切换到另一个 CPU 核上运行，这时就会发生 context switch 此时 Redis 主线程的运行时信息需要被加载到另一个 CPU 核上 CPU 的 NUMA 架构对 Redis 性能的影响 把操作系统的网络中断处理程序和 CPU 核绑定 网络中断处理程序 操作系统内核中用来处理网卡中断事件、把数据从内核的缓冲区拷贝到应用程序缓冲区的程序。 当网卡接收到数据后，会触发网卡中断，用来通知操作系统内核进行数据处理。 避免网络中断处理程序在不同核上来回调度执行，能有效提升 Redis 的网络处理性能 为了避免 Redis 跨 CPU Socket 访问网络数据，最好把网络中断程序和 Redis 实例绑在同一个 CPU Socket 的不同核上 在 CPU 的 NUMA 架构下，对 CPU 核的编号规则，并不是先把一个 CPU Socket 中的所有逻辑核编完，再对下一个 CPU Socket 中的逻辑核编码，而是先给每个 CPU Socket 中每个物理核的第一个逻辑核依次编号，再给每个 CPU Socket 中的物理核的第二个逻辑核依次编号 执行 lscpu 命令 查看核的编号 绑核的风险和解决方案 风险 把 Redis 实例绑到一个 CPU 逻辑核上时，会导致子进程、后台线程和 Redis 主线程竞争 CPU 资源，一旦子进程或后台线程占用 CPU 时，主线程就会被阻塞，导致 Redis 请求延迟增加 解决方案 一个 Redis 实例对应绑一个物理核 将实例绑到一个物理核上的所有逻辑核 Redis 的主线程、子进程和后台线程可以共享使用一个物理核上的两个逻辑核，缓解 CPU 资源竞争 优化 Redis 源码 避免切换核带来的性能影响 让子进程、后台线程核主线程不在同一个核上运行，避免 CPU 资源竞争 Redis 6.</description>
-    <pubDate>Sun, 25 Feb 2024 01:28:13 GMT</pubDate>
+    <title>Think in English</title>
+    <link>https://wangze.tech/Think-in-English</link>
+    <guid>https://wangze.tech/Think-in-English</guid>
+    <description>How to THINK in English | No More Translating in Your Head! - YouTube Introduction If you’re translating in your head, then you know that that’s a frustrating way to speak English.</description>
+    <pubDate>Mon, 26 Feb 2024 04:17:57 GMT</pubDate>
   </item><item>
-    <title>18｜波动的响应延迟：如何应对变慢的 Redis？（上）</title>
-    <link>https://wangze.tech/18%EF%BD%9C%E6%B3%A2%E5%8A%A8%E7%9A%84%E5%93%8D%E5%BA%94%E5%BB%B6%E8%BF%9F%EF%BC%9A%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E5%8F%98%E6%85%A2%E7%9A%84-Redis%EF%BC%9F%EF%BC%88%E4%B8%8A%EF%BC%89</link>
-    <guid>https://wangze.tech/18%EF%BD%9C%E6%B3%A2%E5%8A%A8%E7%9A%84%E5%93%8D%E5%BA%94%E5%BB%B6%E8%BF%9F%EF%BC%9A%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E5%8F%98%E6%85%A2%E7%9A%84-Redis%EF%BC%9F%EF%BC%88%E4%B8%8A%EF%BC%89</guid>
-    <description> Redis 真的变慢了吗？ 查看 Redis 的响应延迟 redis-cli —latency -h host -p port 基于当前环境下的 Redis 基线性能做判断 基线性能：一个系统在低压力、无干扰下的基本性能，这个性能只由当前的软硬件配置决定 redis-cli 命令提供的 -intrinsic-latency 选项可以用来检测和统计测试期间的最大延迟，这个延迟可以作为基线性能 要在服务器端运行，只考虑服务器端软硬件环境的影响 Redis 运行时延迟是其基线性能的 2 倍及以上表示 Redis 变慢了 如何应对 Redis 变慢？ 从慢查询命令开始排查，并且根据业务需求替换慢查询命令 在客户端进行排序、交集、并集操作，不使用 SORT、SUNION、SINTER 命令，避免拖慢 Redis 实例 排查过期 key 的时间设置，并根据实际使用需求，设置不同的过期时间，给过期时间加上随机数 在 Redis 中，还有哪些其他命令可以代替 KEYS 命令，实现同样的功能呢？这些命令的复杂度会导致 Redis 变慢吗？ 使用 SCAN 命令获取整个实例所有 key SCAN cursorCOUNTcount 一次最多返回 count 个数的 key，数量不会超过 count 不会漏 key SCAN 采用高位进位法的方式遍历哈希桶，当哈希表扩容后，通过此算法遍历，旧哈希表中的数据映射到新哈希表，依旧会保留原来的先后顺序，此时不会遗漏也不会重复 key 可能会返回重复的 key 与 Redis 的 Rehash 机制有关，哈希表缩容时，已经遍历过的哈希表会映射到新哈希表没有遍历到的位置 Redis 针对 Hash/Set/Sorted Set 提供了 HSCAN/SSCAN/ZSCAN 命令，用于遍历一个 key 中的所有元素，建议在获取一个 bigkey 的所有数据时使用，避免发生阻塞风险 key 的元素较少时，底层采用 intset/ziplist 方式存储，会无视命令的 count 参数 Redis 4.</description>
-    <pubDate>Sun, 25 Feb 2024 01:28:13 GMT</pubDate>
+    <title>从微博的 Redis 实践中，我们可以学到哪些经验？</title>
+    <link>https://wangze.tech/%E4%BB%8E%E5%BE%AE%E5%8D%9A%E7%9A%84-Redis-%E5%AE%9E%E8%B7%B5%E4%B8%AD%EF%BC%8C%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E5%AD%A6%E5%88%B0%E5%93%AA%E4%BA%9B%E7%BB%8F%E9%AA%8C%EF%BC%9F</link>
+    <guid>https://wangze.tech/%E4%BB%8E%E5%BE%AE%E5%8D%9A%E7%9A%84-Redis-%E5%AE%9E%E8%B7%B5%E4%B8%AD%EF%BC%8C%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E5%AD%A6%E5%88%B0%E5%93%AA%E4%BA%9B%E7%BB%8F%E9%AA%8C%EF%BC%9F</guid>
+    <description>微博对 Redis 的技术需求 能够提供高性能、高并发的读写访问，保证读写延迟低 能够支持大容量存储 可以灵活扩展，对于不同业务能进行快速扩容 对 Redis 的基本改进 避免阻塞和节省内存 持久化需求：使用全量 RDB + 增量 AOF 复制 在 AOF 日志写入刷盘时，用额外的 BIO 线程负责实际的刷盘工作，避免 AOF 日志慢速刷盘阻塞主线程 增加 aofnumber 配置项设置 AOF 文件的数量 使用独立的复制线程进行主从库同步，避免对主线程的阻塞影响 定制化设计了 LongSet 数据类型 数据区分冷热度 用异步线程将冷数据从 Redis 迁移到 RocksDB，保存到硬盘中 服务化改造 使用 Redis 集群服务不同的业务场景需求，每一个业务拥有独立的资源 所有的 Redis 实例形成资源池，轻松扩容 采用类似 Codis 的方案，通过集群代理层连接客户端和服务端 客户端连接监听和端口自动增删 Redis 协议解析：确定需要路由的请求，如果是非法和不支持的请求，直接返回错误 请求路由：根据数据和后端实例间的映射规则，将请求路由到对应的后端实例进行处理，并将结果返回给客户端 指标采集监控：采集集群运行的状态，并发送到专门的可视化组件，由这些组件进行监控处理 配置中心：管理整个集群的元数据 微博 Redis 服务化集群架构图 原文 万亿级日访问量下，Redis 在微博的 9 年优化历程 .</description>
+    <pubDate>Mon, 26 Feb 2024 04:17:57 GMT</pubDate>
   </item><item>
-    <title>19｜波动的响应延迟：如何应对变慢的 Redis？（下）</title>
-    <link>https://wangze.tech/19%EF%BD%9C%E6%B3%A2%E5%8A%A8%E7%9A%84%E5%93%8D%E5%BA%94%E5%BB%B6%E8%BF%9F%EF%BC%9A%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E5%8F%98%E6%85%A2%E7%9A%84-Redis%EF%BC%9F%EF%BC%88%E4%B8%8B%EF%BC%89</link>
-    <guid>https://wangze.tech/19%EF%BD%9C%E6%B3%A2%E5%8A%A8%E7%9A%84%E5%93%8D%E5%BA%94%E5%BB%B6%E8%BF%9F%EF%BC%9A%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E5%8F%98%E6%85%A2%E7%9A%84-Redis%EF%BC%9F%EF%BC%88%E4%B8%8B%EF%BC%89</guid>
-    <description> 文件系统：AOF 模式 AOF 重写会对磁盘进行大量 IO 操作，fsync 需要等到数据写到磁盘后才能返回 everysec 时，使用后台子线程调用 fsync 写日志 虽然 fsync 由后台子线程负责执行，但主线程会监控 fsync 的执行进度 上次 fsync 未执行完时，下次 fsync 会被阻塞 always 时，主线程中调用 fsync 避免使用操作系统的 swap 增加机器的内存 使用 Redis 集群 查看 Redis 进程的 swap 使用情况 redis-cli info | grep process_id cd /proc/{process_id} cat smaps | egrep ’^(Swap|Size)’ 操作系统：内存大页 写时复制：一旦数据要被修改，Redis 不会直接修改内存中的数据，会先拷贝一份再进行修改 常规内存机制只用拷贝 4KB，内存大页需要拷贝 2MB 关闭即可 cat /sys/kernel/mm/transparent_hugepage/enabled 查看是否 always 打开 关闭：echo never &gt; /sys/kernel/mm/transparent_hugepage/enabled Checklist 获取 Redis 实例在当前环境下的基线性能 是否用了慢查询命令？使用其他命令替代慢查询命令，或者把聚合计算命令放在客户端做 是否对过期 key 设置了相同的过期时间？对于批量删除的 key，可以在每个 key 的过期时间上加一个随机数，避免同时删除 是否存在 bigkey？ 对于 bigkey 的删除操作，如果你的 Redis 是 4.</description>
-    <pubDate>Sun, 25 Feb 2024 01:28:13 GMT</pubDate>
+    <title>抢红包系统</title>
+    <link>https://wangze.tech/%E6%8A%A2%E7%BA%A2%E5%8C%85%E7%B3%BB%E7%BB%9F</link>
+    <guid>https://wangze.tech/%E6%8A%A2%E7%BA%A2%E5%8C%85%E7%B3%BB%E7%BB%9F</guid>
+    <description> 不能超抢 剩余的到期需要返还 通常使用的解决高并发问题方案 方案一：使用内存操作替代实时的 DB 事务操作 可能丢数据 方案二：使用乐观锁替代悲观锁 同时抢的只能有一个能成功，可能手慢的反而能抢到 微信红包系统的高并发解决方案 方案三：将关于同一个红包的所有请求聚合到同一个 双维度库表设计：db_xx.</description>
+    <pubDate>Mon, 26 Feb 2024 04:17:57 GMT</pubDate>
   </item><item>
-    <title>20｜删除数据后，为什么内存占用率还是很高？</title>
-    <link>https://wangze.tech/20%EF%BD%9C%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E5%90%8E%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E7%8E%87%E8%BF%98%E6%98%AF%E5%BE%88%E9%AB%98%EF%BC%9F</link>
-    <guid>https://wangze.tech/20%EF%BD%9C%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E5%90%8E%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E7%8E%87%E8%BF%98%E6%98%AF%E5%BE%88%E9%AB%98%EF%BC%9F</guid>
-    <description> 内存碎片 现象：内存空间闲置 生成原因：操作系统的内存分配机制 + Redis 的负载特征 操作系统按固定大小分配内存，而不是完全按照应用程序申请的内存空间大小给程序分配 当程序申请的内存最接近某个固定值时，Redis 使用的 jemalloc 会给它分配相应大小的空间 为了减少分配次数 判断是否有内存碎片 执行 INFO memory used_memory_rss：操作系统实际分配的物理内存空间，包含了碎片 used_memory：保存数据实际申请使用的空间 mem_fragmentation_ratio：当前的内存碎片率 mem_fragmentation_ratio = used_memory_rss / used_memory 经验阈值 合理情况：mem_fragmentation_ratio 大于 1 但小于 1.</description>
-    <pubDate>Sun, 25 Feb 2024 01:28:13 GMT</pubDate>
+    <title>支付技术方案</title>
+    <link>https://wangze.tech/%E6%94%AF%E4%BB%98%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88</link>
+    <guid>https://wangze.tech/%E6%94%AF%E4%BB%98%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88</guid>
+    <description></description>
+    <pubDate>Mon, 26 Feb 2024 04:17:57 GMT</pubDate>
   </item>
     </channel>
   </rss>
