@@ -10,61 +10,61 @@
     <link>https://wangze.tech/Capslock</link>
     <guid>https://wangze.tech/Capslock</guid>
     <description>功能 加强 Caps 键功能 安装 Github 到系统设置 - 键盘 - 键盘快捷键 - Modifier Keys 里选择键盘 设置单击 Caps 切换输入法 打开配置文件 ~/.config/karabiner/karabiner.json 搜 &quot;key_code&quot;: &quot;spacebar&quot; 将 to_if_alone 值改成 caps_lock .</description>
-    <pubDate>Mon, 26 Feb 2024 04:17:57 GMT</pubDate>
+    <pubDate>Tue, 27 Feb 2024 12:42:14 GMT</pubDate>
   </item><item>
     <title>Crontab 执行提示没有权限</title>
     <link>https://wangze.tech/Crontab-%E6%89%A7%E8%A1%8C%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90</link>
     <guid>https://wangze.tech/Crontab-%E6%89%A7%E8%A1%8C%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90</guid>
     <description> Mac 的解决方案：How to Fix Cron “Operation not permitted” error in macOS - ITPro Helper 检查有没有用户对应的 home 目录 .</description>
-    <pubDate>Mon, 26 Feb 2024 04:17:57 GMT</pubDate>
+    <pubDate>Tue, 27 Feb 2024 12:42:14 GMT</pubDate>
   </item><item>
     <title>Linux 安装 oh-my-zsh</title>
     <link>https://wangze.tech/Linux-%E5%AE%89%E8%A3%85-oh-my-zsh</link>
     <guid>https://wangze.tech/Linux-%E5%AE%89%E8%A3%85-oh-my-zsh</guid>
     <description>安装 Zsh https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH sudo apt install zsh # 查看所有可用 shell chsh -l # 将终端默认 shell 切换到 zsh，后面要输入实际看到的 zsh 路径 chsh -s /bin/zsh # 新开一个终端确认是否切换成功 echo $SHELL 安装 oh-my-zsh https://ohmyz.</description>
-    <pubDate>Mon, 26 Feb 2024 04:17:57 GMT</pubDate>
+    <pubDate>Tue, 27 Feb 2024 12:42:14 GMT</pubDate>
   </item><item>
     <title>Obsidian</title>
     <link>https://wangze.tech/Obsidian</link>
     <guid>https://wangze.tech/Obsidian</guid>
     <description> 官网 Obsidian 是一个功能强大且可扩展的知识库，它在您的本地纯文本文件文件夹之上运行。 .</description>
-    <pubDate>Mon, 26 Feb 2024 04:17:57 GMT</pubDate>
+    <pubDate>Tue, 27 Feb 2024 12:42:14 GMT</pubDate>
   </item><item>
     <title>Oh My Zsh</title>
     <link>https://wangze.tech/Oh-My-Zsh</link>
     <guid>https://wangze.tech/Oh-My-Zsh</guid>
     <description> Linux 用户看：Linux 安装 oh-my-zsh Mac 用户往下看 安装 切换到系统自带的 Zsh：chsh -s /bin/zsh Oh My Zsh 插件 brew install autojump brew install zsh-syntax-highlighting brew install zsh-autosuggestions # 添加以下内容到 .</description>
-    <pubDate>Mon, 26 Feb 2024 04:17:57 GMT</pubDate>
-  </item><item>
-    <title>Redis 的使用规范小建议</title>
-    <link>https://wangze.tech/Redis-%E7%9A%84%E4%BD%BF%E7%94%A8%E8%A7%84%E8%8C%83%E5%B0%8F%E5%BB%BA%E8%AE%AE</link>
-    <guid>https://wangze.tech/Redis-%E7%9A%84%E4%BD%BF%E7%94%A8%E8%A7%84%E8%8C%83%E5%B0%8F%E5%BB%BA%E8%AE%AE</guid>
-    <description>键值对使用规范 通过命名区分不同业务数据 SELECT 命令进行数据库切换相当于增加一个额外的操作 业务名缩写作为 key 的前缀 对于业务名或业务数据名，可以使用相应的英文单词的首字母表示，（比如 user 用 u 表示，message 用 m），或者是用缩写表示（例如 unique visitor 使用 uv）。 避免使用 bigkey 尽量把集合类型的元素个数控制在 1 万以下 控制 String 类型数据的大小不超过 10KB 使用高效序列化方法和压缩方法减小 value 的大小 使用整数对象共享池 如果一个键值对中有 0 到 9999 范围的整数，Redis 会服用共享池中的整数对象 不能用的情况 Redis 设置了 maxmemory 并且启用 LRU 策略，因为 LRU 策略需要统计每个键值对的使用时间 集合类型数据采用 ziplist 编码，而集合元素是整数，判断整数对象的共享情况效率低 数据保存规范 使用 Redis 保存热数据 不同的业务数据分实例存储 在数据保存时要设置过期时间 控制 Redis 实例的容量 单实例不要太大，建议设置在 2～6GB RDB 快照、主从集群数据同步都能很快完成 命令使用规范 线上禁用部分命令 KEYS、FLUSHALL、FLUSHDB 严重阻塞主线程 具体的做法：管理员用 rename-command 命令在配置文件中重命名这些命令 替代：SCAN、ASYNC 选项（分别对应上面的 KEYS，FLUSHALL、FLUSHDB） 慎用 MONITOR 命令 会把监控到的内容持续写入到输出缓冲区，可能很快溢出，对性能造成影响甚至引起服务崩溃 慎用全量操作命令 HGETALL、SMEMBERS 等 全量扫描 建议 使用 SSCAN、HSCAN 命令分批返回集合中的数据 大集合拆分成小集合 如果集合类型保存的是业务数据的多个属性，而每次查询时，也需要返回这些属性，那么可以使用 String 类型，将这些属性序列化后保存，每次直接返回 String 数据，不用再对集合类型做全量扫描 规范汇总 强制类别的规范：如果不按照规范内容来执行，就会给 Redis 的应用带来极大的负面影响，例如性能受损。 推荐类别的规范：能有效提升性能、节省内存空间，或者是增加开发和运维的便捷性，可以直接应用到实践中。 建议类别的规范：这类规范内容和实际业务应用相关，结合自己的业务场景参考使用。 面向业务开发人员 key 的长度尽量短，节省内存空间 避免 bigkey，防止阻塞主线程 4.</description>
-    <pubDate>Mon, 26 Feb 2024 04:17:57 GMT</pubDate>
+    <pubDate>Tue, 27 Feb 2024 12:42:14 GMT</pubDate>
   </item><item>
     <title>Think in English</title>
     <link>https://wangze.tech/Think-in-English</link>
     <guid>https://wangze.tech/Think-in-English</guid>
     <description>How to THINK in English | No More Translating in Your Head! - YouTube Introduction If you’re translating in your head, then you know that that’s a frustrating way to speak English.</description>
-    <pubDate>Mon, 26 Feb 2024 04:17:57 GMT</pubDate>
+    <pubDate>Tue, 27 Feb 2024 12:42:14 GMT</pubDate>
   </item><item>
-    <title>从微博的 Redis 实践中，我们可以学到哪些经验？</title>
-    <link>https://wangze.tech/%E4%BB%8E%E5%BE%AE%E5%8D%9A%E7%9A%84-Redis-%E5%AE%9E%E8%B7%B5%E4%B8%AD%EF%BC%8C%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E5%AD%A6%E5%88%B0%E5%93%AA%E4%BA%9B%E7%BB%8F%E9%AA%8C%EF%BC%9F</link>
-    <guid>https://wangze.tech/%E4%BB%8E%E5%BE%AE%E5%8D%9A%E7%9A%84-Redis-%E5%AE%9E%E8%B7%B5%E4%B8%AD%EF%BC%8C%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E5%AD%A6%E5%88%B0%E5%93%AA%E4%BA%9B%E7%BB%8F%E9%AA%8C%EF%BC%9F</guid>
-    <description>微博对 Redis 的技术需求 能够提供高性能、高并发的读写访问，保证读写延迟低 能够支持大容量存储 可以灵活扩展，对于不同业务能进行快速扩容 对 Redis 的基本改进 避免阻塞和节省内存 持久化需求：使用全量 RDB + 增量 AOF 复制 在 AOF 日志写入刷盘时，用额外的 BIO 线程负责实际的刷盘工作，避免 AOF 日志慢速刷盘阻塞主线程 增加 aofnumber 配置项设置 AOF 文件的数量 使用独立的复制线程进行主从库同步，避免对主线程的阻塞影响 定制化设计了 LongSet 数据类型 数据区分冷热度 用异步线程将冷数据从 Redis 迁移到 RocksDB，保存到硬盘中 服务化改造 使用 Redis 集群服务不同的业务场景需求，每一个业务拥有独立的资源 所有的 Redis 实例形成资源池，轻松扩容 采用类似 Codis 的方案，通过集群代理层连接客户端和服务端 客户端连接监听和端口自动增删 Redis 协议解析：确定需要路由的请求，如果是非法和不支持的请求，直接返回错误 请求路由：根据数据和后端实例间的映射规则，将请求路由到对应的后端实例进行处理，并将结果返回给客户端 指标采集监控：采集集群运行的状态，并发送到专门的可视化组件，由这些组件进行监控处理 配置中心：管理整个集群的元数据 微博 Redis 服务化集群架构图 原文 万亿级日访问量下，Redis 在微博的 9 年优化历程 .</description>
-    <pubDate>Mon, 26 Feb 2024 04:17:57 GMT</pubDate>
+    <title>背单词</title>
+    <link>https://wangze.tech/%E8%83%8C%E5%8D%95%E8%AF%8D</link>
+    <guid>https://wangze.tech/%E8%83%8C%E5%8D%95%E8%AF%8D</guid>
+    <description>准备 手机安装不背单词 APP 浏览器安装插件 不背单词查词 在 APP 添加生词 到不背单词首页下拉弹出单词搜索框 输入单词或短语到搜索框进行搜索 点击搜索结果 点击星星图标添加到生词本 在网页添加生词 划词 在弹出的窗口点击添加生词 开始背单词 将生词本设置为正在学习的词书 .</description>
+    <pubDate>Tue, 27 Feb 2024 12:42:14 GMT</pubDate>
   </item><item>
-    <title>抢红包系统</title>
-    <link>https://wangze.tech/%E6%8A%A2%E7%BA%A2%E5%8C%85%E7%B3%BB%E7%BB%9F</link>
-    <guid>https://wangze.tech/%E6%8A%A2%E7%BA%A2%E5%8C%85%E7%B3%BB%E7%BB%9F</guid>
-    <description> 不能超抢 剩余的到期需要返还 通常使用的解决高并发问题方案 方案一：使用内存操作替代实时的 DB 事务操作 可能丢数据 方案二：使用乐观锁替代悲观锁 同时抢的只能有一个能成功，可能手慢的反而能抢到 微信红包系统的高并发解决方案 方案三：将关于同一个红包的所有请求聚合到同一个 双维度库表设计：db_xx.</description>
-    <pubDate>Mon, 26 Feb 2024 04:17:57 GMT</pubDate>
+    <title>英语</title>
+    <link>https://wangze.tech/%E8%8B%B1%E8%AF%AD</link>
+    <guid>https://wangze.tech/%E8%8B%B1%E8%AF%AD</guid>
+    <description> GitHub - 人人都能用英语 Think in English 背单词 BigShot英语 - 哔哩哔哩视频 .</description>
+    <pubDate>Tue, 27 Feb 2024 12:42:14 GMT</pubDate>
   </item><item>
-    <title>支付技术方案</title>
-    <link>https://wangze.tech/%E6%94%AF%E4%BB%98%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88</link>
-    <guid>https://wangze.tech/%E6%94%AF%E4%BB%98%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88</guid>
-    <description></description>
-    <pubDate>Mon, 26 Feb 2024 04:17:57 GMT</pubDate>
+    <title>英语语法</title>
+    <link>https://wangze.tech/%E8%8B%B1%E8%AF%AD%E8%AF%AD%E6%B3%95</link>
+    <guid>https://wangze.tech/%E8%8B%B1%E8%AF%AD%E8%AF%AD%E6%B3%95</guid>
+    <description> 主谓：a good boy/the boys adj + 名词短语 + [主谓]：what a good boy [he is] adv + v/adj/adv：how good what：n/adj how：adv 不定代词之一：other other + 可数名词 = others 找到一些人喜欢什么东西就可以用 others one … the other，特指两者之一 the others，一个大范围的一部分东西的其余部分 another，在原有基础上再来一个单元 .</description>
+    <pubDate>Tue, 27 Feb 2024 12:42:14 GMT</pubDate>
+  </item><item>
+    <title>00｜开篇词</title>
+    <link>https://wangze.tech/00%EF%BD%9C%E5%BC%80%E7%AF%87%E8%AF%8D</link>
+    <guid>https://wangze.tech/00%EF%BD%9C%E5%BC%80%E7%AF%87%E8%AF%8D</guid>
+    <description>Redis 的两大维度，三大主线 Redis 问题画像图 .</description>
+    <pubDate>Tue, 27 Feb 2024 12:42:14 GMT</pubDate>
   </item>
     </channel>
   </rss>
