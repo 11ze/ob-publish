@@ -6,65 +6,65 @@
       <description>Last 10 notes on 🫧 11ze</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
-    <title>00｜开篇词</title>
-    <link>https://wangze.tech/00%EF%BD%9C%E5%BC%80%E7%AF%87%E8%AF%8D</link>
-    <guid>https://wangze.tech/00%EF%BD%9C%E5%BC%80%E7%AF%87%E8%AF%8D</guid>
-    <description>Redis 的两大维度，三大主线 Redis 问题画像图 .</description>
-    <pubDate>Tue, 27 Feb 2024 16:23:37 GMT</pubDate>
+    <title>21｜缓冲区：一个可能引发“惨案”的地方</title>
+    <link>https://wangze.tech/21%EF%BD%9C%E7%BC%93%E5%86%B2%E5%8C%BA%EF%BC%9A%E4%B8%80%E4%B8%AA%E5%8F%AF%E8%83%BD%E5%BC%95%E5%8F%91%E2%80%9C%E6%83%A8%E6%A1%88%E2%80%9D%E7%9A%84%E5%9C%B0%E6%96%B9</link>
+    <guid>https://wangze.tech/21%EF%BD%9C%E7%BC%93%E5%86%B2%E5%8C%BA%EF%BC%9A%E4%B8%80%E4%B8%AA%E5%8F%AF%E8%83%BD%E5%BC%95%E5%8F%91%E2%80%9C%E6%83%A8%E6%A1%88%E2%80%9D%E7%9A%84%E5%9C%B0%E6%96%B9</guid>
+    <description> 客户端输入和输出缓冲区 避免客户端和服务端的请求发送和处理速度不匹配 输入缓冲区会先把客户端发送过来的命令暂存起来，Redis 主线程再从输入缓冲区中读取命令，进行处理。当 Redis 主线程处理完数据后，会把结果写入到输出缓冲区，再通过输出缓冲区返回给客户端 查看输入缓冲区的内存使用情况：CLIENT LIST 命令 cmd：最新执行的命令 qbuf：输入缓冲区已经使用的大小 qbuf-free：尚未使用的大小 服务端允许为每个客户端最多暂存 1GB 的命令和数据，上限阈值在代码中设定 1GB，不可变（输入缓冲区） 输出缓冲区会溢出的情况 返回 bigkey 的大量结果 执行了 MONITOR 命令：检测 Redis 执行 缓冲区大小设置不合理 大小上限阈值 持续写入数据的数量上限阈值 普通客户端通用设置 - 配置文件：client-output-buffer-limit normal 0 0 0 订阅客户端 - 配置文件：client-output-buffer-limit pubsub 8mb 2mb 60 主从集群中的缓冲区 复制缓冲区的溢出问题 在主节点执行：config set client-output-buffer-limit slave 512mb 128mb 60 进行设置 slave 表示该配置项是针对复制缓冲区的 每个从节点各一个 复制积压缓冲区（repl_backlog_buffer）的溢出问题 导致数据丢失 其他缓冲区导致网络连接关闭 应用程序中使用的客户端需要使用缓冲区时 在 buffer 中拼装好数据，一次性由操作系统发送给服务端 使用 Pipeline 批量发送命令到服务端 主库上的从库输出缓冲区 slave-client-output-buffer 不计算在 Redis 使用的总内存中，不会超过 maxmemory 导致淘汰数据，只有普通和订阅客户端的输出缓冲区内存增长，超过 maxmemory 时，才会淘汰数据 .</description>
+    <pubDate>Fri, 01 Mar 2024 15:36:18 GMT</pubDate>
   </item><item>
-    <title>01｜基础架构：一个键值数据库包含什么？</title>
-    <link>https://wangze.tech/01%EF%BD%9C%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%EF%BC%9A%E4%B8%80%E4%B8%AA%E9%94%AE%E5%80%BC%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8C%85%E5%90%AB%E4%BB%80%E4%B9%88%EF%BC%9F</link>
-    <guid>https://wangze.tech/01%EF%BD%9C%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%EF%BC%9A%E4%B8%80%E4%B8%AA%E9%94%AE%E5%80%BC%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8C%85%E5%90%AB%E4%BB%80%E4%B9%88%EF%BC%9F</guid>
-    <description> 操作模块 PUT：新写入或更新一个 key-value 对，如 PUT hello world GET：根据 K 读取 V DELETE：根据 K 删除整个 KV 对 SCAN：根据一段 key 的范围返回相应的 value 值 访问模式 通过函数库调用的方式供外部应用使用 通过网络框架以 Socket 通信的形式对外提供键值对操作 I/O 模型设计 单线程、多线程、多进程 索引模块 让键值数据库根据 key 找到 value 的存储位置，进而执行操作 Memcached 和 Redis 采用哈希表作为 key-value 索引 内存的高性能随机访问特性和哈希表 O(1) 的操作复杂度相匹配 存储模块 分配器 内存：读写快，掉电数据丢失 外存：读写慢，数据持久化 持久化 对于每个键值对都进行落盘保存 数据可靠 性能差 周期性把内存中的键值数据保存到文件 数据可能丢失 性能较好 从 SimpleKV 到 Redis 的架构图转变 从键值数据库开发和运维的辅助工具上做对比 .</description>
-    <pubDate>Tue, 27 Feb 2024 16:23:37 GMT</pubDate>
+    <title>22｜第 11～21 讲课后思考题答案及常见问题答疑</title>
+    <link>https://wangze.tech/22%EF%BD%9C%E7%AC%AC-11%EF%BD%9E21-%E8%AE%B2%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%E5%8F%8A%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E7%AD%94%E7%96%91</link>
+    <guid>https://wangze.tech/22%EF%BD%9C%E7%AC%AC-11%EF%BD%9E21-%E8%AE%B2%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%E5%8F%8A%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E7%AD%94%E7%96%91</guid>
+    <description> 问题 1：如何使用慢查询日志和 latency monitor 排查执行慢的操作？ 设置 slowlog-log-slower-than：对执行时间大于多少微妙的命令进行记录 设置 slowlog-max-len：日志最多记录多少调命令 使用 SLOWLOG GET 命令查看慢查询日志 也可以使用 latency monitor 监控工具 监控 Redis 运行过程中的峰值延迟情况 从 2.</description>
+    <pubDate>Fri, 01 Mar 2024 15:36:18 GMT</pubDate>
   </item><item>
-    <title>02｜数据结构：快速的 Redis 有哪些慢操作？</title>
-    <link>https://wangze.tech/02%EF%BD%9C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E5%BF%AB%E9%80%9F%E7%9A%84-Redis-%E6%9C%89%E5%93%AA%E4%BA%9B%E6%85%A2%E6%93%8D%E4%BD%9C%EF%BC%9F</link>
-    <guid>https://wangze.tech/02%EF%BD%9C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E5%BF%AB%E9%80%9F%E7%9A%84-Redis-%E6%9C%89%E5%93%AA%E4%BA%9B%E6%85%A2%E6%93%8D%E4%BD%9C%EF%BC%9F</guid>
-    <description> Redis 数据类型和底层数据结构的对应关系 Redis 使用一个哈希表 O(1) 保存所有键值对 全局哈希表（数组） 每个数组元素称为一个哈希桶（指针） 每个哈希桶保存多个键值对数据 计算键的哈希值就可以知道对应的哈希桶位置 哈希冲突 两个 key 的哈希值和哈希桶计算对应关系时，正好落在了同一个哈希桶中。 解决方案：链式哈希。同一个哈希桶中的多个元素用一个链表来保存，它们之间依次用指针连接。 当一个桶中的元素过多，访问时间变长时 采用两个全局哈希表，当哈希表 1 不够大时 copy 到更大的哈希表 2 rehash：增加现有哈希桶的数量 装载因子的大小 = 所有 entry 个数除以哈希表的哈希桶个数 &lt; 1 或者在进行 RDB 和 AOF 重写时禁止 rehash = 1，且允许进行 rehash 时会进行 rehash = 5，立马开始 rehash 渐进式 rehash（实际） 每次处理请求时，顺带拷贝一部分数据到另一个哈希表。 定时任务周期性地搬移一些数据到新的哈希表中 压缩列表 ziplist 的结构 表头 zlbytes：列表长度 zltail：列表尾的偏移量 zllen：entry 个数 表尾 zlend：列表结束，取值默认是 255 元素 entry prev_len 前一个 entry 的长度 1 字节：上一个 entry 的长度 &lt; 254 字节 5 字节：1 字节以外的情况 prev_len的第一个字节表示一个entry的开始，如果等于255表示列表结束，如果等于254那后四个字节才是prev_len的实际值，如果小于254，那就不需要后四个字节，直接使用这一个字节表示prev_len的实际值 当前一节点长度大于等于254时，第一个字节为254(1111 1110)作为标志，后面4个字节组成一个整型用来存储长度 encoding 编码方式，1 字节 content 实际数据 其他操作同整数数组、双向列表 顺序查找 O(N) 跳表 O(logN)：多级索引，通过索引位置的几个跳转，实现数据的快速定位 不同操作的复杂度 单元素操作是基础 每一种集合类型对单个数据实现的增删改查操作 范围操作非常耗时 集合类型中的遍历操作，可以返回集合中的所有数据 用 SCAN 代替遍历操作 统计操作通常高效 集合类型中对集合中所有元素个数的记录 例外情况只有几个 某些数据结构的特殊记录 .</description>
-    <pubDate>Tue, 27 Feb 2024 16:23:37 GMT</pubDate>
+    <title>23｜旁路缓存：Redis 是如何工作的？</title>
+    <link>https://wangze.tech/23%EF%BD%9C%E6%97%81%E8%B7%AF%E7%BC%93%E5%AD%98%EF%BC%9ARedis-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84%EF%BC%9F</link>
+    <guid>https://wangze.tech/23%EF%BD%9C%E6%97%81%E8%B7%AF%E7%BC%93%E5%AD%98%EF%BC%9ARedis-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84%EF%BC%9F</guid>
+    <description> 旁路缓存：读取缓存、读取数据库和更新缓存的操作都需要在应用程序中完成 Redis 适合做缓存 在分层系统中，数据暂存在快速子系统中有助于加速访问 缓存容量有限，缓存写满时，数据需要被淘汰 只读缓存 写操作直接作用在数据库，并删掉已缓存的数据 适用于写请求较少或者只需要提升读请求响应速度的情况 数据可靠，优先保证数据库和缓存的一致性 读写缓存 对写请求进行加速 对数据可靠性要求低，或业务上不会并发修改同一个值时 同步直写 异步写回 需要在脏数据被淘汰时，自行把数据写回数据库，Redis 无法实现这一点 所以，使用 Redis 缓存时，不采用这个模式 .</description>
+    <pubDate>Fri, 01 Mar 2024 15:36:18 GMT</pubDate>
   </item><item>
-    <title>03｜高性能 IO 模型：为什么单线程 Redis 那么快？</title>
-    <link>https://wangze.tech/03%EF%BD%9C%E9%AB%98%E6%80%A7%E8%83%BD-IO-%E6%A8%A1%E5%9E%8B%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8D%95%E7%BA%BF%E7%A8%8B-Redis-%E9%82%A3%E4%B9%88%E5%BF%AB%EF%BC%9F</link>
-    <guid>https://wangze.tech/03%EF%BD%9C%E9%AB%98%E6%80%A7%E8%83%BD-IO-%E6%A8%A1%E5%9E%8B%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8D%95%E7%BA%BF%E7%A8%8B-Redis-%E9%82%A3%E4%B9%88%E5%BF%AB%EF%BC%9F</guid>
-    <description> Redis 的网络 IO 和键值对读写由一个线程完成 当客户端和 Reids 的网络连接断开时，Redis 不会等待客户端恢复连接 Redis 的其他功能，比如持久化、异步删除、集群数据同步等，由额外的线程执行 单线程设计机制 多线程编程模式：共享资源的并发访问控制问题 在内存中完成大部分操作 + 高效的数据结构 多路复用机制（select/epoll 机制） 该机制允许内核中同时存在多个监听套接字和已连接套接字 内核监听这些套接字上的连接请求或数据请求，一旦有请求到达，就交给 Redis 处理 基于事件的回调机制 事件队列 基于多路复用的 Redis 高性能 IO 模型 .</description>
-    <pubDate>Tue, 27 Feb 2024 16:23:37 GMT</pubDate>
+    <title>24｜替换策略：缓存满了怎么办？</title>
+    <link>https://wangze.tech/24%EF%BD%9C%E6%9B%BF%E6%8D%A2%E7%AD%96%E7%95%A5%EF%BC%9A%E7%BC%93%E5%AD%98%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F</link>
+    <guid>https://wangze.tech/24%EF%BD%9C%E6%9B%BF%E6%8D%A2%E7%AD%96%E7%95%A5%EF%BC%9A%E7%BC%93%E5%AD%98%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F</guid>
+    <description> 建议把缓存容量设置为总数据量的 15% 到 30%，兼顾访问性能和内存空间开销 CONFIG SET maxmemory 4gb 数据淘汰策略 noeviction（不进行数据淘汰） 一旦缓存被写满，再有写请求时，Redis 不再提供服务，直接返回错误 进行数据淘汰的策略 在设置了过期时间的数据中进行淘汰 volatile-lru volatile-random volatile-ttl volatile-lfu Redis 4.</description>
+    <pubDate>Fri, 01 Mar 2024 15:36:18 GMT</pubDate>
   </item><item>
-    <title>04｜AOF 日志：宕机了，Redis 如何避免数据丢失？</title>
-    <link>https://wangze.tech/04%EF%BD%9CAOF-%E6%97%A5%E5%BF%97%EF%BC%9A%E5%AE%95%E6%9C%BA%E4%BA%86%EF%BC%8CRedis-%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%EF%BC%9F</link>
-    <guid>https://wangze.tech/04%EF%BD%9CAOF-%E6%97%A5%E5%BF%97%EF%BC%9A%E5%AE%95%E6%9C%BA%E4%BA%86%EF%BC%8CRedis-%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%EF%BC%9F</guid>
-    <description> Redis 作为缓存使用 从数据库读取数据恢复 当需要恢复时数据库压力大、Redis 响应慢 写后日志：先执行命令把数据写入内存，再记录日志 不会阻塞当前的写操作 记录的命令没有错误 没来得及记录时，宕机会丢失数据 在主线程写，写盘压力大可能导致后续操作无法执行 日志格式示例 执行 set testkey testvalue AOF 文件（Append Only File） *3：命令有三个部分 $3：命令、键或值一共有多少字节 每个 $n 下一行跟着命令、键或值 三种写回策略 Always：同步写回 Everysec：每秒写回 优先使用，在可靠性和性能取了一个平衡 No：操作系统控制的写回 重写机制 多个操作同一个键值的命令合并为一个命令 避免重写日志过大 直接根据数据库里数据的最新状态，生成这些数据的插入命令，作为新日志 一个拷贝 由后台子进程 bgrewiteaof 完成，避免阻塞主线程 fork 创建 bgrewriteaof 子进程时，阻塞主线程，如果实例内存大，执行时间还会更长 共享主线程内存，主线程执行新写或修改操作时会申请新的内存空间保存新的数据，如果操作的是 bigkey，可能因为申请大空间而面临阻塞风险 两处日志 正在使用的 AOF 日志 + 新的重写日志 避免竞争文件系统的锁 减小日志大小 AOF 非阻塞重写过程 适用于读操作比较多的场景 .</description>
-    <pubDate>Tue, 27 Feb 2024 16:23:37 GMT</pubDate>
+    <title>25｜缓存异常（上）：如何解决缓存和数据库的数据不一致问题？</title>
+    <link>https://wangze.tech/25%EF%BD%9C%E7%BC%93%E5%AD%98%E5%BC%82%E5%B8%B8%EF%BC%88%E4%B8%8A%EF%BC%89%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%95%B0%E6%8D%AE%E4%B8%8D%E4%B8%80%E8%87%B4%E9%97%AE%E9%A2%98%EF%BC%9F</link>
+    <guid>https://wangze.tech/25%EF%BD%9C%E7%BC%93%E5%AD%98%E5%BC%82%E5%B8%B8%EF%BC%88%E4%B8%8A%EF%BC%89%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%95%B0%E6%8D%AE%E4%B8%8D%E4%B8%80%E8%87%B4%E9%97%AE%E9%A2%98%EF%BC%9F</guid>
+    <description> 数据的一致性 缓存中有数据，缓存的数据值需要和数据库中的值相同 缓存中没有数据，数据库中的值必须是最新值 「读写缓存」 要保证一致性可以采用同步直写策略 适用于读写相当的业务场景 「只读缓存」 数据不一致的问题原因、现象和应对方案 分为 1. 先删除缓存再更新数据库；2. 先更新数据库再删除缓存 适用于读操作比较多的业务场景 优先使用先更新数据库再删除缓存的方法 先删除缓存可能导致请求因缓存缺失而访问数据库，给数据库带来压力 业务应用中读取数据库和写缓存的时间不好估算，所以延迟双删的等待时间不好设置 注意：如果要保证数据一致，可以在更新数据库的时候在 Redis 缓存客户端暂存并发读请求，等数据库更新完、缓存值删除后再读取数据 .</description>
+    <pubDate>Fri, 01 Mar 2024 15:36:18 GMT</pubDate>
   </item><item>
-    <title>05｜内存快照：宕机后，Redis 如何实现快速恢复？</title>
-    <link>https://wangze.tech/05%EF%BD%9C%E5%86%85%E5%AD%98%E5%BF%AB%E7%85%A7%EF%BC%9A%E5%AE%95%E6%9C%BA%E5%90%8E%EF%BC%8CRedis-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E6%81%A2%E5%A4%8D%EF%BC%9F</link>
-    <guid>https://wangze.tech/05%EF%BD%9C%E5%86%85%E5%AD%98%E5%BF%AB%E7%85%A7%EF%BC%9A%E5%AE%95%E6%9C%BA%E5%90%8E%EF%BC%8CRedis-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E6%81%A2%E5%A4%8D%EF%BC%9F</guid>
-    <description> 和 AOF 相比，RDB 记录某一时刻的数据，恢复时直接把 RDB 文件读入内存 全量快照 生成 RDB 文件的方案 save：在主线程中执行，会导致阻塞 （默认）bgsave：创建一个子进程，复制主线程的页表，专门写入 RDB 文件，避免阻塞。 共享主线程的所有内存数据 快照时数据能修改吗？ 读操作：bgsave 子进程和主线程互不影响 能 写操作：生成被修改的一块数据的副本，bgsave 子进程继续写 RDB 文件，主线程在副本上进行修改 写时复制：主线程在有写操作时，才会把这个新写或修改后的数据写入到一个新的物理地址中，并修改自己的页表映射 可以每秒做一次快照吗？ 磁盘压力 fork bgsave 子进程的过程会阻塞主线程 混合使用 AOF 和内存快照 AOF 只保留从最后一次快照开始的改动 数据不能丢失时，内存快照和 AOF 的混合使用是一个很好的选择 如果允许分钟级别的数据丢失，可以只使用 RDB 如果只用 AOF，优先使用 everysec 的配置选项，因为它在可靠性和性能之间取了一个平衡 持久化有关的风险 服务器内存不足 写时复制为写、修改操作涉及的数据分配相同大小的内存副本 子进程也会占用 CPU 资源 需要开启定时 RDB 和 AOF 重写时进程一定不要绑定 CPU：子进程会与父进程争夺同一个 CPU 资源（具体搜索关键字找到后面有关绑定 CPU 的章节） .</description>
-    <pubDate>Tue, 27 Feb 2024 16:23:37 GMT</pubDate>
+    <title>26｜缓存异常（下）：如何解决缓存雪崩、击穿、穿透难题？</title>
+    <link>https://wangze.tech/26%EF%BD%9C%E7%BC%93%E5%AD%98%E5%BC%82%E5%B8%B8%EF%BC%88%E4%B8%8B%EF%BC%89%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9%E3%80%81%E5%87%BB%E7%A9%BF%E3%80%81%E7%A9%BF%E9%80%8F%E9%9A%BE%E9%A2%98%EF%BC%9F</link>
+    <guid>https://wangze.tech/26%EF%BD%9C%E7%BC%93%E5%AD%98%E5%BC%82%E5%B8%B8%EF%BC%88%E4%B8%8B%EF%BC%89%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9%E3%80%81%E5%87%BB%E7%A9%BF%E3%80%81%E7%A9%BF%E9%80%8F%E9%9A%BE%E9%A2%98%EF%BC%9F</guid>
+    <description> 三大问题的原因和应对方案 缓存雪崩 大量的应用请求无法在 Redis 缓存中进行处理，紧接着，应用将大量请求发送到数据库层，导致数据库层的压力激增。 缓存击穿 针对某个访问非常频繁的热点数据的请求，无法在缓存中进行处理，紧接着，访问该数据的大量请求，一下子都发送到了后端数据库，导致了数据库压力激增，会影响数据库处理其他请求。 缓存击穿的情况，经常发生在热点数据过期失效时。 缓存穿透 要访问的数据既不在 Redis 缓存中，也不在数据库中，导致请求在访问缓存时，发生缓存缺失，再去访问数据库时，发现数据库中也没有要访问的数据。 此时缓存成了摆设。 同时给缓存和数据库巨大压力。 尽量使用预防式方案 1-1.</description>
+    <pubDate>Fri, 01 Mar 2024 15:36:18 GMT</pubDate>
   </item><item>
-    <title>06｜数据同步：主从库如何实现数据一致？</title>
-    <link>https://wangze.tech/06%EF%BD%9C%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%EF%BC%9A%E4%B8%BB%E4%BB%8E%E5%BA%93%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E4%B8%80%E8%87%B4%EF%BC%9F</link>
-    <guid>https://wangze.tech/06%EF%BD%9C%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%EF%BC%9A%E4%B8%BB%E4%BB%8E%E5%BA%93%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E4%B8%80%E8%87%B4%EF%BC%9F</guid>
-    <description> 写操作：首先到主库执行，主库将写操作同步给从库 同步流程 主从库第一次同步的流程 增量复制流程 全量复制 第一次同步无法避免 一个实例的数据库不要太大（几 GB 级别合适） 通过 RDB 文件 二进制文件 不用 AOF 的原因 需要打开 AOF 功能 有很多场景数据不敏感不需要开启 AOF 功能 刷盘策略选择不当会严重影响 Redis 性能 比 RDB 文件大 在从库端进行恢复时，用 RDB 的恢复效率高于用 AOF 增量复制 通过命令传播的长连接复制 完成全量复制后，主库通过长连接将后续陆续收到的命令操作同步给从库，可以避免频繁建立连接的开销 网络断连时 repl_backlog_buffer 主 → 从 → 从 从库执行 replicaof IP PORT IP 上的实例执行 bgsave 命令生成 RDB 文件后发给从库 从库清空当前数据库 主库会在内存用专门的 replication buffer 记录 RDB 文件生成后收到的所有写操作 将 replication buffer 的修改操作发给从库 从 → 从：分担全量复制时的主库压力 replication buffer 和 repl_backlog_buffer 的区别 replication buffer：复制缓冲区 从库也相当于一个客户端，会单独分配一个 client buffer，这里用来传播用户的写命令到从库，通常把它叫做 replication buffer 主节点开始和一个从节点进行全量同步时，会为从节点创建一个输出缓冲区，这个缓冲区就是复制缓冲区 作用：主节点向从节点发送 RDB 文件时，如果又接收写操作，会暂存在缓冲区，等 RDB 文件传输完成，且从节点加载完成后，主节点把缓冲区中的写命令发给从节点进行同步 对主从同步的影响：如果传输和加载 RDB 文件耗时长，同时主库接收的写命令操作较多，导致缓冲区写满溢出，主库会强制关闭和从库的网络连接，重新开始全量同步 通过 client-output-buffer-limit-slave 配置项增加缓冲区大小 client buffer 超过限制时，主库会强制断开这个 client 连接 此时从库再次发起复制请求，可能导致恶性循环 repl_backlog_buffer：复制积压缓冲区 是一个环形缓冲区：为了在从库断开之后能找到主从差异数据而设计 记录写操作 所有从库共享 不同的从库在进行恢复时，会把自己的复制进度（slave_repl_offset）发给主库，主库就可以和它独立同步 主从断开太久，主库写操作节点越过从库在 repl_backlog_buffer 的读节点时，从库只能全量复制 repl_backlog_size = 缓冲空间大小 * 2 缓冲空间大小 = 主库写入命令速度 * 操作大小 - 主从库间网络传输命令速度 * 操作大小 过小可能导致从库复制进度赶不上主库，触发全量复制 repl_backlog_buffer 的使用 主节点在把接收到的写命令同步给从节点时，同时会把这些写命令写入复制积压缓冲区。一旦从节点发生网络闪断，再次和主节点恢复连接后，从节点就会从复制积压缓冲区中，读取断连期间主节点接收到的写命令，进而进行增量同步 父节点图2 .</description>
-    <pubDate>Tue, 27 Feb 2024 16:23:37 GMT</pubDate>
+    <title>27｜缓存被污染了，该怎么办？</title>
+    <link>https://wangze.tech/27%EF%BD%9C%E7%BC%93%E5%AD%98%E8%A2%AB%E6%B1%A1%E6%9F%93%E4%BA%86%EF%BC%8C%E8%AF%A5%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F</link>
+    <guid>https://wangze.tech/27%EF%BD%9C%E7%BC%93%E5%AD%98%E8%A2%AB%E6%B1%A1%E6%9F%93%E4%BA%86%EF%BC%8C%E8%AF%A5%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F</guid>
+    <description> 缓存污染 留存在缓存中的数据，实际不会被再次访问了，但是又占据了缓存空间。 如果这样的数据体量很大，甚至占满了缓存，每次有新数据写入缓存时，还需要把这些数据逐步淘汰出缓存，就会增加缓存操作的时间开销。 解决 volatile-ttl 策略：设置时需明确知道数据被再次访问的情况时 LRU 缓存策略：只看数据的访问时间，可能在对大量数据进行一次全体读取后没能及时删除缓存数据 LFU 缓存策略 在 LRU 策略基础上，为每个数据增加一个计数器，用于统计数据的访问次数 淘汰数据时，首先根据数据的访问次数进行筛选 如果访问次数相同，则比较两个数据的访问时效性 LRU 与 LFU 实现的异同 LRU 使用 24bit 大小的 lru 字段 LFU 使用前 16bit 作为 ldt 值，表示数据的访问时间戳，后 8bit 作为 counter 值，表示数据的访问次数（最大值 255） LFU 的计数规则 增加机制 每当数据被访问一次 用计数器当前值 * 配置项 lfu_log_factor，再加 1，再取倒数，得到一个 p 值 把 p 值和一个取值范围再（0，1）间的随机数 r 值比大小 p 值大于 r 值时，计数器加 1 计数器默认值为 5（由代码中的 LFU_INIT_VAL 常量设置），避免数据刚写入就被淘汰 一般将 lfu_log_factor 设置为 10 就可以对百、千、十万级别的访问次数做明显区分 衰减机制 假设设置 lfu_decay_time 取值为 1 如果数据在 N 分钟没有被访问 访问次数减 N 如果业务应用中有短时高频访问的数据，建议把 lfu_decay_time 设置为 1 使用 LFU 策略后，缓存还会被污染，因为存在参数设置不合理的问题 如设置太大导致衰减过慢 或者一个数据只在短时间内被高频访问，也有可能滞留在缓存中 .</description>
+    <pubDate>Fri, 01 Mar 2024 15:36:18 GMT</pubDate>
   </item><item>
-    <title>07｜哨兵机制：主库挂了，如何不间断服务？</title>
-    <link>https://wangze.tech/07%EF%BD%9C%E5%93%A8%E5%85%B5%E6%9C%BA%E5%88%B6%EF%BC%9A%E4%B8%BB%E5%BA%93%E6%8C%82%E4%BA%86%EF%BC%8C%E5%A6%82%E4%BD%95%E4%B8%8D%E9%97%B4%E6%96%AD%E6%9C%8D%E5%8A%A1%EF%BC%9F</link>
-    <guid>https://wangze.tech/07%EF%BD%9C%E5%93%A8%E5%85%B5%E6%9C%BA%E5%88%B6%EF%BC%9A%E4%B8%BB%E5%BA%93%E6%8C%82%E4%BA%86%EF%BC%8C%E5%A6%82%E4%BD%95%E4%B8%8D%E9%97%B4%E6%96%AD%E6%9C%8D%E5%8A%A1%EF%BC%9F</guid>
-    <description> 哨兵机制的基本流程 监控：判断主从库下线 主观下线 哨兵进程会使用 PING 命令检测它自己和主、从库的网络连接情况，用来判断实例的状态。 如果哨兵发现主库或从库对 PING 命令的响应超时了，哨兵就会先把它标记为“主观下线”。 从库会被直接标记为“主观下线”。 客观下线 大多数的哨兵判断主库主观下线，主库才会标记为客观下线 减少误判 哨兵集群：哨兵机制通常采用多实例组成的集群模式部署 选主：选出新主库（筛选 + 打分） 按照一定的筛选条件去掉不符合条件的从库 在线状态 网络状态 配置项（ms）down-after-milliseconds * 10 如果在 down-after-milliseconds 毫秒内，主从节点都没有通过网络联系上，我们就可以认为主从节点断连了 如果发生断连的次数超过了 10 次，就说明这个从库的网络状况不好 此参数可以调节哨兵的敏感程度 按照一定的规则给剩下的从库逐个打分 从库优先级 通过 slave-priority 配置项设置 从库复制进度 和旧主库同步程度最接近的从库得分高 salve_repl_offset 最大 从库 ID 号 在优先级和复制进度都相同的情况下，ID 号最小的从库得分最高，会被选为新主库。 得分最高的作为新主库 选择新主库的过程 通知 让从库执行 replicaof 与新主库同步 4.</description>
-    <pubDate>Tue, 27 Feb 2024 16:23:37 GMT</pubDate>
+    <title>28｜Pika：如何基于 SSD 实现大容量 Redis？</title>
+    <link>https://wangze.tech/28%EF%BD%9CPika%EF%BC%9A%E5%A6%82%E4%BD%95%E5%9F%BA%E4%BA%8E-SSD-%E5%AE%9E%E7%8E%B0%E5%A4%A7%E5%AE%B9%E9%87%8F-Redis%EF%BC%9F</link>
+    <guid>https://wangze.tech/28%EF%BD%9CPika%EF%BC%9A%E5%A6%82%E4%BD%95%E5%9F%BA%E4%BA%8E-SSD-%E5%AE%9E%E7%8E%B0%E5%A4%A7%E5%AE%B9%E9%87%8F-Redis%EF%BC%9F</guid>
+    <description> 基于大内存实现大容量 Redis 实例的潜在问题 内存快照 RDB 生成和恢复效率低 主从节点全量同步时长增加、缓冲区易溢出 Pika 键值数据库 设计目标 一、单实例可以保存大容量数据，同时避免实例恢复和主从同步时的潜在问题 二、和 Redis 数据类型保持兼容，可以平滑迁移到 Pika 上 整体架构 网络框架 Pika 线程模块 多线程 一个请求分发线程 DispatchThread 一组工作线程 WorkerThread 一个线程池 ThreadPool Nemo 存储模块 实现 Pika 和 Redis 的数据兼容 List Set Hash Sorted Set 不用修改业务应用中操作 Redis 的代码 RocksDB RocksDB 写入数据的基本流程 基于 SSD 保存数据 是一个持久化键值数据库 保存数据 使用两小块内存空间 Memtable1 和 Memtable2 交替缓存写入的数据 大小可设置 max_write_buffer_number 控制写限速 其中一块写满后，RocksDB 把数据以文件的形式快速写入底层的 SSD 读取数据 先在 Member 中查询，查询不到再到数据文件中查询 避免了内存快照的生成和恢复问题 在把数据写入 Memtable 时，也会把命令操作写到 binlog 文件中。 binlog 机制 实现增量命令同步 节省了内存，避免缓冲区溢出 其他优势 实例重启快 主从库执行全量同步风险低，不受内存缓冲区大小的限制 不足 性能比用内存低 多线程模型一定程度上弥补从 SSD 存取数据造成的性能损失 写 binlog 时影响性能 降低性能影响的建议 利用 Pika 的多线程模型，增加线程数量，提升 Pika 的并发请求处理能力 为 Pika 配置高配的 SSD，提升 SSD 自身的访问性能 工具 使用 aof_to_pika 命令迁移 Redis 数据到 Pika 中 Github｜Pika .</description>
+    <pubDate>Fri, 01 Mar 2024 15:36:18 GMT</pubDate>
   </item><item>
-    <title>08｜哨兵集群：哨兵挂了，主从库还能切换吗？</title>
-    <link>https://wangze.tech/08%EF%BD%9C%E5%93%A8%E5%85%B5%E9%9B%86%E7%BE%A4%EF%BC%9A%E5%93%A8%E5%85%B5%E6%8C%82%E4%BA%86%EF%BC%8C%E4%B8%BB%E4%BB%8E%E5%BA%93%E8%BF%98%E8%83%BD%E5%88%87%E6%8D%A2%E5%90%97%EF%BC%9F</link>
-    <guid>https://wangze.tech/08%EF%BD%9C%E5%93%A8%E5%85%B5%E9%9B%86%E7%BE%A4%EF%BC%9A%E5%93%A8%E5%85%B5%E6%8C%82%E4%BA%86%EF%BC%8C%E4%B8%BB%E4%BB%8E%E5%BA%93%E8%BF%98%E8%83%BD%E5%88%87%E6%8D%A2%E5%90%97%EF%BC%9F</guid>
-    <description> 本质上哨兵就是一个运行在特定模式下的 Redis 实例。 基于 pub/sub 机制的哨兵集群组成过程（发布/订阅机制） 只有订阅了同一个频道的应用才能通过发布的消息进行信息交换 哨兵通过 __sentinel__:hello 频道互相发现、通信 给主库发送 INFO 命令拿到从库列表，哨兵根据列表上的连接信息和从库建立连接并监控 基于哨兵自身的 pub/sub 功能，实现客户端和哨兵之间的事件通知 重要的频道汇总图 订阅例子：客户端执行 SUBSCRIBE * 订阅所有事件 由哪一个哨兵执行主从切换？ 和主库客观下线的判断过程类似，投票仲裁 标记主库“主观下线” 向其他哨兵实例要赞成票 获得仲裁所需的赞成票后，就可以标记主库为“客观下线”。 成功标记主库为客观下线的哨兵实例向其他哨兵发送命令，表明希望执行主从切换 投票（Y/N），确定 Leader 拿到半数以上赞成票 拿到的票数大于等于哨兵配置文件中的 quorum 值 每个哨兵只能投一个赞成票，可以给自己投，第一次必投 Y 所有哨兵同时判断主库主观下线，然后同时得到客观下线的结论时，每个哨兵各自一票（概率极低） 要保证所有哨兵实例的配置是一致的，尤其是主观下线的判断值 down-after-milliseconds 思考题 配置了包含 5 个哨兵实例的集群，quorum 值设为 2。在运行过程中，如果有 3 个哨兵实例都发生故障，此时，Redis 主库如果有故障，还能正确地判断主库“客观下线”吗？ 能，两个哨兵都给出主观下线的结果，达到了 quorum 的值 如果可以的话，还能进行主从库自动切换吗？ 不能主从切换，选举 Leader 拿不到超过半数的选票（5/2 + 1 = 3） 哨兵实例是不是越多越好呢？ 不是。通信次数增多，故障风险变大，选举时间变长 调大 down-after-milliseconds 值，对减少误判有没有好处？ 有好处，降低误判的概率，但主从切换时间变长，对业务影响时间变久 .</description>
-    <pubDate>Tue, 27 Feb 2024 16:23:37 GMT</pubDate>
+    <title>29｜无锁的原子操作：Redis 如何应对并发访问？</title>
+    <link>https://wangze.tech/29%EF%BD%9C%E6%97%A0%E9%94%81%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%EF%BC%9ARedis-%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E5%B9%B6%E5%8F%91%E8%AE%BF%E9%97%AE%EF%BC%9F</link>
+    <guid>https://wangze.tech/29%EF%BD%9C%E6%97%A0%E9%94%81%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%EF%BC%9ARedis-%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E5%B9%B6%E5%8F%91%E8%AE%BF%E9%97%AE%EF%BC%9F</guid>
+    <description> 原子操作 单命令操作 多个操作在 Redis 中实现成一个操作（如改源码） INCR/DECR 命令 以原子性方式执行 Lua 脚本 redis-cli —eval {lua.script} {keys}, {args} 要避免把不需要做并发控制的操作写入脚本 并发访问中需要控制的操作 读取 - 修改 - 写回操作（RMW） .</description>
+    <pubDate>Fri, 01 Mar 2024 15:36:18 GMT</pubDate>
   </item><item>
-    <title>09｜切片集群：数据增多了，是该加内存还是加实例？</title>
-    <link>https://wangze.tech/09%EF%BD%9C%E5%88%87%E7%89%87%E9%9B%86%E7%BE%A4%EF%BC%9A%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%A4%9A%E4%BA%86%EF%BC%8C%E6%98%AF%E8%AF%A5%E5%8A%A0%E5%86%85%E5%AD%98%E8%BF%98%E6%98%AF%E5%8A%A0%E5%AE%9E%E4%BE%8B%EF%BC%9F</link>
-    <guid>https://wangze.tech/09%EF%BD%9C%E5%88%87%E7%89%87%E9%9B%86%E7%BE%A4%EF%BC%9A%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%A4%9A%E4%BA%86%EF%BC%8C%E6%98%AF%E8%AF%A5%E5%8A%A0%E5%86%85%E5%AD%98%E8%BF%98%E6%98%AF%E5%8A%A0%E5%AE%9E%E4%BE%8B%EF%BC%9F</guid>
-    <description>纵向扩展 升级单个 Redis 实例的资源配置，包括增加内存容量、增加磁盘容量、使用更高配置的 CPU 实施起来简单、直接 当使用 RDB 对数据进行持久化时，如果数据量增加，需要的内存也会增加，主线程 fork 子进程时就可能会阻塞（耗时长） 不要求持久化保存 Redis 数据时是一个不错的选择 受到硬件和成本的限制 横向扩展 增加当前 Redis 实例的个数 扩展性更好 数据切片后，在多个实例之间如何分布？ 客户端怎么确定想要访问的数据在哪个实例上？ 切片集群 是一种保存大量数据的通用机制，可以有不同的实现方案 Redis Cluster（官方） 采用哈希槽（Hash Slot）处理数据与实例之间的映射关系 共有 16384 个哈希槽，个数在客户端和服务端写死 根据键值对的 key，按照 CRC16 算法 计算一个 16 bit 的值 用值对 16384 取模，得到 0～16383 范围内的模数（哈希槽编号） 数据映射关系：键的哈希值 ⇒ 哈希槽 ⇒ 不同的实例 部署 手动或自动将所有槽分配完后，集群才能正常工作 cluster create 命令创建集群，自动将槽平均分布在实例上 cluster meet 手动建立实例间的连接形成集群，再使用 cluster addslots 制定每个实例上的哈希槽个数 客户端如何定位数据？ Redis 实例会把自己的哈希槽信息发给和它相连接的其他实例，实例相互连接后每个实例都有所有哈希槽的映射关系 客户端将哈希槽信息缓存在本地 先计算键对应的哈希槽 然后给相应的哈希槽发送请求 运维人员手动触发进行负载均衡和数据迁移 常见的变化 在集群中，实例有新增或删除，Redis 需要重新分配哈希槽 为了负载均衡，Redis 需要把哈希槽在所有实例上重新分布一遍 重定向机制 当客户端把一个键值对的操作请求发给一个实例时，如果这个实例上并没有这个键值对映射的哈希槽，这个实例就会给客户端返回 MOVED 命令响应结果，这个结果中就包含了新实例的访问地址 响应结果示例：GET hello:key｜(error) MOVED 13320 172.</description>
-    <pubDate>Tue, 27 Feb 2024 16:23:37 GMT</pubDate>
+    <title>30｜如何使用 Redis 实现分布式锁？</title>
+    <link>https://wangze.tech/30%EF%BD%9C%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Redis-%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%EF%BC%9F</link>
+    <guid>https://wangze.tech/30%EF%BD%9C%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Redis-%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%EF%BC%9F</guid>
+    <description>单机版 用一个变量表示：0 没有线程获取到锁；1 有线程获取到锁 分布式锁 锁变量需要有一个共享存储系统来维护 如果为了效率，可以使用单节点，缺点是允许锁偶尔失效，优点是简单效率高 业务对结果要求非常严格，为了正确性，使用 Redlock，缺点是比较重，部署成本高 基于单个节点 加锁 SET lock_key unique_value NX [EX seconds | PX milliseconds] key 不存在时会被创建 key 存在，不做任何赋值操作 例：SET lock_key unique_value NX PX 10000 加锁成功后设置有效期 将上述操作写进 Lua 脚本作为一个原子操作 释放锁 比较锁变量的 unique_value 是否相等，避免误释放 unique_value：随机值，唯一，和其他客户端作区分 使用 Lua 脚本保证原子性 例：redis-cli —eval unlock.</description>
+    <pubDate>Fri, 01 Mar 2024 15:36:18 GMT</pubDate>
   </item>
     </channel>
   </rss>
