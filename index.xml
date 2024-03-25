@@ -6,65 +6,65 @@
       <description>Last 10 notes on 🫧 11ze</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>31｜事务机制｜Redis 能实现 ACID 属性吗？</title>
+    <link>https://wangze.tech/31%EF%BD%9C%E4%BA%8B%E5%8A%A1%E6%9C%BA%E5%88%B6%EF%BD%9CRedis-%E8%83%BD%E5%AE%9E%E7%8E%B0-ACID-%E5%B1%9E%E6%80%A7%E5%90%97%EF%BC%9F</link>
+    <guid>https://wangze.tech/31%EF%BD%9C%E4%BA%8B%E5%8A%A1%E6%9C%BA%E5%88%B6%EF%BD%9CRedis-%E8%83%BD%E5%AE%9E%E7%8E%B0-ACID-%E5%B1%9E%E6%80%A7%E5%90%97%EF%BC%9F</guid>
+    <description>事务命令 MULTI：开启一个事务 EXEC：提交事务，从命令队列中去除提交的操作命令，进行实际执行 DISCARD：放弃一个事务，清空命令队列 只是清空，起不到回滚的作用 WATCH：检测一个或多个键的值在事务执行期间是否发生变化，如果发生变化，那么当前事务放弃执行 Redis 的事务机制 可以保证一致性和隔离性，无法保证持久性（非必要） ...</description>
+    <pubDate>Mon, 25 Mar 2024 14:48:20 GMT</pubDate>
+  </item><item>
+    <title>32｜Redis 主从同步与故障切换，有哪些坑？</title>
+    <link>https://wangze.tech/32%EF%BD%9CRedis-%E4%B8%BB%E4%BB%8E%E5%90%8C%E6%AD%A5%E4%B8%8E%E6%95%85%E9%9A%9C%E5%88%87%E6%8D%A2%EF%BC%8C%E6%9C%89%E5%93%AA%E4%BA%9B%E5%9D%91%EF%BC%9F</link>
+    <guid>https://wangze.tech/32%EF%BD%9CRedis-%E4%B8%BB%E4%BB%8E%E5%90%8C%E6%AD%A5%E4%B8%8E%E6%95%85%E9%9A%9C%E5%88%87%E6%8D%A2%EF%BC%8C%E6%9C%89%E5%93%AA%E4%BA%9B%E5%9D%91%EF%BC%9F</guid>
+    <description>1. 主从数据不一致 因为主从数据是异步复制 a）使用外部监控程序对比主从库复制进度，不让客户端从落后的从库中读取数据 开发一个工具： 基于 INFO replication 命令查看主库接收写命令的进度信息（master_repl_offset）和从库复制写命令的进度信息（slave_repl_offset） 比较两者大小，大于我们预设的阈值则不让客户端和此从库连接 b）保证主从间的网络链接状况良好 2.</description>
+    <pubDate>Mon, 25 Mar 2024 14:48:20 GMT</pubDate>
+  </item><item>
+    <title>33｜脑裂：一次奇怪的数据丢失</title>
+    <link>https://wangze.tech/33%EF%BD%9C%E8%84%91%E8%A3%82%EF%BC%9A%E4%B8%80%E6%AC%A1%E5%A5%87%E6%80%AA%E7%9A%84%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1</link>
+    <guid>https://wangze.tech/33%EF%BD%9C%E8%84%91%E8%A3%82%EF%BC%9A%E4%B8%80%E6%AC%A1%E5%A5%87%E6%80%AA%E7%9A%84%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1</guid>
+    <description>脑裂 指在主从集群中，同时有两个主节点，都能接收写请求 影响：客户端不知道该往哪个主节点写入数据，结果不同客户端往不同的主节点写数据，严重的会导致数据丢失 数据丢失排查过程 确认是不是数据同步出现问题 主库的数据未同步到从库且发生了故障，从库升级为主库，未同步的数据丢失 可以通过计算 master_repl_offset ...</description>
+    <pubDate>Mon, 25 Mar 2024 14:48:20 GMT</pubDate>
+  </item><item>
+    <title>35｜Codis VS Redis Cluster：我该选择哪一个集群方案？</title>
+    <link>https://wangze.tech/35%EF%BD%9CCodis-VS-Redis-Cluster%EF%BC%9A%E6%88%91%E8%AF%A5%E9%80%89%E6%8B%A9%E5%93%AA%E4%B8%80%E4%B8%AA%E9%9B%86%E7%BE%A4%E6%96%B9%E6%A1%88%EF%BC%9F</link>
+    <guid>https://wangze.tech/35%EF%BD%9CCodis-VS-Redis-Cluster%EF%BC%9A%E6%88%91%E8%AF%A5%E9%80%89%E6%8B%A9%E5%93%AA%E4%B8%80%E4%B8%AA%E9%9B%86%E7%BE%A4%E6%96%B9%E6%A1%88%EF%BC%9F</guid>
+    <description>Codis 集群 Codis 集群的架构和关键组件图 codis server 进行了二次开发的 Redis 实例，其中增加了额外的数据结构，支持数据迁移操作，主要负责处理具体的数据读写请求 codis proxy 接收客户端请求，并把请求转发给 codis server Zookeeper 集群 保存集群元数据，例如数据位置信息和 ...</description>
+    <pubDate>Mon, 25 Mar 2024 14:48:20 GMT</pubDate>
+  </item><item>
+    <title>36｜Redis 支撑秒杀场景的关键技术和实践都有哪些？</title>
+    <link>https://wangze.tech/36%EF%BD%9CRedis-%E6%94%AF%E6%92%91%E7%A7%92%E6%9D%80%E5%9C%BA%E6%99%AF%E7%9A%84%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF%E5%92%8C%E5%AE%9E%E8%B7%B5%E9%83%BD%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F</link>
+    <guid>https://wangze.tech/36%EF%BD%9CRedis-%E6%94%AF%E6%92%91%E7%A7%92%E6%9D%80%E5%9C%BA%E6%99%AF%E7%9A%84%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF%E5%92%8C%E5%AE%9E%E8%B7%B5%E9%83%BD%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F</guid>
+    <description>特征 瞬时并发访问量非常高 读多写少 秒杀场景的所有环节 活动前 不需要 Redis 尽量把商品详情页页面元素静态化，然后使用前端 CDN 或浏览器缓存把元素缓存起来 活动开始 Redis 参与的两个环节 使用 Redis 保存库存量，不交给数据库做库存扣减 如果把库存扣减在数据库执行，会带来两个问题 额外的开销。Redis 中保存了库存量，而库存量的最新值又是数据库在维护，所以数据库更新后，还需要和 ...</description>
+    <pubDate>Mon, 25 Mar 2024 14:48:20 GMT</pubDate>
+  </item><item>
+    <title>37｜数据分布优化：如何应对数据倾斜？</title>
+    <link>https://wangze.tech/37%EF%BD%9C%E6%95%B0%E6%8D%AE%E5%88%86%E5%B8%83%E4%BC%98%E5%8C%96%EF%BC%9A%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E6%95%B0%E6%8D%AE%E5%80%BE%E6%96%9C%EF%BC%9F</link>
+    <guid>https://wangze.tech/37%EF%BD%9C%E6%95%B0%E6%8D%AE%E5%88%86%E5%B8%83%E4%BC%98%E5%8C%96%EF%BC%9A%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E6%95%B0%E6%8D%AE%E5%80%BE%E6%96%9C%EF%BC%9F</guid>
+    <description>数据量倾斜 在某些情况下，实例上的数据分布不均衡，某个实例上的数据特别多 bigkey 集合类型的 bigkey 如果是集合类型，可以拆分成很多个小的集合类型数据，分散保存在不同的实例上 比如通过 ID 范围拆分 避免 bigkey Slot 分配不均衡 手动迁移 Redis Cluster 的 Slot cluster slots 命令查看 ...</description>
+    <pubDate>Mon, 25 Mar 2024 14:48:20 GMT</pubDate>
+  </item><item>
+    <title>38｜通信开销：限制 Redis Cluster 规模的关键因素</title>
+    <link>https://wangze.tech/38%EF%BD%9C%E9%80%9A%E4%BF%A1%E5%BC%80%E9%94%80%EF%BC%9A%E9%99%90%E5%88%B6-Redis-Cluster-%E8%A7%84%E6%A8%A1%E7%9A%84%E5%85%B3%E9%94%AE%E5%9B%A0%E7%B4%A0</link>
+    <guid>https://wangze.tech/38%EF%BD%9C%E9%80%9A%E4%BF%A1%E5%BC%80%E9%94%80%EF%BC%9A%E9%99%90%E5%88%B6-Redis-Cluster-%E8%A7%84%E6%A8%A1%E7%9A%84%E5%85%B3%E9%94%AE%E5%9B%A0%E7%B4%A0</guid>
+    <description>...</description>
+    <pubDate>Mon, 25 Mar 2024 14:48:20 GMT</pubDate>
+  </item><item>
     <title>39｜Redis 6.0 的新特性：多线程、客户端缓存与安全</title>
     <link>https://wangze.tech/39%EF%BD%9CRedis-6.0-%E7%9A%84%E6%96%B0%E7%89%B9%E6%80%A7%EF%BC%9A%E5%A4%9A%E7%BA%BF%E7%A8%8B%E3%80%81%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BC%93%E5%AD%98%E4%B8%8E%E5%AE%89%E5%85%A8</link>
     <guid>https://wangze.tech/39%EF%BD%9CRedis-6.0-%E7%9A%84%E6%96%B0%E7%89%B9%E6%80%A7%EF%BC%9A%E5%A4%9A%E7%BA%BF%E7%A8%8B%E3%80%81%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BC%93%E5%AD%98%E4%B8%8E%E5%AE%89%E5%85%A8</guid>
     <description>多 IO 线程 作用：使用多个 IO 线程并行读取网络请求、进行协议解析、回写 Socket 主线程和 IO 线程协作完成请求处理 阶段一：服务端和客户端建立 Socket 连接，并分配处理线程 阶段二：IO 线程读取并解析请求 阶段三：主线程执行请求操作 阶段四：IO 线程回写 Socket 和主线程清空全局队列 启用多线程命令：io-threads-do-reads ...</description>
-    <pubDate>Mon, 18 Mar 2024 04:16:19 GMT</pubDate>
+    <pubDate>Mon, 25 Mar 2024 14:48:20 GMT</pubDate>
   </item><item>
     <title>40｜Redis 的下一步：基于 NVM 内存的实践</title>
     <link>https://wangze.tech/40%EF%BD%9CRedis-%E7%9A%84%E4%B8%8B%E4%B8%80%E6%AD%A5%EF%BC%9A%E5%9F%BA%E4%BA%8E-NVM-%E5%86%85%E5%AD%98%E7%9A%84%E5%AE%9E%E8%B7%B5</link>
     <guid>https://wangze.tech/40%EF%BD%9CRedis-%E7%9A%84%E4%B8%8B%E4%B8%80%E6%AD%A5%EF%BC%9A%E5%9F%BA%E4%BA%8E-NVM-%E5%86%85%E5%AD%98%E7%9A%84%E5%AE%9E%E8%B7%B5</guid>
     <description>...</description>
-    <pubDate>Mon, 18 Mar 2024 04:16:19 GMT</pubDate>
+    <pubDate>Mon, 25 Mar 2024 14:48:20 GMT</pubDate>
   </item><item>
     <title>41｜第 35～40 讲课后思考题答案及常见问题答疑</title>
     <link>https://wangze.tech/41%EF%BD%9C%E7%AC%AC-35%EF%BD%9E40-%E8%AE%B2%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%E5%8F%8A%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E7%AD%94%E7%96%91</link>
     <guid>https://wangze.tech/41%EF%BD%9C%E7%AC%AC-35%EF%BD%9E40-%E8%AE%B2%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%E5%8F%8A%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E7%AD%94%E7%96%91</guid>
     <description>...</description>
-    <pubDate>Mon, 18 Mar 2024 04:16:19 GMT</pubDate>
-  </item><item>
-    <title>Capslock</title>
-    <link>https://wangze.tech/Capslock</link>
-    <guid>https://wangze.tech/Capslock</guid>
-    <description>功能 加强 Caps 键功能 安装 Github 到系统设置 - 键盘 - 键盘快捷键 - Modifier Keys 里选择键盘 设置单击 Caps 切换输入法 打开配置文件 ~/.config/karabiner/karabiner.json 搜 &quot;key_code&quot;: &quot;spacebar&quot; 将 to_if_alone ...</description>
-    <pubDate>Mon, 18 Mar 2024 04:16:19 GMT</pubDate>
-  </item><item>
-    <title>Crontab 执行提示没有权限</title>
-    <link>https://wangze.tech/Crontab-%E6%89%A7%E8%A1%8C%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90</link>
-    <guid>https://wangze.tech/Crontab-%E6%89%A7%E8%A1%8C%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90</guid>
-    <description> Mac 的解决方案：How to Fix Cron “Operation not permitted” error in macOS - ITPro Helper 检查有没有用户对应的 home 目录 .</description>
-    <pubDate>Mon, 18 Mar 2024 04:16:19 GMT</pubDate>
-  </item><item>
-    <title>Linux 安装 oh-my-zsh</title>
-    <link>https://wangze.tech/Linux-%E5%AE%89%E8%A3%85-oh-my-zsh</link>
-    <guid>https://wangze.tech/Linux-%E5%AE%89%E8%A3%85-oh-my-zsh</guid>
-    <description>安装 Zsh github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH sudo apt install zsh # 查看所有可用 shell chsh -l # 将终端默认 shell 切换到 zsh，后面要输入实际看到的 zsh 路径 chsh -s /bin/zsh # 新开一个终端确认是否切换成功 echo ...</description>
-    <pubDate>Mon, 18 Mar 2024 04:16:19 GMT</pubDate>
-  </item><item>
-    <title>Obsidian</title>
-    <link>https://wangze.tech/Obsidian</link>
-    <guid>https://wangze.tech/Obsidian</guid>
-    <description> 官网 Obsidian 是一个功能强大且可扩展的知识库，它在您的本地纯文本文件文件夹之上运行。 .</description>
-    <pubDate>Mon, 18 Mar 2024 04:16:19 GMT</pubDate>
-  </item><item>
-    <title>Oh My Zsh</title>
-    <link>https://wangze.tech/Oh-My-Zsh</link>
-    <guid>https://wangze.tech/Oh-My-Zsh</guid>
-    <description>...</description>
-    <pubDate>Mon, 18 Mar 2024 04:16:19 GMT</pubDate>
-  </item><item>
-    <title>Rate Limit</title>
-    <link>https://wangze.tech/Rate-Limit</link>
-    <guid>https://wangze.tech/Rate-Limit</guid>
-    <description>功能 限制接口请求数 缓存数据格式 key: { current_count: number; // 也可以不要该字段，每次请求都算一次队列长度 started_at: date; request_time_queue: date[]; time_range: number; // 时间窗口大小 count_limit: number; ...</description>
-    <pubDate>Mon, 18 Mar 2024 04:16:19 GMT</pubDate>
-  </item><item>
-    <title>Redis 学习路径</title>
-    <link>https://wangze.tech/Redis-%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84</link>
-    <guid>https://wangze.tech/Redis-%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84</guid>
-    <description>...</description>
-    <pubDate>Mon, 18 Mar 2024 04:16:19 GMT</pubDate>
+    <pubDate>Mon, 25 Mar 2024 14:48:20 GMT</pubDate>
   </item>
     </channel>
   </rss>
