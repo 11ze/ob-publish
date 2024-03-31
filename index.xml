@@ -6,65 +6,65 @@
       <description>Last 10 notes on 🫧 11ze</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
-    <title>18｜波动的响应延迟：如何应对变慢的 Redis？（上）</title>
-    <link>https://wangze.tech/18%EF%BD%9C%E6%B3%A2%E5%8A%A8%E7%9A%84%E5%93%8D%E5%BA%94%E5%BB%B6%E8%BF%9F%EF%BC%9A%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E5%8F%98%E6%85%A2%E7%9A%84-Redis%EF%BC%9F%EF%BC%88%E4%B8%8A%EF%BC%89</link>
-    <guid>https://wangze.tech/18%EF%BD%9C%E6%B3%A2%E5%8A%A8%E7%9A%84%E5%93%8D%E5%BA%94%E5%BB%B6%E8%BF%9F%EF%BC%9A%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E5%8F%98%E6%85%A2%E7%9A%84-Redis%EF%BC%9F%EF%BC%88%E4%B8%8A%EF%BC%89</guid>
-    <description>...</description>
-    <pubDate>Sun, 31 Mar 2024 06:20:56 GMT</pubDate>
+    <title>39｜Redis 6.0 的新特性：多线程、客户端缓存与安全</title>
+    <link>https://wangze.tech/39%EF%BD%9CRedis-6.0-%E7%9A%84%E6%96%B0%E7%89%B9%E6%80%A7%EF%BC%9A%E5%A4%9A%E7%BA%BF%E7%A8%8B%E3%80%81%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BC%93%E5%AD%98%E4%B8%8E%E5%AE%89%E5%85%A8</link>
+    <guid>https://wangze.tech/39%EF%BD%9CRedis-6.0-%E7%9A%84%E6%96%B0%E7%89%B9%E6%80%A7%EF%BC%9A%E5%A4%9A%E7%BA%BF%E7%A8%8B%E3%80%81%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BC%93%E5%AD%98%E4%B8%8E%E5%AE%89%E5%85%A8</guid>
+    <description>多 IO 线程 作用：使用多个 IO 线程并行读取网络请求、进行协议解析、回写 Socket 主线程和 IO 线程协作完成请求处理 阶段一：服务端和客户端建立 Socket 连接，并分配处理线程 阶段二：IO 线程读取并解析请求 阶段三：主线程执行请求操作 阶段四：IO 线程回写 Socket 和主线程清空全局队列 启用多线程命令：io-threads-do-reads ...</description>
+    <pubDate>Sun, 31 Mar 2024 06:33:52 GMT</pubDate>
   </item><item>
-    <title>19｜波动的响应延迟：如何应对变慢的 Redis？（下）</title>
-    <link>https://wangze.tech/19%EF%BD%9C%E6%B3%A2%E5%8A%A8%E7%9A%84%E5%93%8D%E5%BA%94%E5%BB%B6%E8%BF%9F%EF%BC%9A%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E5%8F%98%E6%85%A2%E7%9A%84-Redis%EF%BC%9F%EF%BC%88%E4%B8%8B%EF%BC%89</link>
-    <guid>https://wangze.tech/19%EF%BD%9C%E6%B3%A2%E5%8A%A8%E7%9A%84%E5%93%8D%E5%BA%94%E5%BB%B6%E8%BF%9F%EF%BC%9A%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E5%8F%98%E6%85%A2%E7%9A%84-Redis%EF%BC%9F%EF%BC%88%E4%B8%8B%EF%BC%89</guid>
+    <title>40｜Redis 的下一步：基于 NVM 内存的实践</title>
+    <link>https://wangze.tech/40%EF%BD%9CRedis-%E7%9A%84%E4%B8%8B%E4%B8%80%E6%AD%A5%EF%BC%9A%E5%9F%BA%E4%BA%8E-NVM-%E5%86%85%E5%AD%98%E7%9A%84%E5%AE%9E%E8%B7%B5</link>
+    <guid>https://wangze.tech/40%EF%BD%9CRedis-%E7%9A%84%E4%B8%8B%E4%B8%80%E6%AD%A5%EF%BC%9A%E5%9F%BA%E4%BA%8E-NVM-%E5%86%85%E5%AD%98%E7%9A%84%E5%AE%9E%E8%B7%B5</guid>
     <description>...</description>
-    <pubDate>Sun, 31 Mar 2024 06:20:56 GMT</pubDate>
+    <pubDate>Sun, 31 Mar 2024 06:33:52 GMT</pubDate>
   </item><item>
-    <title>20｜删除数据后，为什么内存占用率还是很高？</title>
-    <link>https://wangze.tech/20%EF%BD%9C%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E5%90%8E%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E7%8E%87%E8%BF%98%E6%98%AF%E5%BE%88%E9%AB%98%EF%BC%9F</link>
-    <guid>https://wangze.tech/20%EF%BD%9C%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E5%90%8E%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E7%8E%87%E8%BF%98%E6%98%AF%E5%BE%88%E9%AB%98%EF%BC%9F</guid>
+    <title>41｜第 35～40 讲课后思考题答案及常见问题答疑</title>
+    <link>https://wangze.tech/41%EF%BD%9C%E7%AC%AC-35%EF%BD%9E40-%E8%AE%B2%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%E5%8F%8A%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E7%AD%94%E7%96%91</link>
+    <guid>https://wangze.tech/41%EF%BD%9C%E7%AC%AC-35%EF%BD%9E40-%E8%AE%B2%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%E5%8F%8A%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E7%AD%94%E7%96%91</guid>
     <description>...</description>
-    <pubDate>Sun, 31 Mar 2024 06:20:56 GMT</pubDate>
+    <pubDate>Sun, 31 Mar 2024 06:33:52 GMT</pubDate>
   </item><item>
-    <title>21｜缓冲区：一个可能引发“惨案”的地方</title>
-    <link>https://wangze.tech/21%EF%BD%9C%E7%BC%93%E5%86%B2%E5%8C%BA%EF%BC%9A%E4%B8%80%E4%B8%AA%E5%8F%AF%E8%83%BD%E5%BC%95%E5%8F%91%E2%80%9C%E6%83%A8%E6%A1%88%E2%80%9D%E7%9A%84%E5%9C%B0%E6%96%B9</link>
-    <guid>https://wangze.tech/21%EF%BD%9C%E7%BC%93%E5%86%B2%E5%8C%BA%EF%BC%9A%E4%B8%80%E4%B8%AA%E5%8F%AF%E8%83%BD%E5%BC%95%E5%8F%91%E2%80%9C%E6%83%A8%E6%A1%88%E2%80%9D%E7%9A%84%E5%9C%B0%E6%96%B9</guid>
+    <title>Capslock</title>
+    <link>https://wangze.tech/Capslock</link>
+    <guid>https://wangze.tech/Capslock</guid>
+    <description>功能 加强 Caps 键功能 安装 Github 到系统设置 - 键盘 - 键盘快捷键 - Modifier Keys 里选择键盘 设置单击 Caps 切换输入法 打开配置文件 ~/.config/karabiner/karabiner.json 搜 &quot;key_code&quot;: &quot;spacebar&quot; 将 to_if_alone ...</description>
+    <pubDate>Sun, 31 Mar 2024 06:33:52 GMT</pubDate>
+  </item><item>
+    <title>Crontab 执行提示没有权限</title>
+    <link>https://wangze.tech/Crontab-%E6%89%A7%E8%A1%8C%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90</link>
+    <guid>https://wangze.tech/Crontab-%E6%89%A7%E8%A1%8C%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90</guid>
+    <description> Mac 的解决方案：How to Fix Cron “Operation not permitted” error in macOS - ITPro Helper 检查有没有用户对应的 home 目录 .</description>
+    <pubDate>Sun, 31 Mar 2024 06:33:52 GMT</pubDate>
+  </item><item>
+    <title>Linux 安装 oh-my-zsh</title>
+    <link>https://wangze.tech/Linux-%E5%AE%89%E8%A3%85-oh-my-zsh</link>
+    <guid>https://wangze.tech/Linux-%E5%AE%89%E8%A3%85-oh-my-zsh</guid>
+    <description>安装 Zsh github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH sudo apt install zsh # 查看所有可用 shell chsh -l # 将终端默认 shell 切换到 zsh，后面要输入实际看到的 zsh 路径 chsh -s /bin/zsh # 新开一个终端确认是否切换成功 echo ...</description>
+    <pubDate>Sun, 31 Mar 2024 06:33:52 GMT</pubDate>
+  </item><item>
+    <title>Obsidian</title>
+    <link>https://wangze.tech/Obsidian</link>
+    <guid>https://wangze.tech/Obsidian</guid>
+    <description> 官网 Obsidian 是一个功能强大且可扩展的知识库，它在您的本地纯文本文件文件夹之上运行。 .</description>
+    <pubDate>Sun, 31 Mar 2024 06:33:52 GMT</pubDate>
+  </item><item>
+    <title>Oh My Zsh</title>
+    <link>https://wangze.tech/Oh-My-Zsh</link>
+    <guid>https://wangze.tech/Oh-My-Zsh</guid>
     <description>...</description>
-    <pubDate>Sun, 31 Mar 2024 06:20:56 GMT</pubDate>
+    <pubDate>Sun, 31 Mar 2024 06:33:52 GMT</pubDate>
   </item><item>
-    <title>22｜第 11～21 讲课后思考题答案及常见问题答疑</title>
-    <link>https://wangze.tech/22%EF%BD%9C%E7%AC%AC-11%EF%BD%9E21-%E8%AE%B2%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%E5%8F%8A%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E7%AD%94%E7%96%91</link>
-    <guid>https://wangze.tech/22%EF%BD%9C%E7%AC%AC-11%EF%BD%9E21-%E8%AE%B2%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%E5%8F%8A%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E7%AD%94%E7%96%91</guid>
+    <title>Rate Limit</title>
+    <link>https://wangze.tech/Rate-Limit</link>
+    <guid>https://wangze.tech/Rate-Limit</guid>
+    <description>功能 限制接口请求数 缓存数据格式 key: { current_count: number; // 也可以不要该字段，每次请求都算一次队列长度 started_at: date; request_time_queue: date[]; time_range: number; // 时间窗口大小 count_limit: number; ...</description>
+    <pubDate>Sun, 31 Mar 2024 06:33:52 GMT</pubDate>
+  </item><item>
+    <title>Redis 学习路径</title>
+    <link>https://wangze.tech/Redis-%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84</link>
+    <guid>https://wangze.tech/Redis-%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84</guid>
     <description>...</description>
-    <pubDate>Sun, 31 Mar 2024 06:20:56 GMT</pubDate>
-  </item><item>
-    <title>23｜旁路缓存：Redis 是如何工作的？</title>
-    <link>https://wangze.tech/23%EF%BD%9C%E6%97%81%E8%B7%AF%E7%BC%93%E5%AD%98%EF%BC%9ARedis-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84%EF%BC%9F</link>
-    <guid>https://wangze.tech/23%EF%BD%9C%E6%97%81%E8%B7%AF%E7%BC%93%E5%AD%98%EF%BC%9ARedis-%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84%EF%BC%9F</guid>
-    <description>...</description>
-    <pubDate>Sun, 31 Mar 2024 06:20:56 GMT</pubDate>
-  </item><item>
-    <title>24｜替换策略：缓存满了怎么办？</title>
-    <link>https://wangze.tech/24%EF%BD%9C%E6%9B%BF%E6%8D%A2%E7%AD%96%E7%95%A5%EF%BC%9A%E7%BC%93%E5%AD%98%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F</link>
-    <guid>https://wangze.tech/24%EF%BD%9C%E6%9B%BF%E6%8D%A2%E7%AD%96%E7%95%A5%EF%BC%9A%E7%BC%93%E5%AD%98%E6%BB%A1%E4%BA%86%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F</guid>
-    <description>...</description>
-    <pubDate>Sun, 31 Mar 2024 06:20:56 GMT</pubDate>
-  </item><item>
-    <title>25｜缓存异常（上）：如何解决缓存和数据库的数据不一致问题？</title>
-    <link>https://wangze.tech/25%EF%BD%9C%E7%BC%93%E5%AD%98%E5%BC%82%E5%B8%B8%EF%BC%88%E4%B8%8A%EF%BC%89%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%95%B0%E6%8D%AE%E4%B8%8D%E4%B8%80%E8%87%B4%E9%97%AE%E9%A2%98%EF%BC%9F</link>
-    <guid>https://wangze.tech/25%EF%BD%9C%E7%BC%93%E5%AD%98%E5%BC%82%E5%B8%B8%EF%BC%88%E4%B8%8A%EF%BC%89%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%95%B0%E6%8D%AE%E4%B8%8D%E4%B8%80%E8%87%B4%E9%97%AE%E9%A2%98%EF%BC%9F</guid>
-    <description> 数据的一致性 缓存中有数据，缓存的数据值需要和数据库中的值相同 缓存中没有数据，数据库中的值必须是最新值 「读写缓存」 要保证一致性可以采用同步直写策略 适用于读写相当的业务场景 「只读缓存」 数据不一致的问题原因、现象和应对方案 分为 1. 先删除缓存再更新数据库；2. 先更新数据库再删除缓存 适用于读操作比较多的业务场景 优先使用先更新数据库再删除缓存的方法 先删除缓存可能导致请求因缓存缺失而访问数据库，给数据库带来压力 业务应用中读取数据库和写缓存的时间不好估算，所以延迟双删的等待时间不好设置 注意：如果要保证数据一致，可以在更新数据库的时候在 Redis 缓存客户端暂存并发读请求，等数据库更新完、缓存值删除后再读取数据 .</description>
-    <pubDate>Sun, 31 Mar 2024 06:20:56 GMT</pubDate>
-  </item><item>
-    <title>26｜缓存异常（下）：如何解决缓存雪崩、击穿、穿透难题？</title>
-    <link>https://wangze.tech/26%EF%BD%9C%E7%BC%93%E5%AD%98%E5%BC%82%E5%B8%B8%EF%BC%88%E4%B8%8B%EF%BC%89%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9%E3%80%81%E5%87%BB%E7%A9%BF%E3%80%81%E7%A9%BF%E9%80%8F%E9%9A%BE%E9%A2%98%EF%BC%9F</link>
-    <guid>https://wangze.tech/26%EF%BD%9C%E7%BC%93%E5%AD%98%E5%BC%82%E5%B8%B8%EF%BC%88%E4%B8%8B%EF%BC%89%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9%E3%80%81%E5%87%BB%E7%A9%BF%E3%80%81%E7%A9%BF%E9%80%8F%E9%9A%BE%E9%A2%98%EF%BC%9F</guid>
-    <description>...</description>
-    <pubDate>Sun, 31 Mar 2024 06:20:56 GMT</pubDate>
-  </item><item>
-    <title>27｜缓存被污染了，该怎么办？</title>
-    <link>https://wangze.tech/27%EF%BD%9C%E7%BC%93%E5%AD%98%E8%A2%AB%E6%B1%A1%E6%9F%93%E4%BA%86%EF%BC%8C%E8%AF%A5%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F</link>
-    <guid>https://wangze.tech/27%EF%BD%9C%E7%BC%93%E5%AD%98%E8%A2%AB%E6%B1%A1%E6%9F%93%E4%BA%86%EF%BC%8C%E8%AF%A5%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F</guid>
-    <description>...</description>
-    <pubDate>Sun, 31 Mar 2024 06:20:56 GMT</pubDate>
+    <pubDate>Sun, 31 Mar 2024 06:33:52 GMT</pubDate>
   </item>
     </channel>
   </rss>
