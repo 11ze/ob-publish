@@ -6,65 +6,65 @@
       <description>Last 10 notes on 🫧 11ze</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>Capslock</title>
+    <link>https://wangze.tech/Capslock</link>
+    <guid>https://wangze.tech/Capslock</guid>
+    <description>功能 加强 Caps 键功能 安装 Github 到系统设置 - 键盘 - 键盘快捷键 - Modifier Keys 里选择键盘 设置单击 Caps 切换输入法 打开配置文件 ~/.config/karabiner/karabiner.json 搜 &quot;key_code&quot;: &quot;spacebar&quot; 将 to_if_alone ...</description>
+    <pubDate>Wed, 03 Apr 2024 01:53:30 GMT</pubDate>
+  </item><item>
+    <title>Crontab 执行提示没有权限</title>
+    <link>https://wangze.tech/Crontab-%E6%89%A7%E8%A1%8C%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90</link>
+    <guid>https://wangze.tech/Crontab-%E6%89%A7%E8%A1%8C%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90</guid>
+    <description> Mac 的解决方案：How to Fix Cron “Operation not permitted” error in macOS - ITPro Helper 检查有没有用户对应的 home 目录 .</description>
+    <pubDate>Wed, 03 Apr 2024 01:53:30 GMT</pubDate>
+  </item><item>
+    <title>Linux 安装 oh-my-zsh</title>
+    <link>https://wangze.tech/Linux-%E5%AE%89%E8%A3%85-oh-my-zsh</link>
+    <guid>https://wangze.tech/Linux-%E5%AE%89%E8%A3%85-oh-my-zsh</guid>
+    <description>安装 Zsh github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH sudo apt install zsh # 查看所有可用 shell chsh -l # 将终端默认 shell 切换到 zsh，后面要输入实际看到的 zsh 路径 chsh -s /bin/zsh # 新开一个终端确认是否切换成功 echo ...</description>
+    <pubDate>Wed, 03 Apr 2024 01:53:30 GMT</pubDate>
+  </item><item>
+    <title>Obsidian 插件</title>
+    <link>https://wangze.tech/Obsidian-%E6%8F%92%E4%BB%B6</link>
+    <guid>https://wangze.tech/Obsidian-%E6%8F%92%E4%BB%B6</guid>
+    <description>推荐 Enhancing Mindmap 使用思维导图视图查看文档，只需修改文档头 待折腾 玩转 Obsidian 08：利用 Dataview 打造自动化 HomePage | by 闲者时间 | Medium .</description>
+    <pubDate>Wed, 03 Apr 2024 01:53:30 GMT</pubDate>
+  </item><item>
+    <title>Obsidian</title>
+    <link>https://wangze.tech/Obsidian</link>
+    <guid>https://wangze.tech/Obsidian</guid>
+    <description> 官网 Obsidian 是一个功能强大且可扩展的知识库，它在您的本地纯文本文件文件夹之上运行。 .</description>
+    <pubDate>Wed, 03 Apr 2024 01:53:30 GMT</pubDate>
+  </item><item>
     <title>Oh My Zsh</title>
     <link>https://wangze.tech/Oh-My-Zsh</link>
     <guid>https://wangze.tech/Oh-My-Zsh</guid>
     <description>...</description>
-    <pubDate>Tue, 02 Apr 2024 15:31:48 GMT</pubDate>
+    <pubDate>Wed, 03 Apr 2024 01:53:30 GMT</pubDate>
   </item><item>
     <title>Rate Limit</title>
     <link>https://wangze.tech/Rate-Limit</link>
     <guid>https://wangze.tech/Rate-Limit</guid>
-    <description>功能 限制接口请求数 缓存数据格式 key: { current_count: number; // 也可以不要该字段，每次请求都算一次队列长度 started_at: date; request_time_queue: date[]; time_range: number; // 时间窗口大小 count_limit: number; ...</description>
-    <pubDate>Tue, 02 Apr 2024 15:31:48 GMT</pubDate>
+    <description>功能 限制接口请求数 缓存数据格式 key: { current_count: number; started_at: date; request_time_queue: date[]; time_range: number; // 时间窗口大小 count_limit: number; } 处理流程 请求进来 拼接出 key 查找 key 对应的缓存 ...</description>
+    <pubDate>Wed, 03 Apr 2024 01:53:30 GMT</pubDate>
   </item><item>
     <title>Think in English</title>
     <link>https://wangze.tech/Think-in-English</link>
     <guid>https://wangze.tech/Think-in-English</guid>
     <description>How to THINK in English | No More Translating in Your Head! - YouTube Introduction If you’re translating in your head, then you know that that’s a frustrating way to speak English ...</description>
-    <pubDate>Tue, 02 Apr 2024 15:31:48 GMT</pubDate>
+    <pubDate>Wed, 03 Apr 2024 01:53:30 GMT</pubDate>
   </item><item>
-    <title>发布方案</title>
-    <link>https://wangze.tech/%E5%8F%91%E5%B8%83%E6%96%B9%E6%A1%88</link>
-    <guid>https://wangze.tech/%E5%8F%91%E5%B8%83%E6%96%B9%E6%A1%88</guid>
-    <description>选用方案 quartz 怎么做 将笔记仓库作为发布仓库的 content/ 即可 .</description>
-    <pubDate>Tue, 02 Apr 2024 15:31:48 GMT</pubDate>
+    <title>Vault</title>
+    <link>https://wangze.tech/Vault</link>
+    <guid>https://wangze.tech/Vault</guid>
+    <description> 保管库是本地文件系统上的一个文件夹，Obsidian 将您的笔记存储在其中。您可以将所有笔记保存在一个保险库中，或为每个不同的项目创建多个保险库。 Create a vault - Obsidian Help.</description>
+    <pubDate>Wed, 03 Apr 2024 01:53:30 GMT</pubDate>
   </item><item>
-    <title>笔记 404</title>
-    <link>https://wangze.tech/%E5%8F%91%E5%B8%83%E7%AC%94%E8%AE%B0-404</link>
-    <guid>https://wangze.tech/%E5%8F%91%E5%B8%83%E7%AC%94%E8%AE%B0-404</guid>
-    <description>...</description>
-    <pubDate>Tue, 02 Apr 2024 15:31:48 GMT</pubDate>
-  </item><item>
-    <title>同步方案</title>
-    <link>https://wangze.tech/%E5%90%8C%E6%AD%A5%E6%96%B9%E6%A1%88</link>
-    <guid>https://wangze.tech/%E5%90%8C%E6%AD%A5%E6%96%B9%E6%A1%88</guid>
-    <description>多种方案 Obsidian Sync：官方，要钱 Remotely Sync：第三方插件，但自动同步最短间隔 1 分钟（可以手动同步），免费 iCloud：实时同步，免费 我使用的同步方案（iCloud） 优点 免费实时同步文档、插件、设置 怎么做 我的设备：iPhone + MacBook iPhone 安装 Obsidian 进入 ...</description>
-    <pubDate>Tue, 02 Apr 2024 15:31:48 GMT</pubDate>
-  </item><item>
-    <title>开发环境</title>
-    <link>https://wangze.tech/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</link>
-    <guid>https://wangze.tech/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</guid>
-    <description>设备 M1 MacBook Pro 14 先更新系统 Homebrew 安装 brew tap homebrew/cask-fonts brew tap homebrew/cask-versions brew tap buo/cask-upgrade brew tap mongodb/brew brew install git git-lfs git-flow ...</description>
-    <pubDate>Tue, 02 Apr 2024 15:31:48 GMT</pubDate>
-  </item><item>
-    <title>抢红包系统</title>
-    <link>https://wangze.tech/%E6%8A%A2%E7%BA%A2%E5%8C%85%E7%B3%BB%E7%BB%9F</link>
-    <guid>https://wangze.tech/%E6%8A%A2%E7%BA%A2%E5%8C%85%E7%B3%BB%E7%BB%9F</guid>
-    <description>...</description>
-    <pubDate>Tue, 02 Apr 2024 15:31:48 GMT</pubDate>
-  </item><item>
-    <title>换新设备</title>
-    <link>https://wangze.tech/%E6%8D%A2%E6%96%B0%E8%AE%BE%E5%A4%87</link>
-    <guid>https://wangze.tech/%E6%8D%A2%E6%96%B0%E8%AE%BE%E5%A4%87</guid>
-    <description>推荐做法 clone 文档仓库到本地 将 .git 文件夹移到 iCloud 的 Obsidian 目录下的花园 Vault 根目录 强烈不推荐做法 删掉 iCloud 里的 Vault 再走一遍 同步方案 .</description>
-    <pubDate>Tue, 02 Apr 2024 15:31:48 GMT</pubDate>
-  </item><item>
-    <title>搭建数字花园</title>
-    <link>https://wangze.tech/%E6%90%AD%E5%BB%BA%E6%95%B0%E5%AD%97%E8%8A%B1%E5%9B%AD</link>
-    <guid>https://wangze.tech/%E6%90%AD%E5%BB%BA%E6%95%B0%E5%AD%97%E8%8A%B1%E5%9B%AD</guid>
-    <description>主要步骤 同步方案 发布方案 配置自定义域名 添加评论区 配置图床 本库自动提交到 GitHub 不同步 .git 文件夹 换新设备 问题合集 发布笔记 404 特殊字符 .</description>
-    <pubDate>Tue, 02 Apr 2024 15:31:48 GMT</pubDate>
+    <title>11ze&#039;s Garden</title>
+    <link>https://wangze.tech/</link>
+    <guid>https://wangze.tech/</guid>
+    <description> 英语 搭建数字花园 MySQL 实战 45 讲 Redis 核心技术与实战 开发环境 所有标签 .</description>
+    <pubDate>Wed, 03 Apr 2024 01:53:30 GMT</pubDate>
   </item>
     </channel>
   </rss>
