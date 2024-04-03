@@ -6,65 +6,65 @@
       <description>Last 10 notes on 🫧 11ze</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
-    <title>Capslock</title>
-    <link>https://wangze.tech/Capslock</link>
-    <guid>https://wangze.tech/Capslock</guid>
-    <description>功能 加强 Caps 键功能 安装 Github 到系统设置 - 键盘 - 键盘快捷键 - Modifier Keys 里选择键盘 设置单击 Caps 切换输入法 打开配置文件 ~/.config/karabiner/karabiner.json 搜 &quot;key_code&quot;: &quot;spacebar&quot; 将 to_if_alone ...</description>
-    <pubDate>Wed, 03 Apr 2024 01:53:30 GMT</pubDate>
-  </item><item>
     <title>Crontab 执行提示没有权限</title>
     <link>https://wangze.tech/Crontab-%E6%89%A7%E8%A1%8C%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90</link>
     <guid>https://wangze.tech/Crontab-%E6%89%A7%E8%A1%8C%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90</guid>
     <description> Mac 的解决方案：How to Fix Cron “Operation not permitted” error in macOS - ITPro Helper 检查有没有用户对应的 home 目录 .</description>
-    <pubDate>Wed, 03 Apr 2024 01:53:30 GMT</pubDate>
+    <pubDate>Wed, 03 Apr 2024 02:05:51 GMT</pubDate>
+  </item><item>
+    <title>不常见问题</title>
+    <link>https://wangze.tech/Docker-%E4%B8%8D%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98</link>
+    <guid>https://wangze.tech/Docker-%E4%B8%8D%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98</guid>
+    <description>修改宿主机 hosts 编辑 /etc/hosts 执行 sudo killall -HUP mDNSResponder 刷新缓存 可能需要重启 service docker restart 如果刷新缓存报错则执行 /etc/init.d/network restart 使修改生效 重启 service docker restart 不重启则外网访问 ...</description>
+    <pubDate>Wed, 03 Apr 2024 02:05:51 GMT</pubDate>
+  </item><item>
+    <title>Egg.js 手动热更新</title>
+    <link>https://wangze.tech/Egg.js-%E6%89%8B%E5%8A%A8%E7%83%AD%E6%9B%B4%E6%96%B0</link>
+    <guid>https://wangze.tech/Egg.js-%E6%89%8B%E5%8A%A8%E7%83%AD%E6%9B%B4%E6%96%B0</guid>
+    <description>package.json { &quot;scripts&quot;: { &quot;start&quot;: &quot;egg-scripts start --daemon --title=egg-server&quot;, &quot;stop&quot;: &quot;egg-scripts stop --daemon ...</description>
+    <pubDate>Wed, 03 Apr 2024 02:05:51 GMT</pubDate>
   </item><item>
     <title>Linux 安装 oh-my-zsh</title>
     <link>https://wangze.tech/Linux-%E5%AE%89%E8%A3%85-oh-my-zsh</link>
     <guid>https://wangze.tech/Linux-%E5%AE%89%E8%A3%85-oh-my-zsh</guid>
     <description>安装 Zsh github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH sudo apt install zsh # 查看所有可用 shell chsh -l # 将终端默认 shell 切换到 zsh，后面要输入实际看到的 zsh 路径 chsh -s /bin/zsh # 新开一个终端确认是否切换成功 echo ...</description>
-    <pubDate>Wed, 03 Apr 2024 01:53:30 GMT</pubDate>
+    <pubDate>Wed, 03 Apr 2024 02:05:51 GMT</pubDate>
+  </item><item>
+    <title>Mac 应用已损坏</title>
+    <link>https://wangze.tech/Mac-%E5%BA%94%E7%94%A8%E5%B7%B2%E6%8D%9F%E5%9D%8F</link>
+    <guid>https://wangze.tech/Mac-%E5%BA%94%E7%94%A8%E5%B7%B2%E6%8D%9F%E5%9D%8F</guid>
+    <description> 安装后打开提示已损坏时执行命令：sudo xattr -d com.apple.quarantine &quot;/Applications/{appName}.app&quot; 可能还需要到系统设置 - 隐私与安全下方允许运行应用 .</description>
+    <pubDate>Wed, 03 Apr 2024 02:05:51 GMT</pubDate>
+  </item><item>
+    <title>Mac 运行 Crontab</title>
+    <link>https://wangze.tech/Mac-%E8%BF%90%E8%A1%8C-Crontab</link>
+    <guid>https://wangze.tech/Mac-%E8%BF%90%E8%A1%8C-Crontab</guid>
+    <description>执行不到 iCloud 和 OneDrive 里的文件 按图中顺序添加 cron 的磁盘访问权限 在点击 2 出现的文件选择框里按下 Shift + Command + G 可以调出路径输入窗口查找到 cron 参考：How to Fix Cron “Operation not permitted” error in macOS - ITPro Helper ...</description>
+    <pubDate>Wed, 03 Apr 2024 02:05:51 GMT</pubDate>
   </item><item>
     <title>Obsidian 插件</title>
     <link>https://wangze.tech/Obsidian-%E6%8F%92%E4%BB%B6</link>
     <guid>https://wangze.tech/Obsidian-%E6%8F%92%E4%BB%B6</guid>
     <description>推荐 Enhancing Mindmap 使用思维导图视图查看文档，只需修改文档头 待折腾 玩转 Obsidian 08：利用 Dataview 打造自动化 HomePage | by 闲者时间 | Medium .</description>
-    <pubDate>Wed, 03 Apr 2024 01:53:30 GMT</pubDate>
+    <pubDate>Wed, 03 Apr 2024 02:05:51 GMT</pubDate>
   </item><item>
     <title>Obsidian</title>
     <link>https://wangze.tech/Obsidian</link>
     <guid>https://wangze.tech/Obsidian</guid>
     <description> 官网 Obsidian 是一个功能强大且可扩展的知识库，它在您的本地纯文本文件文件夹之上运行。 .</description>
-    <pubDate>Wed, 03 Apr 2024 01:53:30 GMT</pubDate>
+    <pubDate>Wed, 03 Apr 2024 02:05:51 GMT</pubDate>
   </item><item>
     <title>Oh My Zsh</title>
     <link>https://wangze.tech/Oh-My-Zsh</link>
     <guid>https://wangze.tech/Oh-My-Zsh</guid>
     <description>...</description>
-    <pubDate>Wed, 03 Apr 2024 01:53:30 GMT</pubDate>
+    <pubDate>Wed, 03 Apr 2024 02:05:51 GMT</pubDate>
   </item><item>
     <title>Rate Limit</title>
     <link>https://wangze.tech/Rate-Limit</link>
     <guid>https://wangze.tech/Rate-Limit</guid>
     <description>功能 限制接口请求数 缓存数据格式 key: { current_count: number; started_at: date; request_time_queue: date[]; time_range: number; // 时间窗口大小 count_limit: number; } 处理流程 请求进来 拼接出 key 查找 key 对应的缓存 ...</description>
-    <pubDate>Wed, 03 Apr 2024 01:53:30 GMT</pubDate>
-  </item><item>
-    <title>Think in English</title>
-    <link>https://wangze.tech/Think-in-English</link>
-    <guid>https://wangze.tech/Think-in-English</guid>
-    <description>How to THINK in English | No More Translating in Your Head! - YouTube Introduction If you’re translating in your head, then you know that that’s a frustrating way to speak English ...</description>
-    <pubDate>Wed, 03 Apr 2024 01:53:30 GMT</pubDate>
-  </item><item>
-    <title>Vault</title>
-    <link>https://wangze.tech/Vault</link>
-    <guid>https://wangze.tech/Vault</guid>
-    <description> 保管库是本地文件系统上的一个文件夹，Obsidian 将您的笔记存储在其中。您可以将所有笔记保存在一个保险库中，或为每个不同的项目创建多个保险库。 Create a vault - Obsidian Help.</description>
-    <pubDate>Wed, 03 Apr 2024 01:53:30 GMT</pubDate>
-  </item><item>
-    <title>11ze&#039;s Garden</title>
-    <link>https://wangze.tech/</link>
-    <guid>https://wangze.tech/</guid>
-    <description> 英语 搭建数字花园 MySQL 实战 45 讲 Redis 核心技术与实战 开发环境 所有标签 .</description>
-    <pubDate>Wed, 03 Apr 2024 01:53:30 GMT</pubDate>
+    <pubDate>Wed, 03 Apr 2024 02:05:51 GMT</pubDate>
   </item>
     </channel>
   </rss>
