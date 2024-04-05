@@ -22,24 +22,15 @@ export const defaultContentPageLayout: PageLayout = {
   ],
   left: [
     Component.PageTitle(),
-    Component.MobileOnly(Component.Spacer()),
+    Component.MobileOnly(Component.Spacer()), // 隔开页面标题和搜索框
     Component.Search(),
     Component.Darkmode(),
     Component.DesktopOnly(Component.RecentNotes()),
-    // Component.DesktopOnly(Component.Explorer()), // 在我的文档库会列出所有文档，没有可读性
   ],
   right: [
-    Component.Graph({
-      localGraph: {
-        showTags: false,
-      },
-      globalGraph: {
-        showTags: false,
-      },
-    }),
     Component.DesktopOnly(Component.TableOfContents()),
     Component.Backlinks(),
-    Component.Giscus(), // 评论区太小了
+    Component.Giscus(), // 评论区
   ],
 }
 
