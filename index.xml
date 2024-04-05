@@ -6,65 +6,65 @@
       <description>Last 10 notes on 🫧 11ze</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
-    <title>Capslock</title>
-    <link>https://wangze.tech/Capslock</link>
-    <guid>https://wangze.tech/Capslock</guid>
-    <description>功能 加强 Caps 键功能 安装 Github 到系统设置 - 键盘 - 键盘快捷键 - Modifier Keys 里选择键盘 设置单击 Caps 切换输入法 打开配置文件 ~/.config/karabiner/karabiner.json 搜 &quot;key_code&quot;: &quot;spacebar&quot; 将 to_if_alone ...</description>
-    <pubDate>Fri, 05 Apr 2024 03:12:55 GMT</pubDate>
-  </item><item>
-    <title>Crontab 执行提示没有权限</title>
-    <link>https://wangze.tech/Crontab-%E6%89%A7%E8%A1%8C%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90</link>
-    <guid>https://wangze.tech/Crontab-%E6%89%A7%E8%A1%8C%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90</guid>
-    <description> Mac 的解决方案：How to Fix Cron “Operation not permitted” error in macOS - ITPro Helper 检查有没有用户对应的 home 目录 .</description>
-    <pubDate>Fri, 05 Apr 2024 03:12:55 GMT</pubDate>
-  </item><item>
-    <title>不常见问题</title>
-    <link>https://wangze.tech/Docker-%E4%B8%8D%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98</link>
-    <guid>https://wangze.tech/Docker-%E4%B8%8D%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98</guid>
-    <description>修改宿主机 hosts 编辑 /etc/hosts 执行 sudo killall -HUP mDNSResponder 刷新缓存 可能需要重启 service docker restart 如果刷新缓存报错则执行 /etc/init.d/network restart 使修改生效 重启 service docker restart 不重启则外网访问 ...</description>
-    <pubDate>Fri, 05 Apr 2024 03:12:55 GMT</pubDate>
-  </item><item>
-    <title>Egg.js 手动热更新</title>
-    <link>https://wangze.tech/Egg.js-%E6%89%8B%E5%8A%A8%E7%83%AD%E6%9B%B4%E6%96%B0</link>
-    <guid>https://wangze.tech/Egg.js-%E6%89%8B%E5%8A%A8%E7%83%AD%E6%9B%B4%E6%96%B0</guid>
-    <description>package.json { &quot;scripts&quot;: { &quot;start&quot;: &quot;egg-scripts start --daemon --title=egg-server&quot;, &quot;stop&quot;: &quot;egg-scripts stop --daemon ...</description>
-    <pubDate>Fri, 05 Apr 2024 03:12:55 GMT</pubDate>
-  </item><item>
-    <title>Linux 安装 oh-my-zsh</title>
-    <link>https://wangze.tech/Linux-%E5%AE%89%E8%A3%85-oh-my-zsh</link>
-    <guid>https://wangze.tech/Linux-%E5%AE%89%E8%A3%85-oh-my-zsh</guid>
-    <description>安装 Zsh github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH sudo apt install zsh # 查看所有可用 shell chsh -l # 将终端默认 shell 切换到 zsh，后面要输入实际看到的 zsh 路径 chsh -s /bin/zsh # 新开一个终端确认是否切换成功 echo ...</description>
-    <pubDate>Fri, 05 Apr 2024 03:12:55 GMT</pubDate>
-  </item><item>
-    <title>Mac 应用已损坏</title>
-    <link>https://wangze.tech/Mac-%E5%BA%94%E7%94%A8%E5%B7%B2%E6%8D%9F%E5%9D%8F</link>
-    <guid>https://wangze.tech/Mac-%E5%BA%94%E7%94%A8%E5%B7%B2%E6%8D%9F%E5%9D%8F</guid>
-    <description> 安装后打开提示已损坏时执行命令：sudo xattr -d com.apple.quarantine &quot;/Applications/{appName}.app&quot; 可能还需要到系统设置 - 隐私与安全下方允许运行应用 .</description>
-    <pubDate>Fri, 05 Apr 2024 03:12:55 GMT</pubDate>
-  </item><item>
-    <title>Mac 运行 Crontab</title>
-    <link>https://wangze.tech/Mac-%E8%BF%90%E8%A1%8C-Crontab</link>
-    <guid>https://wangze.tech/Mac-%E8%BF%90%E8%A1%8C-Crontab</guid>
-    <description>执行不到 iCloud 和 OneDrive 里的文件 按图中顺序添加 cron 的磁盘访问权限 在点击 2 出现的文件选择框里按下 Shift + Command + G 可以调出路径输入窗口查找到 cron 参考：How to Fix Cron “Operation not permitted” error in macOS - ITPro Helper ...</description>
-    <pubDate>Fri, 05 Apr 2024 03:12:55 GMT</pubDate>
-  </item><item>
-    <title>Obsidian 插件</title>
-    <link>https://wangze.tech/Obsidian-%E6%8F%92%E4%BB%B6</link>
-    <guid>https://wangze.tech/Obsidian-%E6%8F%92%E4%BB%B6</guid>
-    <description>推荐 Enhancing Mindmap 使用思维导图视图查看文档，只需修改文档头 待折腾 玩转 Obsidian 08：利用 Dataview 打造自动化 HomePage | by 闲者时间 | Medium .</description>
-    <pubDate>Fri, 05 Apr 2024 03:12:55 GMT</pubDate>
-  </item><item>
-    <title>Obsidian</title>
-    <link>https://wangze.tech/Obsidian</link>
-    <guid>https://wangze.tech/Obsidian</guid>
-    <description> 官网 Obsidian 是一个功能强大且可扩展的知识库，它在您的本地纯文本文件文件夹之上运行。 .</description>
-    <pubDate>Fri, 05 Apr 2024 03:12:55 GMT</pubDate>
-  </item><item>
-    <title>Oh My Zsh</title>
-    <link>https://wangze.tech/Oh-My-Zsh</link>
-    <guid>https://wangze.tech/Oh-My-Zsh</guid>
+    <title>英语语法</title>
+    <link>https://wangze.tech/%E8%8B%B1%E8%AF%AD%E8%AF%AD%E6%B3%95</link>
+    <guid>https://wangze.tech/%E8%8B%B1%E8%AF%AD%E8%AF%AD%E6%B3%95</guid>
     <description>...</description>
-    <pubDate>Fri, 05 Apr 2024 03:12:55 GMT</pubDate>
+    <pubDate>Fri, 05 Apr 2024 03:16:10 GMT</pubDate>
+  </item><item>
+    <title>01｜基础架构：一个键值数据库包含什么？</title>
+    <link>https://wangze.tech/01%EF%BD%9C%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%EF%BC%9A%E4%B8%80%E4%B8%AA%E9%94%AE%E5%80%BC%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8C%85%E5%90%AB%E4%BB%80%E4%B9%88%EF%BC%9F</link>
+    <guid>https://wangze.tech/01%EF%BD%9C%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%EF%BC%9A%E4%B8%80%E4%B8%AA%E9%94%AE%E5%80%BC%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8C%85%E5%90%AB%E4%BB%80%E4%B9%88%EF%BC%9F</guid>
+    <description>...</description>
+    <pubDate>Fri, 05 Apr 2024 03:16:10 GMT</pubDate>
+  </item><item>
+    <title>02｜数据结构：快速的 Redis 有哪些慢操作？</title>
+    <link>https://wangze.tech/02%EF%BD%9C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E5%BF%AB%E9%80%9F%E7%9A%84-Redis-%E6%9C%89%E5%93%AA%E4%BA%9B%E6%85%A2%E6%93%8D%E4%BD%9C%EF%BC%9F</link>
+    <guid>https://wangze.tech/02%EF%BD%9C%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%9A%E5%BF%AB%E9%80%9F%E7%9A%84-Redis-%E6%9C%89%E5%93%AA%E4%BA%9B%E6%85%A2%E6%93%8D%E4%BD%9C%EF%BC%9F</guid>
+    <description>...</description>
+    <pubDate>Fri, 05 Apr 2024 03:16:10 GMT</pubDate>
+  </item><item>
+    <title>03｜高性能 IO 模型：为什么单线程 Redis 那么快？</title>
+    <link>https://wangze.tech/03%EF%BD%9C%E9%AB%98%E6%80%A7%E8%83%BD-IO-%E6%A8%A1%E5%9E%8B%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8D%95%E7%BA%BF%E7%A8%8B-Redis-%E9%82%A3%E4%B9%88%E5%BF%AB%EF%BC%9F</link>
+    <guid>https://wangze.tech/03%EF%BD%9C%E9%AB%98%E6%80%A7%E8%83%BD-IO-%E6%A8%A1%E5%9E%8B%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8D%95%E7%BA%BF%E7%A8%8B-Redis-%E9%82%A3%E4%B9%88%E5%BF%AB%EF%BC%9F</guid>
+    <description>...</description>
+    <pubDate>Fri, 05 Apr 2024 03:16:10 GMT</pubDate>
+  </item><item>
+    <title>04｜AOF 日志：宕机了，Redis 如何避免数据丢失？</title>
+    <link>https://wangze.tech/04%EF%BD%9CAOF-%E6%97%A5%E5%BF%97%EF%BC%9A%E5%AE%95%E6%9C%BA%E4%BA%86%EF%BC%8CRedis-%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%EF%BC%9F</link>
+    <guid>https://wangze.tech/04%EF%BD%9CAOF-%E6%97%A5%E5%BF%97%EF%BC%9A%E5%AE%95%E6%9C%BA%E4%BA%86%EF%BC%8CRedis-%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1%EF%BC%9F</guid>
+    <description>...</description>
+    <pubDate>Fri, 05 Apr 2024 03:16:10 GMT</pubDate>
+  </item><item>
+    <title>05｜内存快照：宕机后，Redis 如何实现快速恢复？</title>
+    <link>https://wangze.tech/05%EF%BD%9C%E5%86%85%E5%AD%98%E5%BF%AB%E7%85%A7%EF%BC%9A%E5%AE%95%E6%9C%BA%E5%90%8E%EF%BC%8CRedis-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E6%81%A2%E5%A4%8D%EF%BC%9F</link>
+    <guid>https://wangze.tech/05%EF%BD%9C%E5%86%85%E5%AD%98%E5%BF%AB%E7%85%A7%EF%BC%9A%E5%AE%95%E6%9C%BA%E5%90%8E%EF%BC%8CRedis-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%BF%AB%E9%80%9F%E6%81%A2%E5%A4%8D%EF%BC%9F</guid>
+    <description>...</description>
+    <pubDate>Fri, 05 Apr 2024 03:16:10 GMT</pubDate>
+  </item><item>
+    <title>06｜数据同步：主从库如何实现数据一致？</title>
+    <link>https://wangze.tech/06%EF%BD%9C%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%EF%BC%9A%E4%B8%BB%E4%BB%8E%E5%BA%93%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E4%B8%80%E8%87%B4%EF%BC%9F</link>
+    <guid>https://wangze.tech/06%EF%BD%9C%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%EF%BC%9A%E4%B8%BB%E4%BB%8E%E5%BA%93%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E4%B8%80%E8%87%B4%EF%BC%9F</guid>
+    <description>...</description>
+    <pubDate>Fri, 05 Apr 2024 03:16:10 GMT</pubDate>
+  </item><item>
+    <title>07｜哨兵机制：主库挂了，如何不间断服务？</title>
+    <link>https://wangze.tech/07%EF%BD%9C%E5%93%A8%E5%85%B5%E6%9C%BA%E5%88%B6%EF%BC%9A%E4%B8%BB%E5%BA%93%E6%8C%82%E4%BA%86%EF%BC%8C%E5%A6%82%E4%BD%95%E4%B8%8D%E9%97%B4%E6%96%AD%E6%9C%8D%E5%8A%A1%EF%BC%9F</link>
+    <guid>https://wangze.tech/07%EF%BD%9C%E5%93%A8%E5%85%B5%E6%9C%BA%E5%88%B6%EF%BC%9A%E4%B8%BB%E5%BA%93%E6%8C%82%E4%BA%86%EF%BC%8C%E5%A6%82%E4%BD%95%E4%B8%8D%E9%97%B4%E6%96%AD%E6%9C%8D%E5%8A%A1%EF%BC%9F</guid>
+    <description>...</description>
+    <pubDate>Fri, 05 Apr 2024 03:16:10 GMT</pubDate>
+  </item><item>
+    <title>08｜哨兵集群：哨兵挂了，主从库还能切换吗？</title>
+    <link>https://wangze.tech/08%EF%BD%9C%E5%93%A8%E5%85%B5%E9%9B%86%E7%BE%A4%EF%BC%9A%E5%93%A8%E5%85%B5%E6%8C%82%E4%BA%86%EF%BC%8C%E4%B8%BB%E4%BB%8E%E5%BA%93%E8%BF%98%E8%83%BD%E5%88%87%E6%8D%A2%E5%90%97%EF%BC%9F</link>
+    <guid>https://wangze.tech/08%EF%BD%9C%E5%93%A8%E5%85%B5%E9%9B%86%E7%BE%A4%EF%BC%9A%E5%93%A8%E5%85%B5%E6%8C%82%E4%BA%86%EF%BC%8C%E4%B8%BB%E4%BB%8E%E5%BA%93%E8%BF%98%E8%83%BD%E5%88%87%E6%8D%A2%E5%90%97%EF%BC%9F</guid>
+    <description>...</description>
+    <pubDate>Fri, 05 Apr 2024 03:16:10 GMT</pubDate>
+  </item><item>
+    <title>09｜切片集群：数据增多了，是该加内存还是加实例？</title>
+    <link>https://wangze.tech/09%EF%BD%9C%E5%88%87%E7%89%87%E9%9B%86%E7%BE%A4%EF%BC%9A%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%A4%9A%E4%BA%86%EF%BC%8C%E6%98%AF%E8%AF%A5%E5%8A%A0%E5%86%85%E5%AD%98%E8%BF%98%E6%98%AF%E5%8A%A0%E5%AE%9E%E4%BE%8B%EF%BC%9F</link>
+    <guid>https://wangze.tech/09%EF%BD%9C%E5%88%87%E7%89%87%E9%9B%86%E7%BE%A4%EF%BC%9A%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%A4%9A%E4%BA%86%EF%BC%8C%E6%98%AF%E8%AF%A5%E5%8A%A0%E5%86%85%E5%AD%98%E8%BF%98%E6%98%AF%E5%8A%A0%E5%AE%9E%E4%BE%8B%EF%BC%9F</guid>
+    <description>纵向扩展 升级单个 Redis 实例的资源配置，包括增加内存容量、增加磁盘容量、使用更高配置的 CPU 实施起来简单、直接 当使用 RDB 对数据进行持久化时，如果数据量增加，需要的内存也会增加，主线程 fork 子进程时就可能会阻塞（耗时长） 不要求持久化保存 Redis 数据时是一个不错的选择 受到硬件和成本的限制 横向扩展 ...</description>
+    <pubDate>Fri, 05 Apr 2024 03:16:10 GMT</pubDate>
   </item>
     </channel>
   </rss>
