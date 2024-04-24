@@ -6,6 +6,18 @@
       <description>Last 10 notes on 🫧 11ze</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>Laravel Pint 使用</title>
+    <link>https://wangze.tech/Laravel-Pint-%E4%BD%BF%E7%94%A8</link>
+    <guid>https://wangze.tech/Laravel-Pint-%E4%BD%BF%E7%94%A8</guid>
+    <description>...</description>
+    <pubDate>Wed, 24 Apr 2024 12:33:00 GMT</pubDate>
+  </item><item>
+    <title>我的开发环境</title>
+    <link>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</link>
+    <guid>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</guid>
+    <description>设备 M1 MacBook Pro 14 先更新系统 Homebrew 官网 brew tap homebrew/cask-fonts brew tap homebrew/cask-versions brew tap buo/cask-upgrade brew tap mongodb/brew brew tap homebrew/autoupdate ...</description>
+    <pubDate>Wed, 24 Apr 2024 12:24:00 GMT</pubDate>
+  </item><item>
     <title>发布方案</title>
     <link>https://wangze.tech/%E5%8F%91%E5%B8%83%E6%96%B9%E6%A1%88</link>
     <guid>https://wangze.tech/%E5%8F%91%E5%B8%83%E6%96%B9%E6%A1%88</guid>
@@ -53,18 +65,6 @@
     <guid>https://wangze.tech/Docker-%E4%B8%8D%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98</guid>
     <description>修改宿主机 hosts 编辑 /etc/hosts 执行 sudo killall -HUP mDNSResponder 刷新缓存 可能需要重启 service docker restart 如果刷新缓存报错则执行 /etc/init.d/network restart 使修改生效 重启 service docker restart 不重启则外网访问 ...</description>
     <pubDate>Wed, 24 Apr 2024 06:42:00 GMT</pubDate>
-  </item><item>
-    <title>GitHub 常见错误</title>
-    <link>https://wangze.tech/GitHub-%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF</link>
-    <guid>https://wangze.tech/GitHub-%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF</guid>
-    <description>Connection Closed by x.x.x.x Port 22 添加以下代码到 ~/.ssh/config Host github.com HostName ssh.github.com User $username Port 443.</description>
-    <pubDate>Wed, 24 Apr 2024 06:42:00 GMT</pubDate>
-  </item><item>
-    <title>25｜缓存异常（上）：如何解决缓存和数据库的数据不一致问题？</title>
-    <link>https://wangze.tech/25%EF%BD%9C%E7%BC%93%E5%AD%98%E5%BC%82%E5%B8%B8%EF%BC%88%E4%B8%8A%EF%BC%89%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%95%B0%E6%8D%AE%E4%B8%8D%E4%B8%80%E8%87%B4%E9%97%AE%E9%A2%98%EF%BC%9F</link>
-    <guid>https://wangze.tech/25%EF%BD%9C%E7%BC%93%E5%AD%98%E5%BC%82%E5%B8%B8%EF%BC%88%E4%B8%8A%EF%BC%89%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%95%B0%E6%8D%AE%E4%B8%8D%E4%B8%80%E8%87%B4%E9%97%AE%E9%A2%98%EF%BC%9F</guid>
-    <description> 数据的一致性 缓存中有数据，缓存的数据值需要和数据库中的值相同 缓存中没有数据，数据库中的值必须是最新值 读写缓存 要保证一致性可以采用同步直写策略 适用于读写相当的业务场景 只读缓存 数据不一致的问题原因、现象和应对方案 分为 1. 先删除缓存再更新数据库；2. 先更新数据库再删除缓存 适用于读操作比较多的业务场景 优先使用先更新数据库再删除缓存的方法 1 先删除缓存可能导致请求因缓存缺失而访问数据库，给数据库带来压力 2 业务应用中读取数据库和写缓存的时间不好估算，所以延迟双删的等待时间不好设置 注意：如果要保证数据一致，可以在更新数据库的时候在 Redis 缓存客户端暂存并发读请求，等数据库更新完、缓存值删除后再读取数据 .</description>
-    <pubDate>Wed, 24 Apr 2024 04:03:00 GMT</pubDate>
   </item>
     </channel>
   </rss>
