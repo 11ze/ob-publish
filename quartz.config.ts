@@ -17,8 +17,8 @@ const config: QuartzConfig = {
     },
     locale: "en-US",
     baseUrl: "wangze.tech",
-    ignorePatterns: ["private", "Templates", "Extras"],
-    defaultDateType: "created",
+    ignorePatterns: ["private", "templates", ".obsidian"],
+    defaultDateType: "modified",
     theme: {
       fontOrigin: "googleFonts",
       cdnCaching: true,

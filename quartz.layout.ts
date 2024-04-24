@@ -9,6 +9,7 @@ export const sharedPageComponents: SharedLayout = {
     links: {
       GitHub: "https://github.com/11ze/knowledge-garden",
       Twitter: "https://twitter.com/11ze4",
+      BiliBili: "https://space.bilibili.com/4480720",
     },
   }),
 }
@@ -25,7 +26,7 @@ export const defaultContentPageLayout: PageLayout = {
     Component.MobileOnly(Component.Spacer()), // 隔开页面标题和搜索框
     Component.Search(),
     Component.Darkmode(),
-    Component.DesktopOnly(Component.RecentNotes({ limit: 5, linkToMore: 'tags' })),
+    Component.DesktopOnly(Component.RecentNotes({ linkToMore: 'tags' })),
   ],
   right: [
     Component.DesktopOnly(Component.TableOfContents()),
