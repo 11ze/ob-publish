@@ -29,7 +29,7 @@ jobs:
 
       # 转换笔记结构
       - name: Transform
-        run: rm -rf content/.obsidian content/Extras && mv content/*.md content/Atlas && find content/ -name "*.md" | xargs -I file  mv -f file content
+        run: ./tile_content.sh
 
       - uses: actions/setup-node@v3
         with:
