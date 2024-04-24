@@ -69,17 +69,6 @@ const TagContent: QuartzComponent = (props: QuartzComponentProps) => {
                 </h2>
                 {content && <p>{content}</p>}
                 <div class="page-listing">
-                  <p>
-                    {i18n(cfg.locale).pages.tagContent.itemsUnderTag({ count: pages.length })}
-                    {pages.length > numPages && (
-                      <>
-                        {" "}
-                        <span>
-                          {i18n(cfg.locale).pages.tagContent.showingFirst({ count: numPages })}
-                        </span>
-                      </>
-                    )}
-                  </p>
                   <PageList limit={numPages} {...listProps} />
                 </div>
               </div>
