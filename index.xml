@@ -6,65 +6,65 @@
       <description>Last 10 notes on 🫧 11ze</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
-    <title>44｜答疑文章（三）：说一说这些好问题</title>
-    <link>https://wangze.tech/44%EF%BD%9C%E7%AD%94%E7%96%91%E6%96%87%E7%AB%A0%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AF%B4%E4%B8%80%E8%AF%B4%E8%BF%99%E4%BA%9B%E5%A5%BD%E9%97%AE%E9%A2%98</link>
-    <guid>https://wangze.tech/44%EF%BD%9C%E7%AD%94%E7%96%91%E6%96%87%E7%AB%A0%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AF%B4%E4%B8%80%E8%AF%B4%E8%BF%99%E4%BA%9B%E5%A5%BD%E9%97%AE%E9%A2%98</guid>
-    <description>join 的写法 在 MySQL 里，NULL 跟任何值执行等值判断和不等值判断的结果，都是 NULL。这里包括， select NULL = NULL 的结果，也是返回 NULL。 where a.f2=b.f2 就表示，查询结果里面不会包含 b.f2 是 NULL 的行 使用 left join 时，左边的表不一定是驱动表。 如果需要 left ...</description>
-    <pubDate>Wed, 24 Apr 2024 07:13:55 GMT</pubDate>
+    <title>发布方案</title>
+    <link>https://wangze.tech/%E5%8F%91%E5%B8%83%E6%96%B9%E6%A1%88</link>
+    <guid>https://wangze.tech/%E5%8F%91%E5%B8%83%E6%96%B9%E6%A1%88</guid>
+    <description>选用方案 quartz 笔记位置 发布仓库的 content/ content 内容的生成方式 把笔记仓库作为发布仓库的 submodule。 在 GitHub Action 里 git clone 笔记仓库。 在发布仓库的 content/ 文件夹写文章，不推荐。 .</description>
+    <pubDate>Wed, 24 Apr 2024 07:24:46 GMT</pubDate>
+  </item><item>
+    <title>同步方案</title>
+    <link>https://wangze.tech/%E5%90%8C%E6%AD%A5%E6%96%B9%E6%A1%88</link>
+    <guid>https://wangze.tech/%E5%90%8C%E6%AD%A5%E6%96%B9%E6%A1%88</guid>
+    <description>可选方案 Obsidian Sync：官方，付费 Remotely Sync：第三方插件，自动同步最短间隔 1 分钟（可以手动执行同步），免费 iCloud：实时同步，免费 我使用的同步方案 iCloud iPhone 安装 Obsidian 进入 Obsidian 创建一个打开 iCloud 同步功能的 Vault 此时 iCloud 中会生成 ...</description>
+    <pubDate>Wed, 24 Apr 2024 07:24:46 GMT</pubDate>
+  </item><item>
+    <title>搭建数字花园</title>
+    <link>https://wangze.tech/%E6%90%AD%E5%BB%BA%E6%95%B0%E5%AD%97%E8%8A%B1%E5%9B%AD</link>
+    <guid>https://wangze.tech/%E6%90%AD%E5%BB%BA%E6%95%B0%E5%AD%97%E8%8A%B1%E5%9B%AD</guid>
+    <description> 同步方案 发布方案 部署花园 添加评论区 配置图床 本库自动提交到 GitHub 问题 发布笔记 404 .</description>
+    <pubDate>Wed, 24 Apr 2024 07:24:46 GMT</pubDate>
+  </item><item>
+    <title>部署花园</title>
+    <link>https://wangze.tech/%E9%83%A8%E7%BD%B2%E8%8A%B1%E5%9B%AD</link>
+    <guid>https://wangze.tech/%E9%83%A8%E7%BD%B2%E8%8A%B1%E5%9B%AD</guid>
+    <description>基于 Cloudflare Pages 部署，2024-04-05 官方文档 把域名转到 Cloudflare 在设置里配置自定义域名 仓库每次提交都会触发自动部署 如果不想用 Cloudflare Pages 自动添加 .html 对于 quartz4，需要在 content 目录下放置 vercel.json，用于在点击 Wikilink ...</description>
+    <pubDate>Wed, 24 Apr 2024 07:24:46 GMT</pubDate>
   </item><item>
     <title>30｜答疑文章（二）：用动态的观点看加锁</title>
     <link>https://wangze.tech/30%EF%BD%9C%E7%AD%94%E7%96%91%E6%96%87%E7%AB%A0%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E7%94%A8%E5%8A%A8%E6%80%81%E7%9A%84%E8%A7%82%E7%82%B9%E7%9C%8B%E5%8A%A0%E9%94%81</link>
     <guid>https://wangze.tech/30%EF%BD%9C%E7%AD%94%E7%96%91%E6%96%87%E7%AB%A0%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E7%94%A8%E5%8A%A8%E6%80%81%E7%9A%84%E8%A7%82%E7%82%B9%E7%9C%8B%E5%8A%A0%E9%94%81</guid>
     <description>下面的讨论基于此表 CREATE TABLE `t` ( `id` int(11) NOT NULL, `c` int(11) DEFAULT NULL, `d` int(11) DEFAULT NULL, PRIMARY KEY (`id`), KEY `c` (`c`) ) ENGINE=InnoDB; insert into t values(0,0,0),(5,5,5),(10,10,10),(15,15,15),(20,20,20),(25,25,25); ...</description>
-    <pubDate>Wed, 24 Apr 2024 07:13:55 GMT</pubDate>
+    <pubDate>Wed, 24 Apr 2024 07:16:01 GMT</pubDate>
   </item><item>
-    <title>我的开发环境</title>
-    <link>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</link>
-    <guid>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</guid>
-    <description>设备 M1 MacBook Pro 14 先更新系统 Homebrew 安装 brew tap homebrew/cask-fonts brew tap homebrew/cask-versions brew tap buo/cask-upgrade brew tap mongodb/brew brew tap homebrew/autoupdate ...</description>
-    <pubDate>Tue, 23 Apr 2024 14:39:00 GMT</pubDate>
+    <title>44｜答疑文章（三）：说一说这些好问题</title>
+    <link>https://wangze.tech/44%EF%BD%9C%E7%AD%94%E7%96%91%E6%96%87%E7%AB%A0%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AF%B4%E4%B8%80%E8%AF%B4%E8%BF%99%E4%BA%9B%E5%A5%BD%E9%97%AE%E9%A2%98</link>
+    <guid>https://wangze.tech/44%EF%BD%9C%E7%AD%94%E7%96%91%E6%96%87%E7%AB%A0%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AF%B4%E4%B8%80%E8%AF%B4%E8%BF%99%E4%BA%9B%E5%A5%BD%E9%97%AE%E9%A2%98</guid>
+    <description>join 的写法 在 MySQL 里，NULL 跟任何值执行等值判断和不等值判断的结果，都是 NULL。这里包括， select NULL = NULL 的结果，也是返回 NULL。 where a.f2=b.f2 就表示，查询结果里面不会包含 b.f2 是 NULL 的行 使用 left join 时，左边的表不一定是驱动表。 如果需要 left ...</description>
+    <pubDate>Wed, 24 Apr 2024 07:16:01 GMT</pubDate>
   </item><item>
-    <title>Crontab 执行提示没有权限</title>
-    <link>https://wangze.tech/Crontab-%E6%89%A7%E8%A1%8C%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90</link>
-    <guid>https://wangze.tech/Crontab-%E6%89%A7%E8%A1%8C%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90</guid>
-    <description> Mac 的解决方案：Mac 运行 Crontab 检查有没有用户对应的 home 目录 .</description>
-    <pubDate>Fri, 19 Apr 2024 10:44:00 GMT</pubDate>
+    <title>11ze&#039;s Garden</title>
+    <link>https://wangze.tech/</link>
+    <guid>https://wangze.tech/</guid>
+    <description> 我的开发环境 搭建数字花园 学英语 MySQL 实战 45 讲 Redis 核心技术与实战 no hello .</description>
+    <pubDate>Wed, 24 Apr 2024 06:59:00 GMT</pubDate>
   </item><item>
-    <title>Obsidian</title>
-    <link>https://wangze.tech/Obsidian</link>
-    <guid>https://wangze.tech/Obsidian</guid>
-    <description>基本信息 官网 Obsidian 是一个功能强大且可扩展的知识库，它在您的本地纯文本文件文件夹之上运行。 插件 推荐 Enhancing Mindmap 使用思维导图视图查看文档，只需修改文档头 待折腾 玩转 Obsidian 08：利用 Dataview 打造自动化 HomePage | by 闲者时间 | Medium ...</description>
-    <pubDate>Mon, 15 Apr 2024 06:42:00 GMT</pubDate>
+    <title>Docker 不常见问题</title>
+    <link>https://wangze.tech/Docker-%E4%B8%8D%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98</link>
+    <guid>https://wangze.tech/Docker-%E4%B8%8D%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98</guid>
+    <description>修改宿主机 hosts 编辑 /etc/hosts 执行 sudo killall -HUP mDNSResponder 刷新缓存 可能需要重启 service docker restart 如果刷新缓存报错则执行 /etc/init.d/network restart 使修改生效 重启 service docker restart 不重启则外网访问 ...</description>
+    <pubDate>Wed, 24 Apr 2024 06:42:00 GMT</pubDate>
   </item><item>
-    <title>Vault</title>
-    <link>https://wangze.tech/Vault</link>
-    <guid>https://wangze.tech/Vault</guid>
-    <description> 保管库是本地文件系统上的一个文件夹，Obsidian 将您的笔记存储在其中。您可以将所有笔记保存在一个保险库中，或为每个不同的项目创建多个保险库。 Create a vault - Obsidian Help.</description>
-    <pubDate>Mon, 15 Apr 2024 06:42:00 GMT</pubDate>
+    <title>GitHub 常见错误</title>
+    <link>https://wangze.tech/GitHub-%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF</link>
+    <guid>https://wangze.tech/GitHub-%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF</guid>
+    <description>Connection Closed by x.x.x.x Port 22 添加以下代码到 ~/.ssh/config Host github.com HostName ssh.github.com User $username Port 443.</description>
+    <pubDate>Wed, 24 Apr 2024 06:42:00 GMT</pubDate>
   </item><item>
-    <title>用 iCloud 同步 Mac 应用设置</title>
-    <link>https://wangze.tech/%E7%94%A8-iCloud-%E5%90%8C%E6%AD%A5-Mac-%E5%BA%94%E7%94%A8%E8%AE%BE%E7%BD%AE</link>
-    <guid>https://wangze.tech/%E7%94%A8-iCloud-%E5%90%8C%E6%AD%A5-Mac-%E5%BA%94%E7%94%A8%E8%AE%BE%E7%BD%AE</guid>
-    <description> 先退出要同步的应用 下载腾讯柠檬 在柠檬里点击卸载应用的时候看详细信息，最下面找到应用保存数据的位置 用访达打开 找到数据文件夹 复制数据文件夹到 iCloud 删除原文件夹 在原文件夹的位置创建同名软链接指向 iCloud 里的数据文件 .</description>
-    <pubDate>Mon, 15 Apr 2024 06:42:00 GMT</pubDate>
-  </item><item>
-    <title>Capslock</title>
-    <link>https://wangze.tech/Capslock</link>
-    <guid>https://wangze.tech/Capslock</guid>
-    <description>功能 加强 Caps 键功能 安装 Github 到系统设置 - 键盘 - 键盘快捷键 - Modifier Keys 里选择键盘 设置单击 Caps 切换输入法 打开配置文件 ~/.config/karabiner/karabiner.json 搜 &quot;key_code&quot;: &quot;spacebar&quot; 将 to_if_alone ...</description>
-    <pubDate>Mon, 15 Apr 2024 06:25:00 GMT</pubDate>
-  </item><item>
-    <title>笔记 404</title>
-    <link>https://wangze.tech/%E5%8F%91%E5%B8%83%E7%AC%94%E8%AE%B0-404</link>
-    <guid>https://wangze.tech/%E5%8F%91%E5%B8%83%E7%AC%94%E8%AE%B0-404</guid>
-    <description>现象 文档在 2023-05-12 0 点创建，发布失败，改成 2023-05-11，发布成功 笔记出现在搜索结果，点击自动跳转到 404 页面 猜测 GitHub Action 服务器时间比文档头标记的创建时间早，所以未发布成功 2023-05-12 08:00 尝试发布成功 解决方法 使用 ISO8601 格式的日期 ...</description>
-    <pubDate>Mon, 15 Apr 2024 06:06:00 GMT</pubDate>
-  </item><item>
-    <title>搭建数字花园</title>
-    <link>https://wangze.tech/%E6%90%AD%E5%BB%BA%E6%95%B0%E5%AD%97%E8%8A%B1%E5%9B%AD</link>
-    <guid>https://wangze.tech/%E6%90%AD%E5%BB%BA%E6%95%B0%E5%AD%97%E8%8A%B1%E5%9B%AD</guid>
-    <description> 同步方案 发布方案 部署花园 添加评论区 配置图床 本库自动提交到 GitHub 不同步 .git 文件夹 问题 发布笔记 404 .</description>
-    <pubDate>Mon, 15 Apr 2024 06:06:00 GMT</pubDate>
+    <title>25｜缓存异常（上）：如何解决缓存和数据库的数据不一致问题？</title>
+    <link>https://wangze.tech/25%EF%BD%9C%E7%BC%93%E5%AD%98%E5%BC%82%E5%B8%B8%EF%BC%88%E4%B8%8A%EF%BC%89%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%95%B0%E6%8D%AE%E4%B8%8D%E4%B8%80%E8%87%B4%E9%97%AE%E9%A2%98%EF%BC%9F</link>
+    <guid>https://wangze.tech/25%EF%BD%9C%E7%BC%93%E5%AD%98%E5%BC%82%E5%B8%B8%EF%BC%88%E4%B8%8A%EF%BC%89%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%95%B0%E6%8D%AE%E4%B8%8D%E4%B8%80%E8%87%B4%E9%97%AE%E9%A2%98%EF%BC%9F</guid>
+    <description> 数据的一致性 缓存中有数据，缓存的数据值需要和数据库中的值相同 缓存中没有数据，数据库中的值必须是最新值 读写缓存 要保证一致性可以采用同步直写策略 适用于读写相当的业务场景 只读缓存 数据不一致的问题原因、现象和应对方案 分为 1. 先删除缓存再更新数据库；2. 先更新数据库再删除缓存 适用于读操作比较多的业务场景 优先使用先更新数据库再删除缓存的方法 1 先删除缓存可能导致请求因缓存缺失而访问数据库，给数据库带来压力 2 业务应用中读取数据库和写缓存的时间不好估算，所以延迟双删的等待时间不好设置 注意：如果要保证数据一致，可以在更新数据库的时候在 Redis 缓存客户端暂存并发读请求，等数据库更新完、缓存值删除后再读取数据 .</description>
+    <pubDate>Wed, 24 Apr 2024 04:03:00 GMT</pubDate>
   </item>
     </channel>
   </rss>
