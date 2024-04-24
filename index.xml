@@ -6,65 +6,65 @@
       <description>Last 10 notes on 🫧 11ze</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
-    <title>Capslock</title>
-    <link>https://wangze.tech/Capslock</link>
-    <guid>https://wangze.tech/Capslock</guid>
-    <description>功能 加强 Caps 键功能 安装 Github 到系统设置 - 键盘 - 键盘快捷键 - Modifier Keys 里选择键盘 设置单击 Caps 切换输入法 打开配置文件 ~/.config/karabiner/karabiner.json 搜 &quot;key_code&quot;: &quot;spacebar&quot; 将 to_if_alone ...</description>
-    <pubDate>Tue, 23 Apr 2024 15:00:52 GMT</pubDate>
-  </item><item>
-    <title>Crontab 执行提示没有权限</title>
-    <link>https://wangze.tech/Crontab-%E6%89%A7%E8%A1%8C%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90</link>
-    <guid>https://wangze.tech/Crontab-%E6%89%A7%E8%A1%8C%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90</guid>
-    <description> Mac 的解决方案：Mac 运行 Crontab 检查有没有用户对应的 home 目录 .</description>
-    <pubDate>Tue, 23 Apr 2024 15:00:52 GMT</pubDate>
-  </item><item>
-    <title>不常见问题</title>
-    <link>https://wangze.tech/Docker-%E4%B8%8D%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98</link>
-    <guid>https://wangze.tech/Docker-%E4%B8%8D%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98</guid>
-    <description>修改宿主机 hosts 编辑 /etc/hosts 执行 sudo killall -HUP mDNSResponder 刷新缓存 可能需要重启 service docker restart 如果刷新缓存报错则执行 /etc/init.d/network restart 使修改生效 重启 service docker restart 不重启则外网访问 ...</description>
-    <pubDate>Tue, 23 Apr 2024 15:00:52 GMT</pubDate>
-  </item><item>
-    <title>Egg.js 手动热更新</title>
-    <link>https://wangze.tech/Egg.js-%E6%89%8B%E5%8A%A8%E7%83%AD%E6%9B%B4%E6%96%B0</link>
-    <guid>https://wangze.tech/Egg.js-%E6%89%8B%E5%8A%A8%E7%83%AD%E6%9B%B4%E6%96%B0</guid>
-    <description>package.json { &quot;scripts&quot;: { &quot;start&quot;: &quot;egg-scripts start --daemon --title=egg-server&quot;, &quot;stop&quot;: &quot;egg-scripts stop --daemon ...</description>
-    <pubDate>Tue, 23 Apr 2024 15:00:52 GMT</pubDate>
-  </item><item>
-    <title>Linux 安装 oh-my-zsh</title>
-    <link>https://wangze.tech/Linux-%E5%AE%89%E8%A3%85-oh-my-zsh</link>
-    <guid>https://wangze.tech/Linux-%E5%AE%89%E8%A3%85-oh-my-zsh</guid>
-    <description>安装 Zsh github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH sudo apt install zsh # 查看所有可用 shell chsh -l # 将终端默认 shell 切换到 zsh，后面要输入实际看到的 zsh 路径 chsh -s /bin/zsh # 新开一个终端确认是否切换成功 echo ...</description>
-    <pubDate>Tue, 23 Apr 2024 15:00:52 GMT</pubDate>
-  </item><item>
-    <title>Mac 应用已损坏</title>
-    <link>https://wangze.tech/Mac-%E5%BA%94%E7%94%A8%E5%B7%B2%E6%8D%9F%E5%9D%8F</link>
-    <guid>https://wangze.tech/Mac-%E5%BA%94%E7%94%A8%E5%B7%B2%E6%8D%9F%E5%9D%8F</guid>
-    <description> 安装后打开提示已损坏时执行命令：sudo xattr -d com.apple.quarantine &quot;/Applications/{appName}.app&quot; 可能还需要到系统设置 - 隐私与安全下方允许运行应用 .</description>
-    <pubDate>Tue, 23 Apr 2024 15:00:52 GMT</pubDate>
-  </item><item>
-    <title>Mac 运行 Crontab</title>
-    <link>https://wangze.tech/Mac-%E8%BF%90%E8%A1%8C-Crontab</link>
-    <guid>https://wangze.tech/Mac-%E8%BF%90%E8%A1%8C-Crontab</guid>
-    <description>执行不到 iCloud 和 OneDrive 里的文件 按图中顺序添加 cron 的磁盘访问权限 在点击 2 出现的文件选择框里按下 Shift + Command + G 可以调出路径输入窗口查找到 cron 参考：How to Fix Cron “Operation not permitted” error in macOS - ITPro Helper ...</description>
-    <pubDate>Tue, 23 Apr 2024 15:00:52 GMT</pubDate>
-  </item><item>
-    <title>Obsidian</title>
-    <link>https://wangze.tech/Obsidian</link>
-    <guid>https://wangze.tech/Obsidian</guid>
-    <description>基本信息 官网 Obsidian 是一个功能强大且可扩展的知识库，它在您的本地纯文本文件文件夹之上运行。 插件 推荐 Enhancing Mindmap 使用思维导图视图查看文档，只需修改文档头 待折腾 玩转 Obsidian 08：利用 Dataview 打造自动化 HomePage | by 闲者时间 | Medium ...</description>
-    <pubDate>Tue, 23 Apr 2024 15:00:52 GMT</pubDate>
-  </item><item>
-    <title>Oh My Zsh</title>
-    <link>https://wangze.tech/Oh-My-Zsh</link>
-    <guid>https://wangze.tech/Oh-My-Zsh</guid>
+    <title>11｜“万金油”的 String，为什么不好用了？</title>
+    <link>https://wangze.tech/11%EF%BD%9C%E2%80%9C%E4%B8%87%E9%87%91%E6%B2%B9%E2%80%9D%E7%9A%84-String%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E5%A5%BD%E7%94%A8%E4%BA%86%EF%BC%9F</link>
+    <guid>https://wangze.tech/11%EF%BD%9C%E2%80%9C%E4%B8%87%E9%87%91%E6%B2%B9%E2%80%9D%E7%9A%84-String%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E5%A5%BD%E7%94%A8%E4%BA%86%EF%BC%9F</guid>
     <description>...</description>
-    <pubDate>Tue, 23 Apr 2024 15:00:52 GMT</pubDate>
+    <pubDate>Wed, 24 Apr 2024 06:46:21 GMT</pubDate>
   </item><item>
-    <title>Rate Limit</title>
-    <link>https://wangze.tech/Rate-Limit</link>
-    <guid>https://wangze.tech/Rate-Limit</guid>
-    <description>功能 限制接口请求数 缓存数据格式 key: { current_count: number; started_at: date; request_time_queue: date[]; time_range: number; // 时间窗口大小 count_limit: number; } 处理流程 请求进来 拼接出 key 查找 key 对应的缓存 ...</description>
-    <pubDate>Tue, 23 Apr 2024 15:00:52 GMT</pubDate>
+    <title>12｜有一亿个 keys 要统计，应该用哪种集合？</title>
+    <link>https://wangze.tech/12%EF%BD%9C%E6%9C%89%E4%B8%80%E4%BA%BF%E4%B8%AA-keys-%E8%A6%81%E7%BB%9F%E8%AE%A1%EF%BC%8C%E5%BA%94%E8%AF%A5%E7%94%A8%E5%93%AA%E7%A7%8D%E9%9B%86%E5%90%88%EF%BC%9F</link>
+    <guid>https://wangze.tech/12%EF%BD%9C%E6%9C%89%E4%B8%80%E4%BA%BF%E4%B8%AA-keys-%E8%A6%81%E7%BB%9F%E8%AE%A1%EF%BC%8C%E5%BA%94%E8%AF%A5%E7%94%A8%E5%93%AA%E7%A7%8D%E9%9B%86%E5%90%88%EF%BC%9F</guid>
+    <description>数据类型汇总表格 聚合统计 统计多个集合元素的聚合结果，包括： 统计多个集合的共有元素（交集统计） 把两个集合相比，统计其中一个集合独有的元素（差集统计） 统计多个集合的所有元素（并集统计） 使用 Set 并集：SUNIONSTORE user:new user:id user:id:20200803 差集：SDIFFSTORE ...</description>
+    <pubDate>Wed, 24 Apr 2024 06:46:21 GMT</pubDate>
+  </item><item>
+    <title>13｜GEO 是什么？还可以定义新的数据类型吗？</title>
+    <link>https://wangze.tech/13%EF%BD%9CGEO-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E8%BF%98%E5%8F%AF%E4%BB%A5%E5%AE%9A%E4%B9%89%E6%96%B0%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%90%97%EF%BC%9F</link>
+    <guid>https://wangze.tech/13%EF%BD%9CGEO-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F%E8%BF%98%E5%8F%AF%E4%BB%A5%E5%AE%9A%E4%B9%89%E6%96%B0%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%90%97%EF%BC%9F</guid>
+    <description>...</description>
+    <pubDate>Wed, 24 Apr 2024 06:46:21 GMT</pubDate>
+  </item><item>
+    <title>14｜如何在 Redis 中保存时间序列数据？</title>
+    <link>https://wangze.tech/14%EF%BD%9C%E5%A6%82%E4%BD%95%E5%9C%A8-Redis-%E4%B8%AD%E4%BF%9D%E5%AD%98%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E6%95%B0%E6%8D%AE%EF%BC%9F</link>
+    <guid>https://wangze.tech/14%EF%BD%9C%E5%A6%82%E4%BD%95%E5%9C%A8-Redis-%E4%B8%AD%E4%BF%9D%E5%AD%98%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E6%95%B0%E6%8D%AE%EF%BC%9F</guid>
+    <description>...</description>
+    <pubDate>Wed, 24 Apr 2024 06:46:21 GMT</pubDate>
+  </item><item>
+    <title>15｜消息队列的考验：Redis 有哪些解决方案？</title>
+    <link>https://wangze.tech/15%EF%BD%9C%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84%E8%80%83%E9%AA%8C%EF%BC%9ARedis-%E6%9C%89%E5%93%AA%E4%BA%9B%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9F</link>
+    <guid>https://wangze.tech/15%EF%BD%9C%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84%E8%80%83%E9%AA%8C%EF%BC%9ARedis-%E6%9C%89%E5%93%AA%E4%BA%9B%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9F</guid>
+    <description>...</description>
+    <pubDate>Wed, 24 Apr 2024 06:46:21 GMT</pubDate>
+  </item><item>
+    <title>16｜异步机制：如何避免单线程模型的阻塞？</title>
+    <link>https://wangze.tech/16%EF%BD%9C%E5%BC%82%E6%AD%A5%E6%9C%BA%E5%88%B6%EF%BC%9A%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E5%8D%95%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B%E7%9A%84%E9%98%BB%E5%A1%9E%EF%BC%9F</link>
+    <guid>https://wangze.tech/16%EF%BD%9C%E5%BC%82%E6%AD%A5%E6%9C%BA%E5%88%B6%EF%BC%9A%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E5%8D%95%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B%E7%9A%84%E9%98%BB%E5%A1%9E%EF%BC%9F</guid>
+    <description>...</description>
+    <pubDate>Wed, 24 Apr 2024 06:46:21 GMT</pubDate>
+  </item><item>
+    <title>17｜为什么 CPU 结构也会影响 Redis 的性能？</title>
+    <link>https://wangze.tech/17%EF%BD%9C%E4%B8%BA%E4%BB%80%E4%B9%88-CPU-%E7%BB%93%E6%9E%84%E4%B9%9F%E4%BC%9A%E5%BD%B1%E5%93%8D-Redis-%E7%9A%84%E6%80%A7%E8%83%BD%EF%BC%9F</link>
+    <guid>https://wangze.tech/17%EF%BD%9C%E4%B8%BA%E4%BB%80%E4%B9%88-CPU-%E7%BB%93%E6%9E%84%E4%B9%9F%E4%BC%9A%E5%BD%B1%E5%93%8D-Redis-%E7%9A%84%E6%80%A7%E8%83%BD%EF%BC%9F</guid>
+    <description>NUMA 架构（Non-Uniform Memory Access 非统一内存访问架构） 图 第一步 第二步 文字描述 多个 CPU 处理器（多 CPU Socket） 每个都有自己的： 多个物理核（包括 L1、L2 缓存） 每个物理核私有的 L1、L2 大小受限于处理器的制造基数，KB 级别大小 缓存应用程序访问最频繁的指令和数据 L3 缓存 多个物理核共用 ...</description>
+    <pubDate>Wed, 24 Apr 2024 06:46:21 GMT</pubDate>
+  </item><item>
+    <title>18｜波动的响应延迟：如何应对变慢的 Redis？（上）</title>
+    <link>https://wangze.tech/18%EF%BD%9C%E6%B3%A2%E5%8A%A8%E7%9A%84%E5%93%8D%E5%BA%94%E5%BB%B6%E8%BF%9F%EF%BC%9A%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E5%8F%98%E6%85%A2%E7%9A%84-Redis%EF%BC%9F%EF%BC%88%E4%B8%8A%EF%BC%89</link>
+    <guid>https://wangze.tech/18%EF%BD%9C%E6%B3%A2%E5%8A%A8%E7%9A%84%E5%93%8D%E5%BA%94%E5%BB%B6%E8%BF%9F%EF%BC%9A%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E5%8F%98%E6%85%A2%E7%9A%84-Redis%EF%BC%9F%EF%BC%88%E4%B8%8A%EF%BC%89</guid>
+    <description>...</description>
+    <pubDate>Wed, 24 Apr 2024 06:46:21 GMT</pubDate>
+  </item><item>
+    <title>19｜波动的响应延迟：如何应对变慢的 Redis？（下）</title>
+    <link>https://wangze.tech/19%EF%BD%9C%E6%B3%A2%E5%8A%A8%E7%9A%84%E5%93%8D%E5%BA%94%E5%BB%B6%E8%BF%9F%EF%BC%9A%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E5%8F%98%E6%85%A2%E7%9A%84-Redis%EF%BC%9F%EF%BC%88%E4%B8%8B%EF%BC%89</link>
+    <guid>https://wangze.tech/19%EF%BD%9C%E6%B3%A2%E5%8A%A8%E7%9A%84%E5%93%8D%E5%BA%94%E5%BB%B6%E8%BF%9F%EF%BC%9A%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E5%8F%98%E6%85%A2%E7%9A%84-Redis%EF%BC%9F%EF%BC%88%E4%B8%8B%EF%BC%89</guid>
+    <description>...</description>
+    <pubDate>Wed, 24 Apr 2024 06:46:21 GMT</pubDate>
+  </item><item>
+    <title>20｜删除数据后，为什么内存占用率还是很高？</title>
+    <link>https://wangze.tech/20%EF%BD%9C%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E5%90%8E%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E7%8E%87%E8%BF%98%E6%98%AF%E5%BE%88%E9%AB%98%EF%BC%9F</link>
+    <guid>https://wangze.tech/20%EF%BD%9C%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E5%90%8E%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E7%8E%87%E8%BF%98%E6%98%AF%E5%BE%88%E9%AB%98%EF%BC%9F</guid>
+    <description>...</description>
+    <pubDate>Wed, 24 Apr 2024 06:46:21 GMT</pubDate>
   </item>
     </channel>
   </rss>
