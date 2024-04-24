@@ -6,65 +6,65 @@
       <description>Last 10 notes on 🫧 11ze</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
-    <title>25｜缓存异常（上）：如何解决缓存和数据库的数据不一致问题？</title>
-    <link>https://wangze.tech/25%EF%BD%9C%E7%BC%93%E5%AD%98%E5%BC%82%E5%B8%B8%EF%BC%88%E4%B8%8A%EF%BC%89%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%95%B0%E6%8D%AE%E4%B8%8D%E4%B8%80%E8%87%B4%E9%97%AE%E9%A2%98%EF%BC%9F</link>
-    <guid>https://wangze.tech/25%EF%BD%9C%E7%BC%93%E5%AD%98%E5%BC%82%E5%B8%B8%EF%BC%88%E4%B8%8A%EF%BC%89%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E7%BC%93%E5%AD%98%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%95%B0%E6%8D%AE%E4%B8%8D%E4%B8%80%E8%87%B4%E9%97%AE%E9%A2%98%EF%BC%9F</guid>
-    <description> 数据的一致性 缓存中有数据，缓存的数据值需要和数据库中的值相同 缓存中没有数据，数据库中的值必须是最新值 「读写缓存」 要保证一致性可以采用同步直写策略 适用于读写相当的业务场景 「只读缓存」 数据不一致的问题原因、现象和应对方案 分为 1. 先删除缓存再更新数据库；2. 先更新数据库再删除缓存 适用于读操作比较多的业务场景 优先使用先更新数据库再删除缓存的方法 先删除缓存可能导致请求因缓存缺失而访问数据库，给数据库带来压力 业务应用中读取数据库和写缓存的时间不好估算，所以延迟双删的等待时间不好设置 注意：如果要保证数据一致，可以在更新数据库的时候在 Redis 缓存客户端暂存并发读请求，等数据库更新完、缓存值删除后再读取数据 .</description>
-    <pubDate>Wed, 24 Apr 2024 07:02:23 GMT</pubDate>
+    <title>44｜答疑文章（三）：说一说这些好问题</title>
+    <link>https://wangze.tech/44%EF%BD%9C%E7%AD%94%E7%96%91%E6%96%87%E7%AB%A0%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AF%B4%E4%B8%80%E8%AF%B4%E8%BF%99%E4%BA%9B%E5%A5%BD%E9%97%AE%E9%A2%98</link>
+    <guid>https://wangze.tech/44%EF%BD%9C%E7%AD%94%E7%96%91%E6%96%87%E7%AB%A0%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AF%B4%E4%B8%80%E8%AF%B4%E8%BF%99%E4%BA%9B%E5%A5%BD%E9%97%AE%E9%A2%98</guid>
+    <description>join 的写法 在 MySQL 里，NULL 跟任何值执行等值判断和不等值判断的结果，都是 NULL。这里包括， select NULL = NULL 的结果，也是返回 NULL。 where a.f2=b.f2 就表示，查询结果里面不会包含 b.f2 是 NULL 的行 使用 left join 时，左边的表不一定是驱动表。 如果需要 left ...</description>
+    <pubDate>Wed, 24 Apr 2024 07:13:55 GMT</pubDate>
   </item><item>
-    <title>26｜缓存异常（下）：如何解决缓存雪崩、击穿、穿透难题？</title>
-    <link>https://wangze.tech/26%EF%BD%9C%E7%BC%93%E5%AD%98%E5%BC%82%E5%B8%B8%EF%BC%88%E4%B8%8B%EF%BC%89%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9%E3%80%81%E5%87%BB%E7%A9%BF%E3%80%81%E7%A9%BF%E9%80%8F%E9%9A%BE%E9%A2%98%EF%BC%9F</link>
-    <guid>https://wangze.tech/26%EF%BD%9C%E7%BC%93%E5%AD%98%E5%BC%82%E5%B8%B8%EF%BC%88%E4%B8%8B%EF%BC%89%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9%E3%80%81%E5%87%BB%E7%A9%BF%E3%80%81%E7%A9%BF%E9%80%8F%E9%9A%BE%E9%A2%98%EF%BC%9F</guid>
-    <description>...</description>
-    <pubDate>Wed, 24 Apr 2024 07:02:23 GMT</pubDate>
+    <title>30｜答疑文章（二）：用动态的观点看加锁</title>
+    <link>https://wangze.tech/30%EF%BD%9C%E7%AD%94%E7%96%91%E6%96%87%E7%AB%A0%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E7%94%A8%E5%8A%A8%E6%80%81%E7%9A%84%E8%A7%82%E7%82%B9%E7%9C%8B%E5%8A%A0%E9%94%81</link>
+    <guid>https://wangze.tech/30%EF%BD%9C%E7%AD%94%E7%96%91%E6%96%87%E7%AB%A0%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E7%94%A8%E5%8A%A8%E6%80%81%E7%9A%84%E8%A7%82%E7%82%B9%E7%9C%8B%E5%8A%A0%E9%94%81</guid>
+    <description>下面的讨论基于此表 CREATE TABLE `t` ( `id` int(11) NOT NULL, `c` int(11) DEFAULT NULL, `d` int(11) DEFAULT NULL, PRIMARY KEY (`id`), KEY `c` (`c`) ) ENGINE=InnoDB; insert into t values(0,0,0),(5,5,5),(10,10,10),(15,15,15),(20,20,20),(25,25,25); ...</description>
+    <pubDate>Wed, 24 Apr 2024 07:13:55 GMT</pubDate>
   </item><item>
-    <title>27｜缓存被污染了，该怎么办？</title>
-    <link>https://wangze.tech/27%EF%BD%9C%E7%BC%93%E5%AD%98%E8%A2%AB%E6%B1%A1%E6%9F%93%E4%BA%86%EF%BC%8C%E8%AF%A5%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F</link>
-    <guid>https://wangze.tech/27%EF%BD%9C%E7%BC%93%E5%AD%98%E8%A2%AB%E6%B1%A1%E6%9F%93%E4%BA%86%EF%BC%8C%E8%AF%A5%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F</guid>
-    <description>...</description>
-    <pubDate>Wed, 24 Apr 2024 07:02:23 GMT</pubDate>
+    <title>我的开发环境</title>
+    <link>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</link>
+    <guid>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</guid>
+    <description>设备 M1 MacBook Pro 14 先更新系统 Homebrew 安装 brew tap homebrew/cask-fonts brew tap homebrew/cask-versions brew tap buo/cask-upgrade brew tap mongodb/brew brew tap homebrew/autoupdate ...</description>
+    <pubDate>Tue, 23 Apr 2024 14:39:00 GMT</pubDate>
   </item><item>
-    <title>28｜Pika：如何基于 SSD 实现大容量 Redis？</title>
-    <link>https://wangze.tech/28%EF%BD%9CPika%EF%BC%9A%E5%A6%82%E4%BD%95%E5%9F%BA%E4%BA%8E-SSD-%E5%AE%9E%E7%8E%B0%E5%A4%A7%E5%AE%B9%E9%87%8F-Redis%EF%BC%9F</link>
-    <guid>https://wangze.tech/28%EF%BD%9CPika%EF%BC%9A%E5%A6%82%E4%BD%95%E5%9F%BA%E4%BA%8E-SSD-%E5%AE%9E%E7%8E%B0%E5%A4%A7%E5%AE%B9%E9%87%8F-Redis%EF%BC%9F</guid>
-    <description>...</description>
-    <pubDate>Wed, 24 Apr 2024 07:02:23 GMT</pubDate>
+    <title>Crontab 执行提示没有权限</title>
+    <link>https://wangze.tech/Crontab-%E6%89%A7%E8%A1%8C%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90</link>
+    <guid>https://wangze.tech/Crontab-%E6%89%A7%E8%A1%8C%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90</guid>
+    <description> Mac 的解决方案：Mac 运行 Crontab 检查有没有用户对应的 home 目录 .</description>
+    <pubDate>Fri, 19 Apr 2024 10:44:00 GMT</pubDate>
   </item><item>
-    <title>29｜无锁的原子操作：Redis 如何应对并发访问？</title>
-    <link>https://wangze.tech/29%EF%BD%9C%E6%97%A0%E9%94%81%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%EF%BC%9ARedis-%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E5%B9%B6%E5%8F%91%E8%AE%BF%E9%97%AE%EF%BC%9F</link>
-    <guid>https://wangze.tech/29%EF%BD%9C%E6%97%A0%E9%94%81%E7%9A%84%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%EF%BC%9ARedis-%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E5%B9%B6%E5%8F%91%E8%AE%BF%E9%97%AE%EF%BC%9F</guid>
-    <description>并发访问中需要控制的操作 指对多个客户端访问操作同一份数据的过程进行控制，以保证任何一个客户端发送的操作在 Redis 实例上执行时具有互斥性 例如，客户端 A 的访问操作在执行时，客户端 B 的操作不能执行，需要等到 A 的操作结束后，才能执行 原子操作 单命令操作 多个操作在 Redis 中实现成一个操作（如改源码） INCR/DECR ...</description>
-    <pubDate>Wed, 24 Apr 2024 07:02:23 GMT</pubDate>
+    <title>Obsidian</title>
+    <link>https://wangze.tech/Obsidian</link>
+    <guid>https://wangze.tech/Obsidian</guid>
+    <description>基本信息 官网 Obsidian 是一个功能强大且可扩展的知识库，它在您的本地纯文本文件文件夹之上运行。 插件 推荐 Enhancing Mindmap 使用思维导图视图查看文档，只需修改文档头 待折腾 玩转 Obsidian 08：利用 Dataview 打造自动化 HomePage | by 闲者时间 | Medium ...</description>
+    <pubDate>Mon, 15 Apr 2024 06:42:00 GMT</pubDate>
   </item><item>
-    <title>30｜如何使用 Redis 实现分布式锁？</title>
-    <link>https://wangze.tech/30%EF%BD%9C%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Redis-%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%EF%BC%9F</link>
-    <guid>https://wangze.tech/30%EF%BD%9C%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Redis-%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%EF%BC%9F</guid>
-    <description>单机版 用一个变量表示：0 没有线程获取到锁；1 有线程获取到锁 分布式锁 锁变量需要有一个共享存储系统来维护 如果为了效率，可以使用单节点，缺点是允许锁偶尔失效，优点是简单效率高 业务对结果要求非常严格，为了正确性，使用 Redlock，缺点是比较重，部署成本高 基于单个节点 加锁 SET lock_key unique_value ...</description>
-    <pubDate>Wed, 24 Apr 2024 07:02:23 GMT</pubDate>
+    <title>Vault</title>
+    <link>https://wangze.tech/Vault</link>
+    <guid>https://wangze.tech/Vault</guid>
+    <description> 保管库是本地文件系统上的一个文件夹，Obsidian 将您的笔记存储在其中。您可以将所有笔记保存在一个保险库中，或为每个不同的项目创建多个保险库。 Create a vault - Obsidian Help.</description>
+    <pubDate>Mon, 15 Apr 2024 06:42:00 GMT</pubDate>
   </item><item>
-    <title>31｜事务机制｜Redis 能实现 ACID 属性吗？</title>
-    <link>https://wangze.tech/31%EF%BD%9C%E4%BA%8B%E5%8A%A1%E6%9C%BA%E5%88%B6%EF%BD%9CRedis-%E8%83%BD%E5%AE%9E%E7%8E%B0-ACID-%E5%B1%9E%E6%80%A7%E5%90%97%EF%BC%9F</link>
-    <guid>https://wangze.tech/31%EF%BD%9C%E4%BA%8B%E5%8A%A1%E6%9C%BA%E5%88%B6%EF%BD%9CRedis-%E8%83%BD%E5%AE%9E%E7%8E%B0-ACID-%E5%B1%9E%E6%80%A7%E5%90%97%EF%BC%9F</guid>
-    <description>事务命令 MULTI：开启一个事务 EXEC：提交事务，从命令队列中去除提交的操作命令，进行实际执行 DISCARD：放弃一个事务，清空命令队列 只是清空，起不到回滚的作用 WATCH：检测一个或多个键的值在事务执行期间是否发生变化，如果发生变化，那么当前事务放弃执行 Redis 的事务机制 可以保证一致性和隔离性，无法保证持久性（非必要） ...</description>
-    <pubDate>Wed, 24 Apr 2024 07:02:23 GMT</pubDate>
+    <title>用 iCloud 同步 Mac 应用设置</title>
+    <link>https://wangze.tech/%E7%94%A8-iCloud-%E5%90%8C%E6%AD%A5-Mac-%E5%BA%94%E7%94%A8%E8%AE%BE%E7%BD%AE</link>
+    <guid>https://wangze.tech/%E7%94%A8-iCloud-%E5%90%8C%E6%AD%A5-Mac-%E5%BA%94%E7%94%A8%E8%AE%BE%E7%BD%AE</guid>
+    <description> 先退出要同步的应用 下载腾讯柠檬 在柠檬里点击卸载应用的时候看详细信息，最下面找到应用保存数据的位置 用访达打开 找到数据文件夹 复制数据文件夹到 iCloud 删除原文件夹 在原文件夹的位置创建同名软链接指向 iCloud 里的数据文件 .</description>
+    <pubDate>Mon, 15 Apr 2024 06:42:00 GMT</pubDate>
   </item><item>
-    <title>32｜Redis 主从同步与故障切换，有哪些坑？</title>
-    <link>https://wangze.tech/32%EF%BD%9CRedis-%E4%B8%BB%E4%BB%8E%E5%90%8C%E6%AD%A5%E4%B8%8E%E6%95%85%E9%9A%9C%E5%88%87%E6%8D%A2%EF%BC%8C%E6%9C%89%E5%93%AA%E4%BA%9B%E5%9D%91%EF%BC%9F</link>
-    <guid>https://wangze.tech/32%EF%BD%9CRedis-%E4%B8%BB%E4%BB%8E%E5%90%8C%E6%AD%A5%E4%B8%8E%E6%95%85%E9%9A%9C%E5%88%87%E6%8D%A2%EF%BC%8C%E6%9C%89%E5%93%AA%E4%BA%9B%E5%9D%91%EF%BC%9F</guid>
-    <description>1. 主从数据不一致 因为主从数据是异步复制 a）使用外部监控程序对比主从库复制进度，不让客户端从落后的从库中读取数据 开发一个工具： 基于 INFO replication 命令查看主库接收写命令的进度信息（master_repl_offset）和从库复制写命令的进度信息（slave_repl_offset） 比较两者大小，大于我们预设的阈值则不让客户端和此从库连接 b）保证主从间的网络链接状况良好 2.</description>
-    <pubDate>Wed, 24 Apr 2024 07:02:23 GMT</pubDate>
+    <title>Capslock</title>
+    <link>https://wangze.tech/Capslock</link>
+    <guid>https://wangze.tech/Capslock</guid>
+    <description>功能 加强 Caps 键功能 安装 Github 到系统设置 - 键盘 - 键盘快捷键 - Modifier Keys 里选择键盘 设置单击 Caps 切换输入法 打开配置文件 ~/.config/karabiner/karabiner.json 搜 &quot;key_code&quot;: &quot;spacebar&quot; 将 to_if_alone ...</description>
+    <pubDate>Mon, 15 Apr 2024 06:25:00 GMT</pubDate>
   </item><item>
-    <title>33｜脑裂：一次奇怪的数据丢失</title>
-    <link>https://wangze.tech/33%EF%BD%9C%E8%84%91%E8%A3%82%EF%BC%9A%E4%B8%80%E6%AC%A1%E5%A5%87%E6%80%AA%E7%9A%84%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1</link>
-    <guid>https://wangze.tech/33%EF%BD%9C%E8%84%91%E8%A3%82%EF%BC%9A%E4%B8%80%E6%AC%A1%E5%A5%87%E6%80%AA%E7%9A%84%E6%95%B0%E6%8D%AE%E4%B8%A2%E5%A4%B1</guid>
-    <description>脑裂 指在主从集群中，同时有两个主节点，都能接收写请求 影响：客户端不知道该往哪个主节点写入数据，结果不同客户端往不同的主节点写数据，严重的会导致数据丢失 数据丢失排查过程 确认是不是数据同步出现问题 主库的数据未同步到从库且发生了故障，从库升级为主库，未同步的数据丢失 可以通过计算 master_repl_offset ...</description>
-    <pubDate>Wed, 24 Apr 2024 07:02:23 GMT</pubDate>
+    <title>笔记 404</title>
+    <link>https://wangze.tech/%E5%8F%91%E5%B8%83%E7%AC%94%E8%AE%B0-404</link>
+    <guid>https://wangze.tech/%E5%8F%91%E5%B8%83%E7%AC%94%E8%AE%B0-404</guid>
+    <description>现象 文档在 2023-05-12 0 点创建，发布失败，改成 2023-05-11，发布成功 笔记出现在搜索结果，点击自动跳转到 404 页面 猜测 GitHub Action 服务器时间比文档头标记的创建时间早，所以未发布成功 2023-05-12 08:00 尝试发布成功 解决方法 使用 ISO8601 格式的日期 ...</description>
+    <pubDate>Mon, 15 Apr 2024 06:06:00 GMT</pubDate>
   </item><item>
-    <title>35｜Codis VS Redis Cluster：我该选择哪一个集群方案？</title>
-    <link>https://wangze.tech/35%EF%BD%9CCodis-VS-Redis-Cluster%EF%BC%9A%E6%88%91%E8%AF%A5%E9%80%89%E6%8B%A9%E5%93%AA%E4%B8%80%E4%B8%AA%E9%9B%86%E7%BE%A4%E6%96%B9%E6%A1%88%EF%BC%9F</link>
-    <guid>https://wangze.tech/35%EF%BD%9CCodis-VS-Redis-Cluster%EF%BC%9A%E6%88%91%E8%AF%A5%E9%80%89%E6%8B%A9%E5%93%AA%E4%B8%80%E4%B8%AA%E9%9B%86%E7%BE%A4%E6%96%B9%E6%A1%88%EF%BC%9F</guid>
-    <description>Codis 集群 Codis 集群的架构和关键组件图 codis server 进行了二次开发的 Redis 实例，其中增加了额外的数据结构，支持数据迁移操作，主要负责处理具体的数据读写请求 codis proxy 接收客户端请求，并把请求转发给 codis server Zookeeper 集群 保存集群元数据，例如数据位置信息和 ...</description>
-    <pubDate>Wed, 24 Apr 2024 07:02:23 GMT</pubDate>
+    <title>搭建数字花园</title>
+    <link>https://wangze.tech/%E6%90%AD%E5%BB%BA%E6%95%B0%E5%AD%97%E8%8A%B1%E5%9B%AD</link>
+    <guid>https://wangze.tech/%E6%90%AD%E5%BB%BA%E6%95%B0%E5%AD%97%E8%8A%B1%E5%9B%AD</guid>
+    <description> 同步方案 发布方案 部署花园 添加评论区 配置图床 本库自动提交到 GitHub 不同步 .git 文件夹 问题 发布笔记 404 .</description>
+    <pubDate>Mon, 15 Apr 2024 06:06:00 GMT</pubDate>
   </item>
     </channel>
   </rss>
