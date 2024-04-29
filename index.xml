@@ -10,7 +10,13 @@
     <link>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</link>
     <guid>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</guid>
     <description>设备 M1 MacBook Pro 14 先更新系统 Homebrew 官网 brew tap homebrew/cask-fonts brew tap homebrew/cask-versions brew tap buo/cask-upgrade brew tap mongodb/brew brew tap homebrew/autoupdate ...</description>
-    <pubDate>Sun, 28 Apr 2024 15:46:00 GMT</pubDate>
+    <pubDate>Mon, 29 Apr 2024 03:27:00 GMT</pubDate>
+  </item><item>
+    <title>03｜事务隔离：为什么你改了还看不见？</title>
+    <link>https://wangze.tech/03%EF%BD%9C%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%A0%E6%94%B9%E4%BA%86%E8%BF%98%E7%9C%8B%E4%B8%8D%E8%A7%81%EF%BC%9F</link>
+    <guid>https://wangze.tech/03%EF%BD%9C%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%A0%E6%94%B9%E4%BA%86%E8%BF%98%E7%9C%8B%E4%B8%8D%E8%A7%81%EF%BC%9F</guid>
+    <description>隔离型与隔离级别 读未提交 read uncommitted 一个事务还没提交时，它做的变更就能被别的事务看到。 读提交 read committed 一个事务提交之后，它做的变更才会被其他事务看到。 可重复读 repeatable read 一个事务执行过程中看到的数据，总是跟这个事务在启动时看到的数据是一致的。当然在可重复读隔离级别下，未提交变更对其他事务也是不可见的。 ...</description>
+    <pubDate>Sun, 28 Apr 2024 16:01:00 GMT</pubDate>
   </item><item>
     <title>02｜日志系统：一条 SQL 更新语句是如何执行的？</title>
     <link>https://wangze.tech/02%EF%BD%9C%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%EF%BC%9A%E4%B8%80%E6%9D%A1-SQL-%E6%9B%B4%E6%96%B0%E8%AF%AD%E5%8F%A5%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%A7%E8%A1%8C%E7%9A%84%EF%BC%9F</link>
@@ -58,12 +64,6 @@
     <link>https://wangze.tech/30%EF%BD%9C%E7%AD%94%E7%96%91%E6%96%87%E7%AB%A0%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E7%94%A8%E5%8A%A8%E6%80%81%E7%9A%84%E8%A7%82%E7%82%B9%E7%9C%8B%E5%8A%A0%E9%94%81</link>
     <guid>https://wangze.tech/30%EF%BD%9C%E7%AD%94%E7%96%91%E6%96%87%E7%AB%A0%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E7%94%A8%E5%8A%A8%E6%80%81%E7%9A%84%E8%A7%82%E7%82%B9%E7%9C%8B%E5%8A%A0%E9%94%81</guid>
     <description>下面的讨论基于此表 CREATE TABLE `t` ( `id` int(11) NOT NULL, `c` int(11) DEFAULT NULL, `d` int(11) DEFAULT NULL, PRIMARY KEY (`id`), KEY `c` (`c`) ) ENGINE=InnoDB; insert into t values(0,0,0),(5,5,5),(10,10,10),(15,15,15),(20,20,20),(25,25,25); ...</description>
-    <pubDate>Wed, 24 Apr 2024 07:16:01 GMT</pubDate>
-  </item><item>
-    <title>44｜答疑文章（三）：说一说这些好问题</title>
-    <link>https://wangze.tech/44%EF%BD%9C%E7%AD%94%E7%96%91%E6%96%87%E7%AB%A0%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AF%B4%E4%B8%80%E8%AF%B4%E8%BF%99%E4%BA%9B%E5%A5%BD%E9%97%AE%E9%A2%98</link>
-    <guid>https://wangze.tech/44%EF%BD%9C%E7%AD%94%E7%96%91%E6%96%87%E7%AB%A0%EF%BC%88%E4%B8%89%EF%BC%89%EF%BC%9A%E8%AF%B4%E4%B8%80%E8%AF%B4%E8%BF%99%E4%BA%9B%E5%A5%BD%E9%97%AE%E9%A2%98</guid>
-    <description>join 的写法 在 MySQL 里，NULL 跟任何值执行等值判断和不等值判断的结果，都是 NULL。这里包括， select NULL = NULL 的结果，也是返回 NULL。 where a.f2=b.f2 就表示，查询结果里面不会包含 b.f2 是 NULL 的行 使用 left join 时，左边的表不一定是驱动表。 如果需要 left ...</description>
     <pubDate>Wed, 24 Apr 2024 07:16:01 GMT</pubDate>
   </item>
     </channel>
