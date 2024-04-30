@@ -6,6 +6,12 @@
       <description>Last 10 notes on 🫧 11ze</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>index</title>
+    <link>https://wangze.tech/</link>
+    <guid>https://wangze.tech/</guid>
+    <description>🫧 11ze.</description>
+    <pubDate>Tue, 30 Apr 2024 02:57:33 GMT</pubDate>
+  </item><item>
     <title>我的开发环境</title>
     <link>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</link>
     <guid>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</guid>
@@ -59,12 +65,6 @@
     <guid>https://wangze.tech/%E9%83%A8%E7%BD%B2%E8%8A%B1%E5%9B%AD</guid>
     <description>基于 Cloudflare Pages 部署，2024-04-05 官方文档 把域名转到 Cloudflare 在设置里配置自定义域名 仓库每次提交都会触发自动部署 如果不想用 Cloudflare Pages 自动添加 .html 对于 quartz4，需要在 content 目录下放置 vercel.json，用于在点击 Wikilink ...</description>
     <pubDate>Wed, 24 Apr 2024 07:24:46 GMT</pubDate>
-  </item><item>
-    <title>30｜答疑文章（二）：用动态的观点看加锁</title>
-    <link>https://wangze.tech/30%EF%BD%9C%E7%AD%94%E7%96%91%E6%96%87%E7%AB%A0%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E7%94%A8%E5%8A%A8%E6%80%81%E7%9A%84%E8%A7%82%E7%82%B9%E7%9C%8B%E5%8A%A0%E9%94%81</link>
-    <guid>https://wangze.tech/30%EF%BD%9C%E7%AD%94%E7%96%91%E6%96%87%E7%AB%A0%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E7%94%A8%E5%8A%A8%E6%80%81%E7%9A%84%E8%A7%82%E7%82%B9%E7%9C%8B%E5%8A%A0%E9%94%81</guid>
-    <description>下面的讨论基于此表 CREATE TABLE `t` ( `id` int(11) NOT NULL, `c` int(11) DEFAULT NULL, `d` int(11) DEFAULT NULL, PRIMARY KEY (`id`), KEY `c` (`c`) ) ENGINE=InnoDB; insert into t values(0,0,0),(5,5,5),(10,10,10),(15,15,15),(20,20,20),(25,25,25); ...</description>
-    <pubDate>Wed, 24 Apr 2024 07:16:01 GMT</pubDate>
   </item>
     </channel>
   </rss>
