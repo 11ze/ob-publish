@@ -6,6 +6,36 @@
       <description>Last 10 notes on 🫧 11ze</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>设计一个短链系统</title>
+    <link>https://wangze.tech/%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E7%9F%AD%E9%93%BE%E7%B3%BB%E7%BB%9F</link>
+    <guid>https://wangze.tech/%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E7%9F%AD%E9%93%BE%E7%B3%BB%E7%BB%9F</guid>
+    <description></description>
+    <pubDate>Wed, 01 May 2024 08:52:00 GMT</pubDate>
+  </item><item>
+    <title>11ze&#039;s Garden</title>
+    <link>https://wangze.tech/</link>
+    <guid>https://wangze.tech/</guid>
+    <description> 我的开发环境 搭建数字花园 学英语 MySQL 实战 45 讲 Redis 核心技术与实战 .</description>
+    <pubDate>Wed, 01 May 2024 07:01:00 GMT</pubDate>
+  </item><item>
+    <title>PHP 开发设置</title>
+    <link>https://wangze.tech/PHP-%E5%BC%80%E5%8F%91%E8%AE%BE%E7%BD%AE</link>
+    <guid>https://wangze.tech/PHP-%E5%BC%80%E5%8F%91%E8%AE%BE%E7%BD%AE</guid>
+    <description>Laravel Pint 如何在PHPSTORM 配置Laravel Pint 代码格式化包 Laravel Pint VSCode.</description>
+    <pubDate>Wed, 01 May 2024 06:57:00 GMT</pubDate>
+  </item><item>
+    <title>PHP 错误码设计</title>
+    <link>https://wangze.tech/PHP-%E9%94%99%E8%AF%AF%E7%A0%81%E8%AE%BE%E8%AE%A1</link>
+    <guid>https://wangze.tech/PHP-%E9%94%99%E8%AF%AF%E7%A0%81%E8%AE%BE%E8%AE%A1</guid>
+    <description>目标 错误码包含：数字、英文、含义，还可以有 HTTP Status 这些最好放到一起，不然添加时容易漏 方案 静态变量：数组 多个名字类似的静态变量 静态工厂方法 枚举和注解 讨论 结论 参考 Using attributes to add value PHP 异常与错误处理 .</description>
+    <pubDate>Wed, 01 May 2024 06:57:00 GMT</pubDate>
+  </item><item>
+    <title>支付技术方案</title>
+    <link>https://wangze.tech/%E6%94%AF%E4%BB%98%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88</link>
+    <guid>https://wangze.tech/%E6%94%AF%E4%BB%98%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88</guid>
+    <description></description>
+    <pubDate>Wed, 01 May 2024 06:57:00 GMT</pubDate>
+  </item><item>
     <title>我的开发环境</title>
     <link>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</link>
     <guid>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</guid>
@@ -35,36 +65,6 @@
     <guid>https://wangze.tech/Laravel-Pint-%E4%BD%BF%E7%94%A8</guid>
     <description>...</description>
     <pubDate>Wed, 24 Apr 2024 12:33:00 GMT</pubDate>
-  </item><item>
-    <title>发布方案</title>
-    <link>https://wangze.tech/%E5%8F%91%E5%B8%83%E6%96%B9%E6%A1%88</link>
-    <guid>https://wangze.tech/%E5%8F%91%E5%B8%83%E6%96%B9%E6%A1%88</guid>
-    <description>选用方案 quartz 笔记位置 发布仓库的 content/ content 内容的生成方式 把笔记仓库作为发布仓库的 submodule。 在 GitHub Action 里 git clone 笔记仓库。 在发布仓库的 content/ 文件夹写文章，不推荐。 .</description>
-    <pubDate>Wed, 24 Apr 2024 07:24:46 GMT</pubDate>
-  </item><item>
-    <title>同步方案</title>
-    <link>https://wangze.tech/%E5%90%8C%E6%AD%A5%E6%96%B9%E6%A1%88</link>
-    <guid>https://wangze.tech/%E5%90%8C%E6%AD%A5%E6%96%B9%E6%A1%88</guid>
-    <description>可选方案 Obsidian Sync：官方，付费 Remotely Sync：第三方插件，自动同步最短间隔 1 分钟（可以手动执行同步），免费 iCloud：实时同步，免费 我使用的同步方案 iCloud iPhone 安装 Obsidian 进入 Obsidian 创建一个打开 iCloud 同步功能的 Vault 此时 iCloud 中会生成 ...</description>
-    <pubDate>Wed, 24 Apr 2024 07:24:46 GMT</pubDate>
-  </item><item>
-    <title>搭建数字花园</title>
-    <link>https://wangze.tech/%E6%90%AD%E5%BB%BA%E6%95%B0%E5%AD%97%E8%8A%B1%E5%9B%AD</link>
-    <guid>https://wangze.tech/%E6%90%AD%E5%BB%BA%E6%95%B0%E5%AD%97%E8%8A%B1%E5%9B%AD</guid>
-    <description> 同步方案 发布方案 部署花园 添加评论区 配置图床 本库自动提交到 GitHub 问题 发布笔记 404 .</description>
-    <pubDate>Wed, 24 Apr 2024 07:24:46 GMT</pubDate>
-  </item><item>
-    <title>部署花园</title>
-    <link>https://wangze.tech/%E9%83%A8%E7%BD%B2%E8%8A%B1%E5%9B%AD</link>
-    <guid>https://wangze.tech/%E9%83%A8%E7%BD%B2%E8%8A%B1%E5%9B%AD</guid>
-    <description>基于 Cloudflare Pages 部署，2024-04-05 官方文档 把域名转到 Cloudflare 在设置里配置自定义域名 仓库每次提交都会触发自动部署 如果不想用 Cloudflare Pages 自动添加 .html 对于 quartz4，需要在 content 目录下放置 vercel.json，用于在点击 Wikilink ...</description>
-    <pubDate>Wed, 24 Apr 2024 07:24:46 GMT</pubDate>
-  </item><item>
-    <title>30｜答疑文章（二）：用动态的观点看加锁</title>
-    <link>https://wangze.tech/30%EF%BD%9C%E7%AD%94%E7%96%91%E6%96%87%E7%AB%A0%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E7%94%A8%E5%8A%A8%E6%80%81%E7%9A%84%E8%A7%82%E7%82%B9%E7%9C%8B%E5%8A%A0%E9%94%81</link>
-    <guid>https://wangze.tech/30%EF%BD%9C%E7%AD%94%E7%96%91%E6%96%87%E7%AB%A0%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9A%E7%94%A8%E5%8A%A8%E6%80%81%E7%9A%84%E8%A7%82%E7%82%B9%E7%9C%8B%E5%8A%A0%E9%94%81</guid>
-    <description>下面的讨论基于此表 CREATE TABLE `t` ( `id` int(11) NOT NULL, `c` int(11) DEFAULT NULL, `d` int(11) DEFAULT NULL, PRIMARY KEY (`id`), KEY `c` (`c`) ) ENGINE=InnoDB; insert into t values(0,0,0),(5,5,5),(10,10,10),(15,15,15),(20,20,20),(25,25,25); ...</description>
-    <pubDate>Wed, 24 Apr 2024 07:16:01 GMT</pubDate>
   </item>
     </channel>
   </rss>
