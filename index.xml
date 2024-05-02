@@ -6,6 +6,12 @@
       <description>Last 10 notes on 🫧 11ze</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>Oh My Zsh</title>
+    <link>https://wangze.tech/Oh-My-Zsh</link>
+    <guid>https://wangze.tech/Oh-My-Zsh</guid>
+    <description>...</description>
+    <pubDate>Thu, 02 May 2024 12:58:00 GMT</pubDate>
+  </item><item>
     <title>设计一个短链系统</title>
     <link>https://wangze.tech/%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E7%9F%AD%E9%93%BE%E7%B3%BB%E7%BB%9F</link>
     <guid>https://wangze.tech/%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E7%9F%AD%E9%93%BE%E7%B3%BB%E7%BB%9F</guid>
@@ -59,12 +65,6 @@
     <guid>https://wangze.tech/01%EF%BD%9C%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%EF%BC%9A%E4%B8%80%E6%9D%A1-SQL-%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%A7%E8%A1%8C%E7%9A%84%EF%BC%9F</guid>
     <description>MySQL 的逻辑链接架构图 1. 客户端连接数据库 用 wait_timeout 参数控制连接器长时间没操作自动断开的时间 只有新建的连接才会使用新的权限设置 尽量使用长连接 使用长连接的问题：可能内存疯涨，因为 MySQL 在执行过程中临时使用的内存是管理在连接对象里面，在连接断开的时候才释放 两个解决方案 定期断开长连接。使用一段时间，或者程序里面判断执行过一个占用内存的大查询后，主动断开连接，之后要查询再重连 MySQL 5.7 或更新版本，可以在执行一个比较大的操作后，执行 mysql_reset_connection 初始化连接资源 这个过程不会重连和重新做权限验证，会将连接恢复到刚刚创建完时的状态 2.</description>
     <pubDate>Thu, 25 Apr 2024 06:49:01 GMT</pubDate>
-  </item><item>
-    <title>Laravel Pint 使用</title>
-    <link>https://wangze.tech/Laravel-Pint-%E4%BD%BF%E7%94%A8</link>
-    <guid>https://wangze.tech/Laravel-Pint-%E4%BD%BF%E7%94%A8</guid>
-    <description>...</description>
-    <pubDate>Wed, 24 Apr 2024 12:33:00 GMT</pubDate>
   </item>
     </channel>
   </rss>
