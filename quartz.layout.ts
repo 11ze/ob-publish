@@ -31,7 +31,7 @@ export const defaultContentPageLayout: PageLayout = {
   right: [
     Component.DesktopOnly(Component.TableOfContents()),
     Component.Backlinks(),
-    Component.Giscus(), // 评论区
+    // Component.Giscus(), // 评论区
   ],
 }
 
