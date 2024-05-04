@@ -6,6 +6,7 @@ if which git > /dev/null; then
 fi
 
 rm -rf content/.obsidian
+rm content/*.sh
 rm content/README.md
 mv content/*.md content/Atlas
 find content/ -name "*.md" | xargs -I file  mv -f file content
