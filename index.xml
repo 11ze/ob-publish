@@ -9,62 +9,62 @@
     <title>我的开发环境</title>
     <link>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</link>
     <guid>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</guid>
-    <description>设备 MacBook Pro 14’ M1 16GB Homebrew 官网 brew tap homebrew/cask-fonts brew tap homebrew/cask-versions brew tap buo/cask-upgrade brew tap mongodb/brew brew tap homebrew/autoupdate ...</description>
-    <pubDate>Mon, 06 May 2024 09:30:00 GMT</pubDate>
-  </item><item>
-    <title>Oh My Zsh</title>
-    <link>https://wangze.tech/Oh-My-Zsh</link>
-    <guid>https://wangze.tech/Oh-My-Zsh</guid>
     <description>...</description>
-    <pubDate>Mon, 06 May 2024 08:49:01 GMT</pubDate>
-  </item><item>
-    <title>让顶级域名重定向到 www</title>
-    <link>https://wangze.tech/%E8%AE%A9%E9%A1%B6%E7%BA%A7%E5%9F%9F%E5%90%8D%E9%87%8D%E5%AE%9A%E5%90%91%E5%88%B0-www</link>
-    <guid>https://wangze.tech/%E8%AE%A9%E9%A1%B6%E7%BA%A7%E5%9F%9F%E5%90%8D%E9%87%8D%E5%AE%9A%E5%90%91%E5%88%B0-www</guid>
-    <description>重定向到 www 的好处 顶级域名的 Cookies 会发送到所有二级域名，二级域名则不会发送到其他二级域名，这在需要分开管理 Cookies 时很有用。 加上重定向后可以在任意地方使用简洁的域名。 添加重定向后对于搜索引擎来说是同一个站点。 Cloudflare 设置方法 如果网址打不开，试试添加 DNS 解析到 192.0.2.1 ...</description>
-    <pubDate>Sat, 04 May 2024 05:43:00 GMT</pubDate>
+    <pubDate>Tue, 07 May 2024 10:21:00 GMT</pubDate>
   </item><item>
     <title>11ze&#039;s Garden</title>
     <link>https://wangze.tech/</link>
     <guid>https://wangze.tech/</guid>
-    <description> 我的开发环境 搭建数字花园 .</description>
-    <pubDate>Sat, 04 May 2024 05:42:00 GMT</pubDate>
+    <description>我还没想好说什么，随便看看～.</description>
+    <pubDate>Tue, 07 May 2024 09:43:00 GMT</pubDate>
   </item><item>
-    <title>设计一个短链系统</title>
-    <link>https://wangze.tech/%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E7%9F%AD%E9%93%BE%E7%B3%BB%E7%BB%9F</link>
-    <guid>https://wangze.tech/%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E7%9F%AD%E9%93%BE%E7%B3%BB%E7%BB%9F</guid>
-    <description></description>
-    <pubDate>Wed, 01 May 2024 08:52:00 GMT</pubDate>
+    <title>使用缓存</title>
+    <link>https://wangze.tech/%E4%BD%BF%E7%94%A8%E7%BC%93%E5%AD%98</link>
+    <guid>https://wangze.tech/%E4%BD%BF%E7%94%A8%E7%BC%93%E5%AD%98</guid>
+    <description>判断缓存存在 给缓存续期，而不是先判断存在再进行其它操作，如判断存在后给列表加子元素 核心：多个操作不一定是原子操作，续期完成后给列表加子元素 .</description>
+    <pubDate>Tue, 07 May 2024 09:43:00 GMT</pubDate>
   </item><item>
-    <title>PHP 开发设置</title>
-    <link>https://wangze.tech/PHP-%E5%BC%80%E5%8F%91%E8%AE%BE%E7%BD%AE</link>
-    <guid>https://wangze.tech/PHP-%E5%BC%80%E5%8F%91%E8%AE%BE%E7%BD%AE</guid>
-    <description>Laravel Pint 如何在PHPSTORM 配置Laravel Pint 代码格式化包 Laravel Pint VSCode.</description>
-    <pubDate>Wed, 01 May 2024 06:57:00 GMT</pubDate>
+    <title>搭建数字花园</title>
+    <link>https://wangze.tech/%E6%90%AD%E5%BB%BA%E6%95%B0%E5%AD%97%E8%8A%B1%E5%9B%AD</link>
+    <guid>https://wangze.tech/%E6%90%AD%E5%BB%BA%E6%95%B0%E5%AD%97%E8%8A%B1%E5%9B%AD</guid>
+    <description>同步方案 可选方案 Obsidian Sync：官方，付费 Remotely Sync：第三方插件，自动同步最短间隔 1 分钟（可以手动执行同步），免费 iCloud：实时同步，免费 我使用的同步方案 iCloud iPhone 安装 Obsidian 进入 Obsidian 创建一个打开 iCloud 同步功能的 Vault 此时 iCloud ...</description>
+    <pubDate>Tue, 07 May 2024 09:18:00 GMT</pubDate>
   </item><item>
-    <title>PHP 错误码设计</title>
-    <link>https://wangze.tech/PHP-%E9%94%99%E8%AF%AF%E7%A0%81%E8%AE%BE%E8%AE%A1</link>
-    <guid>https://wangze.tech/PHP-%E9%94%99%E8%AF%AF%E7%A0%81%E8%AE%BE%E8%AE%A1</guid>
-    <description>目标 错误码包含：数字、英文、含义，还可以有 HTTP Status 这些最好放到一起，不然添加时容易漏 方案 静态变量：数组 多个名字类似的静态变量 静态工厂方法 枚举和注解 讨论 结论 参考 Using attributes to add value PHP 异常与错误处理 .</description>
-    <pubDate>Wed, 01 May 2024 06:57:00 GMT</pubDate>
+    <title>Capslock</title>
+    <link>https://wangze.tech/Capslock</link>
+    <guid>https://wangze.tech/Capslock</guid>
+    <description>功能 加强 Caps 键功能 安装 Github 到系统设置 - 键盘 - 键盘快捷键 - Modifier Keys 里选择键盘 设置单击 Caps 切换输入法 打开配置文件 ~/.config/karabiner/karabiner.json 搜 &quot;key_code&quot;: &quot;spacebar&quot; 将 to_if_alone ...</description>
+    <pubDate>Tue, 07 May 2024 08:24:01 GMT</pubDate>
   </item><item>
-    <title>支付技术方案</title>
-    <link>https://wangze.tech/%E6%94%AF%E4%BB%98%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88</link>
-    <guid>https://wangze.tech/%E6%94%AF%E4%BB%98%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88</guid>
-    <description></description>
-    <pubDate>Wed, 01 May 2024 06:57:00 GMT</pubDate>
+    <title>Crontab 执行提示没有权限</title>
+    <link>https://wangze.tech/Crontab-%E6%89%A7%E8%A1%8C%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90</link>
+    <guid>https://wangze.tech/Crontab-%E6%89%A7%E8%A1%8C%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90</guid>
+    <description> Mac 的解决方案：Mac 运行 Crontab 检查有没有用户对应的 home 目录 .</description>
+    <pubDate>Tue, 07 May 2024 08:24:01 GMT</pubDate>
   </item><item>
-    <title>03｜事务隔离：为什么你改了还看不见？</title>
-    <link>https://wangze.tech/03%EF%BD%9C%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%A0%E6%94%B9%E4%BA%86%E8%BF%98%E7%9C%8B%E4%B8%8D%E8%A7%81%EF%BC%9F</link>
-    <guid>https://wangze.tech/03%EF%BD%9C%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%A0%E6%94%B9%E4%BA%86%E8%BF%98%E7%9C%8B%E4%B8%8D%E8%A7%81%EF%BC%9F</guid>
-    <description>隔离型与隔离级别 读未提交 read uncommitted 一个事务还没提交时，它做的变更就能被别的事务看到。 读提交 read committed 一个事务提交之后，它做的变更才会被其他事务看到。 可重复读 repeatable read 一个事务执行过程中看到的数据，总是跟这个事务在启动时看到的数据是一致的。当然在可重复读隔离级别下，未提交变更对其他事务也是不可见的。 ...</description>
-    <pubDate>Sun, 28 Apr 2024 16:01:00 GMT</pubDate>
+    <title>Docker 不常见问题</title>
+    <link>https://wangze.tech/Docker-%E4%B8%8D%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98</link>
+    <guid>https://wangze.tech/Docker-%E4%B8%8D%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98</guid>
+    <description>修改宿主机 hosts 编辑 /etc/hosts 执行 sudo killall -HUP mDNSResponder 刷新缓存 可能需要重启 service docker restart 如果刷新缓存报错则执行 /etc/init.d/network restart 使修改生效 重启 service docker restart 不重启则外网访问 ...</description>
+    <pubDate>Tue, 07 May 2024 08:24:01 GMT</pubDate>
   </item><item>
-    <title>02｜日志系统：一条 SQL 更新语句是如何执行的？</title>
-    <link>https://wangze.tech/02%EF%BD%9C%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%EF%BC%9A%E4%B8%80%E6%9D%A1-SQL-%E6%9B%B4%E6%96%B0%E8%AF%AD%E5%8F%A5%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%A7%E8%A1%8C%E7%9A%84%EF%BC%9F</link>
-    <guid>https://wangze.tech/02%EF%BD%9C%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F%EF%BC%9A%E4%B8%80%E6%9D%A1-SQL-%E6%9B%B4%E6%96%B0%E8%AF%AD%E5%8F%A5%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%A7%E8%A1%8C%E7%9A%84%EF%BC%9F</guid>
-    <description>Update 语句执行流程 重要的日志模块：redo Log InnoDB 引擎特有的日志 WAL（Write-Ahead Logging） 先写日志，再写磁盘 当有一条记录需要更新的时候，InnoDB 引擎先把记录写到 redo log 并更新内存，引擎会在适当的时候，将这个操作记录更新到磁盘，这个更新往往是在系统比较空闲的时候做 ...</description>
-    <pubDate>Thu, 25 Apr 2024 08:10:00 GMT</pubDate>
+    <title>Egg.js 手动热更新</title>
+    <link>https://wangze.tech/Egg.js-%E6%89%8B%E5%8A%A8%E7%83%AD%E6%9B%B4%E6%96%B0</link>
+    <guid>https://wangze.tech/Egg.js-%E6%89%8B%E5%8A%A8%E7%83%AD%E6%9B%B4%E6%96%B0</guid>
+    <description>package.json { &quot;scripts&quot;: { &quot;start&quot;: &quot;egg-scripts start --daemon --title=egg-server&quot;, &quot;stop&quot;: &quot;egg-scripts stop --daemon ...</description>
+    <pubDate>Tue, 07 May 2024 08:24:01 GMT</pubDate>
+  </item><item>
+    <title>Git 知识</title>
+    <link>https://wangze.tech/Git-%E7%9F%A5%E8%AF%86</link>
+    <guid>https://wangze.tech/Git-%E7%9F%A5%E8%AF%86</guid>
+    <description>工作流 OneFlow – a Git branching model and workflow | End of Line Blog 我目前在用选项 3 合并功能分支，缺点如文章所说，需要所有人在合并时配合 .</description>
+    <pubDate>Tue, 07 May 2024 08:24:01 GMT</pubDate>
+  </item><item>
+    <title>GitHub 加速访问</title>
+    <link>https://wangze.tech/GitHub-%E5%8A%A0%E9%80%9F%E8%AE%BF%E9%97%AE</link>
+    <guid>https://wangze.tech/GitHub-%E5%8A%A0%E9%80%9F%E8%AE%BF%E9%97%AE</guid>
+    <description> GitHub Hosts | hosts .</description>
+    <pubDate>Tue, 07 May 2024 08:24:01 GMT</pubDate>
   </item>
     </channel>
   </rss>
