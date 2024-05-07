@@ -26,16 +26,12 @@ export const defaultContentPageLayout: PageLayout = {
     Component.MobileOnly(Component.Spacer()), // 隔开页面标题和搜索框
     Component.Search(),
     Component.Darkmode(),
-    Component.DesktopOnly(Component.RecentNotes({ linkToMore: 'tags' })),
+    Component.DesktopOnly(Component.RecentNotes({ limit: 5, linkToMore: 'tags' })),
   ],
   right: [
     Component.Graph({
-      localGraph: {
-        showTags: false,
-      },
-      globalGraph: {
-        showTags: false,
-      },
+      localGraph: { showTags: false },
+      globalGraph: { showTags: false },
     }),
     Component.DesktopOnly(Component.TableOfContents()),
     Component.Backlinks(),
