@@ -35,7 +35,7 @@ export const defaultContentPageLayout: PageLayout = {
     }),
     Component.DesktopOnly(Component.TableOfContents()),
     Component.Backlinks(),
-    Component.Giscus(), // 评论区
+    // Component.Giscus(), // 评论区
   ],
 }
 
