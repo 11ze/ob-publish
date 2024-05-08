@@ -6,11 +6,29 @@
       <description>Last 10 notes on 🫧 11ze</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>Laravel 开发注意事项</title>
+    <link>https://wangze.tech/Laravel-%E5%BC%80%E5%8F%91%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9</link>
+    <guid>https://wangze.tech/Laravel-%E5%BC%80%E5%8F%91%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9</guid>
+    <description>MySQL 时区：Asia/Shanghai binlog 格式：row 隔离级别：读提交 select @@transaction_isolation; set @global transaction isolation level read committed; 目录说明 Requests 表单验证 Controllers 控制器，无业务或写简单的业务逻辑 ...</description>
+    <pubDate>Wed, 08 May 2024 13:13:44 GMT</pubDate>
+  </item><item>
+    <title>用 iCloud 同步 Mac 应用设置</title>
+    <link>https://wangze.tech/%E7%94%A8-iCloud-%E5%90%8C%E6%AD%A5-Mac-%E5%BA%94%E7%94%A8%E8%AE%BE%E7%BD%AE</link>
+    <guid>https://wangze.tech/%E7%94%A8-iCloud-%E5%90%8C%E6%AD%A5-Mac-%E5%BA%94%E7%94%A8%E8%AE%BE%E7%BD%AE</guid>
+    <description> 先退出要同步的应用 下载腾讯柠檬 在柠檬里点击卸载应用的时候看详细信息，最下面找到应用保存数据的位置 用访达打开 找到数据文件夹 复制数据文件夹到 iCloud 删除原文件夹 在原文件夹的位置创建同名软链接指向 iCloud 里的数据文件 .</description>
+    <pubDate>Wed, 08 May 2024 13:13:44 GMT</pubDate>
+  </item><item>
     <title>我的开发环境</title>
     <link>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</link>
     <guid>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</guid>
     <description>...</description>
-    <pubDate>Tue, 07 May 2024 10:21:00 GMT</pubDate>
+    <pubDate>Wed, 08 May 2024 12:19:41 GMT</pubDate>
+  </item><item>
+    <title>搭建数字花园</title>
+    <link>https://wangze.tech/%E6%90%AD%E5%BB%BA%E6%95%B0%E5%AD%97%E8%8A%B1%E5%9B%AD</link>
+    <guid>https://wangze.tech/%E6%90%AD%E5%BB%BA%E6%95%B0%E5%AD%97%E8%8A%B1%E5%9B%AD</guid>
+    <description>同步方案 可选方案 Obsidian Sync：官方，付费 Remotely Sync：第三方插件，自动同步最短间隔 1 分钟（可以手动执行同步），免费 iCloud：实时同步，免费 我使用的同步方案 iCloud iPhone 安装 Obsidian 进入 Obsidian 创建一个打开 iCloud 同步功能的 Vault 此时 iCloud ...</description>
+    <pubDate>Tue, 07 May 2024 15:53:00 GMT</pubDate>
   </item><item>
     <title>11ze&#039;s Garden</title>
     <link>https://wangze.tech/</link>
@@ -23,12 +41,6 @@
     <guid>https://wangze.tech/%E4%BD%BF%E7%94%A8%E7%BC%93%E5%AD%98</guid>
     <description>判断缓存存在 给缓存续期，而不是先判断存在再进行其它操作，如判断存在后给列表加子元素 核心：多个操作不一定是原子操作，续期完成后给列表加子元素 .</description>
     <pubDate>Tue, 07 May 2024 09:43:00 GMT</pubDate>
-  </item><item>
-    <title>搭建数字花园</title>
-    <link>https://wangze.tech/%E6%90%AD%E5%BB%BA%E6%95%B0%E5%AD%97%E8%8A%B1%E5%9B%AD</link>
-    <guid>https://wangze.tech/%E6%90%AD%E5%BB%BA%E6%95%B0%E5%AD%97%E8%8A%B1%E5%9B%AD</guid>
-    <description>同步方案 可选方案 Obsidian Sync：官方，付费 Remotely Sync：第三方插件，自动同步最短间隔 1 分钟（可以手动执行同步），免费 iCloud：实时同步，免费 我使用的同步方案 iCloud iPhone 安装 Obsidian 进入 Obsidian 创建一个打开 iCloud 同步功能的 Vault 此时 iCloud ...</description>
-    <pubDate>Tue, 07 May 2024 09:18:00 GMT</pubDate>
   </item><item>
     <title>Capslock</title>
     <link>https://wangze.tech/Capslock</link>
@@ -52,18 +64,6 @@
     <link>https://wangze.tech/Egg.js-%E6%89%8B%E5%8A%A8%E7%83%AD%E6%9B%B4%E6%96%B0</link>
     <guid>https://wangze.tech/Egg.js-%E6%89%8B%E5%8A%A8%E7%83%AD%E6%9B%B4%E6%96%B0</guid>
     <description>package.json { &quot;scripts&quot;: { &quot;start&quot;: &quot;egg-scripts start --daemon --title=egg-server&quot;, &quot;stop&quot;: &quot;egg-scripts stop --daemon ...</description>
-    <pubDate>Tue, 07 May 2024 08:24:01 GMT</pubDate>
-  </item><item>
-    <title>Git 知识</title>
-    <link>https://wangze.tech/Git-%E7%9F%A5%E8%AF%86</link>
-    <guid>https://wangze.tech/Git-%E7%9F%A5%E8%AF%86</guid>
-    <description>工作流 OneFlow – a Git branching model and workflow | End of Line Blog 我目前在用选项 3 合并功能分支，缺点如文章所说，需要所有人在合并时配合 .</description>
-    <pubDate>Tue, 07 May 2024 08:24:01 GMT</pubDate>
-  </item><item>
-    <title>GitHub 加速访问</title>
-    <link>https://wangze.tech/GitHub-%E5%8A%A0%E9%80%9F%E8%AE%BF%E9%97%AE</link>
-    <guid>https://wangze.tech/GitHub-%E5%8A%A0%E9%80%9F%E8%AE%BF%E9%97%AE</guid>
-    <description> GitHub Hosts | hosts .</description>
     <pubDate>Tue, 07 May 2024 08:24:01 GMT</pubDate>
   </item>
     </channel>
