@@ -6,6 +6,18 @@
       <description>Last 10 notes on 11ze</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>我的开发环境</title>
+    <link>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</link>
+    <guid>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</guid>
+    <description>...</description>
+    <pubDate>Fri, 10 May 2024 15:00:02 GMT</pubDate>
+  </item><item>
+    <title>搭建数字花园</title>
+    <link>https://wangze.tech/%E6%90%AD%E5%BB%BA%E6%95%B0%E5%AD%97%E8%8A%B1%E5%9B%AD</link>
+    <guid>https://wangze.tech/%E6%90%AD%E5%BB%BA%E6%95%B0%E5%AD%97%E8%8A%B1%E5%9B%AD</guid>
+    <description>同步方案 可选方案 Obsidian Sync：官方，付费 Remotely Sync：第三方插件，自动同步最短间隔 1 分钟（可以手动执行同步），免费 iCloud：实时同步，免费 我使用的同步方案 iCloud iPhone 安装 Obsidian 进入 Obsidian 创建一个打开 iCloud 同步功能的 Vault 此时 iCloud ...</description>
+    <pubDate>Fri, 10 May 2024 15:00:02 GMT</pubDate>
+  </item><item>
     <title>01｜基础架构：一条 SQL 查询语句是如何执行的？</title>
     <link>https://wangze.tech/MySQL-%E5%AE%9E%E6%88%98-45-%E8%AE%B2/01%EF%BD%9C%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%EF%BC%9A%E4%B8%80%E6%9D%A1-SQL-%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%A7%E8%A1%8C%E7%9A%84%EF%BC%9F</link>
     <guid>https://wangze.tech/MySQL-%E5%AE%9E%E6%88%98-45-%E8%AE%B2/01%EF%BD%9C%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%EF%BC%9A%E4%B8%80%E6%9D%A1-SQL-%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%A7%E8%A1%8C%E7%9A%84%EF%BC%9F</guid>
@@ -24,12 +36,6 @@
     <description>...</description>
     <pubDate>Thu, 09 May 2024 15:00:03 GMT</pubDate>
   </item><item>
-    <title>搭建数字花园</title>
-    <link>https://wangze.tech/%E6%90%AD%E5%BB%BA%E6%95%B0%E5%AD%97%E8%8A%B1%E5%9B%AD</link>
-    <guid>https://wangze.tech/%E6%90%AD%E5%BB%BA%E6%95%B0%E5%AD%97%E8%8A%B1%E5%9B%AD</guid>
-    <description>同步方案 可选方案 Obsidian Sync：官方，付费 Remotely Sync：第三方插件，自动同步最短间隔 1 分钟（可以手动执行同步），免费 iCloud：实时同步，免费 我使用的同步方案 iCloud iPhone 安装 Obsidian 进入 Obsidian 创建一个打开 iCloud 同步功能的 Vault 此时 iCloud ...</description>
-    <pubDate>Thu, 09 May 2024 15:00:03 GMT</pubDate>
-  </item><item>
     <title>Laravel 开发注意事项</title>
     <link>https://wangze.tech/Laravel-%E5%BC%80%E5%8F%91%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9</link>
     <guid>https://wangze.tech/Laravel-%E5%BC%80%E5%8F%91%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9</guid>
@@ -41,12 +47,6 @@
     <guid>https://wangze.tech/%E7%94%A8-iCloud-%E5%90%8C%E6%AD%A5-Mac-%E5%BA%94%E7%94%A8%E8%AE%BE%E7%BD%AE</guid>
     <description> 先退出要同步的应用 下载腾讯柠檬 在柠檬里点击卸载应用的时候看详细信息，最下面找到应用保存数据的位置 用访达打开 找到数据文件夹 复制数据文件夹到 iCloud 删除原文件夹 在原文件夹的位置创建同名软链接指向 iCloud 里的数据文件 .</description>
     <pubDate>Wed, 08 May 2024 13:13:44 GMT</pubDate>
-  </item><item>
-    <title>我的开发环境</title>
-    <link>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</link>
-    <guid>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</guid>
-    <description>...</description>
-    <pubDate>Wed, 08 May 2024 12:19:41 GMT</pubDate>
   </item><item>
     <title>11ze&#039;s Garden</title>
     <link>https://wangze.tech/</link>
