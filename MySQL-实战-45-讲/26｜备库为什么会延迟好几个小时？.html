@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en"><head><title>26｜备库为什么会延迟好几个小时？</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM Plex Mono&amp;family=Schibsted Grotesk:wght@400;700&amp;family=Source Sans Pro:ital,wght@0,400;0,600;1,400;1,600&amp;display=swap"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta property="og:title" content="26｜备库为什么会延迟好几个小时？"/><meta property="og:description" content="..."/><meta property="og:image" content="https://wangze.tech/static/og-image.png"/><meta property="og:width" content="1200"/><meta property="og:height" content="675"/><link rel="icon" href="../static/icon.png"/><meta name="description" content="..."/><meta name="generator" content="Quartz"/><link href="../index.css" rel="stylesheet" type="text/css" spa-preserve/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../static/contentIndex.json").then(data => data.json())</script></head><body data-slug="MySQL-实战-45-讲/26｜备库为什么会延迟好几个小时？"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h1 class="page-title"><a href="..">11ze</a></h1><div class="spacer mobile-only"></div><div class="search"><div id="search-icon"><p>Search</p><div></div><svg tabindex="0" aria-labelledby="title desc" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title id="title">Search</title><desc id="desc">Search</desc><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg></div><div id="search-container"><div id="search-space"><input autocomplete="off" id="search-bar" name="search" type="text" aria-label="Search for something" placeholder="Search for something"/><div id="search-layout" data-preview="true"></div></div></div></div><div class="darkmode"><input class="toggle" id="darkmode-toggle" type="checkbox" tabindex="-1"/><label id="toggle-label-light" for="darkmode-toggle" tabindex="-1"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve"><title>Dark mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg></label><label id="toggle-label-dark" for="darkmode-toggle" tabindex="-1"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve"><title>Light mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></label></div><div class="toc desktop-only"><button type="button" id="toc" class><h3>Table of Contents</h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="toc-content"><ul class="overflow"><li class="depth-0"><a href="#多线程复制机制将单线程-sql_thread-拆成多个线程" data-for="多线程复制机制将单线程-sql_thread-拆成多个线程">多线程复制机制：将单线程 sql_thread 拆成多个线程</a></li><li class="depth-0"><a href="#mysql-55-版本的并行复制策略" data-for="mysql-55-版本的并行复制策略">MySQL 5.5 版本的并行复制策略</a></li><li class="depth-0"><a href="#mysql-56-版本的并行复制策略" data-for="mysql-56-版本的并行复制策略">MySQL 5.6 版本的并行复制策略</a></li><li class="depth-0"><a href="#mariadb-的并行复制策略" data-for="mariadb-的并行复制策略">MariaDB 的并行复制策略</a></li><li class="depth-0"><a href="#mysql-57-的并行复制策略" data-for="mysql-57-的并行复制策略">MySQL 5.7 的并行复制策略</a></li><li class="depth-0"><a href="#mysql-5722-的并行复制策略" data-for="mysql-5722-的并行复制策略">MySQL 5.7.22 的并行复制策略</a></li><li class="depth-0"><a href="#️-57-版本新增的备库并行策略修改了-binlog-的内容说明-binlog-协议并不是向上兼容的在主备切换版本升级的时候需要考虑这个因素" data-for="️-57-版本新增的备库并行策略修改了-binlog-的内容说明-binlog-协议并不是向上兼容的在主备切换版本升级的时候需要考虑这个因素">⚠️ 5.7 版本新增的备库并行策略修改了 binlog 的内容，说明 binlog 协议并不是向上兼容的，在主备切换、版本升级的时候需要考虑这个因素</a></li><li class="depth-0"><a href="#思考题" data-for="思考题">思考题</a></li><li class="depth-0"><a href="#评论区" data-for="评论区">评论区</a></li></ul></div></div><div class="explorer desktop-only"><button type="button" id="explorer" data-behavior="collapse" data-collapsed="collapsed" data-savestate="true" data-tree="[{&quot;path&quot;:&quot;MySQL-实战-45-讲&quot;,&quot;collapsed&quot;:true},{&quot;path&quot;:&quot;Redis-核心技术与实战&quot;,&quot;collapsed&quot;:true}]"><h1>Explorer</h1><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="fold"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="explorer-content"><ul class="overflow" id="explorer-ul"><li><div class="folder-outer open"><ul style="padding-left:0;" class="content" data-folderul><li><div class="folder-outer "><ul style="padding-left:0;" class="content" data-folderul></ul></div></li><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div data-folderpath="MySQL-实战-45-讲"><button class="folder-button"><span class="folder-title">MySQL 实战 45 讲</span></button></div></div><div class="folder-outer "><ul style="padding-left:1.4rem;" class="content" data-folderul="MySQL-实战-45-讲"><li><a href="../MySQL-实战-45-讲/01｜基础架构：一条-SQL-查询语句是如何执行的？" data-for="MySQL-实战-45-讲/01｜基础架构：一条-SQL-查询语句是如何执行的？">01｜基础架构：一条 SQL 查询语句是如何执行的？</a></li><li><a href="../MySQL-实战-45-讲/02｜日志系统：一条-SQL-更新语句是如何执行的？" data-for="MySQL-实战-45-讲/02｜日志系统：一条-SQL-更新语句是如何执行的？">02｜日志系统：一条 SQL 更新语句是如何执行的？</a></li><li><a href="../MySQL-实战-45-讲/03｜事务隔离：为什么你改了还看不见？" data-for="MySQL-实战-45-讲/03｜事务隔离：为什么你改了还看不见？">03｜事务隔离：为什么你改了还看不见？</a></li><li><a href="../MySQL-实战-45-讲/04｜深入浅出索引（上）" data-for="MySQL-实战-45-讲/04｜深入浅出索引（上）">04｜深入浅出索引（上）</a></li><li><a href="../MySQL-实战-45-讲/05｜深入浅出索引（下）" data-for="MySQL-实战-45-讲/05｜深入浅出索引（下）">05｜深入浅出索引（下）</a></li><li><a href="../MySQL-实战-45-讲/06｜全局锁和表锁：给表加个字段怎么有这么多阻碍？" data-for="MySQL-实战-45-讲/06｜全局锁和表锁：给表加个字段怎么有这么多阻碍？">06｜全局锁和表锁：给表加个字段怎么有这么多阻碍？</a></li><li><a href="../MySQL-实战-45-讲/07｜行锁功过：怎么减少锁对性能的影响？" data-for="MySQL-实战-45-讲/07｜行锁功过：怎么减少锁对性能的影响？">07｜行锁功过：怎么减少锁对性能的影响？</a></li><li><a href="../MySQL-实战-45-讲/08｜事务到底是隔离的还是不隔离的？" data-for="MySQL-实战-45-讲/08｜事务到底是隔离的还是不隔离的？">08｜事务到底是隔离的还是不隔离的？</a></li><li><a href="../MySQL-实战-45-讲/09｜普通索引和唯一索引，应该怎么选择？" data-for="MySQL-实战-45-讲/09｜普通索引和唯一索引，应该怎么选择？">09｜普通索引和唯一索引，应该怎么选择？</a></li><li><a href="../MySQL-实战-45-讲/10｜MySQL-为什么有时候会选错索引？" data-for="MySQL-实战-45-讲/10｜MySQL-为什么有时候会选错索引？">10｜MySQL 为什么有时候会选错索引？</a></li><li><a href="../MySQL-实战-45-讲/11｜怎么给字符串字段加索引？" data-for="MySQL-实战-45-讲/11｜怎么给字符串字段加索引？">11｜怎么给字符串字段加索引？</a></li><li><a href="../MySQL-实战-45-讲/12｜为什么我的-MySQL-会“抖”一下？" data-for="MySQL-实战-45-讲/12｜为什么我的-MySQL-会“抖”一下？">12｜为什么我的 MySQL 会“抖”一下？</a></li><li><a href="../MySQL-实战-45-讲/13｜为什么表数据删掉一半，表文件大小不变？" data-for="MySQL-实战-45-讲/13｜为什么表数据删掉一半，表文件大小不变？">13｜为什么表数据删掉一半，表文件大小不变？</a></li><li><a href="../MySQL-实战-45-讲/14｜count()-这么慢，我该怎么办？" data-for="MySQL-实战-45-讲/14｜count()-这么慢，我该怎么办？">14｜count(*) 这么慢，我该怎么办？</a></li><li><a href="../MySQL-实战-45-讲/15｜答疑文章（一）：日志和索引相关问题" data-for="MySQL-实战-45-讲/15｜答疑文章（一）：日志和索引相关问题">15｜答疑文章（一）：日志和索引相关问题</a></li><li><a href="../MySQL-实战-45-讲/16｜“order-by”是怎么工作的？" data-for="MySQL-实战-45-讲/16｜“order-by”是怎么工作的？">16｜“order by”是怎么工作的？</a></li><li><a href="../MySQL-实战-45-讲/17｜如何正确地显示随机消息？" data-for="MySQL-实战-45-讲/17｜如何正确地显示随机消息？">17｜如何正确地显示随机消息？</a></li><li><a href="../MySQL-实战-45-讲/18｜为什么这些-SQL-语句逻辑相同，性能却差异巨大？" data-for="MySQL-实战-45-讲/18｜为什么这些-SQL-语句逻辑相同，性能却差异巨大？">18｜为什么这些 SQL 语句逻辑相同，性能却差异巨大？</a></li><li><a href="../MySQL-实战-45-讲/19｜为什么我只查一行的语句，也执行这么慢？" data-for="MySQL-实战-45-讲/19｜为什么我只查一行的语句，也执行这么慢？">19｜为什么我只查一行的语句，也执行这么慢？</a></li><li><a href="../MySQL-实战-45-讲/20｜幻读是什么，幻读有什么问题？" data-for="MySQL-实战-45-讲/20｜幻读是什么，幻读有什么问题？">20｜幻读是什么，幻读有什么问题？</a></li><li><a href="../MySQL-实战-45-讲/21｜为什么我只改一行的语句，锁这么多？" data-for="MySQL-实战-45-讲/21｜为什么我只改一行的语句，锁这么多？">21｜为什么我只改一行的语句，锁这么多？</a></li><li><a href="../MySQL-实战-45-讲/22｜MySQL有哪些“饮鸩止渴”提高性能的方法？" data-for="MySQL-实战-45-讲/22｜MySQL有哪些“饮鸩止渴”提高性能的方法？">22｜MySQL有哪些“饮鸩止渴”提高性能的方法？</a></li><li><a href="../MySQL-实战-45-讲/23｜MySQL-是怎么保证数据不丢的？" data-for="MySQL-实战-45-讲/23｜MySQL-是怎么保证数据不丢的？">23｜MySQL 是怎么保证数据不丢的？</a></li><li><a href="../MySQL-实战-45-讲/24｜MySQL-是怎么保证主备一致的？" data-for="MySQL-实战-45-讲/24｜MySQL-是怎么保证主备一致的？">24｜MySQL 是怎么保证主备一致的？</a></li><li><a href="../MySQL-实战-45-讲/25｜MySQL-是怎么保证高可用的？" data-for="MySQL-实战-45-讲/25｜MySQL-是怎么保证高可用的？">25｜MySQL 是怎么保证高可用的？</a></li><li><a href="../MySQL-实战-45-讲/26｜备库为什么会延迟好几个小时？" data-for="MySQL-实战-45-讲/26｜备库为什么会延迟好几个小时？">26｜备库为什么会延迟好几个小时？</a></li><li><a href="../MySQL-实战-45-讲/27｜主库出问题了，从库怎么办？" data-for="MySQL-实战-45-讲/27｜主库出问题了，从库怎么办？">27｜主库出问题了，从库怎么办？</a></li><li><a href="../MySQL-实战-45-讲/28｜读写分离有哪些坑？" data-for="MySQL-实战-45-讲/28｜读写分离有哪些坑？">28｜读写分离有哪些坑？</a></li><li><a href="../MySQL-实战-45-讲/29｜如何判断一个数据库是不是出问题了？" data-for="MySQL-实战-45-讲/29｜如何判断一个数据库是不是出问题了？">29｜如何判断一个数据库是不是出问题了？</a></li><li><a href="../MySQL-实战-45-讲/30｜答疑文章（二）：用动态的观点看加锁" data-for="MySQL-实战-45-讲/30｜答疑文章（二）：用动态的观点看加锁">30｜答疑文章（二）：用动态的观点看加锁</a></li><li><a href="../MySQL-实战-45-讲/31｜误删数据后除了跑路，还能怎么办？" data-for="MySQL-实战-45-讲/31｜误删数据后除了跑路，还能怎么办？">31｜误删数据后除了跑路，还能怎么办？</a></li><li><a href="../MySQL-实战-45-讲/32｜为什么还有-kill-不掉的语句？" data-for="MySQL-实战-45-讲/32｜为什么还有-kill-不掉的语句？">32｜为什么还有 kill 不掉的语句？</a></li><li><a href="../MySQL-实战-45-讲/33｜我查这么多数据，会不会把数据库内存打爆？" data-for="MySQL-实战-45-讲/33｜我查这么多数据，会不会把数据库内存打爆？">33｜我查这么多数据，会不会把数据库内存打爆？</a></li><li><a href="../MySQL-实战-45-讲/34｜到底可不可以使用-join-？" data-for="MySQL-实战-45-讲/34｜到底可不可以使用-join-？">34｜到底可不可以使用 join ？</a></li><li><a href="../MySQL-实战-45-讲/35｜join-语句怎么优化？" data-for="MySQL-实战-45-讲/35｜join-语句怎么优化？">35｜join 语句怎么优化？</a></li><li><a href="../MySQL-实战-45-讲/36｜为什么临时表可以重名？" data-for="MySQL-实战-45-讲/36｜为什么临时表可以重名？">36｜为什么临时表可以重名？</a></li><li><a href="../MySQL-实战-45-讲/37｜什么时候会使用内部临时表？" data-for="MySQL-实战-45-讲/37｜什么时候会使用内部临时表？">37｜什么时候会使用内部临时表？</a></li><li><a href="../MySQL-实战-45-讲/38｜都说-InnoDB-好，那还要不要使用-Memory-引擎？" data-for="MySQL-实战-45-讲/38｜都说-InnoDB-好，那还要不要使用-Memory-引擎？">38｜都说 InnoDB 好，那还要不要使用 Memory 引擎？</a></li><li><a href="../MySQL-实战-45-讲/39｜自增主键为什么不是连续的？" data-for="MySQL-实战-45-讲/39｜自增主键为什么不是连续的？">39｜自增主键为什么不是连续的？</a></li><li><a href="../MySQL-实战-45-讲/40｜insert-语句的锁为什么这么多？" data-for="MySQL-实战-45-讲/40｜insert-语句的锁为什么这么多？">40｜insert 语句的锁为什么这么多？</a></li><li><a href="../MySQL-实战-45-讲/41｜怎么最快地复制一张表？" data-for="MySQL-实战-45-讲/41｜怎么最快地复制一张表？">41｜怎么最快地复制一张表？</a></li><li><a href="../MySQL-实战-45-讲/42｜grant-之后要跟着-flush-privileges-吗？" data-for="MySQL-实战-45-讲/42｜grant-之后要跟着-flush-privileges-吗？">42｜grant 之后要跟着 flush privileges 吗？</a></li><li><a href="../MySQL-实战-45-讲/43｜要不要使用分区表？" data-for="MySQL-实战-45-讲/43｜要不要使用分区表？">43｜要不要使用分区表？</a></li><li><a href="../MySQL-实战-45-讲/44｜答疑文章（三）：说一说这些好问题" data-for="MySQL-实战-45-讲/44｜答疑文章（三）：说一说这些好问题">44｜答疑文章（三）：说一说这些好问题</a></li><li><a href="../MySQL-实战-45-讲/45｜自增-id-用完怎么办？" data-for="MySQL-实战-45-讲/45｜自增-id-用完怎么办？">45｜自增 id 用完怎么办？</a></li><li><a href="../MySQL-实战-45-讲/MySQL-实战-45-讲" data-for="MySQL-实战-45-讲/MySQL-实战-45-讲">MySQL 实战 45 讲</a></li></ul></div></li><li><div class="folder-container"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="5 8 14 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="folder-icon"><polyline points="6 9 12 15 18 9"></polyline></svg><div data-folderpath="Redis-核心技术与实战"><button class="folder-button"><span class="folder-title">Redis 核心技术与实战</span></button></div></div><div class="folder-outer "><ul style="padding-left:1.4rem;" class="content" data-folderul="Redis-核心技术与实战"><li><a href="../Redis-核心技术与实战/00｜开篇词" data-for="Redis-核心技术与实战/00｜开篇词">00｜开篇词</a></li><li><a href="../Redis-核心技术与实战/01｜基础架构：一个键值数据库包含什么？" data-for="Redis-核心技术与实战/01｜基础架构：一个键值数据库包含什么？">01｜基础架构：一个键值数据库包含什么？</a></li><li><a href="../Redis-核心技术与实战/02｜数据结构：快速的-Redis-有哪些慢操作？" data-for="Redis-核心技术与实战/02｜数据结构：快速的-Redis-有哪些慢操作？">02｜数据结构：快速的 Redis 有哪些慢操作？</a></li><li><a href="../Redis-核心技术与实战/03｜高性能-IO-模型：为什么单线程-Redis-那么快？" data-for="Redis-核心技术与实战/03｜高性能-IO-模型：为什么单线程-Redis-那么快？">03｜高性能 IO 模型：为什么单线程 Redis 那么快？</a></li><li><a href="../Redis-核心技术与实战/04｜AOF-日志：宕机了，Redis-如何避免数据丢失？" data-for="Redis-核心技术与实战/04｜AOF-日志：宕机了，Redis-如何避免数据丢失？">04｜AOF 日志：宕机了，Redis 如何避免数据丢失？</a></li><li><a href="../Redis-核心技术与实战/05｜内存快照：宕机后，Redis-如何实现快速恢复？" data-for="Redis-核心技术与实战/05｜内存快照：宕机后，Redis-如何实现快速恢复？">05｜内存快照：宕机后，Redis 如何实现快速恢复？</a></li><li><a href="../Redis-核心技术与实战/06｜数据同步：主从库如何实现数据一致？" data-for="Redis-核心技术与实战/06｜数据同步：主从库如何实现数据一致？">06｜数据同步：主从库如何实现数据一致？</a></li><li><a href="../Redis-核心技术与实战/07｜哨兵机制：主库挂了，如何不间断服务？" data-for="Redis-核心技术与实战/07｜哨兵机制：主库挂了，如何不间断服务？">07｜哨兵机制：主库挂了，如何不间断服务？</a></li><li><a href="../Redis-核心技术与实战/08｜哨兵集群：哨兵挂了，主从库还能切换吗？" data-for="Redis-核心技术与实战/08｜哨兵集群：哨兵挂了，主从库还能切换吗？">08｜哨兵集群：哨兵挂了，主从库还能切换吗？</a></li><li><a href="../Redis-核心技术与实战/09｜切片集群：数据增多了，是该加内存还是加实例？" data-for="Redis-核心技术与实战/09｜切片集群：数据增多了，是该加内存还是加实例？">09｜切片集群：数据增多了，是该加内存还是加实例？</a></li><li><a href="../Redis-核心技术与实战/11｜“万金油”的-String，为什么不好用了？" data-for="Redis-核心技术与实战/11｜“万金油”的-String，为什么不好用了？">11｜“万金油”的 String，为什么不好用了？</a></li><li><a href="../Redis-核心技术与实战/12｜有一亿个-keys-要统计，应该用哪种集合？" data-for="Redis-核心技术与实战/12｜有一亿个-keys-要统计，应该用哪种集合？">12｜有一亿个 keys 要统计，应该用哪种集合？</a></li><li><a href="../Redis-核心技术与实战/13｜GEO-是什么？还可以定义新的数据类型吗？" data-for="Redis-核心技术与实战/13｜GEO-是什么？还可以定义新的数据类型吗？">13｜GEO 是什么？还可以定义新的数据类型吗？</a></li><li><a href="../Redis-核心技术与实战/14｜如何在-Redis-中保存时间序列数据？" data-for="Redis-核心技术与实战/14｜如何在-Redis-中保存时间序列数据？">14｜如何在 Redis 中保存时间序列数据？</a></li><li><a href="../Redis-核心技术与实战/15｜消息队列的考验：Redis-有哪些解决方案？" data-for="Redis-核心技术与实战/15｜消息队列的考验：Redis-有哪些解决方案？">15｜消息队列的考验：Redis 有哪些解决方案？</a></li><li><a href="../Redis-核心技术与实战/16｜异步机制：如何避免单线程模型的阻塞？" data-for="Redis-核心技术与实战/16｜异步机制：如何避免单线程模型的阻塞？">16｜异步机制：如何避免单线程模型的阻塞？</a></li><li><a href="../Redis-核心技术与实战/17｜为什么-CPU-结构也会影响-Redis-的性能？" data-for="Redis-核心技术与实战/17｜为什么-CPU-结构也会影响-Redis-的性能？">17｜为什么 CPU 结构也会影响 Redis 的性能？</a></li><li><a href="../Redis-核心技术与实战/18｜波动的响应延迟：如何应对变慢的-Redis？（上）" data-for="Redis-核心技术与实战/18｜波动的响应延迟：如何应对变慢的-Redis？（上）">18｜波动的响应延迟：如何应对变慢的 Redis？（上）</a></li><li><a href="../Redis-核心技术与实战/19｜波动的响应延迟：如何应对变慢的-Redis？（下）" data-for="Redis-核心技术与实战/19｜波动的响应延迟：如何应对变慢的-Redis？（下）">19｜波动的响应延迟：如何应对变慢的 Redis？（下）</a></li><li><a href="../Redis-核心技术与实战/20｜删除数据后，为什么内存占用率还是很高？" data-for="Redis-核心技术与实战/20｜删除数据后，为什么内存占用率还是很高？">20｜删除数据后，为什么内存占用率还是很高？</a></li><li><a href="../Redis-核心技术与实战/21｜缓冲区：一个可能引发“惨案”的地方" data-for="Redis-核心技术与实战/21｜缓冲区：一个可能引发“惨案”的地方">21｜缓冲区：一个可能引发“惨案”的地方</a></li><li><a href="../Redis-核心技术与实战/22｜第-11～21-讲课后思考题答案及常见问题答疑" data-for="Redis-核心技术与实战/22｜第-11～21-讲课后思考题答案及常见问题答疑">22｜第 11～21 讲课后思考题答案及常见问题答疑</a></li><li><a href="../Redis-核心技术与实战/23｜旁路缓存：Redis-是如何工作的？" data-for="Redis-核心技术与实战/23｜旁路缓存：Redis-是如何工作的？">23｜旁路缓存：Redis 是如何工作的？</a></li><li><a href="../Redis-核心技术与实战/24｜替换策略：缓存满了怎么办？" data-for="Redis-核心技术与实战/24｜替换策略：缓存满了怎么办？">24｜替换策略：缓存满了怎么办？</a></li><li><a href="../Redis-核心技术与实战/25｜缓存异常（上）：如何解决缓存和数据库的数据不一致问题？" data-for="Redis-核心技术与实战/25｜缓存异常（上）：如何解决缓存和数据库的数据不一致问题？">25｜缓存异常（上）：如何解决缓存和数据库的数据不一致问题？</a></li><li><a href="../Redis-核心技术与实战/26｜缓存异常（下）：如何解决缓存雪崩、击穿、穿透难题？" data-for="Redis-核心技术与实战/26｜缓存异常（下）：如何解决缓存雪崩、击穿、穿透难题？">26｜缓存异常（下）：如何解决缓存雪崩、击穿、穿透难题？</a></li><li><a href="../Redis-核心技术与实战/27｜缓存被污染了，该怎么办？" data-for="Redis-核心技术与实战/27｜缓存被污染了，该怎么办？">27｜缓存被污染了，该怎么办？</a></li><li><a href="../Redis-核心技术与实战/28｜Pika：如何基于-SSD-实现大容量-Redis？" data-for="Redis-核心技术与实战/28｜Pika：如何基于-SSD-实现大容量-Redis？">28｜Pika：如何基于 SSD 实现大容量 Redis？</a></li><li><a href="../Redis-核心技术与实战/29｜无锁的原子操作：Redis-如何应对并发访问？" data-for="Redis-核心技术与实战/29｜无锁的原子操作：Redis-如何应对并发访问？">29｜无锁的原子操作：Redis 如何应对并发访问？</a></li><li><a href="../Redis-核心技术与实战/30｜如何使用-Redis-实现分布式锁？" data-for="Redis-核心技术与实战/30｜如何使用-Redis-实现分布式锁？">30｜如何使用 Redis 实现分布式锁？</a></li><li><a href="../Redis-核心技术与实战/31｜事务机制｜Redis-能实现-ACID-属性吗？" data-for="Redis-核心技术与实战/31｜事务机制｜Redis-能实现-ACID-属性吗？">31｜事务机制｜Redis 能实现 ACID 属性吗？</a></li><li><a href="../Redis-核心技术与实战/32｜Redis-主从同步与故障切换，有哪些坑？" data-for="Redis-核心技术与实战/32｜Redis-主从同步与故障切换，有哪些坑？">32｜Redis 主从同步与故障切换，有哪些坑？</a></li><li><a href="../Redis-核心技术与实战/33｜脑裂：一次奇怪的数据丢失" data-for="Redis-核心技术与实战/33｜脑裂：一次奇怪的数据丢失">33｜脑裂：一次奇怪的数据丢失</a></li><li><a href="../Redis-核心技术与实战/35｜Codis-VS-Redis-Cluster：我该选择哪一个集群方案？" data-for="Redis-核心技术与实战/35｜Codis-VS-Redis-Cluster：我该选择哪一个集群方案？">35｜Codis VS Redis Cluster：我该选择哪一个集群方案？</a></li><li><a href="../Redis-核心技术与实战/36｜Redis-支撑秒杀场景的关键技术和实践都有哪些？" data-for="Redis-核心技术与实战/36｜Redis-支撑秒杀场景的关键技术和实践都有哪些？">36｜Redis 支撑秒杀场景的关键技术和实践都有哪些？</a></li><li><a href="../Redis-核心技术与实战/37｜数据分布优化：如何应对数据倾斜？" data-for="Redis-核心技术与实战/37｜数据分布优化：如何应对数据倾斜？">37｜数据分布优化：如何应对数据倾斜？</a></li><li><a href="../Redis-核心技术与实战/38｜通信开销：限制-Redis-Cluster-规模的关键因素" data-for="Redis-核心技术与实战/38｜通信开销：限制-Redis-Cluster-规模的关键因素">38｜通信开销：限制 Redis Cluster 规模的关键因素</a></li><li><a href="../Redis-核心技术与实战/39｜Redis-6.0-的新特性：多线程、客户端缓存与安全" data-for="Redis-核心技术与实战/39｜Redis-6.0-的新特性：多线程、客户端缓存与安全">39｜Redis 6.0 的新特性：多线程、客户端缓存与安全</a></li><li><a href="../Redis-核心技术与实战/40｜Redis-的下一步：基于-NVM-内存的实践" data-for="Redis-核心技术与实战/40｜Redis-的下一步：基于-NVM-内存的实践">40｜Redis 的下一步：基于 NVM 内存的实践</a></li><li><a href="../Redis-核心技术与实战/41｜第-35～40-讲课后思考题答案及常见问题答疑" data-for="Redis-核心技术与实战/41｜第-35～40-讲课后思考题答案及常见问题答疑">41｜第 35～40 讲课后思考题答案及常见问题答疑</a></li><li><a href="../Redis-核心技术与实战/Redis-学习路径" data-for="Redis-核心技术与实战/Redis-学习路径">Redis 学习路径</a></li><li><a href="../Redis-核心技术与实战/Redis-客户端如何与服务端交换命令和数据？" data-for="Redis-核心技术与实战/Redis-客户端如何与服务端交换命令和数据？">Redis 客户端如何与服务端交换命令和数据？</a></li><li><a href="../Redis-核心技术与实战/Redis-有哪些好用的运维工具？" data-for="Redis-核心技术与实战/Redis-有哪些好用的运维工具？">Redis 有哪些好用的运维工具？</a></li><li><a href="../Redis-核心技术与实战/Redis-核心技术与实战" data-for="Redis-核心技术与实战/Redis-核心技术与实战">Redis 核心技术与实战</a></li><li><a href="../Redis-核心技术与实战/Redis-的使用规范小建议" data-for="Redis-核心技术与实战/Redis-的使用规范小建议">Redis 的使用规范小建议</a></li><li><a href="../Redis-核心技术与实战/从微博的-Redis-实践中，我们可以学到哪些经验？" data-for="Redis-核心技术与实战/从微博的-Redis-实践中，我们可以学到哪些经验？">从微博的 Redis 实践中，我们可以学到哪些经验？</a></li><li><a href="../Redis-核心技术与实战/经典的-Redis-学习资料" data-for="Redis-核心技术与实战/经典的-Redis-学习资料">经典的 Redis 学习资料</a></li></ul></div></li><li><a href="../Capslock" data-for="Capslock">Capslock</a></li><li><a href="../Crontab-执行提示没有权限" data-for="Crontab-执行提示没有权限">Crontab 执行提示没有权限</a></li><li><a href="../Docker-不常见问题" data-for="Docker-不常见问题">Docker 不常见问题</a></li><li><a href="../Egg.js-手动热更新" data-for="Egg.js-手动热更新">Egg.js 手动热更新</a></li><li><a href="../Git-知识" data-for="Git-知识">Git 知识</a></li><li><a href="../GitHub-加速访问" data-for="GitHub-加速访问">GitHub 加速访问</a></li><li><a href="../GitHub-常见错误" data-for="GitHub-常见错误">GitHub 常见错误</a></li><li><a href="../iCloud-不同步指定文件" data-for="iCloud-不同步指定文件">iCloud 不同步指定文件</a></li><li><a href="../iCloud-同步卡住" data-for="iCloud-同步卡住">iCloud 同步卡住</a></li><li><a href="../Java-小问题" data-for="Java-小问题">Java 小问题</a></li><li><a href="../Laravel-Pint-使用" data-for="Laravel-Pint-使用">Laravel Pint 使用</a></li><li><a href="../Laravel-开发注意事项" data-for="Laravel-开发注意事项">Laravel 开发注意事项</a></li><li><a href="../Linux-安装-oh-my-zsh" data-for="Linux-安装-oh-my-zsh">Linux 安装 oh-my-zsh</a></li><li><a href="../Mac-应用已损坏" data-for="Mac-应用已损坏">Mac 应用已损坏</a></li><li><a href="../Mac-运行-Crontab" data-for="Mac-运行-Crontab">Mac 运行 Crontab</a></li><li><a href="../Obsidian" data-for="Obsidian">Obsidian</a></li><li><a href="../Oh-My-Zsh" data-for="Oh-My-Zsh">Oh My Zsh</a></li><li><a href="../PHP-开发设置" data-for="PHP-开发设置">PHP 开发设置</a></li><li><a href="../PHP-测试" data-for="PHP-测试">PHP 测试</a></li><li><a href="../PHP-错误码设计" data-for="PHP-错误码设计">PHP 错误码设计</a></li><li><a href="../PHP-FPM-配置" data-for="PHP-FPM-配置">PHP-FPM 配置</a></li><li><a href="../Rate-Limit" data-for="Rate-Limit">Rate Limit</a></li><li><a href="../Think-in-English" data-for="Think-in-English">Think in English</a></li><li><a href="../Vault" data-for="Vault">Vault</a></li><li><a href="../使用缓存" data-for="使用缓存">使用缓存</a></li><li><a href="../学-Java" data-for="学-Java">学 Java</a></li><li><a href="../学习方法" data-for="学习方法">学习方法</a></li><li><a href="../学算法" data-for="学算法">学算法</a></li><li><a href="../学英语" data-for="学英语">学英语</a></li><li><a href="../我的开发环境" data-for="我的开发环境">我的开发环境</a></li><li><a href="../抢红包系统" data-for="抢红包系统">抢红包系统</a></li><li><a href="../搭建数字花园" data-for="搭建数字花园">搭建数字花园</a></li><li><a href="../支付技术方案" data-for="支付技术方案">支付技术方案</a></li><li><a href="../服务器疑难杂症" data-for="服务器疑难杂症">服务器疑难杂症</a></li><li><a href="../用-iCloud-同步-Mac-应用设置" data-for="用-iCloud-同步-Mac-应用设置">用 iCloud 同步 Mac 应用设置</a></li><li><a href="../秒杀系统" data-for="秒杀系统">秒杀系统</a></li><li><a href="../英语语法" data-for="英语语法">英语语法</a></li><li><a href="../让顶级域名重定向到-www" data-for="让顶级域名重定向到-www">让顶级域名重定向到 www</a></li><li><a href="../设计一个短链系统" data-for="设计一个短链系统">设计一个短链系统</a></li></ul></div></li><li id="explorer-end"></li></ul></div></div></div><div class="center"><div class="page-header"><div class="popover-hint"><h1 class="article-title">26｜备库为什么会延迟好几个小时？</h1><p show-comma="true" class="content-meta"><span>Aug 22, 2023</span><span>14 min read</span></p><ul class="tags"><li><a href="../tags/MySQL" class="internal tag-link">MySQL</a></li></ul></div></div><article class="popover-hint"><ul>
+<li>为了解决备库一直追不上更新压力较大的主库的问题</li>
+</ul>
+<h2 id="多线程复制机制将单线程-sql_thread-拆成多个线程">多线程复制机制：将单线程 sql_thread 拆成多个线程<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#多线程复制机制将单线程-sql_thread-拆成多个线程" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>
+<p><img src="https://cdn.jsdelivr.net/gh/11ze/static/images/mysql45-26-2.png" alt="image.png"/></p>
+</li>
+<li>
+<p>coordinator 就是原来的 sql_thread，但不再更新数据，只负责读取中转日志和分发事务真正更新日志的变成 worker 线程，个数由参数 slave_parallel_workers 决定一般设置 8～16 之间最好（32 核物理机的情况）需要留资源给读查询</p>
+<ul>
+<li><img src="https://cdn.jsdelivr.net/gh/11ze/static/images/mysql45-26-1.png" alt="image.png"/></li>
+</ul>
+</li>
+<li>
+<p>分发时的基本要求</p>
+<ul>
+<li>
+<ol>
+<li>不会造成更新覆盖。这就要求更新同一行的两个事务必须分发到同一个 worker 中</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>同一个事务不能被拆开</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="mysql-55-版本的并行复制策略">MySQL 5.5 版本的并行复制策略<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#mysql-55-版本的并行复制策略" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>
+<p>官方 5.5 版本不支持并行复制</p>
+<ul>
+<li>下面两个策略没有被合并</li>
+</ul>
+</li>
+<li>
+<p>按表分发策略</p>
+<ul>
+<li>
+<p>如果两个事务更新不同的表，就可以并行， 如果有跨表的事务就需要把两张表放在一起考虑</p>
+</li>
+<li>
+<p>按表并行复制线程模型</p>
+<ul>
+<li><img src="https://cdn.jsdelivr.net/gh/11ze/static/images/mysql45-26-3.png" alt="image.png"/></li>
+</ul>
+</li>
+<li>
+<p>每个 worker 线程对应一个 hash 表，用于保存当前正在这个 worker 的“执行队列”里的事务所涉及的表。hash 表的 key 是“库名. 表名”，value 是一个数字，表示队列中有多少个事务修改这个表。</p>
+</li>
+<li>
+<p>假设在图中的情况下，coordinator 从中转日志中读入一个新事务 T，这个事务修改的行涉及到表 t1 和 t3。此时事务 T 的分配规则：1. 由于事务 T 中涉及修改表 t1，而 worker_1 队列中有事务在修改表 t1，事务 T 和队列中的某个事务要修改同一个表的数据，这种情况我们说事务 T 和 worker_1 是冲突的。2. 按照这个逻辑，顺序判断事务 T 和每个 worker 队列的冲突关系，会发现事务 T 跟 worker_2 也冲突。3. 事务 T 跟多于一个 worker 冲突，coordinator 线程就进入等待。4. 每个 worker 继续执行，同时修改 hash_table。假设 hash_table_2 里面涉及到修改表 t3 的事务先执行完成，就会从 hash_table_2 中把 db1.t3 这一项去掉。5. 这样 coordinator 会发现跟事务 T 冲突的 worker 只有 worker_1 了，因此就把它分配给 worker_1。6. coordinator 继续读下一个中转日志，继续分配事务。</p>
+</li>
+<li>
+<p>每个事务在分发的时候，跟所有 worker 的冲突关系包括三种情况：</p>
+<ul>
+<li>
+<ol>
+<li>如果跟所有 worker 都不冲突，coordinator 线程就会把这个事务分配给最空闲的 woker;</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>如果跟多于一个 worker 冲突，coordinator 线程就进入等待状态，直到和这个事务存在冲突关系的 worker 只剩下 1 个；</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>如果只跟一个 worker 冲突，coordinator 线程就会把这个事务分配给这个存在冲突关系的 worker。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>按行分发策略</p>
+<ul>
+<li>如果两个事务没有更新相同的行，它们在备库上可以并发执行</li>
+<li>需要同时考虑主键和唯一键</li>
+<li>执行 <code>update t1 set a=1 where id=2</code> 语句，在 binlog 里面记录了整行的数据修改前各个字段的值，和修改后各个字段的值。因此，coordinator 在解析这个语句的 binlog 的时候，这个事务的 hash 表就有三个项
+<ol>
+<li><code>key=hash_func(db1+t1+“PRIMARY”+2), value=2</code>，这里 value=2 是因为修改前后的行 id 值不变，出现了两次。</li>
+<li><code>key=hash_func(db1+t1+“a”+2), value=1</code>，表示会影响到这个表 a=2 的行。</li>
+<li><code>key=hash_func(db1+t1+“a”+1), value=1</code>，表示会影响到这个表 a=1 的行。</li>
+</ol>
+</li>
+<li>消耗更多的计算资源</li>
+</ul>
+</li>
+<li>
+<p>两个方案有一些约束条件</p>
+<ul>
+<li>
+<ol>
+<li>要能够从 binlog 里面解析出表名、主键值和唯一索引的值。也就是说，主库的 binlog 格式必须是 row；</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>表必须有主键；</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>不能有外键。表上如果有外键，级联更新的行不会记录在 binlog 中，这样冲突检测就不准确。</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p>按行策略遇到一个语句要删除 100 万行数据类似的情况时，hash 表要记录 100 万个项，耗内存解析 binlog 计算 hash 值，对于大事务，成本很高</p>
+<ul>
+<li>设置阈值，单个事务如果超过设置的行数阈值，就暂时退化为单线程模式
+<ol>
+<li>coordinator 暂时先 hold 住这个事务；</li>
+<li>等待所有 worker 都执行完成，变成空队列；</li>
+<li>coordinator 直接执行这个事务；</li>
+<li>恢复并行模式。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="mysql-56-版本的并行复制策略">MySQL 5.6 版本的并行复制策略<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#mysql-56-版本的并行复制策略" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>按库并行</li>
+<li>hash 表的 key = 数据库名</li>
+<li>不要求 binlog 的格式</li>
+</ul>
+<h2 id="mariadb-的并行复制策略">MariaDB 的并行复制策略<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#mariadb-的并行复制策略" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>
+<p>利用了 redo log 组提交优化（group commit）的特性</p>
+<ul>
+<li>
+<ol>
+<li>能够在同一组里提交的事务，一定不会修改同一行；</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>主库上可以并行执行的事务，备库上也一定是可以并行执行的。</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p>实现</p>
+<ul>
+<li>
+<ol>
+<li>在一组里面一起提交的事务，有一个相同的 commit_id，下一组就是 commit_id + 1；</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>commit_id 直接写到 binlog 里面；</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>传到备库应用的时候，相同 commit_id 的事务分发到多个 worker 执行；</li>
+</ol>
+</li>
+<li>
+<ol start="4">
+<li>这一组全部执行完成后，coordinator 再去取下一批。</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p>之前的思路：分析 binlog，并拆分到 worker 上，MariaDB 的策略：模拟主库的并行模式</p>
+</li>
+<li>
+<p>但是没有实现“真正的模拟主库并发度”目标主库上，一组事务在 commit 的时候，下一组事务是同时处于“执行中”状态的</p>
+</li>
+</ul>
+<h2 id="mysql-57-的并行复制策略">MySQL 5.7 的并行复制策略<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#mysql-57-的并行复制策略" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>
+<p>由参数 slave-parallel-type 控制并行复制策略</p>
+<ul>
+<li>
+<ol>
+<li>配置为 DATABASE，表示使用 MySQL 5.6 版本的按库并行策略；</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>配置为 LOGICAL_CLOCK，表示的就是类似 MariaDB 的策略。不过，MySQL 5.7 这个策略，针对并行度做了优化。这个优化的思路也很有趣儿。</li>
+</ol>
+<ul>
+<li>同时处于“执行状态”的所有事务不可以并行因为可能由由于锁冲突而处于锁等待状态的事务</li>
+<li>这里的思想是：1. 同时处于 prepare 状态的事务，在备库执行时是可以并行的；2. 处于 prepare 状态的事务，与处于 commit 状态的事务之间，在备库执行时也是可以并行的。</li>
+<li>备库如何知道事务的二阶段提交状态（依赖 redo log，备库接收到的是 binlog）
+<ul>
+<li>主库在写 binlog 的时候会给这些 binlog 里面记 commit_id 和sequence_no，来说明事务之间在主库上并行 prepare 的状态；备库是通过解析 binlog 拿到 commit_id 和 sequence_no，来决定要怎么并发的。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>binlog 的组提交相关参数</p>
+<ul>
+<li>
+<ol>
+<li>binlog_group_commit_sync_delay 参数，表示延迟多少微秒后才调用 fsync；</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>binlog_group_commit_sync_no_delay_count 参数，表示累积多少次以后才调用 fsync。</li>
+</ol>
+</li>
+<li>用于故意拉长 binlog 从 write 到 fsync 的时间，减少 binlog 的写盘次数</li>
+<li>同时可以用来制造更多的“同时处于 prepare 阶段的事务”，增加备库复制的并行度</li>
+</ul>
+</li>
+</ul>
+<h2 id="mysql-5722-的并行复制策略">MySQL 5.7.22 的并行复制策略<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#mysql-5722-的并行复制策略" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>
+<p>MySQL 增加了一个新的并行复制策略，基于 WRITESET 的并行复制。</p>
+</li>
+<li>
+<p>相应地，新增了一个参数 binlog-transaction-dependency-tracking，用来控制是否启用这个新策略。这个参数的可选值有以下三种。</p>
+<ul>
+<li>
+<ol>
+<li>COMMIT_ORDER，表示的就是前面介绍的，根据同时进入 prepare 和 commit 来判断是否可以并行的策略。</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>WRITESET，表示的是对于事务涉及更新的每一行，计算出这一行的 hash 值，组成集合 writeset。如果两个事务没有操作相同的行，也就是说它们的 writeset 没有交集，就可以并行。</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>
+<p>WRITESET_SESSION，是在 WRITESET 的基础上多了一个约束，即在主库上同一个线程先后执行的两个事务，在备库执行的时候，要保证相同的先后顺序。</p>
+</li>
+</ol>
+<ul>
+<li>基本用不到</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>2、3 的 hash 值 = 库名 + 表名 + 索引名 + 值，如果表上除了主键索引外，还有其他唯一索引，对于每个唯一索引，insert 语句对应的 writeset 就要多增加一个 hash 值</p>
+</li>
+<li>
+<p>跟 MySQL 5.5 版本的按行分发策略差不多，但有优势</p>
+<ul>
+<li>
+<ol>
+<li>writeset 是在主库生成后直接写入到 binlog 里面的，这样在备库执行的时候，不需要解析 binlog 内容（event 里的行数据），节省了很多计算量；</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>不需要把整个事务的 binlog 都扫一遍才能决定分发到哪个 worker，更省内存；</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>由于备库的分发策略不依赖于 binlog 内容，所以 binlog 是 statement 格式也是可以的。</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p>对于“表上没主键”和“外键约束”的场景，WRITESET 策略也是没法并行的，也会暂时退化为单线程模型。</p>
+</li>
+</ul>
+<h2 id="️-57-版本新增的备库并行策略修改了-binlog-的内容说明-binlog-协议并不是向上兼容的在主备切换版本升级的时候需要考虑这个因素">⚠️ 5.7 版本新增的备库并行策略修改了 binlog 的内容，说明 binlog 协议并不是向上兼容的，在主备切换、版本升级的时候需要考虑这个因素<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#️-57-版本新增的备库并行策略修改了-binlog-的内容说明-binlog-协议并不是向上兼容的在主备切换版本升级的时候需要考虑这个因素" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<h2 id="思考题">思考题<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#思考题" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>假设一个 MySQL 5.7.22 版本的主库，单线程插入了很多数据，过了 3 个小时后，我们要给这个主库搭建一个相同版本的备库。</li>
+<li>这时候，你为了更快地让备库追上主库，要开并行复制。在 binlog-transaction-dependency-tracking 参数的 COMMIT_ORDER、WRITESET 和 WRITE_SESSION 这三个取值中，你会选择哪一个呢？你选择的原因是什么？
+<ul>
+<li>WRITESET</li>
+</ul>
+</li>
+<li>如果设置另外两个参数，你认为会出现什么现象呢？
+<ul>
+<li>COMMIT_ORDER：由于主库是单线程压力模式，所以每个事务的 commit_id 不同</li>
+<li>由于 WRITESET_SESSION 模式要求在备库应用日志的时候，同一个线程的日志必须与主库上执行的先后顺序相同，也会导致主库单线程压力模式下退化成单线程复制。</li>
+</ul>
+</li>
+</ul>
+<h2 id="评论区">评论区<a role="anchor" aria-hidden="true" tabindex="-1" data-no-popover="true" href="#评论区" class="internal"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
+<ul>
+<li>
+<p>存在主从的 binlog event 写入顺序不一致的情况</p>
+</li>
+<li>
+<p>对同一行的修改会因为行锁而不能同时进入 commit 状态，所以 commit_id 不会相同</p>
+</li>
+<li>
+<p>每个事务都有两个数字表示它在执行提交阶段的时间范围，构成区间 (c1, c2)。如果两个事务的区间有交集，就是可以并行的。这里 c1 是事务启动的时候，当前系统里最大的 commit_id；一个事务提交的时候，commit_id + 1.</p>
+<ul>
+<li>进入 prepare 的时候就给这个事务分配 commit_id，这个 commit_id 就是当前系统最大的一个 commit_id</li>
+</ul>
+</li>
+<li>
+<p>作者回复: 我也建议尽量少使用外键</p>
+<ol>
+<li>这个关系应该维护在开发系统的逻辑中，放在数据库里面，比较隐蔽，容易忘记</li>
+<li>外键约束可能会导致有些更新失败</li>
+<li>外键约束（尤其是级联更新）容易出现非预期的结果</li>
+</ol>
+</li>
+</ul></article></div><div class="right sidebar"><div class="graph"><h3>Graph View</h3><div class="graph-outer"><div id="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:false,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false}"></div><svg version="1.1" id="global-graph-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+	s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+	c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+	C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+	c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+	v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+	s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+	C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+	S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+	s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+	s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></div><div id="global-graph-outer"><div id="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:false,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true}"></div></div></div><div class="backlinks"><h3>Backlinks</h3><ul class="overflow"><li><a href="../MySQL-实战-45-讲/MySQL-实战-45-讲" class="internal">MySQL 实战 45 讲</a></li></ul></div></div></div><footer class><hr/><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.2.3</a> © 2024</p><ul><li><a href="https://github.com/11ze/knowledge-garden">GitHub</a></li><li><a href="https://twitter.com/11ze4">Twitter</a></li><li><a href="https://space.bilibili.com/4480720">BiliBili</a></li></ul></footer></div></body><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/copy-tex.min.js" type="application/javascript"></script><script type="application/javascript">function c(){let t=this.parentElement;t.classList.toggle("is-collapsed");let l=t.classList.contains("is-collapsed")?this.scrollHeight:t.scrollHeight;t.style.maxHeight=l+"px";let o=t,e=t.parentElement;for(;e;){if(!e.classList.contains("callout"))return;let n=e.classList.contains("is-collapsed")?e.scrollHeight:e.scrollHeight+o.scrollHeight;e.style.maxHeight=n+"px",o=e,e=e.parentElement}}function i(){let t=document.getElementsByClassName("callout is-collapsible");for(let s of t){let l=s.firstElementChild;if(l){l.addEventListener("click",c),window.addCleanup(()=>l.removeEventListener("click",c));let e=s.classList.contains("is-collapsed")?l.scrollHeight:s.scrollHeight;s.style.maxHeight=e+"px"}}}document.addEventListener("nav",i);window.addEventListener("resize",i);
+</script><script type="module">
+          let mermaidImport = undefined
+          document.addEventListener('nav', async () => {
+            if (document.querySelector("code.mermaid")) {
+              mermaidImport ||= await import('https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.esm.min.mjs')
+              const mermaid = mermaidImport.default
+              const darkMode = document.documentElement.getAttribute('saved-theme') === 'dark'
+              mermaid.initialize({
+                startOnLoad: false,
+                securityLevel: 'loose',
+                theme: darkMode ? 'dark' : 'default'
+              })
+
+              await mermaid.run({
+                querySelector: '.mermaid'
+              })
+            }
+          });
+          </script><script src="../postscript.js" type="module"></script></html>
