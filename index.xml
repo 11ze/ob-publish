@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
     <channel>
-      <title>🫧 11ze</title>
+      <title>11ze</title>
       <link>https://wangze.tech</link>
-      <description>Last 10 notes on 🫧 11ze</description>
+      <description>Last 10 notes on 11ze</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
     <title>01｜基础架构：一条 SQL 查询语句是如何执行的？</title>
