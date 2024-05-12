@@ -6,6 +6,24 @@
       <description>Last 10 notes on 11ze</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>11｜怎么给字符串字段加索引？</title>
+    <link>https://wangze.tech/MySQL-%E5%AE%9E%E6%88%98-45-%E8%AE%B2/11%EF%BD%9C%E6%80%8E%E4%B9%88%E7%BB%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AD%97%E6%AE%B5%E5%8A%A0%E7%B4%A2%E5%BC%95%EF%BC%9F</link>
+    <guid>https://wangze.tech/MySQL-%E5%AE%9E%E6%88%98-45-%E8%AE%B2/11%EF%BD%9C%E6%80%8E%E4%B9%88%E7%BB%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AD%97%E6%AE%B5%E5%8A%A0%E7%B4%A2%E5%BC%95%EF%BC%9F</guid>
+    <description>...</description>
+    <pubDate>Sun, 12 May 2024 15:00:01 GMT</pubDate>
+  </item><item>
+    <title>36｜为什么临时表可以重名？</title>
+    <link>https://wangze.tech/MySQL-%E5%AE%9E%E6%88%98-45-%E8%AE%B2/36%EF%BD%9C%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%B4%E6%97%B6%E8%A1%A8%E5%8F%AF%E4%BB%A5%E9%87%8D%E5%90%8D%EF%BC%9F</link>
+    <guid>https://wangze.tech/MySQL-%E5%AE%9E%E6%88%98-45-%E8%AE%B2/36%EF%BD%9C%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%B4%E6%97%B6%E8%A1%A8%E5%8F%AF%E4%BB%A5%E9%87%8D%E5%90%8D%EF%BC%9F</guid>
+    <description>...</description>
+    <pubDate>Sun, 12 May 2024 15:00:01 GMT</pubDate>
+  </item><item>
+    <title>PHP 开发设置</title>
+    <link>https://wangze.tech/PHP-%E5%BC%80%E5%8F%91%E8%AE%BE%E7%BD%AE</link>
+    <guid>https://wangze.tech/PHP-%E5%BC%80%E5%8F%91%E8%AE%BE%E7%BD%AE</guid>
+    <description>Laravel Pint（可选） 如何在 PHPSTORM 配置 Laravel Pint 代码格式化包 Laravel Pint VSCode Extension PHP Intelephense PHP DocBlocker .</description>
+    <pubDate>Sun, 12 May 2024 15:00:01 GMT</pubDate>
+  </item><item>
     <title>我的开发环境</title>
     <link>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</link>
     <guid>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</guid>
@@ -47,24 +65,6 @@
     <guid>https://wangze.tech/%E7%94%A8-iCloud-%E5%90%8C%E6%AD%A5-Mac-%E5%BA%94%E7%94%A8%E8%AE%BE%E7%BD%AE</guid>
     <description> 先退出要同步的应用 下载腾讯柠檬 在柠檬里点击卸载应用的时候看详细信息，最下面找到应用保存数据的位置 用访达打开 找到数据文件夹 复制数据文件夹到 iCloud 删除原文件夹 在原文件夹的位置创建同名软链接指向 iCloud 里的数据文件 .</description>
     <pubDate>Wed, 08 May 2024 13:13:44 GMT</pubDate>
-  </item><item>
-    <title>11ze&#039;s Garden</title>
-    <link>https://wangze.tech/</link>
-    <guid>https://wangze.tech/</guid>
-    <description>我还没想好说什么，随便看看～.</description>
-    <pubDate>Tue, 07 May 2024 09:43:00 GMT</pubDate>
-  </item><item>
-    <title>使用缓存</title>
-    <link>https://wangze.tech/%E4%BD%BF%E7%94%A8%E7%BC%93%E5%AD%98</link>
-    <guid>https://wangze.tech/%E4%BD%BF%E7%94%A8%E7%BC%93%E5%AD%98</guid>
-    <description>判断缓存存在 给缓存续期，而不是先判断存在再进行其它操作，如判断存在后给列表加子元素 核心：多个操作不一定是原子操作，续期完成后给列表加子元素 .</description>
-    <pubDate>Tue, 07 May 2024 09:43:00 GMT</pubDate>
-  </item><item>
-    <title>Capslock</title>
-    <link>https://wangze.tech/Capslock</link>
-    <guid>https://wangze.tech/Capslock</guid>
-    <description>功能 加强 Caps 键功能 安装 Github 到系统设置 - 键盘 - 键盘快捷键 - Modifier Keys 里选择键盘 设置单击 Caps 切换输入法 打开配置文件 ~/.config/karabiner/karabiner.json 搜 &quot;key_code&quot;: &quot;spacebar&quot; 将 to_if_alone ...</description>
-    <pubDate>Tue, 07 May 2024 08:24:01 GMT</pubDate>
   </item>
     </channel>
   </rss>
