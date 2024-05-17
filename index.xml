@@ -6,6 +6,42 @@
       <description>Last 10 notes on 11ze</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>25｜MySQL 是怎么保证高可用的？</title>
+    <link>https://wangze.tech/MySQL-%E5%AE%9E%E6%88%98-45-%E8%AE%B2/25%EF%BD%9CMySQL-%E6%98%AF%E6%80%8E%E4%B9%88%E4%BF%9D%E8%AF%81%E9%AB%98%E5%8F%AF%E7%94%A8%E7%9A%84%EF%BC%9F</link>
+    <guid>https://wangze.tech/MySQL-%E5%AE%9E%E6%88%98-45-%E8%AE%B2/25%EF%BD%9CMySQL-%E6%98%AF%E6%80%8E%E4%B9%88%E4%BF%9D%E8%AF%81%E9%AB%98%E5%8F%AF%E7%94%A8%E7%9A%84%EF%BC%9F</guid>
+    <description>...</description>
+    <pubDate>Fri, 17 May 2024 15:00:01 GMT</pubDate>
+  </item><item>
+    <title>27｜主库出问题了，从库怎么办？</title>
+    <link>https://wangze.tech/MySQL-%E5%AE%9E%E6%88%98-45-%E8%AE%B2/27%EF%BD%9C%E4%B8%BB%E5%BA%93%E5%87%BA%E9%97%AE%E9%A2%98%E4%BA%86%EF%BC%8C%E4%BB%8E%E5%BA%93%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F</link>
+    <guid>https://wangze.tech/MySQL-%E5%AE%9E%E6%88%98-45-%E8%AE%B2/27%EF%BD%9C%E4%B8%BB%E5%BA%93%E5%87%BA%E9%97%AE%E9%A2%98%E4%BA%86%EF%BC%8C%E4%BB%8E%E5%BA%93%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F</guid>
+    <description>基于位点的主备切换 change master 命令： CHANGE MASTER TO MASTER_HOST=$host_name MASTER_PORT=$port MASTER_USER=$user_name MASTER_PASSWORD=$password MASTER_LOG_FILE=$master_log_name ...</description>
+    <pubDate>Fri, 17 May 2024 15:00:01 GMT</pubDate>
+  </item><item>
+    <title>34｜到底可不可以使用 join ？</title>
+    <link>https://wangze.tech/MySQL-%E5%AE%9E%E6%88%98-45-%E8%AE%B2/34%EF%BD%9C%E5%88%B0%E5%BA%95%E5%8F%AF%E4%B8%8D%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8-join-%EF%BC%9F</link>
+    <guid>https://wangze.tech/MySQL-%E5%AE%9E%E6%88%98-45-%E8%AE%B2/34%EF%BD%9C%E5%88%B0%E5%BA%95%E5%8F%AF%E4%B8%8D%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8-join-%EF%BC%9F</guid>
+    <description>Index Nested-Loop Join（NLJ） 使用 join 语句，性能比强行拆成多个单表执行 SQL 语句的性能要好； 如果使用 join 语句的话，需要让小表做驱动表 Simple Nested-Loop Join MySQL 没有 Block Nested-Loop Join（BNL） 1 被驱动表没有索引 2 驱动表中取出所有满足条件的数据，读入线程内存 ...</description>
+    <pubDate>Fri, 17 May 2024 15:00:01 GMT</pubDate>
+  </item><item>
+    <title>38｜都说 InnoDB 好，那还要不要使用 Memory 引擎？</title>
+    <link>https://wangze.tech/MySQL-%E5%AE%9E%E6%88%98-45-%E8%AE%B2/38%EF%BD%9C%E9%83%BD%E8%AF%B4-InnoDB-%E5%A5%BD%EF%BC%8C%E9%82%A3%E8%BF%98%E8%A6%81%E4%B8%8D%E8%A6%81%E4%BD%BF%E7%94%A8-Memory-%E5%BC%95%E6%93%8E%EF%BC%9F</link>
+    <guid>https://wangze.tech/MySQL-%E5%AE%9E%E6%88%98-45-%E8%AE%B2/38%EF%BD%9C%E9%83%BD%E8%AF%B4-InnoDB-%E5%A5%BD%EF%BC%8C%E9%82%A3%E8%BF%98%E8%A6%81%E4%B8%8D%E8%A6%81%E4%BD%BF%E7%94%A8-Memory-%E5%BC%95%E6%93%8E%EF%BC%9F</guid>
+    <description>内存表的数据组织结构 InnoDB 引擎把数据放在主键索引上，其他索引上保存的是主键 id。这种方式，我们称之为索引组织表。 Memory 引擎采用的是把数据单独存放，索引上保存数据位置的数据组织形式，我们称之为堆组织表。 1 InnoDB 表的数据总是有序存放，而内存表的数据就是按照写入顺序存放； 2 当数据文件有空洞，InnoDB ...</description>
+    <pubDate>Fri, 17 May 2024 15:00:01 GMT</pubDate>
+  </item><item>
+    <title>09｜切片集群：数据增多了，是该加内存还是加实例？</title>
+    <link>https://wangze.tech/Redis-%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E6%88%98/09%EF%BD%9C%E5%88%87%E7%89%87%E9%9B%86%E7%BE%A4%EF%BC%9A%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%A4%9A%E4%BA%86%EF%BC%8C%E6%98%AF%E8%AF%A5%E5%8A%A0%E5%86%85%E5%AD%98%E8%BF%98%E6%98%AF%E5%8A%A0%E5%AE%9E%E4%BE%8B%EF%BC%9F</link>
+    <guid>https://wangze.tech/Redis-%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E6%88%98/09%EF%BD%9C%E5%88%87%E7%89%87%E9%9B%86%E7%BE%A4%EF%BC%9A%E6%95%B0%E6%8D%AE%E5%A2%9E%E5%A4%9A%E4%BA%86%EF%BC%8C%E6%98%AF%E8%AF%A5%E5%8A%A0%E5%86%85%E5%AD%98%E8%BF%98%E6%98%AF%E5%8A%A0%E5%AE%9E%E4%BE%8B%EF%BC%9F</guid>
+    <description>纵向扩展 升级单个 Redis 实例的资源配置，包括增加内存容量、增加磁盘容量、使用更高配置的 CPU 实施起来简单、直接 当使用 RDB 对数据进行持久化时，如果数据量增加，需要的内存也会增加，主线程 fork 子进程时就可能会阻塞（耗时长） 不要求持久化保存 Redis 数据时是一个不错的选择 受到硬件和成本的限制 横向扩展 ...</description>
+    <pubDate>Fri, 17 May 2024 15:00:01 GMT</pubDate>
+  </item><item>
+    <title>搭建数字花园</title>
+    <link>https://wangze.tech/%E6%90%AD%E5%BB%BA%E6%95%B0%E5%AD%97%E8%8A%B1%E5%9B%AD</link>
+    <guid>https://wangze.tech/%E6%90%AD%E5%BB%BA%E6%95%B0%E5%AD%97%E8%8A%B1%E5%9B%AD</guid>
+    <description>同步方案 可选方案 Obsidian Sync：官方，付费 Remotely Sync：第三方插件，自动同步最短间隔 1 分钟（可以手动执行同步），免费 iCloud：实时同步，免费 我使用的同步方案 iCloud iPhone 安装 Obsidian 进入 Obsidian 创建一个打开 iCloud 同步功能的 Vault 此时 iCloud ...</description>
+    <pubDate>Fri, 17 May 2024 15:00:01 GMT</pubDate>
+  </item><item>
     <title>Linux 安装 oh-my-zsh</title>
     <link>https://wangze.tech/Linux-%E5%AE%89%E8%A3%85-oh-my-zsh</link>
     <guid>https://wangze.tech/Linux-%E5%AE%89%E8%A3%85-oh-my-zsh</guid>
@@ -29,42 +65,6 @@
     <guid>https://wangze.tech/Redis-%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E6%88%98/22%EF%BD%9C%E7%AC%AC-11%EF%BD%9E21-%E8%AE%B2%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%E5%8F%8A%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E7%AD%94%E7%96%91</guid>
     <description>问题 1：如何使用慢查询日志和 latency monitor 排查执行慢的操作？ 1 设置 slowlog-log-slower-than：对执行时间大于多少微妙的命令进行记录 2 设置 slowlog-max-len：日志最多记录多少条命令 3 使用 SLOWLOG GET 命令查看慢查询日志 4 可以使用 latency monitor ...</description>
     <pubDate>Wed, 15 May 2024 15:00:01 GMT</pubDate>
-  </item><item>
-    <title>36｜为什么临时表可以重名？</title>
-    <link>https://wangze.tech/MySQL-%E5%AE%9E%E6%88%98-45-%E8%AE%B2/36%EF%BD%9C%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%B4%E6%97%B6%E8%A1%A8%E5%8F%AF%E4%BB%A5%E9%87%8D%E5%90%8D%EF%BC%9F</link>
-    <guid>https://wangze.tech/MySQL-%E5%AE%9E%E6%88%98-45-%E8%AE%B2/36%EF%BD%9C%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%B4%E6%97%B6%E8%A1%A8%E5%8F%AF%E4%BB%A5%E9%87%8D%E5%90%8D%EF%BC%9F</guid>
-    <description>...</description>
-    <pubDate>Mon, 13 May 2024 15:00:00 GMT</pubDate>
-  </item><item>
-    <title>39｜自增主键为什么不是连续的？</title>
-    <link>https://wangze.tech/MySQL-%E5%AE%9E%E6%88%98-45-%E8%AE%B2/39%EF%BD%9C%E8%87%AA%E5%A2%9E%E4%B8%BB%E9%94%AE%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%98%AF%E8%BF%9E%E7%BB%AD%E7%9A%84%EF%BC%9F</link>
-    <guid>https://wangze.tech/MySQL-%E5%AE%9E%E6%88%98-45-%E8%AE%B2/39%EF%BD%9C%E8%87%AA%E5%A2%9E%E4%B8%BB%E9%94%AE%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%98%AF%E8%BF%9E%E7%BB%AD%E7%9A%84%EF%BC%9F</guid>
-    <description>自增值保存在哪儿？ 表的结构定义存放在后缀名为.frm 的文件中，但是并不会保存自增值。 MyISAM 引擎的自增值保存在数据文件中。 InnoDB 在 MySQL 5.7 及之前的版本，自增值保存在内存里。每次重启后，第一次打开表的时候，都会去找自增值的最大值 max(id)，然后将 max(id)+1 作为这个表当前的自增值。 ...</description>
-    <pubDate>Mon, 13 May 2024 15:00:00 GMT</pubDate>
-  </item><item>
-    <title>45｜自增 id 用完怎么办？</title>
-    <link>https://wangze.tech/MySQL-%E5%AE%9E%E6%88%98-45-%E8%AE%B2/45%EF%BD%9C%E8%87%AA%E5%A2%9E-id-%E7%94%A8%E5%AE%8C%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F</link>
-    <guid>https://wangze.tech/MySQL-%E5%AE%9E%E6%88%98-45-%E8%AE%B2/45%EF%BD%9C%E8%87%AA%E5%A2%9E-id-%E7%94%A8%E5%AE%8C%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F</guid>
-    <description>...</description>
-    <pubDate>Mon, 13 May 2024 15:00:00 GMT</pubDate>
-  </item><item>
-    <title>11｜怎么给字符串字段加索引？</title>
-    <link>https://wangze.tech/MySQL-%E5%AE%9E%E6%88%98-45-%E8%AE%B2/11%EF%BD%9C%E6%80%8E%E4%B9%88%E7%BB%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AD%97%E6%AE%B5%E5%8A%A0%E7%B4%A2%E5%BC%95%EF%BC%9F</link>
-    <guid>https://wangze.tech/MySQL-%E5%AE%9E%E6%88%98-45-%E8%AE%B2/11%EF%BD%9C%E6%80%8E%E4%B9%88%E7%BB%99%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%AD%97%E6%AE%B5%E5%8A%A0%E7%B4%A2%E5%BC%95%EF%BC%9F</guid>
-    <description>...</description>
-    <pubDate>Sun, 12 May 2024 15:00:01 GMT</pubDate>
-  </item><item>
-    <title>PHP 开发设置</title>
-    <link>https://wangze.tech/PHP-%E5%BC%80%E5%8F%91%E8%AE%BE%E7%BD%AE</link>
-    <guid>https://wangze.tech/PHP-%E5%BC%80%E5%8F%91%E8%AE%BE%E7%BD%AE</guid>
-    <description>Laravel Pint（可选） 如何在 PHPSTORM 配置 Laravel Pint 代码格式化包 Laravel Pint VSCode Extension PHP Intelephense PHP DocBlocker .</description>
-    <pubDate>Sun, 12 May 2024 15:00:01 GMT</pubDate>
-  </item><item>
-    <title>我的开发环境</title>
-    <link>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</link>
-    <guid>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</guid>
-    <description>...</description>
-    <pubDate>Fri, 10 May 2024 15:00:02 GMT</pubDate>
   </item>
     </channel>
   </rss>
