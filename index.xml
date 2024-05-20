@@ -6,6 +6,12 @@
       <description>Last 10 notes on 11ze</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>我的开发环境</title>
+    <link>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</link>
+    <guid>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</guid>
+    <description>...</description>
+    <pubDate>Mon, 20 May 2024 15:00:00 GMT</pubDate>
+  </item><item>
     <title>25｜MySQL 是怎么保证高可用的？</title>
     <link>https://wangze.tech/MySQL-%E5%AE%9E%E6%88%98-45-%E8%AE%B2/25%EF%BD%9CMySQL-%E6%98%AF%E6%80%8E%E4%B9%88%E4%BF%9D%E8%AF%81%E9%AB%98%E5%8F%AF%E7%94%A8%E7%9A%84%EF%BC%9F</link>
     <guid>https://wangze.tech/MySQL-%E5%AE%9E%E6%88%98-45-%E8%AE%B2/25%EF%BD%9CMySQL-%E6%98%AF%E6%80%8E%E4%B9%88%E4%BF%9D%E8%AF%81%E9%AB%98%E5%8F%AF%E7%94%A8%E7%9A%84%EF%BC%9F</guid>
@@ -58,12 +64,6 @@
     <link>https://wangze.tech/Redis-%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E6%88%98/18%EF%BD%9C%E6%B3%A2%E5%8A%A8%E7%9A%84%E5%93%8D%E5%BA%94%E5%BB%B6%E8%BF%9F%EF%BC%9A%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E5%8F%98%E6%85%A2%E7%9A%84-Redis%EF%BC%9F%EF%BC%88%E4%B8%8A%EF%BC%89</link>
     <guid>https://wangze.tech/Redis-%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E6%88%98/18%EF%BD%9C%E6%B3%A2%E5%8A%A8%E7%9A%84%E5%93%8D%E5%BA%94%E5%BB%B6%E8%BF%9F%EF%BC%9A%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9%E5%8F%98%E6%85%A2%E7%9A%84-Redis%EF%BC%9F%EF%BC%88%E4%B8%8A%EF%BC%89</guid>
     <description>Redis 真的变慢了吗？ 1 查看 Redis 的响应延迟 redis-cli —latency -h host -p port 2 基于当前环境下的 Redis 基线性能做判断 基线性能：一个系统在低压力、无干扰下的基本性能，这个性能只由当前的软硬件配置决定 redis-cli 命令提供的 -intrinsic-latency 选项可以用来检测和统计测试期间的最大延迟，这个延迟可以作为基线性能 ...</description>
-    <pubDate>Wed, 15 May 2024 15:00:01 GMT</pubDate>
-  </item><item>
-    <title>22｜第 11～21 讲课后思考题答案及常见问题答疑</title>
-    <link>https://wangze.tech/Redis-%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E6%88%98/22%EF%BD%9C%E7%AC%AC-11%EF%BD%9E21-%E8%AE%B2%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%E5%8F%8A%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E7%AD%94%E7%96%91</link>
-    <guid>https://wangze.tech/Redis-%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%AE%9E%E6%88%98/22%EF%BD%9C%E7%AC%AC-11%EF%BD%9E21-%E8%AE%B2%E8%AF%BE%E5%90%8E%E6%80%9D%E8%80%83%E9%A2%98%E7%AD%94%E6%A1%88%E5%8F%8A%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E7%AD%94%E7%96%91</guid>
-    <description>问题 1：如何使用慢查询日志和 latency monitor 排查执行慢的操作？ 1 设置 slowlog-log-slower-than：对执行时间大于多少微妙的命令进行记录 2 设置 slowlog-max-len：日志最多记录多少条命令 3 使用 SLOWLOG GET 命令查看慢查询日志 4 可以使用 latency monitor ...</description>
     <pubDate>Wed, 15 May 2024 15:00:01 GMT</pubDate>
   </item>
     </channel>
