@@ -27,7 +27,8 @@ export const defaultContentPageLayout: PageLayout = {
     Component.Search(),
     Component.Darkmode(),
     Component.DesktopOnly(Component.TableOfContents()),
-    Component.DesktopOnly(Component.Explorer()),
+    // Component.DesktopOnly(Component.Explorer()),
+    Component.DesktopOnly(Component.RecentNotes({ limit: 5 })),
   ],
   right: [
     Component.Graph({
@@ -35,7 +36,7 @@ export const defaultContentPageLayout: PageLayout = {
       globalGraph: { showTags: false },
     }),
     Component.Backlinks(),
-    // Component.Giscus(), // 评论区
+    Component.Giscus(), // 评论区
   ],
 }
 
