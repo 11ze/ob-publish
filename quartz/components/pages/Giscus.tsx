@@ -2,7 +2,7 @@ import { QuartzComponentConstructor } from "../types"
 
 function Content() {
   return <script src="https://giscus.app/client.js"
-    data-repo="11ze/knowledge-garden"
+    data-repo="11ze/notes"
     data-repo-id="R_kgDOJhaxtw"
     data-category="General"
     data-category-id="DIC_kwDOJhaxt84CWa3R"
@@ -11,7 +11,7 @@ function Content() {
     data-reactions-enabled="1"
     data-emit-metadata="0"
     data-input-position="bottom"
-    data-theme="preferred_color_scheme"
+    data-theme="light"
     data-lang="zh-CN"
     crossorigin="anonymous"
     async>
