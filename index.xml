@@ -6,6 +6,18 @@
       <description>Last 10 notes on 11ze</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>发布个人笔记</title>
+    <link>https://wangze.tech/%E5%8F%91%E5%B8%83%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0</link>
+    <guid>https://wangze.tech/%E5%8F%91%E5%B8%83%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0</guid>
+    <description>同步方案 可选方案 Obsidian Sync：官方，付费 Remotely Sync：Obsidian 的第三方插件，可以自动和手动同步，免费 iCloud：实时同步，免费 我使用的同步方案 iCloud iPhone 安装 Obsidian 进入 Obsidian 创建一个打开 iCloud 同步功能的 Vault 此时 iCloud ...</description>
+    <pubDate>Fri, 31 May 2024 15:00:02 GMT</pubDate>
+  </item><item>
+    <title>设计一个短链系统</title>
+    <link>https://wangze.tech/%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E7%9F%AD%E9%93%BE%E7%B3%BB%E7%BB%9F</link>
+    <guid>https://wangze.tech/%E8%AE%BE%E8%AE%A1%E4%B8%80%E4%B8%AA%E7%9F%AD%E9%93%BE%E7%B3%BB%E7%BB%9F</guid>
+    <description>参考 GitHub - ccbikai/Sink: ⚡ A Simple / Speedy / Secure Link Shortener with Analytics, 100% run on Cloudflare.</description>
+    <pubDate>Fri, 31 May 2024 15:00:02 GMT</pubDate>
+  </item><item>
     <title>Capslock：增强 Mac 的 Caps 键功能</title>
     <link>https://wangze.tech/Capslock%EF%BC%9A%E5%A2%9E%E5%BC%BA-Mac-%E7%9A%84-Caps-%E9%94%AE%E5%8A%9F%E8%83%BD</link>
     <guid>https://wangze.tech/Capslock%EF%BC%9A%E5%A2%9E%E5%BC%BA-Mac-%E7%9A%84-Caps-%E9%94%AE%E5%8A%9F%E8%83%BD</guid>
@@ -52,18 +64,6 @@
     <link>https://wangze.tech/PHP-%E5%BC%80%E5%8F%91%E8%AE%BE%E7%BD%AE</link>
     <guid>https://wangze.tech/PHP-%E5%BC%80%E5%8F%91%E8%AE%BE%E7%BD%AE</guid>
     <description>Laravel Pint 如何在 PhpStorm 配置 Laravel Pint 代码格式化包 Laravel Pint VSCode Extension PHP Intelephense PHP DocBlocker .</description>
-    <pubDate>Thu, 30 May 2024 15:00:00 GMT</pubDate>
-  </item><item>
-    <title>PHP 测试</title>
-    <link>https://wangze.tech/PHP-%E6%B5%8B%E8%AF%95</link>
-    <guid>https://wangze.tech/PHP-%E6%B5%8B%E8%AF%95</guid>
-    <description> 10 testing best practices for Laravel in 2023 还没看。 .</description>
-    <pubDate>Thu, 30 May 2024 15:00:00 GMT</pubDate>
-  </item><item>
-    <title>使用缓存</title>
-    <link>https://wangze.tech/%E4%BD%BF%E7%94%A8%E7%BC%93%E5%AD%98</link>
-    <guid>https://wangze.tech/%E4%BD%BF%E7%94%A8%E7%BC%93%E5%AD%98</guid>
-    <description>判断缓存是否存在的方式 给缓存续期，而不是先判断存在再进行其它操作，如判断存在后给列表加子元素 核心：多个操作不一定是原子操作，续期完成后给列表加子元素 .</description>
     <pubDate>Thu, 30 May 2024 15:00:00 GMT</pubDate>
   </item>
     </channel>
