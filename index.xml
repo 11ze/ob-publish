@@ -6,6 +6,12 @@
       <description>Last 10 notes on 11ze</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>我的开发环境</title>
+    <link>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</link>
+    <guid>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</guid>
+    <description>...</description>
+    <pubDate>Mon, 03 Jun 2024 15:00:00 GMT</pubDate>
+  </item><item>
     <title>发布个人笔记</title>
     <link>https://wangze.tech/%E5%8F%91%E5%B8%83%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0</link>
     <guid>https://wangze.tech/%E5%8F%91%E5%B8%83%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0</guid>
@@ -58,12 +64,6 @@
     <link>https://wangze.tech/MySQL-%E5%AE%9E%E6%88%98-45-%E8%AE%B2/05%EF%BD%9C%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E7%B4%A2%E5%BC%95%EF%BC%88%E4%B8%8B%EF%BC%89</link>
     <guid>https://wangze.tech/MySQL-%E5%AE%9E%E6%88%98-45-%E8%AE%B2/05%EF%BD%9C%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E7%B4%A2%E5%BC%95%EF%BC%88%E4%B8%8B%EF%BC%89</guid>
     <description>如何安排联合索引内的字段顺序 第一原则：如果通过调整顺序，可以少维护一个索引，那么这个顺序往往就是需要优先考虑采用的。 如果既有联合查询，又有基于 a、b 各自的查询，此时要考虑空间 比如 a 比 b 大，就建 (a, b) + 单 b 还有其他情况，需要结合业务分析 查询语句的 where 里面各个判断调换顺序不影响 覆盖索引 如果查询条件使用的是普通索引（或是联合索引的最左原则字段），查询结果是联合索引的字段或是主键，不用回表操作，直接返回结果 ...</description>
-    <pubDate>Thu, 30 May 2024 15:00:00 GMT</pubDate>
-  </item><item>
-    <title>PHP 开发设置</title>
-    <link>https://wangze.tech/PHP-%E5%BC%80%E5%8F%91%E8%AE%BE%E7%BD%AE</link>
-    <guid>https://wangze.tech/PHP-%E5%BC%80%E5%8F%91%E8%AE%BE%E7%BD%AE</guid>
-    <description>Laravel Pint 如何在 PhpStorm 配置 Laravel Pint 代码格式化包 Laravel Pint VSCode Extension PHP Intelephense PHP DocBlocker .</description>
     <pubDate>Thu, 30 May 2024 15:00:00 GMT</pubDate>
   </item>
     </channel>
