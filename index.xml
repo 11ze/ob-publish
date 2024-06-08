@@ -24,12 +24,6 @@
     <description>同步方案 可选方案 Obsidian Sync：官方，付费 Remotely Sync：Obsidian 的第三方插件，可以自动和手动同步，免费 iCloud：实时同步，免费 我使用的同步方案 iCloud iPhone 安装 Obsidian 进入 Obsidian 创建一个打开 iCloud 同步功能的 Vault 此时 iCloud ...</description>
     <pubDate>Fri, 07 Jun 2024 15:00:00 GMT</pubDate>
   </item><item>
-    <title>学英语</title>
-    <link>https://wangze.tech/%E5%AD%A6%E8%8B%B1%E8%AF%AD</link>
-    <guid>https://wangze.tech/%E5%AD%A6%E8%8B%B1%E8%AF%AD</guid>
-    <description>...</description>
-    <pubDate>Fri, 07 Jun 2024 15:00:00 GMT</pubDate>
-  </item><item>
     <title>我的开发环境</title>
     <link>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</link>
     <guid>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</guid>
@@ -64,6 +58,12 @@
     <link>https://wangze.tech/Laravel-%E5%BC%80%E5%8F%91%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9</link>
     <guid>https://wangze.tech/Laravel-%E5%BC%80%E5%8F%91%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9</guid>
     <description>MySQL 时区：Asia/Shanghai binlog 格式：row 隔离级别：读提交 select @@transaction_isolation; set @global transaction isolation level read committed; 目录说明 Requests 表单验证 Controllers 控制器，无业务或写简单的业务逻辑 ...</description>
+    <pubDate>Thu, 30 May 2024 15:00:00 GMT</pubDate>
+  </item><item>
+    <title>Mac 运行 Crontab</title>
+    <link>https://wangze.tech/Mac-%E8%BF%90%E8%A1%8C-Crontab</link>
+    <guid>https://wangze.tech/Mac-%E8%BF%90%E8%A1%8C-Crontab</guid>
+    <description>没有权限执行 iCloud 里的文件 按图中顺序添加 cron 的磁盘访问权限 在点击 2 出现的文件选择框里按下 Shift + Command + G 可以调出路径输入窗口查找到 cron 参考 How to Fix Cron “Operation not permitted” error in macOS - ITPro Helper ...</description>
     <pubDate>Thu, 30 May 2024 15:00:00 GMT</pubDate>
   </item>
     </channel>
