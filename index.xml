@@ -6,17 +6,17 @@
       <description>Last 10 notes on 11ze</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>我的开发环境</title>
+    <link>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</link>
+    <guid>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</guid>
+    <description>...</description>
+    <pubDate>Sat, 15 Jun 2024 15:00:00 GMT</pubDate>
+  </item><item>
     <title>Git</title>
     <link>https://wangze.tech/Git</link>
     <guid>https://wangze.tech/Git</guid>
     <description>工作流 OneFlow – a Git branching model and workflow | End of Line Blog 我目前在用选项 3 合并功能分支 缺点如文章所说，需要所有人在合并时配合 2024-06-13：发现 Azure Devops 支持限制合并类型 .</description>
     <pubDate>Thu, 13 Jun 2024 15:00:01 GMT</pubDate>
-  </item><item>
-    <title>我的开发环境</title>
-    <link>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</link>
-    <guid>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</guid>
-    <description>...</description>
-    <pubDate>Tue, 11 Jun 2024 15:00:01 GMT</pubDate>
   </item><item>
     <title>Linux 安装 oh-my-zsh</title>
     <link>https://wangze.tech/Linux-%E5%AE%89%E8%A3%85-oh-my-zsh</link>
