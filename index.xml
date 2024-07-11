@@ -6,11 +6,17 @@
       <description>Last 10 notes on 11ze</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>基于 quartz 和 Obsidian 搭建公开笔记</title>
+    <link>https://wangze.tech/%E5%9F%BA%E4%BA%8E-quartz-%E5%92%8C-Obsidian-%E6%90%AD%E5%BB%BA%E5%85%AC%E5%BC%80%E7%AC%94%E8%AE%B0</link>
+    <guid>https://wangze.tech/%E5%9F%BA%E4%BA%8E-quartz-%E5%92%8C-Obsidian-%E6%90%AD%E5%BB%BA%E5%85%AC%E5%BC%80%E7%AC%94%E8%AE%B0</guid>
+    <description>同步方案 可选方案 Obsidian Sync：官方，付费 Remotely Sync：Obsidian 的第三方插件，可以自动和手动同步，免费 iCloud：实时同步，免费 我使用的同步方案 iCloud iPhone 安装 Obsidian 进入 Obsidian 创建一个打开 iCloud 同步功能的 Vault 此时 iCloud ...</description>
+    <pubDate>Thu, 11 Jul 2024 15:00:06 GMT</pubDate>
+  </item><item>
     <title>我的开发环境</title>
     <link>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</link>
     <guid>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</guid>
     <description>...</description>
-    <pubDate>Mon, 08 Jul 2024 15:00:00 GMT</pubDate>
+    <pubDate>Thu, 11 Jul 2024 15:00:06 GMT</pubDate>
   </item><item>
     <title>Git</title>
     <link>https://wangze.tech/Git</link>
@@ -28,12 +34,6 @@
     <link>https://wangze.tech/Mac-%E5%AE%89%E8%A3%85-oh-my-zsh</link>
     <guid>https://wangze.tech/Mac-%E5%AE%89%E8%A3%85-oh-my-zsh</guid>
     <description>...</description>
-    <pubDate>Fri, 07 Jun 2024 15:00:00 GMT</pubDate>
-  </item><item>
-    <title>发布个人笔记</title>
-    <link>https://wangze.tech/%E5%8F%91%E5%B8%83%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0</link>
-    <guid>https://wangze.tech/%E5%8F%91%E5%B8%83%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0</guid>
-    <description>同步方案 可选方案 Obsidian Sync：官方，付费 Remotely Sync：Obsidian 的第三方插件，可以自动和手动同步，免费 iCloud：实时同步，免费 我使用的同步方案 iCloud iPhone 安装 Obsidian 进入 Obsidian 创建一个打开 iCloud 同步功能的 Vault 此时 iCloud ...</description>
     <pubDate>Fri, 07 Jun 2024 15:00:00 GMT</pubDate>
   </item><item>
     <title>解决 iCloud 同步卡住问题</title>
