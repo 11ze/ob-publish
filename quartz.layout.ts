@@ -50,7 +50,6 @@ export const defaultContentPageLayout: PageLayout = {
       globalGraph: { showTags: false },
     }),
     Component.Backlinks(),
-    Component.Giscus(), // 评论区
   ],
 }
 
