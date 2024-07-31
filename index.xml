@@ -6,6 +6,12 @@
       <description>Last 10 notes on 11ze</description>
       <generator>Quartz -- quartz.jzhao.xyz</generator>
       <item>
+    <title>暗时间</title>
+    <link>https://wangze.tech/%E6%9A%97%E6%97%B6%E9%97%B4</link>
+    <guid>https://wangze.tech/%E6%9A%97%E6%97%B6%E9%97%B4</guid>
+    <description>...</description>
+    <pubDate>Wed, 31 Jul 2024 05:22:14 GMT</pubDate>
+  </item><item>
     <title>我的开发环境</title>
     <link>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</link>
     <guid>https://wangze.tech/%E6%88%91%E7%9A%84%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83</guid>
@@ -58,12 +64,6 @@
     <link>https://wangze.tech/Java</link>
     <guid>https://wangze.tech/Java</guid>
     <description>资料 安装 JDK 教程 官网下载 路线图 语法基础 问题 卸载任一 JDK 后 IDEA 报错 错误信息如： nice: /Library/Java/JavaVirtualMachines/zulu-18.jdk/Contents/Home/bin/java: No such file or directory 修复： 退出 IDEA 修改 ~/Library/Application\ ...</description>
-    <pubDate>Thu, 30 May 2024 15:00:00 GMT</pubDate>
-  </item><item>
-    <title>Laravel 开发注意事项</title>
-    <link>https://wangze.tech/Laravel-%E5%BC%80%E5%8F%91%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9</link>
-    <guid>https://wangze.tech/Laravel-%E5%BC%80%E5%8F%91%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9</guid>
-    <description>MySQL 时区：Asia/Shanghai binlog 格式：row 隔离级别：读提交 select @@transaction_isolation; set @global transaction isolation level read committed; 目录说明 Requests 表单验证 Controllers 控制器，无业务或写简单的业务逻辑 ...</description>
     <pubDate>Thu, 30 May 2024 15:00:00 GMT</pubDate>
   </item>
     </channel>
