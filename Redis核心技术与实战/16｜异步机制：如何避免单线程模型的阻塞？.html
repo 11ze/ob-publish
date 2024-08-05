@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en"><head><title>16｜异步机制：如何避免单线程模型的阻塞？</title><meta charset="utf-8"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains Mono&amp;family=Schibsted Grotesk:wght@400;700&amp;family=Source Sans Pro:ital,wght@0,400;0,600;1,400;1,600&amp;display=swap"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta property="og:title" content="16｜异步机制：如何避免单线程模型的阻塞？"/><meta property="og:description" content="..."/><meta property="og:image" content="https://wangze.tech/static/og-image.png"/><meta property="og:width" content="1200"/><meta property="og:height" content="675"/><link rel="icon" href="../static/icon.png"/><meta name="description" content="..."/><meta name="generator" content="Quartz"/><link href="../index.css" rel="stylesheet" type="text/css" spa-preserve/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" rel="stylesheet" type="text/css" spa-preserve/><script src="../prescript.js" type="application/javascript" spa-preserve></script><script type="application/javascript" spa-preserve>const fetchData = fetch("../static/contentIndex.json").then(data => data.json())</script></head><body data-slug="Redis核心技术与实战/16｜异步机制：如何避免单线程模型的阻塞？"><div id="quartz-root" class="page"><div id="quartz-body"><div class="left sidebar"><h1 class="page-title"><a href="..">11ze</a></h1><div class="spacer mobile-only"></div><div class="search"><div id="search-icon"><p>Search</p><div></div><svg tabindex="0" aria-labelledby="title desc" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 19.7"><title id="title">Search</title><desc id="desc">Search</desc><g class="search-path" fill="none"><path stroke-linecap="square" d="M18.5 18.3l-5.4-5.4"></path><circle cx="8" cy="8" r="7"></circle></g></svg></div><div id="search-container"><div id="search-space"><input autocomplete="off" id="search-bar" name="search" type="text" aria-label="Search for something" placeholder="Search for something"/><div id="search-layout" data-preview="true"></div></div></div></div><div class="darkmode"><input class="toggle" id="darkmode-toggle" type="checkbox" tabindex="-1"/><label id="toggle-label-light" for="darkmode-toggle" tabindex="-1"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="dayIcon" x="0px" y="0px" viewBox="0 0 35 35" style="enable-background:new 0 0 35 35" xml:space="preserve"><title>Dark mode</title><path d="M6,17.5C6,16.672,5.328,16,4.5,16h-3C0.672,16,0,16.672,0,17.5    S0.672,19,1.5,19h3C5.328,19,6,18.328,6,17.5z M7.5,26c-0.414,0-0.789,0.168-1.061,0.439l-2,2C4.168,28.711,4,29.086,4,29.5    C4,30.328,4.671,31,5.5,31c0.414,0,0.789-0.168,1.06-0.44l2-2C8.832,28.289,9,27.914,9,27.5C9,26.672,8.329,26,7.5,26z M17.5,6    C18.329,6,19,5.328,19,4.5v-3C19,0.672,18.329,0,17.5,0S16,0.672,16,1.5v3C16,5.328,16.671,6,17.5,6z M27.5,9    c0.414,0,0.789-0.168,1.06-0.439l2-2C30.832,6.289,31,5.914,31,5.5C31,4.672,30.329,4,29.5,4c-0.414,0-0.789,0.168-1.061,0.44    l-2,2C26.168,6.711,26,7.086,26,7.5C26,8.328,26.671,9,27.5,9z M6.439,8.561C6.711,8.832,7.086,9,7.5,9C8.328,9,9,8.328,9,7.5    c0-0.414-0.168-0.789-0.439-1.061l-2-2C6.289,4.168,5.914,4,5.5,4C4.672,4,4,4.672,4,5.5c0,0.414,0.168,0.789,0.439,1.06    L6.439,8.561z M33.5,16h-3c-0.828,0-1.5,0.672-1.5,1.5s0.672,1.5,1.5,1.5h3c0.828,0,1.5-0.672,1.5-1.5S34.328,16,33.5,16z     M28.561,26.439C28.289,26.168,27.914,26,27.5,26c-0.828,0-1.5,0.672-1.5,1.5c0,0.414,0.168,0.789,0.439,1.06l2,2    C28.711,30.832,29.086,31,29.5,31c0.828,0,1.5-0.672,1.5-1.5c0-0.414-0.168-0.789-0.439-1.061L28.561,26.439z M17.5,29    c-0.829,0-1.5,0.672-1.5,1.5v3c0,0.828,0.671,1.5,1.5,1.5s1.5-0.672,1.5-1.5v-3C19,29.672,18.329,29,17.5,29z M17.5,7    C11.71,7,7,11.71,7,17.5S11.71,28,17.5,28S28,23.29,28,17.5S23.29,7,17.5,7z M17.5,25c-4.136,0-7.5-3.364-7.5-7.5    c0-4.136,3.364-7.5,7.5-7.5c4.136,0,7.5,3.364,7.5,7.5C25,21.636,21.636,25,17.5,25z"></path></svg></label><label id="toggle-label-dark" for="darkmode-toggle" tabindex="-1"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="nightIcon" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve"><title>Light mode</title><path d="M96.76,66.458c-0.853-0.852-2.15-1.064-3.23-0.534c-6.063,2.991-12.858,4.571-19.655,4.571  C62.022,70.495,50.88,65.88,42.5,57.5C29.043,44.043,25.658,23.536,34.076,6.47c0.532-1.08,0.318-2.379-0.534-3.23  c-0.851-0.852-2.15-1.064-3.23-0.534c-4.918,2.427-9.375,5.619-13.246,9.491c-9.447,9.447-14.65,22.008-14.65,35.369  c0,13.36,5.203,25.921,14.65,35.368s22.008,14.65,35.368,14.65c13.361,0,25.921-5.203,35.369-14.65  c3.872-3.871,7.064-8.328,9.491-13.246C97.826,68.608,97.611,67.309,96.76,66.458z"></path></svg></label></div><div class="recent-notes desktop-only"><h3>Recent Notes</h3><ul class="recent-ul"><li class="recent-li"><div class="section"><div class="desc"><h3><a href="../Capslock：增强Mac的Caps键功能" class="internal">Capslock：增强Mac的Caps键功能</a></h3></div><p class="meta">Aug 05, 2024</p></div></li><li class="recent-li"><div class="section"><div class="desc"><h3><a href="../Crontab执行任务提示没有权限" class="internal">Crontab执行任务提示没有权限</a></h3></div><p class="meta">Aug 05, 2024</p></div></li><li class="recent-li"><div class="section"><div class="desc"><h3><a href="../Docker问题" class="internal">Docker问题</a></h3></div><p class="meta">Aug 05, 2024</p></div></li><li class="recent-li"><div class="section"><div class="desc"><h3><a href="../Egg.js手动热更新" class="internal">Egg.js手动热更新</a></h3></div><p class="meta">Aug 05, 2024</p></div></li><li class="recent-li"><div class="section"><div class="desc"><h3><a href="../GitHub加速访问" class="internal">GitHub加速访问</a></h3></div><p class="meta">Aug 05, 2024</p></div></li></ul></div></div><div class="center"><div class="page-header"><div class="popover-hint"><h1 class="article-title">16｜异步机制：如何避免单线程模型的阻塞？</h1><p show-comma="true" class="content-meta"><span>Sep 05, 2023</span></p><ul class="tags"><li><a href="../tags/Redis" class="internal tag-link">Redis</a></li></ul></div></div><article class="popover-hint"><ul>
+<li>
+<p>4 类交互对象和具体的操作之间的关系</p>
+<ul>
+<li><img src="https://cdn.jsdelivr.net/gh/11ze/static/images/redis-16-1.png" alt="image.png"/></li>
+</ul>
+</li>
+<li>
+<p>和客户端交互时的阻塞点</p>
+<ul>
+<li>
+<ol>
+<li>集合的全量查询和聚合操作</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>删除 bigkey</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>清空数据库</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p>和磁盘交互时的阻塞点</p>
+<ul>
+<li>
+<ol start="4">
+<li>同步写 AOF 日志</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p>主从节点交互时的阻塞点</p>
+<ul>
+<li>
+<ol start="5">
+<li>
+<p>加载 RDB 文件</p>
+</li>
+</ol>
+<ul>
+<li>从库接收 RDB 文件后会清空当前数据库</li>
+<li>然后加载 RDB 到内存，文件越大越慢</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>切片集群实例交互时的阻塞点</p>
+<ul>
+<li>
+<ol start="6">
+<li>
+<p>使用 Redis Cluster 方案，并迁移 bigkey</p>
+</li>
+</ol>
+<ul>
+<li>Redis Cluster 方案使用了同步迁移</li>
+<li>当没有 bigkey 时，切片集群的各实例在进行交互时不会阻塞主线程</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>可以异步操作的阻塞点：2、3、4</p>
+</li>
+<li>
+<p>如果一个操作能被异步执行，就意味着，它并不是 Redis 主线程的关键路径上的操作</p>
+<ul>
+<li>客户端把请求发送给 Redis 后，等着 Redis 返回数据结果的操作</li>
+<li>读操作是典型的关键路径操作</li>
+</ul>
+</li>
+<li>
+<p>异步的键值对删除和数据库清空操作是 Redis 4.0 后提供的功能，Redis 也提供了新的命令来执行这两个操作</p>
+<ul>
+<li>键值对删除：当集合类型中有大量元素（百万或千万级别）需要删除时，使用 UNLINK 命令</li>
+<li>清空数据库：在 FLUSHDB 和 FLUSHALL 命令后加上 ASYNC 选项</li>
+</ul>
+</li>
+<li>
+<p>小建议</p>
+<ul>
+<li>4.0 之前删除 bigkey：先使用集合类型提供的 SCAN 命令读取数据，然后再进行删除</li>
+<li>集合的全量查询和聚合操作：可以使用 SCAN 命令，分批读取数据，再在客户端进行聚合计算</li>
+<li>从库加载 RDB 文件：把主库的数据量大小控制在 2~4GB，以保证 RDB 文件能以较快的速度加载</li>
+</ul>
+</li>
+<li>
+<p>lazy-free（惰性删除）</p>
+<ul>
+<li>
+<ol>
+<li>4.0 新增功能，默认关闭</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>
+<p>4 个控制选项</p>
+</li>
+</ol>
+<ul>
+<li>a) lazyfree-lazy-expire：key 在过期删除时尝试异步释放内存</li>
+<li>b) lazyfree-lazy-eviction：内存达到 maxmemory 并设置了淘汰策略时尝试异步释放内存</li>
+<li>c) lazyfree-lazy-server-del：执行 RENAME/MOVE 等命令或需要覆盖一个 key 时，删除旧 key 尝试异步释放内存</li>
+<li>d) replica-lazy-flush：主从全量同步，从库清空数据库时异步释放内存</li>
+</ul>
+</li>
+<li>
+<ol start="3">
+<li>即使开启了lazy-free，如果直接使用 DEL 命令还是会同步删除 key，只有使用 UNLINK 命令才可能会异步删除 key</li>
+</ol>
+</li>
+<li>
+<ol start="4">
+<li>最关键的一点，上面提到开启 lazy-free 的场景，除了 d）replica-lazy-flush，其他情况都只是 <em>可能</em> 去异步释放 key 的内存，并不是每次必定异步释放内存的</li>
+</ol>
+</li>
+<li>
+<p>真正异步释放内存的情况：与 key 的类型、编码方式、元素数量都有关系</p>
+<ul>
+<li>a) 当 Hash/Set 底层采用哈希表存储（非 ziplist/int 编码存储）时，并且元素数量超过64个</li>
+<li>b) 当 ZSet 底层采用跳表存储（非 ziplist 编码存储）时，并且元素数量超过64个</li>
+<li>c) 当 List 链表节点数量超过 64 个（注意，不是元素数量，而是链表节点的数量，List 的实现是在每个节点包含了若干个元素的数据，这些元素采用 ziplist 存储）</li>
+<li>其他情况一律还是在主线程操作</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul></article><hr/><div class="page-footer"><div class="giscus"></div></div></div><div class="right sidebar"><div class="graph"><h3>Graph View</h3><div class="graph-outer"><div id="graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:1,&quot;scale&quot;:1.1,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:false,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:false}"></div><svg version="1.1" id="global-graph-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 55 55" fill="currentColor" xml:space="preserve"><path d="M49,0c-3.309,0-6,2.691-6,6c0,1.035,0.263,2.009,0.726,2.86l-9.829,9.829C32.542,17.634,30.846,17,29,17
+	s-3.542,0.634-4.898,1.688l-7.669-7.669C16.785,10.424,17,9.74,17,9c0-2.206-1.794-4-4-4S9,6.794,9,9s1.794,4,4,4
+	c0.74,0,1.424-0.215,2.019-0.567l7.669,7.669C21.634,21.458,21,23.154,21,25s0.634,3.542,1.688,4.897L10.024,42.562
+	C8.958,41.595,7.549,41,6,41c-3.309,0-6,2.691-6,6s2.691,6,6,6s6-2.691,6-6c0-1.035-0.263-2.009-0.726-2.86l12.829-12.829
+	c1.106,0.86,2.44,1.436,3.898,1.619v10.16c-2.833,0.478-5,2.942-5,5.91c0,3.309,2.691,6,6,6s6-2.691,6-6c0-2.967-2.167-5.431-5-5.91
+	v-10.16c1.458-0.183,2.792-0.759,3.898-1.619l7.669,7.669C41.215,39.576,41,40.26,41,41c0,2.206,1.794,4,4,4s4-1.794,4-4
+	s-1.794-4-4-4c-0.74,0-1.424,0.215-2.019,0.567l-7.669-7.669C36.366,28.542,37,26.846,37,25s-0.634-3.542-1.688-4.897l9.665-9.665
+	C46.042,11.405,47.451,12,49,12c3.309,0,6-2.691,6-6S52.309,0,49,0z M11,9c0-1.103,0.897-2,2-2s2,0.897,2,2s-0.897,2-2,2
+	S11,10.103,11,9z M6,51c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S8.206,51,6,51z M33,49c0,2.206-1.794,4-4,4s-4-1.794-4-4
+	s1.794-4,4-4S33,46.794,33,49z M29,31c-3.309,0-6-2.691-6-6s2.691-6,6-6s6,2.691,6,6S32.309,31,29,31z M47,41c0,1.103-0.897,2-2,2
+	s-2-0.897-2-2s0.897-2,2-2S47,39.897,47,41z M49,10c-2.206,0-4-1.794-4-4s1.794-4,4-4s4,1.794,4,4S51.206,10,49,10z"></path></svg></div><div id="global-graph-outer"><div id="global-graph-container" data-cfg="{&quot;drag&quot;:true,&quot;zoom&quot;:true,&quot;depth&quot;:-1,&quot;scale&quot;:0.9,&quot;repelForce&quot;:0.5,&quot;centerForce&quot;:0.3,&quot;linkDistance&quot;:30,&quot;fontSize&quot;:0.6,&quot;opacityScale&quot;:1,&quot;showTags&quot;:false,&quot;removeTags&quot;:[],&quot;focusOnHover&quot;:true}"></div></div></div><div class="backlinks"><h3>Backlinks</h3><ul class="overflow"><li><a href="../Redis核心技术与实战/Redis-核心技术与实战" class="internal">Redis 核心技术与实战</a></li></ul></div></div></div><footer class><p>Created with <a href="https://quartz.jzhao.xyz/">Quartz v4.2.4</a> © 2024</p><ul><li><a href="https://github.com/11ze/notes">GitHub</a></li><li><a href="https://twitter.com/11ze4">Twitter</a></li><li><a href="https://space.bilibili.com/4480720">BiliBili</a></li></ul></footer></div></body><script type="application/javascript">function c(){let t=this.parentElement;t.classList.toggle("is-collapsed");let l=t.classList.contains("is-collapsed")?this.scrollHeight:t.scrollHeight;t.style.maxHeight=l+"px";let o=t,e=t.parentElement;for(;e;){if(!e.classList.contains("callout"))return;let n=e.classList.contains("is-collapsed")?e.scrollHeight:e.scrollHeight+o.scrollHeight;e.style.maxHeight=n+"px",o=e,e=e.parentElement}}function i(){let t=document.getElementsByClassName("callout is-collapsible");for(let s of t){let l=s.firstElementChild;if(l){l.addEventListener("click",c),window.addCleanup(()=>l.removeEventListener("click",c));let e=s.classList.contains("is-collapsed")?l.scrollHeight:s.scrollHeight;s.style.maxHeight=e+"px"}}}document.addEventListener("nav",i);window.addEventListener("resize",i);
+</script><script type="module">
+          let mermaidImport = undefined
+          document.addEventListener('nav', async () => {
+            if (document.querySelector("code.mermaid")) {
+              mermaidImport ||= await import('https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.7.0/mermaid.esm.min.mjs')
+              const mermaid = mermaidImport.default
+              const darkMode = document.documentElement.getAttribute('saved-theme') === 'dark'
+              mermaid.initialize({
+                startOnLoad: false,
+                securityLevel: 'loose',
+                theme: darkMode ? 'dark' : 'default'
+              })
+
+              await mermaid.run({
+                querySelector: '.mermaid'
+              })
+            }
+          });
+          </script><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/copy-tex.min.js" type="application/javascript"></script><script src="../postscript.js" type="module"></script></html>
